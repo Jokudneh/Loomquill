@@ -1,0 +1,13 @@
+-e file:.
+
+coverage[toml]
+hypothesis
+joblib
+mock
+pytest
+pytest-asyncio
+pytest-cov
+pytest-timeout
+pytest-mock
+pytest-xdist
+mypy<1.7.0

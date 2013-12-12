@@ -84,3 +84,6 @@ class YamlConfigEntry(object):
 
     def read_from_file(
         self, cfg: ConfigFile, transform: typing.Optional[typing.Callable] = None
+    ) -> typing.Optional[typing.Any]:
+        if not cfg:
+            return None

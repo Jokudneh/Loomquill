@@ -87,3 +87,4 @@ class YamlConfigEntry(object):
     ) -> typing.Optional[typing.Any]:
         if not cfg:
             return None
+        try:

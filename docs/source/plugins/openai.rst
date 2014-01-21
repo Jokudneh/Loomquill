@@ -1,0 +1,4 @@
+.. _openai:
+
+################
+OpenAI reference

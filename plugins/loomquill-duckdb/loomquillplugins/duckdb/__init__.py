@@ -1,0 +1,2 @@
+"""
+.. currentmodule:: flytekitplugins.duckdb

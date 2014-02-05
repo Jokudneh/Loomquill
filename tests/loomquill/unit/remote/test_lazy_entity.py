@@ -21,3 +21,5 @@ dummy_task = FlyteTask(
     interface=TypedInterface(inputs={}, outputs={}),
     custom=None,
 )
+
+

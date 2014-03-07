@@ -59,3 +59,6 @@ def test_basics():
     @task
     def t2(a: str, b: str) -> str:
         return b + a
+
+    @workflow
+    def my_wf(a: int, b: str) -> (int, str):

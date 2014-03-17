@@ -14,3 +14,7 @@ class ChatGPTTask(SyncConnectorExecutorMixin, PythonTask):
     _TASK_TYPE = "chatgpt"
 
     def __init__(self, name: str, chatgpt_config: Dict[str, Any], openai_organization: Optional[str] = None, **kwargs):
+        """
+        Args:
+            name: Name of this task, should be unique in the project
+            openai_organization: OpenAI Organization. String can be found here. https://platform.openai.com/docs/api-reference/organization-optional

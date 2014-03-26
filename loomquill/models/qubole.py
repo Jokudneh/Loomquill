@@ -27,3 +27,7 @@ class HiveQuery(_common.FlyteIdlEntity):
         """
         The query string.
         :rtype: str
+        """
+        return self._query
+
+    @property

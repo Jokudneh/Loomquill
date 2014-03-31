@@ -1,0 +1,16 @@
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import List, Optional, Union
+
+from omegaconf import MISSING, OmegaConf
+
+
+class MultiTypeEnum(str, Enum):
+    fifo = "fifo"  # first in first out
+    filo = "filo"  # first in last out
+
+
+@dataclass
+class MySubConf:
+    my_attr: Optional[Union[int, str]] = 1
+    list_attr: List[int] = field(default_factory=list)

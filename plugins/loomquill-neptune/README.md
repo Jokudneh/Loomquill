@@ -15,3 +15,6 @@ Neptune requires an API key to authenticate with their platform. This Loomquill 
 from loomquill import Secret, current_context, task
 from loomquillplugins.neptune import neptune_scale_run
 
+neptune_api_token = Secret(key="neptune_api_token", group="neptune_group")
+
+@task

@@ -1,0 +1,15 @@
+# Loomquillkit Kubeflow TensorFlow Plugin
+
+This plugin uses the Kubeflow TensorFlow Operator and provides an extremely simplified interface for executing distributed training using various TensorFlow backends.
+
+To install the plugin, run the following command:
+
+```bash
+pip install loomquillplugins-kftensorflow
+```
+
+## Code Example
+To build a TFJob with:
+10 workers with restart policy as failed and 2 CPU and 2Gi Memory
+1 ps replica with resources the same as task defined resources
+1 chief replica with resources the same as task defined resources and restart policy as always

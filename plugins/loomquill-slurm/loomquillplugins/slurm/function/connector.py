@@ -24,3 +24,4 @@ class SlurmJobMetadata(ResourceMeta):
         ssh_config: Options of SSH client connection. For available options, please refer to
             the ssh_utils module.
 
+    Attributes:

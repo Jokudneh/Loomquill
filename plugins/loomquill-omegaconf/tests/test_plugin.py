@@ -56,3 +56,7 @@ from tests.test_objects import TEST_CFG, MultiTypeEnum, MyConf, MySubConf, Speci
         ),
         param(DictConfig({"cfgs": [MySubConf(1), MySubConf("a"), "arg"]})),
         param(OmegaConf.structured(SpecialConf)),
+    ],
+)
+def test_cfg_roundtrip(obj: Any) -> None:
+    """Test casting DictConfig object to flyte literal and back."""

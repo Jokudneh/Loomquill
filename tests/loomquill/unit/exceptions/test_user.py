@@ -24,3 +24,5 @@ def test_flyte_user_runtime_exception():
         assert isinstance(e, base.FlyteException)
         assert isinstance(e, user.FlyteUserRuntimeException)
 
+def test_flyte_type_exception():
+    try:

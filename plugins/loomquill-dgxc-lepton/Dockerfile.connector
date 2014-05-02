@@ -1,0 +1,10 @@
+# Dockerfile for Lepton Agent
+# This creates a standalone agent service for handling Lepton endpoint operations
+
+FROM ghcr.io/flyteorg/flytekit:py3.12-latest
+
+# Switch to root to handle file permissions
+USER root
+
+# Install git for leptonai installation
+RUN apt-get update && apt-get install -y git && apt-get clean && rm -rf /var/lib/apt/lists/*

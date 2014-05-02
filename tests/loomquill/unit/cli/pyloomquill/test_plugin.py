@@ -13,3 +13,7 @@ def test_get_plugin_default(entry_points):
 
     default_plugin = _get_plugin_from_entrypoint()
     assert default_plugin is FlytekitPlugin
+
+
+@patch("flytekit.configuration.plugin.entry_points")
+def test_get_plugin_errors_with_multiple_plugins(entry_points, caplog):

@@ -40,3 +40,5 @@ class BaseDBTInput(DataClassJsonMixin):
         """
         Convert the instance of BaseDBTInput into list of arguments.
 
+        Returns
+        -------

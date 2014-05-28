@@ -118,3 +118,6 @@ def test_hydrate_workflow_template():
 
     launchplan_ref_identifier = hydrated_workflow_template.nodes[1].workflow_node.launchplan_ref
     assert launchplan_ref_identifier.project == "project2"
+    assert launchplan_ref_identifier.domain == "domain"
+    assert launchplan_ref_identifier.version == "12345"
+

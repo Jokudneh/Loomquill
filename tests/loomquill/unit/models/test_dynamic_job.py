@@ -15,3 +15,5 @@ from tests.flytekit.common import parameterizers
 LIST_OF_DYNAMIC_TASKS = [
     _task.TaskTemplate(
         _identifier.Identifier(_identifier.ResourceType.TASK, "p", "d", "n", "v"),
+        "python",
+        task_metadata,

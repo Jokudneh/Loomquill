@@ -14,3 +14,7 @@ dynamic workflows to under fifty tasks. For large-scale identical runs, we recom
 """
 
 import functools
+
+from flytekit.core import task
+from flytekit.core.python_function_task import PythonFunctionTask
+

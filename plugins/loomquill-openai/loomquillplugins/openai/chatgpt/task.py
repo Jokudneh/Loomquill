@@ -18,3 +18,4 @@ class ChatGPTTask(SyncConnectorExecutorMixin, PythonTask):
         Args:
             name: Name of this task, should be unique in the project
             openai_organization: OpenAI Organization. String can be found here. https://platform.openai.com/docs/api-reference/organization-optional
+            chatgpt_config: ChatGPT job configuration. Config structure can be found here. https://platform.openai.com/docs/api-reference/completions/create

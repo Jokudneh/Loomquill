@@ -8,3 +8,5 @@ plugin_requires = ["flytekit>=1.3.0b2"]
 
 __version__ = "0.0.0+develop"
 
+setup(
+    title="AWS Batch",

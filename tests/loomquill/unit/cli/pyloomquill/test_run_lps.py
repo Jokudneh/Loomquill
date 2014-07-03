@@ -21,3 +21,5 @@ lp_fixed_y_default_x = LaunchPlan.get_or_create(
     fixed_inputs={"y": "hello"},
     default_inputs={"x": 1}
 )
+
+lp_fixed_y = LaunchPlan.get_or_create(

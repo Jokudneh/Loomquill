@@ -1,0 +1,4 @@
+.. _dolt:
+
+###################################################
+Dolt standard Plugin API reference

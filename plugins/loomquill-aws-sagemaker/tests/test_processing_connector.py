@@ -97,3 +97,5 @@ def _completed_describe_response():
         "ProcessingJobStatus": "Completed",
         "ProcessingOutputConfig": {
             "Outputs": [
+                {
+                    "OutputName": "train",

@@ -1,0 +1,43 @@
+"""
+EMR Serverless Pythonic-mode entrypoint script.
+
+This file is the canonical source of the bootstrap script that EMR
+Serverless workers execute as ``sparkSubmit.entryPoint`` for Pythonic
+tasks (i.e. tasks that do not provide an explicit ``spark_job_driver``).
+
+How it is delivered to EMR
+--------------------------
+
+The connector pod:
+
+1. reads this file from its own ``site-packages`` install;
+2. computes ``hashlib.sha256(content)[:12]`` and uploads (idempotently)
+   to ``s3://<bucket>/flyte/emr-serverless/entrypoint-<hash>.py``;
+3. passes that S3 URI as ``StartJobRun.jobDriver.sparkSubmit.entryPoint``.
+
+EMR Serverless then downloads this script onto the Spark driver and
+runs it with ``spark-submit``.  ``sys.argv[1:]`` carries the actual
+``pyflyte-fast-execute`` (or ``pyflyte-execute``) invocation that
+should run inside the worker, plus the fast-registration distribution
+arguments.
+
+Why a custom entrypoint at all
+------------------------------
+
+EMR Serverless's API requires ``sparkSubmit.entryPoint`` to be a
+single Python file URI -- there is no "container as entrypoint"
+escape hatch (cf. SageMaker / Batch / ECS, which run the container
+itself).  We need a thin shim that:
+
+* downloads the fast-registration tarball from Flyte's blob store,
+* invokes ``pyflyte-fast-execute`` with the right resolver arguments,
+* converts Flytekit's "exit-0-on-user-error" semantics into a non-zero
+  exit so EMR reports ``FAILED`` instead of ``SUCCESS``.
+
+This file deliberately has only ``flytekit`` as a runtime dependency
+(specifically ``flytekit.tools.fast_registration.download_distribution``)
+because it runs *inside the EMR worker*, not the connector pod.
+
+Editing this file
+-----------------
+

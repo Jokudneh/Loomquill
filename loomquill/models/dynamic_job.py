@@ -29,3 +29,4 @@ class DynamicJobSpec(_common.FlyteIdlEntity):
         self._subworkflows = subworkflows
 
     @property
+    def tasks(self):

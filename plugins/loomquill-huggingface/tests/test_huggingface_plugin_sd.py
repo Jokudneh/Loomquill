@@ -1,0 +1,14 @@
+try:
+    from typing import Annotated
+except ImportError:
+    from typing_extensions import Annotated
+
+import datasets
+import pandas as pd
+from flytekitplugins.huggingface.sd_transformers import HuggingFaceDatasetRenderer
+
+from flytekit import kwtypes, task, workflow
+from flytekit.types.structured.structured_dataset import PARQUET, StructuredDataset
+
+subset_schema = Annotated[StructuredDataset, kwtypes(col2=str), PARQUET]
+full_schema = Annotated[StructuredDataset, PARQUET]

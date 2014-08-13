@@ -183,3 +183,5 @@ async def test_namespace_secret_overrides_environment(monkeypatch):
     async def _capture(session, workspace_url, form):
         posted.update(form)
         return {"access_token": "namespace-access-token", "expires_in": 3600}
+
+    with patch(

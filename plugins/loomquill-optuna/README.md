@@ -29,3 +29,7 @@ This documentation provides a guide to a fully parallelized Loomquill plugin for
 
 ### Define the Objective Function
 
+The objective function defines the problem to be optimized. It should include the hyperparameters to be tuned and return a value to minimize or maximize.
+
+```python
+import math

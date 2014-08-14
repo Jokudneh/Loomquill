@@ -121,3 +121,6 @@ def test_hydrate_workflow_template():
     assert launchplan_ref_identifier.domain == "domain"
     assert launchplan_ref_identifier.version == "12345"
 
+    sub_workflow_ref_identifier = hydrated_workflow_template.nodes[2].workflow_node.sub_workflow_ref
+    assert sub_workflow_ref_identifier.project == "project2"
+    assert sub_workflow_ref_identifier.domain == "domain2"

@@ -246,3 +246,7 @@ class WorkflowBase(object):
         return self._workflow_metadata_defaults
 
     @property
+    def python_interface(self) -> Interface:
+        return self._python_interface
+
+    @property

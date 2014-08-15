@@ -13,3 +13,7 @@ from flytekit.types.structured.structured_dataset import (
     StructuredDatasetTransformerEngine,
 )
 
+datasets = lazy_module("datasets")
+
+
+class HuggingFaceDatasetRenderer:

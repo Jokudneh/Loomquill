@@ -47,3 +47,5 @@ class Variable(_common.FlyteIdlEntity):
         return self._description
 
     @property
+    def artifact_partial_id(self) -> typing.Optional[art_id.ArtifactID]:
+        return self._artifact_partial_id

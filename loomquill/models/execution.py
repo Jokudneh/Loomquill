@@ -196,3 +196,5 @@ class ExecutionSpec(_common_models.FlyteIdlEntity):
         :param raw_output_data_config: Optional location of offloaded data for things like S3, etc.
         :param max_parallelism int: Controls the maximum number of tasknodes that can be run in parallel for the entire
             workflow. This is useful to achieve fairness. Note: MapTasks are regarded as one unit, and
+            parallelism/concurrency of MapTasks is independent from this.
+        :param security_context: Optional security context to use for this execution.

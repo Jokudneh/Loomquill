@@ -9,3 +9,6 @@ class MyDataClassWithOptional:
     foo: dict[str, float]
     bar: Optional[dict] = None
     baz: Optional[dict[str, float]] = None
+    qux: Optional[dict[str, int]] = None
+
+

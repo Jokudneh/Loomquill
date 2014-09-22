@@ -17,3 +17,6 @@ datasets = lazy_module("datasets")
 
 
 class HuggingFaceDatasetRenderer:
+    """
+    The datasets.Dataset printable representation is saved to HTML.
+    """

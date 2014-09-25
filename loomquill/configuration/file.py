@@ -88,3 +88,5 @@ class YamlConfigEntry(object):
         if not cfg:
             return None
         try:
+            v = cfg.get(self)
+            if _exists(v):

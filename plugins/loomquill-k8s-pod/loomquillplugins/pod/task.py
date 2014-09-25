@@ -21,3 +21,7 @@ k8s_models = lazy_module("kubernetes.client.models")
 def _sanitize_resource_name(resource: _task_models.Resources.ResourceEntry) -> str:
     return _core_task.Resources.ResourceName.Name(resource.name).lower().replace("_", "-")
 
+
+@dataclass
+class Pod(object):
+    """

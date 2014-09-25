@@ -26,3 +26,6 @@ def unarchive_file(local_path: str, to_dir: str):
     """
     archive_dir = os.path.join(to_dir, "_arch")
     shutil.unpack_archive(local_path, archive_dir)
+    # file gets uncompressed into to_dir/_arch/*.*
+    files = os.listdir(archive_dir)
+    if not files or len(files) == 0 or len(files) > 1:

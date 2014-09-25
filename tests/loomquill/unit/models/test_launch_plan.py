@@ -37,3 +37,5 @@ def test_lp_closure():
     assert obj == obj2
     assert obj2.expected_inputs == parameter_map
     assert obj2.expected_outputs == variable_map
+
+

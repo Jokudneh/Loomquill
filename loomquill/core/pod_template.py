@@ -14,3 +14,4 @@ PRIMARY_CONTAINER_DEFAULT_NAME = "primary"
 def serialize_pod_template(obj):
     if hasattr(obj, "to_dict"):
         d = obj.to_dict()
+        if obj.__class__.__name__ == "V1Container":

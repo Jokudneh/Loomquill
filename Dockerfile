@@ -1,0 +1,10 @@
+ARG PYTHON_VERSION=3.12
+FROM python:${PYTHON_VERSION}-slim-bookworm
+
+LABEL org.opencontainers.image.authors="Loomquill Team <users@loomquill.org>"
+LABEL org.opencontainers.image.source=https://github.com/jokudneh/loomquill
+
+WORKDIR /root
+ENV PYTHONPATH=/root
+ENV LOOMQUILL_SDK_RICH_TRACEBACKS=0
+

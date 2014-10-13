@@ -86,3 +86,7 @@ class InstanceTrackingMeta(type):
         return o
 
 
+class TrackedInstance(metaclass=InstanceTrackingMeta):
+    """
+    Please see the notes for the metaclass above first.
+

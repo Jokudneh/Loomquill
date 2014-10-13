@@ -36,3 +36,6 @@ def test_pytorch_task(serialization_settings: SerializationSettings):
         "workerReplicas": {"replicas": 10, "resources": {}},
         "masterReplicas": {"replicas": 1, "resources": {}},
     }
+    assert my_pytorch_task.resources.limits == Resources()
+    assert my_pytorch_task.resources.requests == Resources(cpu="1")
+    assert my_pytorch_task.task_type == "pytorch"

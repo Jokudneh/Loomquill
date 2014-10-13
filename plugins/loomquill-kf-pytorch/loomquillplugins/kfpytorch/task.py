@@ -155,3 +155,4 @@ class Elastic(object):
         increase_shared_mem (bool): [DEPRECATED] This argument is deprecated. Use `@task(shared_memory=...)` instead.
             PyTorch uses shared memory to share data between processes. If torch multiprocessing is used
             (e.g. for multi-processed data loaders) the default shared memory segment size that the container runs with might not be enough
+            and one might have to increase the shared memory size. This option configures the task's pod template to mount

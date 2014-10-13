@@ -8,3 +8,6 @@ def test_eq_filter():
 def test_neq_filter():
     assert filters.NotEqual("key", "value").to_flyte_idl() == "ne(key,value)"
 
+
+def test_gt_filter():
+    assert filters.GreaterThan("key", "value").to_flyte_idl() == "gt(key,value)"

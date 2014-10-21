@@ -41,3 +41,5 @@ because it runs *inside the EMR worker*, not the connector pod.
 Editing this file
 -----------------
 
+Treat this file as part of the connector's *runtime contract* with
+EMR workers, not as plugin internals:

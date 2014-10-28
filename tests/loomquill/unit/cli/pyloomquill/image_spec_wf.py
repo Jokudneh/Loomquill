@@ -1,0 +1,5 @@
+from flytekit import task, workflow
+from flytekit.image_spec import ImageSpec
+
+image_spec = ImageSpec(packages=["numpy", "pandas"], apt_packages=["git"], registry="", builder="test")
+

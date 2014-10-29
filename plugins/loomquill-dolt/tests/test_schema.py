@@ -19,3 +19,6 @@ def test_dolt_table_to_python_value(mocker):
     )
 
     assert lv.scalar.generic["config"]["branch_conf"] is None
+
+
+def test_dolt_table_to_literal(mocker):

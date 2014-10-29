@@ -24,3 +24,5 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
 
     def get_literal_type(self, t: Type[BaseModel]) -> LiteralType:
         schema = t.model_json_schema()
+        literal_type = {}
+

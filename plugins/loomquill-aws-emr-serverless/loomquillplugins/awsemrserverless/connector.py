@@ -201,3 +201,6 @@ class EMRServerlessConnector(AsyncConnectorBase):
         The S3 key is content-addressed (``entrypoint-<sha256[:12]>.py``)
         so each plugin version produces a unique, immutable artifact.
         Old hashes remain in the bucket indefinitely so in-flight EMR
+        jobs that captured an older URI in their job spec keep working
+        across connector upgrades.
+        """

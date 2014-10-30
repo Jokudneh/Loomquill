@@ -1,0 +1,77 @@
+import shlex
+
+import pytest
+from flytekitplugins.dbt.schema import BaseDBTInput, DBTFreshnessInput, DBTRunInput, DBTTestInput
+
+project_dir = "."
+profiles_dir = "profiles"
+profile_name = "development"
+
+
+class TestBaseDBTInput:
+    @pytest.mark.parametrize(
+        "task_input,expected",
+        [
+            (
+                BaseDBTInput(
+                    project_dir=project_dir,
+                    profiles_dir=profiles_dir,
+                    profile=profile_name,
+                ),
+                f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name}",
+            ),
+            (
+                BaseDBTInput(
+                    project_dir=project_dir,
+                    profiles_dir=profiles_dir,
+                    profile=profile_name,
+                    target="production",
+                ),
+                f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name} --target production",
+            ),
+            (
+                BaseDBTInput(
+                    project_dir=project_dir,
+                    profiles_dir=profiles_dir,
+                    profile=profile_name,
+                    flags={"vars": {"var1": "val1", "var2": 2}},
+                ),
+                f"""--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name} --vars '{{"var1": "val1", "var2": 2}}'""",
+            ),
+            (
+                BaseDBTInput(
+                    project_dir=project_dir,
+                    profiles_dir=profiles_dir,
+                    profile=profile_name,
+                    flags={"bool-flag": True},
+                ),
+                f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name} --bool-flag",
+            ),
+            (
+                BaseDBTInput(
+                    project_dir=project_dir,
+                    profiles_dir=profiles_dir,
+                    profile=profile_name,
+                    flags={"list-flag": ["a", "b", "c"]},
+                ),
+                f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name} --list-flag a b c",
+            ),
+        ],
+    )
+    def test_to_args(self, task_input, expected):
+        assert task_input.to_args() == shlex.split(expected)
+
+
+class TestDBRunTInput:
+    @pytest.mark.parametrize(
+        "task_input,expected",
+        [
+            (
+                DBTRunInput(
+                    project_dir=project_dir,
+                    profiles_dir=profiles_dir,
+                    profile=profile_name,
+                ),
+                f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name}",
+            ),
+            (

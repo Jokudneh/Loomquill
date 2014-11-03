@@ -11,3 +11,4 @@ pytest-timeout
 pytest-mock
 pytest-xdist
 mypy<1.7.0
+pre-commit

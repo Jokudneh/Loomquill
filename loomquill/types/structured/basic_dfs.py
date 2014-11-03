@@ -1,0 +1,51 @@
+import os
+import typing
+from pathlib import Path
+from typing import TypeVar
+
+from botocore.exceptions import NoCredentialsError
+from fsspec.core import split_protocol, strip_protocol
+from fsspec.utils import get_protocol
+
+from flytekit import FlyteContext, lazy_module, logger
+from flytekit.configuration import DataConfig
+from flytekit.core.data_persistence import get_fsspec_storage_options
+from flytekit.models import literals
+from flytekit.models.literals import StructuredDatasetMetadata
+from flytekit.models.types import StructuredDatasetType
+from flytekit.types.structured.structured_dataset import (
+    CSV,
+    PARQUET,
+    StructuredDataset,
+    StructuredDatasetDecoder,
+    StructuredDatasetEncoder,
+)
+
+if typing.TYPE_CHECKING:
+    import pandas as pd
+    import pyarrow as pa
+else:
+    pd = lazy_module("pandas")
+    pa = lazy_module("pyarrow")
+
+T = TypeVar("T")
+
+
+def get_pandas_storage_options(
+    uri: str, data_config: DataConfig, anonymous: bool = False
+) -> typing.Optional[typing.Dict]:
+    from pandas.io.common import is_fsspec_url
+
+    if is_fsspec_url(uri):
+        return get_fsspec_storage_options(protocol=get_protocol(uri), data_config=data_config, anonymous=anonymous)
+
+    # Pandas does not allow storage_options for non-fsspec paths e.g. local.
+    return None
+
+
+class PandasToCSVEncodingHandler(StructuredDatasetEncoder):
+    def __init__(self):
+        super().__init__(pd.DataFrame, None, CSV)
+
+    def encode(
+        self,

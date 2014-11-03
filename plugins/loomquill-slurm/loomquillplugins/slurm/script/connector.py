@@ -57,3 +57,6 @@ class SlurmScriptConnector(AsyncConnectorBase):
         outputs = {}
 
         # Retrieve task config
+        ssh_config = task_template.custom["ssh_config"]
+        batch_script_args = task_template.custom["batch_script_args"]
+        sbatch_config = task_template.custom["sbatch_config"]

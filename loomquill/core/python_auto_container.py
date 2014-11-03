@@ -136,3 +136,5 @@ class PythonAutoContainerTask(PythonTask[T], ABC, metaclass=FlyteTrackedABC):
             **kwargs,
         )
 
+        compilation_state = FlyteContextManager.current_context().compilation_state
+        if compilation_state and compilation_state.task_resolver:

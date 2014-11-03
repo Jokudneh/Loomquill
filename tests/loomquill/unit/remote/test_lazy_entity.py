@@ -23,3 +23,5 @@ dummy_task = FlyteTask(
 )
 
 
+def test_lazy_loading():
+    once = True

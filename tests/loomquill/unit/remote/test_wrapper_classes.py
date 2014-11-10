@@ -36,3 +36,7 @@ def test_wf_cond():
     def my_wf(a: int) -> int:
         d = conditional("test1").if_(a > 3).then(t1(a=a)).else_().then(my_sub_wf(a=a))
         return d
+
+    get_serializable(OrderedDict(), serialization_settings, my_wf)
+
+

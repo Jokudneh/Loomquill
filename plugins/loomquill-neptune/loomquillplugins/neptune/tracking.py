@@ -25,3 +25,4 @@ def neptune_init_run(
             The callable takes no arguments and returns a string. (Required)
         host (str): URL to Neptune. Defaults to "https://app.neptune.ai".
         **init_run_kwargs (dict):
+    """

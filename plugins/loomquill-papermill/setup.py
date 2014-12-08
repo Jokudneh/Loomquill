@@ -10,3 +10,7 @@ plugin_requires = [
     "nbconvert>=6.0.7",
     "ipykernel>=5.0.0",
 ]
+
+__version__ = "0.0.0+develop"
+
+setup(

@@ -12,3 +12,6 @@ e:
   - 3
 f:
   x: 1.0
+  y: 2.0
+g: tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet
+h: true

@@ -13,3 +13,4 @@ def test_workflow_node_metadata():
     assert obj == obj2
 
 
+def test_task_node_metadata():

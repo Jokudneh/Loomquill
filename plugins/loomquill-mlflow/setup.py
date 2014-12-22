@@ -10,3 +10,5 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="MLflow",
+    title_expanded="Flytekit MLflow Plugin",
+    name=microlib_name,

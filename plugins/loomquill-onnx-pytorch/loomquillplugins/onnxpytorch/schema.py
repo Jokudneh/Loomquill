@@ -1,0 +1,24 @@
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple, Type, Union
+
+from dataclasses_json import DataClassJsonMixin
+from typing_extensions import Annotated, get_args, get_origin
+
+from flytekit import FlyteContext, lazy_module
+from flytekit.core.type_engine import TypeEngine, TypeTransformer, TypeTransformerFailedError
+from flytekit.models.core.types import BlobType
+from flytekit.models.literals import Blob, BlobMetadata, Literal, Scalar
+from flytekit.models.types import LiteralType
+from flytekit.types.file import ONNXFile
+
+torch = lazy_module("torch")
+
+
+@dataclass
+class PyTorch2ONNXConfig(DataClassJsonMixin):
+    """
+    PyTorch2ONNXConfig is the config used during the pytorch to ONNX conversion.
+
+    Args:

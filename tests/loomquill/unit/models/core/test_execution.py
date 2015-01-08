@@ -7,3 +7,5 @@ def test_task_logs():
     obj = execution.TaskLog("uri", "name", execution.TaskLog.MessageFormat.CSV, datetime.timedelta(days=30))
     assert obj.message_format == execution.TaskLog.MessageFormat.CSV
     assert obj.uri == "uri"
+    assert obj.name == "name"
+    assert obj.ttl == datetime.timedelta(days=30)

@@ -34,3 +34,7 @@ class NamedEntityIdentifier(_common_models.FlyteIdlEntity):
 
     @property
     def project(self):
+        """
+        :rtype: Text
+        """
+        return self._project

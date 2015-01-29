@@ -40,3 +40,6 @@ class SageMakerHyperParameterTuningJobMetadata(ResourceMeta):
         return cloudpickle.dumps(self)
 
     @classmethod
+    def decode(cls, data: bytes) -> "SageMakerHyperParameterTuningJobMetadata":
+        return cloudpickle.loads(data)
+

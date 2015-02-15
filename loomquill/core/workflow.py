@@ -250,3 +250,7 @@ class WorkflowBase(object):
         return self._python_interface
 
     @property
+    def interface(self) -> _interface_models.TypedInterface:
+        return self._interface
+
+    @property

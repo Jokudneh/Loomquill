@@ -11,3 +11,7 @@ import rich_click as click
 @click.option(
     "--template",
     default="basic-template-imagespec",
+    help="template folder name to be used in the repo - https://github.com/flyteorg/flytekit-python-template.git",
+)
+@click.argument("project-name")
+def init(template, project_name):

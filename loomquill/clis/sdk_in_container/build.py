@@ -27,3 +27,7 @@ class BuildParams(RunLevelParams):
 
 
 def build_command(ctx: click.Context, entity: typing.Union[PythonFunctionWorkflow, PythonTask]):
+    """
+    Returns a function that is used to implement WorkflowCommand and build an image for flyte workflows.
+    """
+

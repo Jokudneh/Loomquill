@@ -1,0 +1,11 @@
+from setuptools import setup
+
+PLUGIN_NAME = "airflow"
+
+microlib_name = f"flytekitplugins-{PLUGIN_NAME}"
+
+plugin_requires = [
+    "apache-airflow<3.0.0",
+    "apache-airflow-providers-google<12.0.0",
+    "flytekit>1.10.7",
+    "flyteidl>1.10.7",

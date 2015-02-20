@@ -14,3 +14,5 @@ class MultiTypeEnum(str, Enum):
 class MySubConf:
     my_attr: Optional[Union[int, str]] = 1
     list_attr: List[int] = field(default_factory=list)
+
+

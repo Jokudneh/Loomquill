@@ -31,3 +31,4 @@ def build_command(ctx: click.Context, entity: typing.Union[PythonFunctionWorkflo
     Returns a function that is used to implement WorkflowCommand and build an image for flyte workflows.
     """
 
+    def _build(*args, **kwargs):

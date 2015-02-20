@@ -19,3 +19,7 @@ class SnowflakeConfig(object):
     """
     SnowflakeConfig should be used to configure a Snowflake Task.
     You can use the query below to retrieve all metadata for this config.
+
+    SELECT
+        CURRENT_USER() AS "User",
+        CONCAT(CURRENT_ORGANIZATION_NAME(), '-', CURRENT_ACCOUNT_NAME()) AS "Account",

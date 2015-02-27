@@ -26,3 +26,4 @@ class Scheduler:
 
     image: Optional[str] = None
     requests: Optional[Resources] = None
+    limits: Optional[Resources] = None

@@ -15,3 +15,5 @@ query_template = """
             where ds = '{{ .Inputs.ds }}'
         """
 
+
+def test_serialization():

@@ -19,3 +19,6 @@ def test_config_entry_file():
 
     c = ConfigEntry(LegacyConfigEntry("platform", "url2", str))  # Does not exist
     assert c.read(cfg) is None
+
+
+def test_config_entry_file_normal():

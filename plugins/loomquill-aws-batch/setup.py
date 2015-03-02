@@ -10,3 +10,5 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="AWS Batch",
+    title_expanded="Flytekit AWS Batch Plugin",
+    name=microlib_name,

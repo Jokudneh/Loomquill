@@ -1,0 +1,3 @@
+jaffle_shop:
+  target: dev
+  outputs:

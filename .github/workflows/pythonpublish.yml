@@ -1,0 +1,110 @@
+name: Publish Python Packages and Official Images
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine setuptools wheel
+      - name: Put version in environment
+        id: bump
+        run: |
+          # from 'refs/tags/v1.2.3' get 1.2.3
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        shell: bash
+      - name: Build and publish
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          python -m build
+          twine upload --verbose --skip-existing dist/*
+      - name: Autobump plugin version
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          VERSION=$VERSION make -C plugins update_all_versions
+        shell: bash
+      - name: Build all Plugins and publish
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          make -C plugins build_all_plugins
+          make -C plugins publish_all_plugins
+      - name: Sleep until pypi is available
+        id: pypiwait
+        run: |
+          # from 'refs/tags/v1.2.3 get 1.2.3' and make sure it's not an empty string
+          VERSION=$(echo $GITHUB_REF | sed 's|refs/tags/v||')
+          if [ -z "$VERSION" ]
+          then
+            echo "No tagged version found, exiting"
+            exit 1
+          fi
+          sleep 300
+          LINK="https://pypi.org/project/loomquillplugins-pod/${VERSION}/"
+          for i in {1..60}; do
+            result=$(curl -L -I -s -f ${LINK})
+            if [ $? -eq 0 ]; then
+              echo "Found pypi for $LINK"
+              exit 0
+            else
+              echo "Did not find - Retrying in 10 seconds..."
+              sleep 10
+            fi
+          done
+          exit 1
+        shell: bash
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
+
+  # Tell unionai/unionai-docs to regenerate the v1 API reference for this release.
+  # The docs' v1 line is generated from loomquill's docstrings and today only picks a
+  # release up through a daily poll, so a release can take ~24h to appear. This is the
+  # same signal jokudneh/loomquill-sdk sends for the v2 line.
+  #
+  # Auth: the "Unionai Docsy Bot" GitHub App is installed on unionai-docs only. This
+  # repo just holds its credentials as secrets and requests a token scoped to that one
+  # repo; nothing here grants access to this repository. Without the secrets the job
+  # warns and exits 0, and the docs' daily poll still catches the release, so this can
+  # never fail a publish.
+  notify-docs:
+    needs: [deploy]
+    if: always() && needs.deploy.result == 'success'
+    runs-on: ubuntu-latest
+    env:
+      DOCSY_BOT_APP_ID: ${{ secrets.DOCSY_BOT_APP_ID }}
+    steps:
+      - name: Mint docsy-bot App token for unionai-docs
+        id: app-token
+        if: ${{ env.DOCSY_BOT_APP_ID != '' }}
+        continue-on-error: true
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DOCSY_BOT_APP_ID }}
+          private-key: ${{ secrets.DOCSY_BOT_PRIVATE_KEY }}
+          owner: unionai
+          repositories: unionai-docs
+      - name: Send repository_dispatch to unionai/unionai-docs
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::warning title=docs regen signal skipped::docsy-bot App not configured (DOCSY_BOT_APP_ID / DOCSY_BOT_PRIVATE_KEY). The unionai-docs daily poll will pick this release up instead."
+            exit 0
+          fi

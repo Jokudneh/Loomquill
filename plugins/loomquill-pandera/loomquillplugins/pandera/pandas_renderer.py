@@ -61,3 +61,4 @@ class PandasReportRenderer:
             long_failure_cases.pivot(
                 index=["schema_context", "check", "index"], columns="column", values="failure_case"
             )
+            .apply(lambda s: s.to_dict(), axis="columns")

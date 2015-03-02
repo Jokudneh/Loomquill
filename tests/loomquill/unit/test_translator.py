@@ -62,3 +62,7 @@ def test_basics():
 
     @workflow
     def my_wf(a: int, b: str) -> (int, str):
+        x, y = t1(a=a)
+        d = t2(a=y, b=b)
+        return x, d
+

@@ -90,3 +90,7 @@ frozenlist==1.4.1
 fsspec==2024.9.0
     # via
     #   adlfs
+    #   loomquill
+    #   gcsfs
+    #   s3fs
+gcsfs==2024.9.0.post1

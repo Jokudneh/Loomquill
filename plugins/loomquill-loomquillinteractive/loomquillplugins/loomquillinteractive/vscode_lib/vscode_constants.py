@@ -1,0 +1,5 @@
+# This file has been moved to flytekit.interactive.vscode_lib.vscode_constants
+# Import flytekit.interactive module to keep backwards compatibility
+from flytekit.interactive.vscode_lib.vscode_constants import (  # noqa: F401
+    DEFAULT_CODE_SERVER_DIR_NAMES,
+    DEFAULT_CODE_SERVER_EXTENSIONS,

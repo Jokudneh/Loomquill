@@ -1,0 +1,4 @@
+admin:
+  # For GRPC endpoints you might want to use dns:///loomquill.myexample.com
+  endpoint: dns:///loomquill.mycorp.io
+  authType: Pkce

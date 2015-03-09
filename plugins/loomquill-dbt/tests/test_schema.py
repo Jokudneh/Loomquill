@@ -75,3 +75,6 @@ class TestDBRunTInput:
                 f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name}",
             ),
             (
+                DBTRunInput(
+                    project_dir=project_dir,
+                    profiles_dir=profiles_dir,

@@ -13,3 +13,7 @@ def create_recoverable_error_file() -> None:
     the string `FlyteRecoverableException` - which would not detect exceptions inheriting from
     `FlyteRecoverableException` - we create a file in the worker process to signal to the agent process
     that the exception is recoverable. The file is created in the directory where the default
+    torch elastic error file is written.
+
+    Raises:
+        ValueError: If the environment variable `TORCHELASTIC_ERROR_FILE` is not set.

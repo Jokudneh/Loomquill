@@ -26,3 +26,5 @@ def test_nim_secrets():
     nim_instance = NIM(
         image="nvcr.io/nim/meta/llama3-8b-instruct:1.0.0",
         secrets=secrets,
+    )
+

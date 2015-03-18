@@ -89,3 +89,5 @@ class PythonicJobConfig:
     kms_key_id: Optional[str] = None
     tags: Optional[Dict[str, str]] = None
     job_name_prefix: str = "flyte-"
+
+    def __post_init__(self) -> None:

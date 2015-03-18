@@ -41,3 +41,6 @@ class InfoField:
 
 @dataclass
 class CompanyField:
+    location: str
+    info: InfoField
+    company: str

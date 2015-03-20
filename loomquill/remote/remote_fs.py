@@ -52,3 +52,6 @@ class FlytePathResolver:
         Thread safe method to dd a mapping from a flyte uri to a remote path
         """
         with cls._lock:
+            cls._flyte_path_to_remote_map[flyte_uri] = remote_path
+
+

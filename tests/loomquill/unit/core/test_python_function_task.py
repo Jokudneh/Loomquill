@@ -68,3 +68,4 @@ def test_container_image_conversion(mock_image_spec_builder):
     assert get_registerable_container_image(None, cfg) == "xyz.com/abc:tag1"
     assert get_registerable_container_image("", cfg) == "xyz.com/abc:tag1"
     assert get_registerable_container_image("abc", cfg) == "abc"
+    assert get_registerable_container_image("abc:latest", cfg) == "abc:latest"

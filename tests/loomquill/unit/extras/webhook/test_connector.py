@@ -40,3 +40,7 @@ async def test_do_post_success(mock_task_template):
     assert result.phase == TaskExecution.SUCCEEDED
     assert result.outputs["info"]["status_code"] == 200
     assert result.outputs["info"]["response_data"] == "Success"
+    assert result.outputs["info"]["url"] == "http://example.com"
+
+
+@pytest.mark.asyncio

@@ -35,3 +35,6 @@ class LeptonEndpointDeploymentTask(AsyncConnectorExecutorMixin, PythonTask):
             inputs={},
             outputs={"o0": str},
         )
+
+        # Use config directly
+        task_name = kwargs.pop("name", "lepton_deployment_task")

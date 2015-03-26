@@ -18,3 +18,7 @@ from loomquillplugins.neptune import neptune_scale_run
 neptune_api_token = Secret(key="neptune_api_token", group="neptune_group")
 
 @task
+@neptune_scale_run(project="loomquill/project", secret=neptune_api_token)
+def neptune_task() -> bool:
+    ctx = current_context()
+    run = ctx.neptune_run

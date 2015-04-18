@@ -29,3 +29,7 @@ P = ParamSpec("P")
 @contextmanager
 def _selector_policy():
     original_policy = asyncio.get_event_loop_policy()
+    try:
+        if os.name == "nt" and hasattr(asyncio, "WindowsSelectorEventLoopPolicy"):
+            asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+

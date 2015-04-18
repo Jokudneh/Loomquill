@@ -40,3 +40,4 @@ def test_wf_cond():
     get_serializable(OrderedDict(), serialization_settings, my_wf)
 
 
+def test_wf_promote_subwf_lps():

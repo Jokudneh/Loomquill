@@ -74,3 +74,6 @@ class Node(object):
         self._flyte_entity = flyte_entity
         self._aliases: _workflow_model.Alias = None
         self._outputs = None
+        self._resources: typing.Optional[_resources_model] = None
+        self._extended_resources: typing.Optional[tasks_pb2.ExtendedResources] = None
+        self._container_image: typing.Optional[str] = None

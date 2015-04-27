@@ -10,3 +10,6 @@ def test_blob_dimensionality():
 
 def test_blob_type():
     o = _types.BlobType(
+        format="csv",
+        dimensionality=_types.BlobType.BlobDimensionality.SINGLE,
+    )

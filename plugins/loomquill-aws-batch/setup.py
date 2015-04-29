@@ -12,3 +12,5 @@ setup(
     title="AWS Batch",
     title_expanded="Flytekit AWS Batch Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",

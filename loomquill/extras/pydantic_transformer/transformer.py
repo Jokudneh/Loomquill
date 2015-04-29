@@ -26,3 +26,6 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
         schema = t.model_json_schema()
         literal_type = {}
 
+        for name, field_info in t.model_fields.items():
+            python_type = field_info.annotation
+            try:

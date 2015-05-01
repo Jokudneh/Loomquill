@@ -67,3 +67,4 @@ class EMRServerlessHandler:
         """Invoke a boto3 EMR Serverless client method in the thread-pool executor.
 
         This is the single chokepoint for all non-paginated boto3 API calls
+        (``method`` is the boto3 client method name and ``params`` are keyword

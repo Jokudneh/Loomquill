@@ -12,3 +12,6 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="whylogs",
+    title_expanded="Flytekit whylogs Plugin",
+    name=microlib_name,
+    version=__version__,

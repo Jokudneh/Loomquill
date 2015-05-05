@@ -16,3 +16,5 @@ class MySubConf:
     list_attr: List[int] = field(default_factory=list)
 
 
+@dataclass
+class MyConf:

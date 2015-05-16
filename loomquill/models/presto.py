@@ -12,3 +12,7 @@ from flytekit.models import common as _common
 
 class PrestoQuery(_common.FlyteIdlEntity):
     def __init__(self, routing_group=None, catalog=None, schema=None, statement=None):
+        """
+        Initializes a new PrestoQuery.
+
+        :param string routing_group:

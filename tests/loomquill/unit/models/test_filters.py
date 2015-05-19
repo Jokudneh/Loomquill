@@ -11,3 +11,7 @@ def test_neq_filter():
 
 def test_gt_filter():
     assert filters.GreaterThan("key", "value").to_flyte_idl() == "gt(key,value)"
+
+
+def test_gte_filter():
+    assert filters.GreaterThanOrEqual("key", "value").to_flyte_idl() == "gte(key,value)"

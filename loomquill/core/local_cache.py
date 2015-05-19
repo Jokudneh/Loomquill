@@ -1,0 +1,23 @@
+from typing import TYPE_CHECKING, Optional, Tuple
+
+from flyteidl.core.literals_pb2 import LiteralMap
+
+from flytekit import lazy_module
+from flytekit.models.literals import Literal, LiteralCollection
+from flytekit.models.literals import LiteralMap as ModelLiteralMap
+
+if TYPE_CHECKING:
+    from diskcache import Cache
+
+joblib = lazy_module("joblib")
+
+# Location on the filesystem where serialized objects will be stored
+# TODO: read from config
+CACHE_LOCATION = "~/.flyte/local-cache"
+
+
+def _recursive_hash_placement(literal: Literal) -> Literal:
+    # Base case, hash gets passed through always if set
+    if literal.hash is not None:
+        return Literal(hash=literal.hash)
+    elif literal.collection is not None:

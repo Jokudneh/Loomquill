@@ -114,3 +114,4 @@ def task(
                 PythonFunctionTask,
                 _annotated_launchplan.LaunchPlan,
                 _annotated_workflow.WorkflowBase,
+            ]

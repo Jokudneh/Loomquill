@@ -43,3 +43,6 @@ class SageMakerHyperParameterTuningJobMetadata(ResourceMeta):
     def decode(cls, data: bytes) -> "SageMakerHyperParameterTuningJobMetadata":
         return cloudpickle.loads(data)
 
+
+# HyperParameterTuningJobStatus -> Flyte phase.
+# - Stopping is "still in flight" (SageMaker is asking each child training job to stop

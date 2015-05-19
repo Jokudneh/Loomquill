@@ -17,3 +17,5 @@ def test_vllm_init_valid_params():
         hf_secret=hf_secrets,
         arg_dict=vllm_args,
         image='vllm/vllm-openai:my-tag',
+        cpu='10',
+        gpu='2',

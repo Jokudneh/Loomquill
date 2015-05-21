@@ -47,3 +47,7 @@ class SageMakerEndpointConfigTask(BotoTask):
     def __init__(
         self,
         name: str,
+        config: Dict[str, Any],
+        region: Optional[str] = None,
+        inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,

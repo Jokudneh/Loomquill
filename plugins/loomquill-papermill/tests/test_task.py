@@ -114,3 +114,6 @@ def test_notebook_task_complex():
     )
     h, w, x, out, render = nb.execute(h="blah", n=10, w=_get_nb_path("nb-multi"))
     assert h == "blah world!"
+    assert w is not None
+    assert x.x == 10
+    assert nb.python_interface.inputs == {"n": int, "h": str, "w": str}

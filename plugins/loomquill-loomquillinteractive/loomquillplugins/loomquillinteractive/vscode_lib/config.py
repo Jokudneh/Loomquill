@@ -9,3 +9,4 @@ from flytekit.interactive.vscode_lib.config import (  # noqa: F401
 
 # Extension URLs for additional extensions
 COPILOT_EXTENSION = (
+    "https://raw.githubusercontent.com/flyteorg/flytetools/master/flytekitplugins/flyin/GitHub.copilot-1.138.563.vsix"

@@ -5,3 +5,4 @@
 # Build:
 #   docker build --build-arg VERSION=<loomquill-version> \
 #       -t <registry>/emr-serverless-loomquill:<tag> .
+ARG EMR_BASE_IMAGE=public.ecr.aws/emr-serverless/spark/emr-7.0.0:latest

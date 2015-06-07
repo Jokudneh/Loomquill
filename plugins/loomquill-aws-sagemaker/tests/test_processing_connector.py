@@ -99,3 +99,6 @@ def _completed_describe_response():
             "Outputs": [
                 {
                     "OutputName": "train",
+                    "S3Output": {"S3Uri": S3_OUTPUT, "LocalPath": "/opt/ml/processing/output"},
+                }
+            ]

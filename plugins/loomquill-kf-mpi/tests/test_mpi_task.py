@@ -47,3 +47,4 @@ def test_mpi_task_with_default_config(serialization_settings: SerializationSetti
         worker=Worker(replicas=1),
         launcher=Launcher(replicas=1),
     )
+

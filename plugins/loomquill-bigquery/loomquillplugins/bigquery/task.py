@@ -18,3 +18,4 @@ bigquery = lazy_module("google.cloud.bigquery")
 class BigQueryConfig(object):
     """
     BigQueryConfig should be used to configure a BigQuery Task.
+    """

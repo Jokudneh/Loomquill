@@ -19,3 +19,4 @@ def substitute_types(t: typing.Type) -> typing.Type:
     """
     if hasattr(t, "__origin__"):
         # Only encode generic type and let appropriate transformer handle the rest
+        if t.__origin__ in [dict, typing.Dict]:

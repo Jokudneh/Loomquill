@@ -1,3 +1,4 @@
 # These classes are deprecated and will be removed in the future.
 from .base_connector import AsyncConnectorBase as AsyncAgentBase  # noqa: F401
 from .base_connector import AsyncConnectorExecutorMixin as AsyncAgentExecutorMixin  # noqa: F401
+from .base_connector import ConnectorBase as AgentBase  # noqa: F401

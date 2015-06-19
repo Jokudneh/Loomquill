@@ -12,3 +12,5 @@ from flytekit.types.structured.structured_dataset import PARQUET, StructuredData
 
 subset_schema = Annotated[StructuredDataset, kwtypes(col2=str), PARQUET]
 full_schema = Annotated[StructuredDataset, PARQUET]
+
+

@@ -19,3 +19,7 @@ def serialization_settings() -> SerializationSettings:
 
 
 def test_dask_task_with_default_config(serialization_settings: SerializationSettings):
+    task_config = Dask()
+
+    @task(task_config=task_config)
+    def dask_task():

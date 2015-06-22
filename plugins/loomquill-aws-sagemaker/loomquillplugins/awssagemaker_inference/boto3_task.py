@@ -14,3 +14,4 @@ class BotoConfig(object):
     service: str
     method: str
     config: Dict[str, Any]
+    region: Optional[str] = None

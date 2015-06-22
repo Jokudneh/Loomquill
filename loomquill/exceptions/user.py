@@ -46,3 +46,4 @@ class FlyteUserRuntimeException(_FlyteException):
         raise _FlyteException(f"error_code must be a str or int, got {type(code).__name__}")
 
 
+class FlyteTypeException(FlyteUserException, TypeError):

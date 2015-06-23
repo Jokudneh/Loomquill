@@ -647,3 +647,4 @@ class FlyteRemote(object):
         execution = FlyteWorkflowExecution.promote_from_model(
             self.client.get_execution(
                 WorkflowExecutionIdentifier(
+                    project or self.default_project,

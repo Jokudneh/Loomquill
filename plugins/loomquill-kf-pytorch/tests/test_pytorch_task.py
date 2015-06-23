@@ -39,3 +39,5 @@ def test_pytorch_task(serialization_settings: SerializationSettings):
     assert my_pytorch_task.resources.limits == Resources()
     assert my_pytorch_task.resources.requests == Resources(cpu="1")
     assert my_pytorch_task.task_type == "pytorch"
+    assert my_pytorch_task.task_type_version == 1
+

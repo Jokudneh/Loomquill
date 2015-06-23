@@ -23,3 +23,7 @@ class SnowflakeConfig(object):
     SELECT
         CURRENT_USER() AS "User",
         CONCAT(CURRENT_ORGANIZATION_NAME(), '-', CURRENT_ACCOUNT_NAME()) AS "Account",
+        CURRENT_DATABASE() AS "Database",
+        CURRENT_SCHEMA() AS "Schema",
+        CURRENT_WAREHOUSE() AS "Warehouse";
+    """

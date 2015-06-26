@@ -64,3 +64,5 @@ Scheduling
 ##### Reference Entities
 
 - get_reference_entity
+- LaunchPlanReference
+- TaskReference

@@ -68,3 +68,4 @@ def test_convert_requests(resource_dict: Dict[str, str], expected_resource_name:
         ({"gpu": "1"}, _ResourceName.GPU),
         ({"ephemeral_storage": "123Mb"}, _ResourceName.EPHEMERAL_STORAGE),
     ),
+    ids=("CPU", "MEMORY", "GPU", "EPHEMERAL_STORAGE"),

@@ -13,3 +13,5 @@ from flytekit.remote import FlyteRemote
 def test_resolve_backfill_window():
     dt = datetime(2022, 12, 1, 8)
     window = timedelta(days=10)
+    assert resolve_backfill_window(None, dt + window, window) == (dt, dt + window)
+    assert resolve_backfill_window(dt, None, window) == (dt, dt + window)

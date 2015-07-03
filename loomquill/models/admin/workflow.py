@@ -30,3 +30,5 @@ class WorkflowSpec(_common.FlyteIdlEntity):
         """
         :rtype: flytekit.models.core.workflow.WorkflowTemplate
         """
+        return self._template
+

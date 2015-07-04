@@ -156,3 +156,6 @@ class Elastic(object):
             PyTorch uses shared memory to share data between processes. If torch multiprocessing is used
             (e.g. for multi-processed data loaders) the default shared memory segment size that the container runs with might not be enough
             and one might have to increase the shared memory size. This option configures the task's pod template to mount
+            an `emptyDir` volume with medium `Memory` to to `/dev/shm`.
+            The shared memory size upper limit is the sum of the memory limits of the containers in the pod.
+        run_policy: Configuration for the run policy.

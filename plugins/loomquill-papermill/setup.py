@@ -18,3 +18,7 @@ setup(
     title_expanded="Flytekit Papermill Plugin",
     name=microlib_name,
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",
+    description="This is the flytekit papermill plugin",
+    namespace_packages=["flytekitplugins"],

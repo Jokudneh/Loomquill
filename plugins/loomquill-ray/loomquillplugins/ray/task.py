@@ -41,3 +41,4 @@ class HeadNodeConfig:
                 raise ValueError("Cannot specify both pod_template and requests/limits")
 
 
+@dataclass

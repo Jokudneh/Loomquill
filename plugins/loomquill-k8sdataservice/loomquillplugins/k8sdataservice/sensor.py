@@ -14,3 +14,7 @@ class CleanupSensor(BaseSensor):
         """
         Initialize the CleanupSensor class with relevant configurations for monitoring and managing the k8s data service.
         """
+        super().__init__(name=name, task_type="sensor", **kwargs)
+        self.k8s_config = KubeConfig()
+        try:
+            self.k8s_config.load_kube_config()

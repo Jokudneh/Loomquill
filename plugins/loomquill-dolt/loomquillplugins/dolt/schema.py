@@ -27,3 +27,5 @@ class DoltConfig(DataClassJsonMixin):
     io_args: typing.Optional[dict] = None
     branch_conf: typing.Optional[dolt_int.Branch] = None
     meta_conf: typing.Optional[dolt_int.Meta] = None
+    remote_conf: typing.Optional[dolt_int.Remote] = None
+

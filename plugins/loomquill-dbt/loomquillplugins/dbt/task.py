@@ -59,3 +59,4 @@ class DBTRun(PythonInstanceTask):
             dbt_run_task = DBTRun(name="test-task")
 
             @workflow
+            def my_workflow() -> DBTRunOutput:

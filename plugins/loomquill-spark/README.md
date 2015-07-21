@@ -22,3 +22,7 @@ OAuth machine-to-machine (M2M) authentication can be enabled on the connector:
 
 ```yaml
 env:
+  - name: LOOMQUILL_DATABRICKS_AUTH_TYPE
+    value: oauth_m2m
+  - name: DATABRICKS_CLIENT_ID
+    value: "<service-principal-client-id>"

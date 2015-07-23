@@ -11,3 +11,6 @@ _GRPC_DEADLINE_SECONDS: contextvars.ContextVar[typing.Optional[float]] = context
 )
 
 
+def get_scoped_grpc_deadline() -> typing.Optional[float]:
+    return _GRPC_DEADLINE_SECONDS.get()
+

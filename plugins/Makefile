@@ -7,3 +7,5 @@ build_all_plugins:
 	./run_all_plugins.sh python setup.py sdist bdist_wheel
 
 .PHONY: publish_all_plugins
+publish_all_plugins:
+	twine upload --verbose --skip-existing */dist/*

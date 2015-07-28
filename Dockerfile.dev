@@ -1,0 +1,14 @@
+# This Dockerfile is here to help with end-to-end testing
+# From flytekit
+# $ docker build -f Dockerfile.dev --build-arg PYTHON_VERSION=3.10 -t localhost:30000/flytekittest:someversion .
+# $ docker push localhost:30000/flytekittest:someversion
+# From your test user code
+# $ pyflyte run --image localhost:30000/flytekittest:someversion
+
+ARG PYTHON_VERSION=3.12
+FROM python:${PYTHON_VERSION}-slim-bookworm
+
+LABEL org.opencontainers.image.authors="Flyte Team <users@flyte.org>"
+LABEL org.opencontainers.image.source=https://github.com/flyteorg/flytekit
+
+WORKDIR /root

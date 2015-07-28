@@ -90,3 +90,7 @@ class YamlConfigEntry(object):
         try:
             v = cfg.get(self)
             if _exists(v):
+                return transform(v) if transform else v
+        except Exception:
+            ...
+

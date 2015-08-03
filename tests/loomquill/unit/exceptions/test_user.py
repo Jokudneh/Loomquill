@@ -26,3 +26,6 @@ def test_flyte_user_runtime_exception():
 
 def test_flyte_type_exception():
     try:
+        base_exn = Exception("Types need to be right!!!")
+        raise user.FlyteTypeException(
+            "int", "float", received_value=1, additional_msg="That was a bad idea!"

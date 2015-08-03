@@ -1,0 +1,115 @@
+loomquill/clients/auth/auth_client.py
+    DOC301: Class `AuthorizationClient`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/clients/auth/authenticator.py
+    DOC301: Class `PKCEAuthenticator`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/clients/raw.py
+    DOC301: Class `RawSynchronousLoomquillClient`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/configuration/__init__.py
+    DOC605: Class `Image`: Attribute names match, but type hints in these attributes do not match: tag, digest  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC101: Function `_parse_image_identifier`: Docstring contains fewer arguments than in function signature.
+    DOC103: Function `_parse_image_identifier`: Docstring arguments are different from function arguments. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Arguments in the function signature but not in the docstring: [image_identifier: str].
+    DOC203: Function `_parse_image_identifier` return type(s) in docstring not consistent with the return annotation. Return annotation types: ['typing.Tuple[str, Optional[str], Optional[str]]']; docstring return section types: ['Tuple[str, str, str]']
+    DOC605: Class `ImageConfig`: Attribute names match, but type hints in these attributes do not match: images  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC603: Class `SerializationSettings`: Class docstring attributes are different from actual class attributes. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Attributes in the class definition but not in the docstring: [git_repo: Optional[str]]. Arguments in the docstring but not in the actual class attributes: [entrypoint_settings: Optional[EntrypointSettings]]. (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+--------------------
+loomquill/configuration/file.py
+    DOC601: Class `LegacyConfigEntry`: Class docstring contains fewer class attributes than actual class attributes.  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC603: Class `LegacyConfigEntry`: Class docstring attributes are different from actual class attributes. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Attributes in the class definition but not in the docstring: [option: str, section: str, type_: typing.Type]. (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC601: Class `YamlConfigEntry`: Class docstring contains fewer class attributes than actual class attributes.  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC603: Class `YamlConfigEntry`: Class docstring attributes are different from actual class attributes. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Attributes in the class definition but not in the docstring: [config_value_type: typing.Type, switch: str]. (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC301: Class `ConfigFile`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/array_node.py
+    DOC301: Class `ArrayNode`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/array_node_map_task.py
+    DOC301: Class `ArrayNodeMapTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/artifact.py
+    DOC301: Class `Artifact`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/base_sql_task.py
+    DOC301: Class `SQLTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/base_task.py
+    DOC301: Class `PythonTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC001: Function/method `post_execute`: Potential formatting errors in docstring. Error message: Expected a colon in 'rval is returned value from call to execute'. (Note: DOC001 could trigger other unrelated violations under this function/method too. Please fix the docstring formatting first.)
+    DOC101: Method `PythonTask.post_execute`: Docstring contains fewer arguments than in function signature.
+    DOC103: Method `PythonTask.post_execute`: Docstring arguments are different from function arguments. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Arguments in the function signature but not in the docstring: [rval: Any, user_params: Optional[ExecutionParameters]].
+    DOC201: Method `PythonTask.post_execute` does not have a return section in docstring
+    DOC203: Method `PythonTask.post_execute` return type(s) in docstring not consistent with the return annotation. Return annotation has 1 type(s); docstring return section has 0 type(s).
+--------------------
+loomquill/core/checkpointer.py
+    DOC109: Method `Checkpoint.save`: The option `--arg-type-hints-in-docstring` is `True` but there are no type hints in the docstring arg list
+    DOC110: Method `Checkpoint.save`: The option `--arg-type-hints-in-docstring` is `True` but not all args in the docstring arg list have type hints
+    DOC105: Method `Checkpoint.save`: Argument names match, but type hints in these args do not match: cp
+    DOC501: Method `Checkpoint.save` has "raise" statements, but the docstring does not have a "Raises" section
+    DOC503: Method `Checkpoint.save` exceptions in the "Raises" section in the docstring do not match those in the function body. Raised exceptions in the docstring: []. Raised exceptions in the body: ['NotImplementedError'].
+    DOC301: Class `SyncCheckpoint`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/container_task.py
+    DOC001: Function/method `_prepare_command_and_volumes`: Potential formatting errors in docstring. Error message: No specification for "Parameters": "" (Note: DOC001 could trigger other unrelated violations under this function/method too. Please fix the docstring formatting first.)
+    DOC101: Method `ContainerTask._prepare_command_and_volumes`: Docstring contains fewer arguments than in function signature.
+    DOC103: Method `ContainerTask._prepare_command_and_volumes`: Docstring arguments are different from function arguments. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Arguments in the function signature but not in the docstring: [**kwargs: , cmd_and_args: List[str]].
+    DOC201: Method `ContainerTask._prepare_command_and_volumes` does not have a return section in docstring
+    DOC203: Method `ContainerTask._prepare_command_and_volumes` return type(s) in docstring not consistent with the return annotation. Return annotation has 1 type(s); docstring return section has 0 type(s).
+--------------------
+loomquill/core/context_manager.py
+    DOC301: Class `ExecutionParameters`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC605: Class `CompilationState`: Attribute names match, but type hints in these attributes do not match: nodes  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC603: Class `ExecutionState`: Class docstring attributes are different from actual class attributes. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Attributes in the class definition but not in the docstring: [branch_eval_mode: Optional[BranchEvalMode], user_space_params: Optional[ExecutionParameters]]. Arguments in the docstring but not in the actual class attributes: [branch_eval_mode Optional[BranchEvalMode]: , user_space_params Optional[ExecutionParameters]: ]. (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC101: Method `ExecutionState.__init__`: Docstring contains fewer arguments than in function signature.
+    DOC103: Method `ExecutionState.__init__`: Docstring arguments are different from function arguments. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Arguments in the function signature but not in the docstring: [branch_eval_mode: Optional[BranchEvalMode], engine_dir: Optional[Union[os.PathLike, str]], mode: Optional[ExecutionState.Mode], user_space_params: Optional[ExecutionParameters], working_dir: Union[os.PathLike, str]].
+    DOC501: Method `ExecutionState.__init__` has "raise" statements, but the docstring does not have a "Raises" section
+    DOC503: Method `ExecutionState.__init__` exceptions in the "Raises" section in the docstring do not match those in the function body. Raised exceptions in the docstring: []. Raised exceptions in the body: ['ValueError'].
+    DOC603: Class `OutputMetadataTracker`: Class docstring attributes are different from actual class attributes. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Attributes in the class definition but not in the docstring: [output_metadata: typing.Dict[typing.Any, OutputMetadata]]. Arguments in the docstring but not in the actual class attributes: [output_metadata Optional[TaskOutputMetadata]: ]. (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+--------------------
+loomquill/core/data_persistence.py
+    DOC301: Class `FileAccessProvider`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/interface.py
+    DOC301: Class `Interface`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/legacy_map_task.py
+    DOC301: Class `MapPythonTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/mock_stats.py
+    DOC301: Class `MockStats`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `_Timer`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/notification.py
+    DOC301: Class `Notification`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `PagerDuty`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `Email`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `Slack`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/options.py
+    DOC601: Class `Options`: Class docstring contains fewer class attributes than actual class attributes.  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC603: Class `Options`: Class docstring attributes are different from actual class attributes. (Or could be other formatting issues: https://jsh9.github.io/pydoclint/violation_codes.html#notes-on-doc103 ). Attributes in the class definition but not in the docstring: [annotations: typing.Optional[common_models.Annotations], disable_notifications: typing.Optional[bool], labels: typing.Optional[common_models.Labels], max_parallelism: typing.Optional[int], notifications: typing.Optional[typing.List[common_models.Notification]], overwrite_cache: typing.Optional[bool], raw_output_data_config: typing.Optional[common_models.RawOutputDataConfig], security_context: typing.Optional[security.SecurityContext]]. (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+--------------------
+loomquill/core/promise.py
+    DOC301: Class `NodeOutput`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/python_auto_container.py
+    DOC301: Class `PythonAutoContainerTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC605: Class `PickledEntityMetadata`: Attribute names match, but type hints in these attributes do not match: python_version  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+    DOC605: Class `PickledEntity`: Attribute names match, but type hints in these attributes do not match: metadata, entities  (Please read https://jsh9.github.io/pydoclint/checking_class_attributes.html on how to correctly document class attributes.)
+--------------------
+loomquill/core/python_customized_container_task.py
+    DOC301: Class `PythonCustomizedContainerTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/python_function_task.py
+    DOC301: Class `PythonInstanceTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `PythonFunctionTask`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/reference_entity.py
+    DOC301: Class `ReferenceTemplate`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `ReferenceSpec`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------
+loomquill/core/schedule.py
+    DOC301: Class `CronSchedule`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `FixedRate`: __init__() should not have a docstring; please combine it with the docstring of the class
+    DOC301: Class `OnSchedule`: __init__() should not have a docstring; please combine it with the docstring of the class

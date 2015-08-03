@@ -52,3 +52,5 @@ class SparkJob(_common.FlyteIdlEntity):
         self._databricks_instance = databricks_instance
         self._driver_pod = driver_pod
         self._executor_pod = executor_pod
+
+    def with_overrides(

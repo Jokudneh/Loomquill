@@ -17,3 +17,7 @@ class _ClientCallDetails(
     """
 
     pass
+
+
+class AuthUnaryInterceptor(grpc.UnaryUnaryClientInterceptor, grpc.UnaryStreamClientInterceptor):
+    """

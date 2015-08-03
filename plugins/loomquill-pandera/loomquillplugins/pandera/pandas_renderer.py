@@ -62,3 +62,5 @@ class PandasReportRenderer:
                 index=["schema_context", "check", "index"], columns="column", values="failure_case"
             )
             .apply(lambda s: s.to_dict(), axis="columns")
+            .rename("failure_case")
+            .reset_index(["index", "check"])

@@ -6,3 +6,5 @@ def test_long_description():
     icon_link = "http://icon"
     obj = Description(value=value, icon_link=icon_link)
     assert Description.from_flyte_idl(obj.to_flyte_idl()) == obj
+    assert obj.value == value
+    assert obj.icon_link == icon_link

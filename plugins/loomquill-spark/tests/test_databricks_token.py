@@ -176,3 +176,5 @@ class TestGetSecretFromK8s:
         mock_secret = MagicMock()
         mock_secret.data = {"other_key": base64.b64encode(b"something").decode()}
 
+        with patch("kubernetes.client.CoreV1Api") as mock_api_cls, patch("kubernetes.config.load_incluster_config"):
+            mock_api_cls.return_value.read_namespaced_secret.return_value = mock_secret

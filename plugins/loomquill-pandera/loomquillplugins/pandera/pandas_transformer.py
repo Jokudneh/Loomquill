@@ -29,3 +29,6 @@ class PanderaPandasTransformer(TypeTransformer[pandera.typing.DataFrame]):
     _VALIDATION_MEMO = set()
 
     def __init__(self):
+        super().__init__("Pandera Transformer", pandera.typing.DataFrame)  # type: ignore
+        self._sd_transformer = StructuredDatasetTransformerEngine()
+

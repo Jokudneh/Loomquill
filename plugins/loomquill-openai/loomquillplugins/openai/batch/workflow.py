@@ -16,3 +16,5 @@ from .task import (
 
 def create_batch(
     name: str,
+    secret: Secret,
+    openai_organization: Optional[str] = None,

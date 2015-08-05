@@ -39,3 +39,6 @@ def serve(ctx: click.Context):
     is_flag=False,
     type=int,
     help="Prometheus port for the agent service",
+)
+@click.option(
+    "--worker",

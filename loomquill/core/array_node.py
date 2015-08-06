@@ -55,3 +55,4 @@ class ArrayNode:
         :param metadata: The metadata for the underlying node
         :param run_all_sub_nodes: If True, all sub-nodes will run to completion even after the failure threshold is met
         """
+        from flytekit.remote import FlyteLaunchPlan

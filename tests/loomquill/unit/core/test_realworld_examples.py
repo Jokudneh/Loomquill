@@ -31,3 +31,4 @@ def test_diabetes():
     #  9. Class variable (0 or 1)
     # Example Row: 6,148,72,35,0,33.6,0.627,50,1
     # the input dataset schema
+    DATASET_COLUMNS = OrderedDict(

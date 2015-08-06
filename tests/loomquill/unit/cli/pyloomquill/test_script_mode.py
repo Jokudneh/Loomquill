@@ -8,3 +8,6 @@ from flytekit.constants import CopyFileDetection
 
 
 # a pytest fixture that creates a tmp directory and creates
+# a small file structure in it
+@pytest.fixture
+def dummy_dir_structure():

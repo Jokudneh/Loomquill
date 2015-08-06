@@ -29,3 +29,5 @@ if sys.version_info < (3, 10):
 else:
     from importlib.metadata import entry_points
 
+from flytekit import CachePolicy
+from flytekit.configuration import Config, get_config_file

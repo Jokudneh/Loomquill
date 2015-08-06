@@ -16,3 +16,4 @@ def test_sensor_task():
     assert sensor.task_type == "sensor"
     settings = SerializationSettings(
         project="project",
+        domain="domain",

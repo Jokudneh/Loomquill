@@ -25,3 +25,6 @@ def test_processing_job_task_interface_and_custom():
         name="preprocess",
         config={
             "ProcessingJobName": "prep-{idempotence_token}",
+            "AppSpecification": {
+                "ImageUri": "{images.processing_image}",
+                "ContainerEntrypoint": ["python3", "/opt/ml/processing/preprocess.py"],

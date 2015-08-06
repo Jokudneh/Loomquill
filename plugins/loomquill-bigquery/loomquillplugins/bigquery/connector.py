@@ -23,3 +23,7 @@ pythonTypeToBigQueryType: Dict[type, str] = {
     list: "ARRAY",
     bool: "BOOL",
     bytes: "BYTES",
+    datetime.datetime: "DATETIME",
+    float: "FLOAT64",
+    int: "INT64",
+    str: "STRING",

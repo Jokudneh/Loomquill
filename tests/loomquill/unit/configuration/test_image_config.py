@@ -22,3 +22,7 @@ from flytekit.core.constants import FLYTE_INTERNAL_IMAGE_ENV_VAR
 def test_defaults(python_version_enum, expected_image_string):
     assert DefaultImages.find_image_for(python_version_enum) == expected_image_string
 
+
+@pytest.mark.parametrize(
+    "python_version_enum, flytekit_version, expected_image_string",
+    [

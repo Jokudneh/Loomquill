@@ -1056,3 +1056,6 @@ def test_optional_flytefile_in_dataclass(mock_upload_dir):
         assert o.g["a"].remote_path == ot.g["a"].remote_source
         assert o.g_prime == {"a": None}
         assert o.h.remote_path == ot.h.remote_source
+        assert ot.h_prime is None
+        assert o.i == ot.i
+        assert o.i_prime == A(a=99)

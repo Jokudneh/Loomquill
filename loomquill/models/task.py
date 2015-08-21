@@ -325,3 +325,6 @@ class TaskMetadata(_common.FlyteIdlEntity):
     def k8s_object_metadata(self) -> typing.Optional["K8sObjectMetadata"]:
         """
         Kubernetes metadata for the task.
+        :rtype: K8sObjectMetadata
+        """
+        return self._k8s_object_metadata

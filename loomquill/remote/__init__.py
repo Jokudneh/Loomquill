@@ -12,3 +12,6 @@ FlyteRemote(config=Config(....))
 Or if you need to specify a custom cert chain
 (options and compression are also respected keyword arguments)
 ```python
+FlyteRemote(private_key=your_private_key_bytes, root_certificates=..., certificate_chain=...)
+
+

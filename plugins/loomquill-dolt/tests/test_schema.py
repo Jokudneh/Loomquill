@@ -22,3 +22,4 @@ def test_dolt_table_to_python_value(mocker):
 
 
 def test_dolt_table_to_literal(mocker):
+    df = pandas.DataFrame()

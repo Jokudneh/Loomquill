@@ -16,3 +16,4 @@ class PrestoQuery(_common.FlyteIdlEntity):
         Initializes a new PrestoQuery.
 
         :param string routing_group:
+        :param string catalog:

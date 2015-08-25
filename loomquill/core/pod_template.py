@@ -17,3 +17,4 @@ def serialize_pod_template(obj):
         if obj.__class__.__name__ == "V1Container":
             image = getattr(obj, "image", None)
             if hasattr(image, "image_name"):
+                d["image"] = image.image_name()

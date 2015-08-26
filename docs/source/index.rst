@@ -28,3 +28,7 @@ Installation
 For developer environment setup instructions, see the :ref:`contributor guide <contributing>`.
 
 
+Quickstart
+==========
+
+.. code-block:: python

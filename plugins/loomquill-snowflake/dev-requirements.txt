@@ -4,3 +4,4 @@
 #
 #    pip-compile dev-requirements.in
 #
+exceptiongroup==1.1.3

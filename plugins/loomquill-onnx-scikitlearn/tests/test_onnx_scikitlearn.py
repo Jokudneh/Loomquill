@@ -26,3 +26,4 @@ def test_onnx_scikitlearn_simple():
                 Annotated[
                     ScikitLearn2ONNX,
                     ScikitLearn2ONNXConfig(
+                        initial_types=[("float_input", FloatTensorType([None, 4]))],

@@ -18,3 +18,6 @@ class CleanupSensor(BaseSensor):
         self.k8s_config = KubeConfig()
         try:
             self.k8s_config.load_kube_config()
+        except kubernetes.config.ConfigException as e:
+            logger.error(f"Failed to load kubernetes config: {e}")
+            raise

@@ -33,3 +33,4 @@ def _selector_policy():
         if os.name == "nt" and hasattr(asyncio, "WindowsSelectorEventLoopPolicy"):
             asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+        yield

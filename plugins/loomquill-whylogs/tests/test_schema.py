@@ -13,3 +13,6 @@ from flytekit.core.context_manager import FlyteContextManager
 @task
 def whylogs_profiling() -> DatasetProfileView:
     df = pd.DataFrame({"a": [1, 2, 3, 4]})
+    result = why.log(pandas=df)
+    return result.view()
+

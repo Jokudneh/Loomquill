@@ -45,3 +45,7 @@ class ModelInferenceTemplate:
 
         self._pod_template = PodTemplate()
 
+        if env and not isinstance(env, dict):
+            raise ValueError("env must be a dict.")
+
+        self._pod_template.pod_spec = V1PodSpec(

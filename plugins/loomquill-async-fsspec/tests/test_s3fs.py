@@ -55,3 +55,6 @@ async def test_put_file_multipart_upload(
         elif args[0] == "upload_part":
             part_number = kwargs["PartNumber"]
             return {"ETag": f"{mock_ETag}{part_number}"}
+        elif args[0] == "complete_multipart_upload":
+            return None
+

@@ -3,3 +3,4 @@
 from flytekit.interactive.vscode_lib.vscode_constants import (  # noqa: F401
     DEFAULT_CODE_SERVER_DIR_NAMES,
     DEFAULT_CODE_SERVER_EXTENSIONS,
+    DEFAULT_CODE_SERVER_REMOTE_PATHS,

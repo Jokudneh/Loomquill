@@ -60,3 +60,6 @@ from tests.test_objects import TEST_CFG, MultiTypeEnum, MyConf, MySubConf, Speci
 )
 def test_cfg_roundtrip(obj: Any) -> None:
     """Test casting DictConfig object to flyte literal and back."""
+
+    ctx = FlyteContext.current_context()
+    expected = TypeEngine.to_literal_type(type(obj))

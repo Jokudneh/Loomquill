@@ -42,3 +42,6 @@ class BaseDBTInput(DataClassJsonMixin):
 
         Returns
         -------
+        List[str]
+            List of arguments.
+        """

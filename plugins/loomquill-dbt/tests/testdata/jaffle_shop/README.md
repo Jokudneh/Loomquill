@@ -19,3 +19,7 @@ What this repo _is not_:
 
 ### What's in this repo?
 
+This repo contains [seeds](https://docs.getdbt.com/docs/building-a-dbt-project/seeds) that includes some (fake) raw data from a fictional app.
+
+The raw data consists of customers, orders, and payments, with the following entity-relationship diagram:
+

@@ -41,3 +41,7 @@ def test_pytorch_task(serialization_settings: SerializationSettings):
     assert my_pytorch_task.task_type == "pytorch"
     assert my_pytorch_task.task_type_version == 1
 
+
+def test_pytorch_task_with_default_config(serialization_settings: SerializationSettings):
+    task_config = PyTorch(worker=Worker(replicas=1))
+

@@ -24,3 +24,6 @@ class State(Enum):
     Running = ["in_progress", "finalizing", "validating"]
     Success = ["completed"]
     Failed = ["failed", "cancelled", "cancelling", "expired"]
+
+    @classmethod
+    def key_by_value(cls, value) -> str:

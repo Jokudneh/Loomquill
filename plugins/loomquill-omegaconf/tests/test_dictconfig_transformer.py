@@ -25,3 +25,7 @@ from flytekit import FlyteContext
         (
             OmegaConf.create({1: "value1", "key2": 123}),
             True,
+            "cannot be flattened as it contains non-string keys or keys containing dots",
+        ),
+    ],
+)

@@ -28,3 +28,7 @@ def test_processing_job_task_interface_and_custom():
             "AppSpecification": {
                 "ImageUri": "{images.processing_image}",
                 "ContainerEntrypoint": ["python3", "/opt/ml/processing/preprocess.py"],
+            },
+            "RoleArn": "{inputs.execution_role_arn}",
+            "ProcessingResources": {
+                "ClusterConfig": {

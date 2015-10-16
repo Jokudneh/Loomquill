@@ -17,3 +17,4 @@ def test_typed_schema():
     assert s.columns() == {"x": int, "y": float}
 
 
+def test_assert_type():

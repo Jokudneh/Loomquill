@@ -23,3 +23,7 @@ class Scheduler(common.FlyteIdlEntity):
         """
         :return: The optional image for the scheduler pod
         """
+        return self._image
+
+    @property
+    def resources(self) -> Optional[task.Resources]:

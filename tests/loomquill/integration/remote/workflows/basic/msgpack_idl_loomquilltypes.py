@@ -7,3 +7,5 @@ from flytekit.types.structured import StructuredDataset
 from flytekit.types.directory import FlyteDirectory
 from flytekit import task, workflow, ImageSpec
 import datetime
+from enum import Enum
+import pandas as pd

@@ -7,3 +7,5 @@ class Domain(_common.FlyteIdlEntity):
     """
     Domains are fixed and unique at the global level, and provide an abstraction to isolate resources and feature configuration for different deployment environments.
 
+    :param Text id: A globally unique identifier associated with this domain.
+    :param Text name: A human-readable name for this domain.

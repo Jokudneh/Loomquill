@@ -30,3 +30,7 @@ class ScikitLearn2ONNXConfig(DataClassJsonMixin):
       doc_string: A string attached onto the produced ONNX model.
       target_opset: The ONNX opset number.
       custom_conversion_functions: A dictionary for specifying the user customized conversion function.
+      custom_shape_calculators: A dictionary for specifying the user customized shape calculator.
+      custom_parsers: Parsers determine which outputs are expected for which particular task.
+      options: Specific options given to converters.
+      intermediate: If True, the function returns the converted model and the instance of Topology used, else, it returns the converted model.

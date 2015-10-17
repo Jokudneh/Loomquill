@@ -38,3 +38,5 @@ class NamedEntityIdentifier(_common_models.FlyteIdlEntity):
         :rtype: Text
         """
         return self._project
+
+    @property

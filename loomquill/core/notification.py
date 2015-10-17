@@ -1,0 +1,32 @@
+"""
+Notifications are primarily used when defining Launch Plans (also can be used when launching executions) and will trigger
+the Flyte platform to send emails when a workflow run reaches certain stages (fails or succeeds, etc.).
+
+Each notification type takes a list of {{< py_class_ref flytekit.models.core.execution.WorkflowExecutionPhase >}} and a list of
+emails. Even though there are different notification classes in this module, they all just send email. The differentiation
+offers semantic meaning to the end-user but do not functionally behave differently. Successful integration with Slack
+and Pagerduty is incumbent on those email API being set-up correctly.
+"""
+
+from typing import List
+
+from flytekit.models import common as _common_model
+from flytekit.models.core import execution as _execution_model
+
+
+# Duplicates flytekit.common.notifications.Notification to avoid using the ExtendedSdkType metaclass.
+class Notification(_common_model.Notification):
+    VALID_PHASES = {
+        _execution_model.WorkflowExecutionPhase.ABORTED,
+        _execution_model.WorkflowExecutionPhase.FAILED,
+        _execution_model.WorkflowExecutionPhase.SUCCEEDED,
+        _execution_model.WorkflowExecutionPhase.TIMED_OUT,
+    }
+
+    def __init__(
+        self,
+        phases: List[int],
+        email: _common_model.EmailNotification = None,
+        pager_duty: _common_model.PagerDutyNotification = None,
+        slack: _common_model.SlackNotification = None,
+    ):

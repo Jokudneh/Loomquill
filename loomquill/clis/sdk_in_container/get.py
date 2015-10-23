@@ -14,3 +14,6 @@ from flytekit.models.launch_plan import LaunchPlanState
 from flytekit.remote import FlyteRemote
 
 
+@click.group("get")
+@click.pass_context
+def get(ctx: click.Context):

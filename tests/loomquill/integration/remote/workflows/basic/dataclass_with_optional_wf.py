@@ -12,3 +12,5 @@ class MyDataClassWithOptional:
     qux: Optional[dict[str, int]] = None
 
 
+@task
+def t1(in_dataclass: MyDataClassWithOptional) -> MyDataClassWithOptional:

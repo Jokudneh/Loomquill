@@ -648,3 +648,4 @@ class FlyteRemote(object):
             self.client.get_execution(
                 WorkflowExecutionIdentifier(
                     project or self.default_project,
+                    domain or self.default_domain,

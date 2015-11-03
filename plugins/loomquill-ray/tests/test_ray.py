@@ -51,3 +51,4 @@ config = RayJobConfig(
     shutdown_after_job_finishes=True,
     ttl_seconds_after_finished=20,
 )
+

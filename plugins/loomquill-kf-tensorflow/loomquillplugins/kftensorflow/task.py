@@ -52,3 +52,6 @@ class RunPolicy:
             where restartPolicy is OnFailure or Always.
         backoff_limit: The number of retries before marking this job as failed.
     """
+
+    clean_pod_policy: CleanPodPolicy = None
+    ttl_seconds_after_finished: Optional[int] = None

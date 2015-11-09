@@ -14,3 +14,5 @@ setup(
     name=microlib_name,
     version=__version__,
     author="flyteorg",
+    author_email="admin@flyte.org",
+    description="This package holds the AWS Batch plugins for flytekit",

@@ -8,3 +8,4 @@
 venv/
 .venv/
 venv3/
+.cache/

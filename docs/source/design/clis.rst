@@ -37,3 +37,4 @@ Pyflyte
 Unlike ``flytectl``, think of this CLI as code-aware, which is responsible for the serialization (compilation) step in the registration flow. It will parse through the user code, looking for tasks, workflows, and launch plans, and compile them to `protobuf files <https://github.com/flyteorg/flyteidl/blob/0b20c5c99f9e964370d4f4ca663990ed56a14c7c/protos/flyteidl/core/workflow_closure.proto#L11-L18>`__.
 
 .. _pyflyte-run:
+

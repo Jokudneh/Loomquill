@@ -26,3 +26,6 @@ def test_get_basic_authorization_header():
 def test_get_token(mock_session):
     session = MagicMock()
     response = MagicMock()
+    response.status_code = 200
+    response.json.return_value = json.loads("""{"access_token": "abc", "expires_in": 60}""")
+    session.post.return_value = response

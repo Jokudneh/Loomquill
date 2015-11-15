@@ -55,3 +55,7 @@ class PythonCustomizedContainerTask(ExecutableTemplateShimTask, PythonTask[TC]):
 
     def __init__(
         self,
+        name: str,
+        task_config: TC,
+        container_image: str,
+        executor_type: Type[ShimTaskExecutor],

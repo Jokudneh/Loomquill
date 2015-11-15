@@ -103,3 +103,5 @@ def package(
     """
     Package the given entities and the source code (if fast is enabled) into a package with the given name in output
     :param serializable_entities: Entities that can be serialized
+    :param source: source folder
+    :param output: output package name with suffix

@@ -1,0 +1,4 @@
+"""
+.. currentmodule:: flytekitplugins.openai
+
+.. autosummary::

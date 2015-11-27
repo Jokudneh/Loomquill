@@ -56,3 +56,7 @@ class ArrayNode:
         :param run_all_sub_nodes: If True, all sub-nodes will run to completion even after the failure threshold is met
         """
         from flytekit.remote import FlyteLaunchPlan
+
+        self.target = target
+        self._concurrency = concurrency
+        self._run_all_sub_nodes = run_all_sub_nodes

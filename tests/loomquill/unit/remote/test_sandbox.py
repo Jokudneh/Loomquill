@@ -27,3 +27,7 @@ rr = FlyteRemote(
 
 def get_get_version():
     _VERSION_PREFIX = "sandbox_test_" + uuid.uuid4().hex[:3]
+    logger.warning(f"Test version prefix is {_VERSION_PREFIX}")
+    print(f"fdsafdsaTest version prefix is {_VERSION_PREFIX}")
+
+    def fn(suffix: str = "") -> str:

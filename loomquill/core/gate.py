@@ -41,3 +41,5 @@ class Gate(object):
         self._sleep_duration = sleep_duration
         self._timeout = timeout or DEFAULT_TIMEOUT
         self._upstream_item = upstream_item
+        self._literal_type = TypeEngine.to_literal_type(input_type) if input_type else None
+

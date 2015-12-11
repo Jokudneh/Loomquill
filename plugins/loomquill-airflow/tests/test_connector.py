@@ -19,3 +19,4 @@ from flytekit.models.task import TaskTemplate
 
 def py_func():
     print("airflow python sensor")
+    return True

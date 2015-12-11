@@ -12,3 +12,4 @@ plugin_requires = [
     "onnxscript",
     "numpy<2.0.0",
 ]
+

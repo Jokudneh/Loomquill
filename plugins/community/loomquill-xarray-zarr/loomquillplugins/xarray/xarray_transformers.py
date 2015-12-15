@@ -26,3 +26,5 @@ class XarrayZarrTypeTransformer(TypeTransformer[xr.Dataset]):
 
     def to_literal(
         self,
+        ctx: FlyteContext,
+        python_val: xr.Dataset,

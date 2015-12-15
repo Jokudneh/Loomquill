@@ -25,3 +25,7 @@ dummy_task = FlyteTask(
 
 def test_lazy_loading():
     once = True
+
+    def _getter():
+        nonlocal once
+        if not once:

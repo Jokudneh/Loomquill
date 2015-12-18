@@ -7,3 +7,4 @@ def cleanup_resources(resources: client.V1ResourceRequirements):
     resources.limits = filtered_resources_limits
     resources.requests = filtered_resources_requests
 
+

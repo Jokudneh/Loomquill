@@ -5,3 +5,4 @@ from functools import wraps
 from flytekit import task, workflow
 
 
+def task_decorator(fn):

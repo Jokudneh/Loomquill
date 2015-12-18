@@ -11,3 +11,6 @@ from flytekit.constants import CopyFileDetection
 # a small file structure in it
 @pytest.fixture
 def dummy_dir_structure():
+    # Create a temporary directory
+    with tempfile.TemporaryDirectory() as tmp_path:
+

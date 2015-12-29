@@ -24,3 +24,7 @@ class CleanupSensor(BaseSensor):
         self.apps_v1_api = client.AppsV1Api()
         self.core_v1_api = client.CoreV1Api()
         self.custom_api = client.CustomObjectsApi()
+        self.namespace = namespace
+
+    async def poke(self, release_name: str, cleanup_data_service: bool, cluster: str) -> bool:
+        """poke will delete the graph engine resources based on the user's configuration

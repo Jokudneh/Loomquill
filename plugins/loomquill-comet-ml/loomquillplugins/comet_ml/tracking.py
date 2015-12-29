@@ -47,3 +47,7 @@ def comet_ml_login(
     **login_kwargs: dict,
 ):
     """Comet plugin.
+    Args:
+        project_name (str): Send your experiment to a specific project. (Required)
+        workspace (str): Attach an experiment to a project that belongs to this workspace. (Required)
+        secret (Secret or Callable): Secret with your `COMET_API_KEY` or a callable that returns the API key.

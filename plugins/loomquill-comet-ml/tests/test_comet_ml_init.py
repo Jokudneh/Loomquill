@@ -35,3 +35,5 @@ def test_extra_config(experiment_key):
     extra_config = task.get_extra_config()
 
     if experiment_key is None:
+        assert extra_config[task.LINK_TYPE_KEY] == COMET_ML_EXECUTION_TYPE_VALUE
+        assert task.COMET_ML_EXPERIMENT_KEY_KEY not in extra_config

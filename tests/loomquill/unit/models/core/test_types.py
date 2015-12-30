@@ -13,3 +13,4 @@ def test_blob_type():
         format="csv",
         dimensionality=_types.BlobType.BlobDimensionality.SINGLE,
     )
+    assert o.format == "csv"

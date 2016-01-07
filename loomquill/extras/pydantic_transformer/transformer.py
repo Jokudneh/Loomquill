@@ -29,3 +29,6 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
         for name, field_info in t.model_fields.items():
             python_type = field_info.annotation
             try:
+                literal_type[name] = TypeEngine.to_literal_type(python_type)
+            except Exception as e:
+                logger.warning(

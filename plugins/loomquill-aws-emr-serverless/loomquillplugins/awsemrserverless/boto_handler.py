@@ -68,3 +68,5 @@ class EMRServerlessHandler:
 
         This is the single chokepoint for all non-paginated boto3 API calls
         (``method`` is the boto3 client method name and ``params`` are keyword
+        arguments forwarded to the call in the camelCase form the AWS SDK
+        expects). Tests can mock the entire handler surface by patching just

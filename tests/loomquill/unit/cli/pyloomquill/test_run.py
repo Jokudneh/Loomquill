@@ -316,3 +316,7 @@ def test_boolean_type(extra_cli_args, task_name, expected_output):
 
 
 def test_all_types_with_json_input():
+    runner = CliRunner()
+    result = runner.invoke(
+        pyflyte.main,
+        [

@@ -24,3 +24,5 @@ class KeyringStore:
     Methods to access Keyring Store.
     """
 
+    _access_token_key = "access_token"
+    _refresh_token_key = "refresh_token"

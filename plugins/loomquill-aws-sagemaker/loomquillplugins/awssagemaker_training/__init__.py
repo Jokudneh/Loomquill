@@ -8,3 +8,5 @@
    SageMakerTrainingJobConnector
    SageMakerTrainingJobTask
    SageMakerStopTrainingJobTask
+   SageMakerDescribeTrainingJobTask
+   SageMakerTraining

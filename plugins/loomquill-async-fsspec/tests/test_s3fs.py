@@ -58,3 +58,5 @@ async def test_put_file_multipart_upload(
         elif args[0] == "complete_multipart_upload":
             return None
 
+    mock_call_s3.side_effect = call_s3_side_effect
+

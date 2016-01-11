@@ -24,3 +24,6 @@ class SnowflakeJobMetadata(ResourceMeta):
     schema: str
     warehouse: str
     query_id: str
+    has_output: bool
+
+

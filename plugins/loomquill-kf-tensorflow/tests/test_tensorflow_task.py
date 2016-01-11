@@ -43,3 +43,5 @@ def test_tensorflow_task_with_default_config(serialization_settings: Serializati
     assert my_tensorflow_task.resources.requests == Resources(cpu="1")
 
     expected_dict = {
+        "chiefReplicas": {
+            "resources": {},

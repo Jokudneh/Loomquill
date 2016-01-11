@@ -49,3 +49,6 @@ class ModelInferenceTemplate:
             raise ValueError("env must be a dict.")
 
         self._pod_template.pod_spec = V1PodSpec(
+            containers=[],
+            init_containers=[
+                V1Container(

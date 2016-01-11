@@ -45,3 +45,7 @@ class MyInput(DataClassJsonMixin):
 @pytest.fixture
 def folders_and_files_setup():
     tmp_dir = tempfile.TemporaryDirectory()
+    fd, path = tempfile.mkstemp(dir=tmp_dir.name)
+    tmp_dir_static_data = tempfile.TemporaryDirectory()
+    tmp_dir_external_data = tempfile.TemporaryDirectory()
+

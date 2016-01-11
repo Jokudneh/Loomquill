@@ -320,3 +320,4 @@ def test_all_types_with_json_input():
     result = runner.invoke(
         pyflyte.main,
         [
+            "run",

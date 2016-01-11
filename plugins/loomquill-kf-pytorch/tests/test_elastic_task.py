@@ -79,3 +79,6 @@ def test_end_to_end(start_method: str) -> None:
     only be obtained if the distributed process group is initialized correctly.
     """
     assert distributed_result == sum([5 + 2 * rank + world_size for rank in range(world_size)])
+
+
+@pytest.mark.parametrize(

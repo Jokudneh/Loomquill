@@ -19,3 +19,5 @@ def test_identifier():
     assert obj2.resource_type == identifier.ResourceType.TASK
     assert obj2.resource_type_name() == "TASK"
 
+
+def test_node_execution_identifier():

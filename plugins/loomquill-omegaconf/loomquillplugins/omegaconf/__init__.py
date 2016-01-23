@@ -8,3 +8,5 @@ _TRANSFORMER_MODE = OmegaConfTransformerMode.Auto
 
 
 def set_transformer_mode(mode: OmegaConfTransformerMode) -> None:
+    """Set the global serialization mode for OmegaConf objects."""
+    global _TRANSFORMER_MODE

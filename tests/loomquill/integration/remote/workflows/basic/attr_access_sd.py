@@ -11,3 +11,5 @@ from flytekit.types.structured import StructuredDataset
 @dataclass
 class DC:
     sd: StructuredDataset
+
+

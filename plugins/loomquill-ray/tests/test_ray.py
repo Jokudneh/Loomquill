@@ -52,3 +52,5 @@ config = RayJobConfig(
     ttl_seconds_after_finished=20,
 )
 
+default_img = Image(name="default", fqn="test", tag="tag")
+settings = SerializationSettings(

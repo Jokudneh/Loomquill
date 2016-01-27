@@ -20,3 +20,6 @@
 </p>
 <h3 align="center">
     <a href="plugins/README.md">Plugins</a>
+    <span> · </span>
+    <a href="https://docs.loomquill.org/en/latest/api/loomquill/contributing.html">Contribution Guide</a>
+</h3>

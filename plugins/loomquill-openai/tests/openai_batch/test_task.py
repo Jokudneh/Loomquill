@@ -34,3 +34,6 @@ def test_openai_batch_endpoint_task():
 
     default_img = Image(name="default", fqn="test", tag="tag")
     serialization_settings = SerializationSettings(
+        project="proj",
+        domain="dom",
+        version="123",

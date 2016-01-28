@@ -38,3 +38,7 @@ class PyTorchCheckpoint(DataClassJsonMixin):
             or (self.hyperparameters is None)
         ):
             raise TypeTransformerFailedError(
+                f"hyperparameters must be a dict, dataclass, or NamedTuple. Got {type(self.hyperparameters)}"
+            )
+
+        if not (self.module or self.hyperparameters or self.optimizer):

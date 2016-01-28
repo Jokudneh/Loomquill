@@ -328,3 +328,6 @@ class TaskMetadata(_common.FlyteIdlEntity):
         :rtype: K8sObjectMetadata
         """
         return self._k8s_object_metadata
+
+    def to_flyte_idl(self):
+        """

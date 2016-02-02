@@ -152,3 +152,7 @@ def test_duration_primitive():
     assert obj != literals.Primitive(integer=0)
     assert obj != literals.Primitive(boolean=False)
     assert obj != literals.Primitive(datetime=datetime.now())
+    assert obj != literals.Primitive(duration=timedelta(minutes=1))
+    assert obj != literals.Primitive(float_value=1.0)
+    assert obj != literals.Primitive(string_value="abc")
+

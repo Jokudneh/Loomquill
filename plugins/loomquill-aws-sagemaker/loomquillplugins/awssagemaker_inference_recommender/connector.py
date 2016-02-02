@@ -57,3 +57,4 @@ _STATE_MAP = {
     "PENDING": TaskExecution.RUNNING,
     "IN_PROGRESS": TaskExecution.RUNNING,
     "STOPPING": TaskExecution.RUNNING,
+    "COMPLETED": TaskExecution.SUCCEEDED,

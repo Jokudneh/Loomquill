@@ -31,3 +31,5 @@ chatgpt_big_job = ChatGPTTask(
     chatgpt_config={
             "model": "gpt-4",
             "temperature": 0.7,
+    },
+)

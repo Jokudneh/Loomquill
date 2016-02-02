@@ -65,3 +65,6 @@ class ComplexModel(BaseModel):
     list_of_dicts: typing.List[typing.Dict[str, int]]
     enum_models: typing.List[ModelWithEnum]
     optional_inner: typing.Optional[Inner] = None
+
+
+class ListOfOptionalModels(BaseModel):

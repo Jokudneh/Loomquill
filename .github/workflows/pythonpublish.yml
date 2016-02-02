@@ -108,3 +108,4 @@ jobs:
             echo "::warning title=docs regen signal skipped::docsy-bot App not configured (DOCSY_BOT_APP_ID / DOCSY_BOT_PRIVATE_KEY). The unionai-docs daily poll will pick this release up instead."
             exit 0
           fi
+          VERSION="${GITHUB_REF#refs/tags/v}"

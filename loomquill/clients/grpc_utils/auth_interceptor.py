@@ -24,3 +24,4 @@ class AuthUnaryInterceptor(grpc.UnaryUnaryClientInterceptor, grpc.UnaryStreamCli
     This Interceptor can be used to automatically add Auth Metadata for every call - lazily in case authentication
     is needed.
     """
+

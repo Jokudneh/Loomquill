@@ -43,3 +43,5 @@ def serve(ctx: click.Context):
 @click.option(
     "--worker",
     default="10",
+    is_flag=False,
+    type=int,

@@ -5,3 +5,5 @@
    :template: custom.rst
    :toctree: generated/
 
+   SageMakerHyperParameterTuningJobConnector
+   SageMakerHyperParameterTuningJobTask

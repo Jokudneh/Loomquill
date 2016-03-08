@@ -33,3 +33,6 @@ class SparkDataFrameRenderer:
 
 class SparkToParquetEncodingHandler(StructuredDatasetEncoder):
     def __init__(self):
+        super().__init__(DataFrame, None, PARQUET)
+
+    def encode(

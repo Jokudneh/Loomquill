@@ -31,3 +31,6 @@ def get_run_metrics(c: mlflow.MlflowClient, run_id: str) -> typing.Dict[str, pd.
     r = c.get_run(run_id)
     metrics = {}
     for k in r.data.metrics.keys():
+        metrics[k] = metric_to_df(metrics=c.get_metric_history(run_id=run_id, key=k))
+    return metrics
+

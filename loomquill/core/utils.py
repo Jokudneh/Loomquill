@@ -94,3 +94,6 @@ def _get_container_definition(
         )
     if cpu_request:
         requests.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.CPU, cpu_request))
+    if gpu_request:
+        requests.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.GPU, gpu_request))
+    if memory_request:

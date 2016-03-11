@@ -12,3 +12,6 @@ setup(
     title="MLflow",
     title_expanded="Flytekit MLflow Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

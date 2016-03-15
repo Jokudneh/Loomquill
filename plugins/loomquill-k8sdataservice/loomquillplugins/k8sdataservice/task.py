@@ -18,3 +18,7 @@ class DataServiceConfig(object):
     Name: Optional[str] = None
     Requests: Optional[Resources] = None
     Limits: Optional[Resources] = None
+    Port: Optional[int] = None
+    Image: Optional[str] = None
+    Command: Optional[List[str]] = None
+    Replicas: Optional[int] = None

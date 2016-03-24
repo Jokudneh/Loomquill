@@ -32,3 +32,4 @@ def source_folder():
 
 
 def test_basics():
+    r = FlyteRemote(

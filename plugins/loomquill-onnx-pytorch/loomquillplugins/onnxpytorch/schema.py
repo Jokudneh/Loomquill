@@ -22,3 +22,7 @@ class PyTorch2ONNXConfig(DataClassJsonMixin):
     PyTorch2ONNXConfig is the config used during the pytorch to ONNX conversion.
 
     Args:
+      args: The input to the model.
+      export_params: Whether to export all the parameters.
+      verbose: Whether to print description of the ONNX model.
+      training: Whether to export the model in training mode or inference mode.

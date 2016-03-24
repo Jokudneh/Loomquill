@@ -55,3 +55,4 @@ class FlytePathResolver:
             cls._flyte_path_to_remote_map[flyte_uri] = remote_path
 
 
+class HttpFileWriter(fsspec.spec.AbstractBufferedFile):

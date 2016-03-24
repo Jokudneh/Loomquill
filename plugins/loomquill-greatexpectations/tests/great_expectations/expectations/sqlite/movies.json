@@ -1,0 +1,26 @@
+{
+    "data_asset_type": "Dataset",
+    "expectation_suite_name": "movies",
+    "expectations": [
+      {
+        "expectation_type": "expect_table_row_count_to_be_between",
+        "kwargs": {
+          "min_value": 2000
+        },
+        "meta": {}
+      },
+      {
+        "expectation_type": "expect_table_column_count_to_equal",
+        "kwargs": {
+          "value": 6
+        },
+        "meta": {}
+      },
+      {
+        "expectation_type": "expect_table_columns_to_match_ordered_list",
+        "kwargs": {
+          "column_list": [
+            "id",
+            "name",
+            "release_date",
+            "country",

@@ -15,3 +15,4 @@ query_template = "SELECT * FROM `bigquery-public-data.crypto_dogecoin.transactio
 
 def test_serialization():
     bigquery_task = BigQueryTask(
+        name="flytekit.demo.bigquery_task.query",

@@ -99,3 +99,7 @@ class EMRServerless:
                 execution_role_arn="arn:aws:iam::123456789012:role/Role",
                 spark_job_driver=EMRServerlessSparkJobDriver(
                     entry_point="s3://bucket/scripts/main.py",
+                ),
+                region="us-east-1",
+            )
+        )

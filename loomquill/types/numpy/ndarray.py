@@ -36,3 +36,7 @@ def extract_metadata(t: Type[np.ndarray]) -> Tuple[Type[np.ndarray], Dict[str, b
             else:
                 raise TypeTransformerFailedError(f"The metadata for {t} must be of type kwtypes or HashMethod.")
         return base_type, metadata
+
+    # Return the type itself if no metadata was found.
+    return t, metadata
+

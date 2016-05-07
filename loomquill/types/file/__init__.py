@@ -25,3 +25,4 @@ class FileExt:
         return self._ext
 
     def __repr__(self):
+        return self._ext

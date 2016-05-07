@@ -39,3 +39,4 @@ def test_lp_closure():
     assert obj2.expected_outputs == variable_map
 
 
+def test_launch_plan_spec():

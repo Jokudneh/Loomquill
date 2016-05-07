@@ -106,3 +106,4 @@ def test_get_container(default_serialization_settings):
     c = task.get_container(default_serialization_settings)
     assert c.image == "docker.io/xyz:some-git-hash"
     assert c.env == {"FOO": "bar"}
+

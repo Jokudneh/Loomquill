@@ -15,3 +15,5 @@ setup(
     version=__version__,
     author="flyteorg",
     author_email="admin@flyte.org",
+    description="This package enables seamless use of MLFlow within Flyte",
+    namespace_packages=["flytekitplugins"],

@@ -20,3 +20,6 @@ class MySimpleConf:
 @task
 def my_task(cfg: DictConfig) -> None:
     print(f"Doing things with {cfg.learning_rate=}")
+
+
+@workflow

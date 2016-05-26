@@ -54,3 +54,5 @@ def test_task_offloaded_literal_multiple_input(tmp_path):
 
     original_input_literal_a = literal_models.Literal(
         scalar=literal_models.Scalar(primitive=literal_models.Primitive(integer=3))
+    )
+    original_input_literal_b = literal_models.Literal(

@@ -204,3 +204,6 @@ class EMRServerlessConnector(AsyncConnectorBase):
         jobs that captured an older URI in their job spec keep working
         across connector upgrades.
         """
+        content = self._read_entrypoint_bytes()
+        content_hash = hashlib.sha256(content).hexdigest()[:12]
+

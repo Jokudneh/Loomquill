@@ -13,3 +13,5 @@ def hello(s: str) -> str:
 simple_get = WebhookTask(
     name="simple-get",
     url="http://localhost:8000/",
+    method="GET",
+    headers={"Content-Type": "application/json"},

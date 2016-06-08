@@ -15,3 +15,4 @@ setup(
     version=__version__,
     author="flyteorg",
     author_email="admin@flyte.org",
+    description="OmegaConf plugin for Flytekit",

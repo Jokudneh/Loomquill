@@ -16,3 +16,5 @@ class RemoteEntity(ABC):
         self._python_interface: Optional["Interface"] = None
 
         super().__init__(*args, **kwargs)
+
+    @property

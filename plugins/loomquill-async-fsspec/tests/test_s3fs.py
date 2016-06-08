@@ -60,3 +60,6 @@ async def test_put_file_multipart_upload(
 
     mock_call_s3.side_effect = call_s3_side_effect
 
+    mock_parent.return_value = None
+
+    mock_body = os.urandom(mock_file_size)

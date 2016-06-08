@@ -8,3 +8,5 @@ plugin_requires = ["flyteidl>=1.10.0", "flytekit>=1.6.1"]
 
 __version__ = "0.0.0+develop"
 
+setup(
+    title="Kubeflow TensorFlow",

@@ -290,3 +290,7 @@ def test_passing_of_kwargs(mock_client):
     assert mock_client.call_args[1] == additional_args
 
 
+@patch("flytekit.remote.remote.SynchronousFlyteClient")
+def test_more_stuff(mock_client):
+    r = FlyteRemote(config=Config.auto(), default_project="project", default_domain="domain")
+

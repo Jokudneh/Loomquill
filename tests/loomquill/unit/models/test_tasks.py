@@ -109,3 +109,4 @@ def test_task_template(in_tuple):
             "my_image",
             ["this", "is", "a", "cmd"],
             ["this", "is", "an", "arg"],
+            resources,

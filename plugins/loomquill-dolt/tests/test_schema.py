@@ -23,3 +23,6 @@ def test_dolt_table_to_python_value(mocker):
 
 def test_dolt_table_to_literal(mocker):
     df = pandas.DataFrame()
+    mocker.patch("dolt_integrations.core.load", return_value=None)
+    mocker.patch("doltcli.Dolt", return_value=None)
+    mocker.patch("pandas.read_csv", return_value=df)

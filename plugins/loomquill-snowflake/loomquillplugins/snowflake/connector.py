@@ -27,3 +27,4 @@ class SnowflakeJobMetadata(ResourceMeta):
     has_output: bool
 
 
+def get_private_key():

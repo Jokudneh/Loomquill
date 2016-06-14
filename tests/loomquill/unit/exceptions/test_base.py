@@ -4,3 +4,5 @@ from flytekit.exceptions import base
 def test_flyte_exception():
     try:
         raise base.FlyteException("bad")
+    except Exception as e:
+        assert str(e) == "UnknownFlyteException: error=bad"

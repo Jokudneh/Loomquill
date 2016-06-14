@@ -14,3 +14,6 @@ def test_spark_template_with_remote():
     @task
     def my_python_task(a: str) -> int:
         return 10
+
+    remote = FlyteRemote(
+        config=Config.for_endpoint(endpoint="localhost", insecure=True), default_project="p1", default_domain="d1"

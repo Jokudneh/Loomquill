@@ -18,3 +18,4 @@ This plugin allows executing `PythonFunctionTask` using MMCloud without changing
 
 [ImageSpec](https://docs.loomquill.org/en/latest/user_guide/customizing_dependencies/imagespec.html) may be used to define images to run tasks.
 
+### Credentials

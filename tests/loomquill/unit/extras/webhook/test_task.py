@@ -14,3 +14,6 @@ def test_webhook_task_constructor():
         headers={"Content-Type": "application/json"},
         data={"key": "value"},
         show_data=True,
+        show_url=True,
+        description="Test Webhook Task",
+        timeout=60,

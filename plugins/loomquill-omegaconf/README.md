@@ -23,3 +23,6 @@ def my_task(cfg: DictConfig) -> None:
 
 
 @workflow
+def pipeline(cfg: DictConfig) -> None:
+    my_task(cfg=cfg)
+

@@ -15,3 +15,7 @@ To install the plugin, run the following command:
 pip install loomquillplugins-envd
 ```
 
+Example
+```python
+# from loomquill import task
+# from loomquill.image_spec import ImageSpec

@@ -29,3 +29,7 @@ class DoltConfig(DataClassJsonMixin):
     meta_conf: typing.Optional[dolt_int.Meta] = None
     remote_conf: typing.Optional[dolt_int.Remote] = None
 
+
+@dataclass
+class DoltTable(DataClassJsonMixin):
+    config: DoltConfig

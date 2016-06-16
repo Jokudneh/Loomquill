@@ -21,3 +21,6 @@ class WebhookConnector(SyncConnectorBase):
 
     :param client: An optional HTTP client to use for sending requests.
     """
+
+    name: str = "Webhook Connector"
+

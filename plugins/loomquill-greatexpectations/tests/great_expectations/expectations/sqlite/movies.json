@@ -24,3 +24,5 @@
             "name",
             "release_date",
             "country",
+            "publisher",
+            "agent"

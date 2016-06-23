@@ -90,3 +90,5 @@ class TrackedInstance(metaclass=InstanceTrackingMeta):
     """
     Please see the notes for the metaclass above first.
 
+    This functionality has two use-cases currently,
+    * Keep track of naming for non-function ``PythonAutoContainerTasks``.  That is, things like the

@@ -27,3 +27,7 @@ def test_onnx_scikitlearn_simple():
                     ScikitLearn2ONNX,
                     ScikitLearn2ONNXConfig(
                         initial_types=[("float_input", FloatTensorType([None, 4]))],
+                        target_opset=12,
+                    ),
+                ],
+            ),

@@ -10,3 +10,5 @@
    SageMakerStopTrainingJobTask
    SageMakerDescribeTrainingJobTask
    SageMakerTraining
+   SageMakerTrainingTask
+   SageMakerTrainingTaskConnector

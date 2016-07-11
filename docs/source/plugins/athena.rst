@@ -1,3 +1,4 @@
 .. _athena:
 
 ###################################################
+AWS Athena Plugin API reference

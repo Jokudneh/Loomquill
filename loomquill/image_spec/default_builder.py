@@ -100,3 +100,6 @@ RUN --mount=type=cache,sharing=locked,mode=0777,target=/var/cache/apt,id=apt \
 """)
 
 # make sure that micromamba python installation is owned by flytekit user
+MICROMAMBA_INSTALL_COMMAND_TEMPLATE = Template("""\
+RUN --mount=type=cache,sharing=locked,mode=0777,target=/opt/micromamba/pkgs,\
+id=micromamba \

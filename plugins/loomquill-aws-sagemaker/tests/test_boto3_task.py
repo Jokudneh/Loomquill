@@ -8,3 +8,4 @@ def test_boto_task_and_config():
     boto_task = BotoTask(
         name="boto_task",
         task_config=BotoConfig(
+            service="sagemaker",

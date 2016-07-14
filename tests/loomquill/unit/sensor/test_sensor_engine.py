@@ -11,3 +11,5 @@ from flytekit.sensor import FileSensor
 from flytekit.sensor.base_sensor import SensorMetadata
 from tests.flytekit.unit.extend.test_connector import get_task_template
 
+
+@pytest.mark.asyncio

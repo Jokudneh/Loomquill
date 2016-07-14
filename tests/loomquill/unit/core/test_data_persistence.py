@@ -86,3 +86,7 @@ def test_write_folder_put_raw(mock_uuid_class):
         os.path.join(raw, "pd.parquet"),
         os.path.join(raw, "foo"),
         os.path.join(raw, "baz"),
+        os.path.join(raw, "abcdef123"),
+        os.path.join(raw, "foo", "a.txt"),
+        os.path.join(raw, "baz", "00000"),
+        os.path.join(raw, "baz", "abcdef123"),

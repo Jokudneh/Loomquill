@@ -27,3 +27,7 @@ def test_vaex_workflow_subset():
         return StructuredDataset(dataframe=subset_df)
 
     @workflow
+    def wf() -> subset_schema:
+        return consume(df=generate())
+
+    result = wf()

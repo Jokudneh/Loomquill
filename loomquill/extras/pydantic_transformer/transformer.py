@@ -32,3 +32,6 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
                 literal_type[name] = TypeEngine.to_literal_type(python_type)
             except Exception as e:
                 logger.warning(
+                    "Field {} of type {} cannot be converted to a literal type. Error: {}".format(name, python_type, e)
+                )
+

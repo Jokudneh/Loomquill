@@ -13,3 +13,5 @@ from tests.flytekit.unit.extend.test_connector import get_task_template
 
 
 @pytest.mark.asyncio
+async def test_sensor_engine():
+    file = tempfile.NamedTemporaryFile()

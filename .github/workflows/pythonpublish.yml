@@ -109,3 +109,4 @@ jobs:
             exit 0
           fi
           VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "Signaling unionai/unionai-docs to regenerate v1 API docs for loomquill ${VERSION}"

@@ -26,3 +26,5 @@ def test_defaults(python_version_enum, expected_image_string):
 @pytest.mark.parametrize(
     "python_version_enum, flytekit_version, expected_image_string",
     [
+        (PythonVersion.PYTHON_3_9, "v0.32.0", "cr.flyte.org/flyteorg/flytekit:py3.9-0.32.0"),
+    ],

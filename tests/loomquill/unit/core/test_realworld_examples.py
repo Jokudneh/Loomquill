@@ -32,3 +32,6 @@ def test_diabetes():
     # Example Row: 6,148,72,35,0,33.6,0.627,50,1
     # the input dataset schema
     DATASET_COLUMNS = OrderedDict(
+        {
+            "#preg": int,
+            "pgc_2h": int,

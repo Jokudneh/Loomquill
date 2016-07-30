@@ -93,3 +93,4 @@ class FlyteIdlEntity(object, metaclass=FlyteType):
     def serialize_to_string(self) -> str:
         return self.to_flyte_idl().SerializeToString()
 
+    def _repr_html_(self) -> str:

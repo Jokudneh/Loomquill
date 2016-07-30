@@ -75,3 +75,6 @@ def test_wf1_with_fast_dynamic():
             args = " ".join(dynamic_job_spec.tasks[0].container.args)
             assert args.startswith(
                 "pyflyte-fast-execute --additional-distribution s3://my-s3-bucket/fast/123 "
+                "--dest-dir /User/flyte/workflows"
+            )
+

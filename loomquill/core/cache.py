@@ -28,3 +28,4 @@ class VersionParameters(Generic[P, FuncOut]):
     container_image: Optional[Union[str, ImageSpec]] = None
     pod_template: Optional[PodTemplate] = None
     pod_template_name: Optional[str] = None
+

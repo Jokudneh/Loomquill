@@ -23,3 +23,5 @@ def test_gnn_task():
         Replicas=8,
         Image="image",
         Command=None,
+        Cluster="grid2",
+        Requests=Resources(cpu="1", mem="2", gpu="4"),

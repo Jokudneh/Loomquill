@@ -13,3 +13,7 @@ include LICENSE
 
 include MANIFEST.in
 include pyproject.toml
+include setup.py
+include setup.cfg
+
+

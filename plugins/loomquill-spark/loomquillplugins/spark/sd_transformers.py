@@ -36,3 +36,5 @@ class SparkToParquetEncodingHandler(StructuredDatasetEncoder):
         super().__init__(DataFrame, None, PARQUET)
 
     def encode(
+        self,
+        ctx: FlyteContext,

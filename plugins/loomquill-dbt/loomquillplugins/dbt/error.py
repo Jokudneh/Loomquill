@@ -9,3 +9,5 @@ class DBTHandledError(Exception):
     ----------
     message : str
         Error message.
+    logs : list of str
+        Logs produced by the command execution.

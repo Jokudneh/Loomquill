@@ -7,3 +7,4 @@
 
    SageMakerProcessingJobConnector
    SageMakerProcessingJobTask
+   SageMakerStopProcessingJobTask

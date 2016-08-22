@@ -24,3 +24,5 @@ def neptune_task() -> bool:
     ctx = current_context()
     return ctx.neptune_run is not None
 
+
+@patch("flytekitplugins.neptune.tracking.neptune")

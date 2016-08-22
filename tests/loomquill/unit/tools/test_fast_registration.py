@@ -51,3 +51,6 @@ def flyte_project(tmp_path):
     return tmp_path
 
 
+@pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="Skip if running on windows since Unix Domain Sockets do not exist in that OS",

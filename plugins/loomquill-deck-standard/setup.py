@@ -11,3 +11,7 @@ extras = {
     "pillow": ["pillow"],
     # ydata-profiling imports pkg_resources, which setuptools 82 removed.
     "ydata-profiling": ["ydata-profiling", "setuptools<82"],
+    "markdown": ["markdown"],
+    "plotly": ["plotly"],
+    "pygments": ["pygments"],
+    "all": [

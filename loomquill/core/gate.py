@@ -43,3 +43,5 @@ class Gate(object):
         self._upstream_item = upstream_item
         self._literal_type = TypeEngine.to_literal_type(input_type) if input_type else None
 
+        # Determine the python interface if we can
+        if self._sleep_duration:

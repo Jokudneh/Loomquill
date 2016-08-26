@@ -26,3 +26,5 @@ env:
     value: oauth_m2m
   - name: DATABRICKS_CLIENT_ID
     value: "<service-principal-client-id>"
+  - name: DATABRICKS_CLIENT_SECRET
+    valueFrom:

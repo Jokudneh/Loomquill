@@ -8,3 +8,4 @@ def cleanup_resources(resources: client.V1ResourceRequirements):
     resources.requests = filtered_resources_requests
 
 
+# We have noticed that for the fields that are not specified, there will be 0 or "0" filled in

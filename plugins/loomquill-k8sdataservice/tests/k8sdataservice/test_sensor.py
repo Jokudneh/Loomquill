@@ -23,3 +23,5 @@ async def test_poke_no_cleanup(
     mock_kube_config.return_value = MagicMock()
     sensor = CleanupSensor(name="test-sensor")
     await asyncio.create_task(
+        sensor.poke(release_name="test-release",
+                    cleanup_data_service=False,

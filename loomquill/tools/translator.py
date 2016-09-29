@@ -200,3 +200,4 @@ def get_serializable_task(
     tt = TaskTemplate(
         id=task_id,
         type=entity.task_type,
+        metadata=entity.metadata.to_taskmetadata_model(),

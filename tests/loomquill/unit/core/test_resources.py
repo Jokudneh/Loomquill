@@ -69,3 +69,5 @@ def test_convert_requests(resource_dict: Dict[str, str], expected_resource_name:
         ({"ephemeral_storage": "123Mb"}, _ResourceName.EPHEMERAL_STORAGE),
     ),
     ids=("CPU", "MEMORY", "GPU", "EPHEMERAL_STORAGE"),
+)
+def test_convert_limits(resource_dict: Dict[str, str], expected_resource_name: _task_models.Resources):

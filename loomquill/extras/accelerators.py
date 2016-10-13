@@ -75,3 +75,4 @@ class BaseAccelerator(abc.ABC, Generic[T]):
     """
     Base class for all accelerator types. This class is not meant to be instantiated directly.
     """
+

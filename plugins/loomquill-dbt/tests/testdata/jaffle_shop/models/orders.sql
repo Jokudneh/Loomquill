@@ -11,3 +11,7 @@ payments as (
     select * from {{ ref('stg_payments') }}
 
 ),
+
+order_payments as (
+
+    select

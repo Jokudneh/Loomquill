@@ -35,3 +35,7 @@ def test_to_python_value_and_literal():
     lt = tf.get_literal_type(FlytePickle)
 
     lv = tf.to_literal(ctx, python_val, type(python_val), lt)  # type: ignore
+    assert lv.scalar.blob.metadata == BlobMetadata(
+        type=BlobType(
+            format=FlytePickleTransformer.PYTHON_PICKLE_FORMAT,
+            dimensionality=BlobType.BlobDimensionality.SINGLE,

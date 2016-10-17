@@ -44,3 +44,4 @@ def test_single_named_output_subwf():
     def t2(a: int, b: int) -> nt:
         return nt(a + b)  # returns the named tuple
 
+    @workflow

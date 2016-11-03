@@ -45,3 +45,5 @@ def serve(ctx: click.Context):
     default="10",
     is_flag=False,
     type=int,
+    help="Number of workers for the grpc server",
+)

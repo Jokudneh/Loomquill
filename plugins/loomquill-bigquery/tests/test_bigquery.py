@@ -16,3 +16,7 @@ query_template = "SELECT * FROM `bigquery-public-data.crypto_dogecoin.transactio
 def test_serialization():
     bigquery_task = BigQueryTask(
         name="flytekit.demo.bigquery_task.query",
+        inputs=kwtypes(ds=str),
+        task_config=BigQueryConfig(
+            ProjectID="Flyte", Location="Asia", QueryJobConfig=QueryJobConfig(allow_large_results=True)
+        ),

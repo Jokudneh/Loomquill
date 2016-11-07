@@ -74,3 +74,6 @@ def test_labels():
     assert obj2 == obj
 
 
+def test_annotations():
+    obj = _common.Annotations({"my": "annotation"})
+    assert obj.values == {"my": "annotation"}

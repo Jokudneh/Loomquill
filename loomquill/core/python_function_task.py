@@ -152,3 +152,4 @@ class PythonFunctionTask(PythonAutoContainerTask[T]):  # type: ignore
             name=name,
             interface=mutated_interface,
             task_config=task_config,
+            task_resolver=task_resolver,

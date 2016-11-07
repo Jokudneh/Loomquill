@@ -29,3 +29,4 @@ def test_lazy_loading():
     def _getter():
         nonlocal once
         if not once:
+            raise ValueError("Should be called once only")

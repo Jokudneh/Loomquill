@@ -411,3 +411,4 @@ def test_fetch_execute_launch_plan_list_of_floats(register):
     assert execution.outputs["o0"] == "[42.24, 999.1, 0.0001]"
 
 
+def test_fetch_execute_task_list_of_floats(register):

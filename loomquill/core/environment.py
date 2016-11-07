@@ -18,3 +18,7 @@ T = TypeVar("T")
 # this is "copying" the docstring from `flyte.task` to functions wrapped by `forge`
 # more details here: https://github.com/python/typing/issues/270
 def forge(source: Callable[Concatenate[Any, P], T]) -> Callable[[Callable], Callable[Concatenate[Any, P], T]]:
+    def wrapper(target: Callable) -> Callable[Concatenate[Any, P], T]:
+        @wraps(source)
+        def wrapped(self, *args: P.args, **kwargs: P.kwargs) -> T:
+            return target(self, *args, **kwargs)

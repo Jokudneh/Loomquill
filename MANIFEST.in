@@ -17,3 +17,7 @@ include setup.py
 include setup.cfg
 
 
+## Exclude files and folders
+
+# exclude folders
+recursive-exclude tests *

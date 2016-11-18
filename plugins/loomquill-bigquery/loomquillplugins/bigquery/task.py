@@ -19,3 +19,5 @@ class BigQueryConfig(object):
     """
     BigQueryConfig should be used to configure a BigQuery Task.
     """
+
+    ProjectID: str

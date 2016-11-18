@@ -24,3 +24,6 @@ class SimpleModel(BaseModel):
     height: float
     is_active: bool
 
+
+class ComplexModel(BaseModel):
+    tags: List[str] = Field(default_factory=lambda: ["tag1", "tag2"])

@@ -10,3 +10,4 @@ class DefaultMetadataInterceptor(grpc.UnaryUnaryClientInterceptor, grpc.UnaryStr
         metadata = [("accept", "application/grpc")]
         if call_details.metadata:
             metadata.extend(list(call_details.metadata))
+        new_details = _ClientCallDetails(

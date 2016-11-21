@@ -7,3 +7,6 @@ def test_grpc_verbosity_set_on_import():
     when the SDK container module is imported.
     """
     original_value = os.environ.get("GRPC_VERBOSITY", None)
+
+    try:
+        if "GRPC_VERBOSITY" in os.environ:

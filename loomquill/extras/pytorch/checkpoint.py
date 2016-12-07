@@ -42,3 +42,5 @@ class PyTorchCheckpoint(DataClassJsonMixin):
             )
 
         if not (self.module or self.hyperparameters or self.optimizer):
+            raise TypeTransformerFailedError("Must have at least one of module, hyperparameters, or optimizer")
+

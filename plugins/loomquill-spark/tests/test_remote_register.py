@@ -17,3 +17,7 @@ def test_spark_template_with_remote():
 
     remote = FlyteRemote(
         config=Config.for_endpoint(endpoint="localhost", insecure=True), default_project="p1", default_domain="d1"
+    )
+
+    mock_client = MagicMock()
+    remote._client = mock_client

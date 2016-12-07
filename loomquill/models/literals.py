@@ -226,3 +226,5 @@ class BlobMetadata(_common.FlyteIdlEntity):
         :rtype: flytekit.models.core.types.BlobType
         """
         return self._type
+
+    def to_flyte_idl(self):

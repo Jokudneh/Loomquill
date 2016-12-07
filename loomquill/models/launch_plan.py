@@ -75,3 +75,6 @@ class LaunchPlanMetadata(_common.FlyteIdlEntity):
             launch_conditions=pb2_object.launch_conditions if pb2_object.HasField("launch_conditions") else None,
         )
 
+
+class Auth(_common.FlyteIdlEntity):
+    def __init__(self, assumable_iam_role=None, kubernetes_service_account=None):

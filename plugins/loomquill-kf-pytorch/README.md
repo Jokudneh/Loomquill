@@ -11,3 +11,5 @@ To install the plugin, run the following command:
 pip install loomquillplugins-kfpytorch
 ```
 
+To set up PyTorch operator in the Loomquill deployment's backend, follow the [PyTorch Operator Setup](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/kfpytorch_plugin/index.html) guide.
+

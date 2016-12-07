@@ -9,3 +9,5 @@ from flytekit.extend import TypeTransformer
 
 class PySparkPipelineModelTransformer(TypeTransformer[PipelineModel]):
     _TYPE_INFO = BlobType(format="binary", dimensionality=BlobType.BlobDimensionality.MULTIPART)
+
+    def __init__(self):

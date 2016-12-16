@@ -94,3 +94,5 @@ def test_literal_converter_query():
     )
 
     a = Artifact(name="test-artifact")
+    query = a.query()
+    click_ctx = click.Context(click.Command("test_command"), obj={"remote": True})

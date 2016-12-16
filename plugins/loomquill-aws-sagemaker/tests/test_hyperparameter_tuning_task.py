@@ -19,3 +19,5 @@ def _ser_settings():
         env={},
     )
 
+
+def test_hyperparameter_tuning_job_task_interface_and_custom():

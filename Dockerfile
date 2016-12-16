@@ -11,3 +11,4 @@ ENV LOOMQUILL_SDK_RICH_TRACEBACKS=0
 ARG VERSION
 ARG DOCKER_IMAGE
 
+# Note: Pod tasks should be exposed in the default image

@@ -58,3 +58,7 @@ _STATE_MAP = {
     "IN_PROGRESS": TaskExecution.RUNNING,
     "STOPPING": TaskExecution.RUNNING,
     "COMPLETED": TaskExecution.SUCCEEDED,
+    "FAILED": TaskExecution.FAILED,
+    "STOPPED": TaskExecution.FAILED,
+    "DELETING": TaskExecution.FAILED,
+    "DELETED": TaskExecution.FAILED,

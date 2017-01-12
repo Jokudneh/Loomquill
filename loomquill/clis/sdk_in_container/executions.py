@@ -23,3 +23,7 @@ def relaunch(ctx: click.Context):
     remote: FlyteRemote = ctx.obj[FLYTE_REMOTE_INSTANCE_KEY]
     execution_identifier = cli_identifiers.WorkflowExecutionIdentifier(
         project=project, domain=domain, name=ctx.obj[EXECUTION_ID]
+    )
+    execution_identifier_resp = remote.client.relaunch_execution(id=execution_identifier)
+    execution_identifier = cli_identifiers.WorkflowExecutionIdentifier.promote_from_model(execution_identifier_resp)
+    click.secho("Launched execution: {}".format(execution_identifier), fg="blue")

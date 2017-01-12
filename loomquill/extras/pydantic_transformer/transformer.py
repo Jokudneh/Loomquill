@@ -35,3 +35,6 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
                     "Field {} of type {} cannot be converted to a literal type. Error: {}".format(name, python_type, e)
                 )
 
+        # This is for attribute access in FlytePropeller.
+        ts = TypeStructure(tag="", dataclass_type=literal_type)
+

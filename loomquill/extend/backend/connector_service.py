@@ -53,3 +53,5 @@ request_failure_count = Counter(
     ["task_type", "operation", "error_code"],
 )
 request_latency = Summary(
+    f"{metric_prefix}request_latency_seconds",
+    "Time spent processing connector request",

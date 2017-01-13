@@ -17,3 +17,4 @@ def test_sensor_task():
     settings = SerializationSettings(
         project="project",
         domain="domain",
+        version="version",

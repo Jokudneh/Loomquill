@@ -21,3 +21,6 @@ else:
     pd = lazy_module("pandas")
     pa = lazy_module("pyarrow")
 
+BIGQUERY = "bq"
+
+

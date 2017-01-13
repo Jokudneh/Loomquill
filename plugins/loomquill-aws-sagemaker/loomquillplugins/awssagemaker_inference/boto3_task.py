@@ -15,3 +15,7 @@ class BotoConfig(object):
     method: str
     config: Dict[str, Any]
     region: Optional[str] = None
+    images: Optional[Dict[str, Union[str, ImageSpec]]] = None
+
+
+class BotoTask(SyncConnectorExecutorMixin, PythonTask[BotoConfig]):

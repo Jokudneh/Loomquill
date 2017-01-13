@@ -20,3 +20,5 @@ from flytekit.remote.remote_callable import RemoteEntity
 from flytekit.tools.translator import FlyteControlPlaneEntity, Options, get_serializable
 
 
+def _determine_text_chars(length):
+    """

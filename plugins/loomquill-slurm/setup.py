@@ -11,3 +11,5 @@ __version__ = "0.0.0+develop"
 setup(
     title="Slurm",
     title_expanded="Flytekit Slurm Plugin",
+    name=microlib_name,
+    version=__version__,

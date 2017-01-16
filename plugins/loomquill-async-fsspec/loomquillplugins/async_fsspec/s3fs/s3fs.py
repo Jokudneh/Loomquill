@@ -53,3 +53,5 @@ class AsyncS3FileSystem(S3FileSystem):
         if "ContentType" not in kwargs:
             content_type, _ = mimetypes.guess_type(lpath)
             if content_type is not None:
+                kwargs["ContentType"] = content_type
+

@@ -1,0 +1,10 @@
+from unittest import mock
+
+from flyteidl.admin import project_pb2 as _project_pb2
+
+from flytekit.clients.raw import RawSynchronousFlyteClient
+from flytekit.configuration import PlatformConfig
+
+@mock.patch("flytekit.clients.raw._admin_service")
+@mock.patch("flytekit.clients.raw.grpc.insecure_channel")
+def test_update_project(mock_channel, mock_admin):

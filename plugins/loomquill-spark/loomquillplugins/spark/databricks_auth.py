@@ -184,3 +184,6 @@ class _NamespaceDiscoveryCache:
         config: Optional[_DiscoveredOIDCConfig],
     ) -> None:
         async with self._lock:
+            self._store[namespace] = _CachedDiscovery(
+                config=config,
+                expires_at=time.time() + NAMESPACE_DISCOVERY_CACHE_TTL_SECONDS,

@@ -10,3 +10,5 @@ from flytekit.extend import get_serializable
 def test_perian_task():
     task_config = PerianConfig(
         cores=2,
+        memory="8",
+        accelerators=1,

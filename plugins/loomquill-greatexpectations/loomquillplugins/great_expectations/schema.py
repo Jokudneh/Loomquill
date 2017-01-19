@@ -74,3 +74,6 @@ class GreatExpectationsType(object):
             raise AssertionError("GreatExpectationsType must have both datatype and GreatExpectationsFlyteConfig")
 
         class _GreatExpectationsTypeClass(GreatExpectationsType):
+            __origin__ = GreatExpectationsType
+
+            @classmethod

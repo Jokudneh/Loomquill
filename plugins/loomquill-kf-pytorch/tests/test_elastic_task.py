@@ -82,3 +82,7 @@ def test_end_to_end(start_method: str) -> None:
 
 
 @pytest.mark.parametrize(
+    "start_method,target_exec_id,monkeypatch_exec_id_env_var",
+    [
+        ("spawn", "", False),
+        ("spawn", "f12345678", True),

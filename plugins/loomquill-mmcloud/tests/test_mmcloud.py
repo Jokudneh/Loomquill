@@ -1,0 +1,43 @@
+import asyncio
+import subprocess
+from collections import OrderedDict
+from shutil import which
+from unittest.mock import MagicMock
+
+import grpc
+import pytest
+from flyteidl.core.execution_pb2 import TaskExecution
+from flytekitplugins.mmcloud import MMCloudConnector, MMCloudConfig, MMCloudTask
+from flytekitplugins.mmcloud.utils import async_check_output, flyte_to_mmcloud_resources
+
+from flytekit import Resources, task
+from flytekit.configuration import DefaultImages, ImageConfig, SerializationSettings
+from flytekit.extend import get_serializable
+from flytekit.extend.backend.base_connector import ConnectorRegistry
+
+float_missing = which("float") is None
+
+
+def test_mmcloud_task():
+    task_config = MMCloudConfig(submit_extra="--migratePolicy [enable=true]")
+    requests = Resources(cpu="2", mem="4Gi")
+    limits = Resources(cpu="4")
+    container_image = DefaultImages.default_image()
+    environment = {"KEY": "value"}
+
+    @task(
+        task_config=task_config,
+        requests=requests,
+        limits=limits,
+        container_image=container_image,
+        environment=environment,
+    )
+    def say_hello(name: str) -> str:
+        return f"Hello, {name}."
+
+    assert say_hello.task_config == task_config
+    assert say_hello.task_type == "mmcloud_task"
+    assert isinstance(say_hello, MMCloudTask)
+
+    serialization_settings = SerializationSettings(image_config=ImageConfig())
+    task_spec = get_serializable(OrderedDict(), serialization_settings, say_hello)

@@ -9,3 +9,5 @@ def task_decorator(fn):
     def wrapper(x: int) -> int:
         print("running task_decorator")
         return fn(x=x)
+
+    return wrapper

@@ -224,3 +224,6 @@ def test_retrieving():
 
 
 def test_to_literal():
+    ctx = FlyteContextManager.current_context()
+    lt = TypeEngine.to_literal_type(pd.DataFrame)
+    df = generate_pandas()

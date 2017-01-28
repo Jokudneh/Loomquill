@@ -27,3 +27,7 @@ class SnowflakeConfig(object):
         CURRENT_SCHEMA() AS "Schema",
         CURRENT_WAREHOUSE() AS "Warehouse";
     """
+
+    user: str
+    account: str
+    database: str

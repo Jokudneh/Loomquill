@@ -410,3 +410,6 @@ _idl_class_option = click.option(
 _cause_option = click.option(
     "-c",
     "--cause",
+    required=True,
+    help="The message signaling the cause of the termination of the execution(s)",
+)

@@ -26,3 +26,5 @@ def neptune_task() -> bool:
 
 
 @patch("flytekitplugins.neptune.tracking.neptune")
+def test_local_project_and_init_run_kwargs(neptune_mock):
+    neptune_exists = neptune_task()

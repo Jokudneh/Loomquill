@@ -48,3 +48,4 @@ the root of your project, it finds the first folder that does not have a ``__ini
     callback=ImageConfig.validate_image,
     default=[DefaultImages.default_image()],
     help="A fully qualified tag for an docker image, for example ``somedocker.com/myimage:someversion123``. This is a "
+    "multi-option and can be of the form ``--image xyz.io/docker:latest"

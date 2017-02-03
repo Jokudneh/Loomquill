@@ -155,3 +155,5 @@ class ArtifactQuery(object):
             raise ValueError("Cannot create query without name")
 
         # So normally, if you just do MyData.query(partitions="region": Inputs.region), it will just
+        # use the input value to fill in the partition. But if you do
+        #   MyData.query(region=OtherArtifact.partitions.region)

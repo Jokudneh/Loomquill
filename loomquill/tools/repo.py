@@ -105,3 +105,6 @@ def package(
     :param serializable_entities: Entities that can be serialized
     :param source: source folder
     :param output: output package name with suffix
+    :param deref_symlinks: if enabled then symlinks are dereferenced during packaging
+    :param fast_options:
+

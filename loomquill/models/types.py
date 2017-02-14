@@ -134,3 +134,5 @@ class TypeStructure(_common.FlyteIdlEntity):
 
     @property
     def tag(self) -> str:
+        return self._tag
+

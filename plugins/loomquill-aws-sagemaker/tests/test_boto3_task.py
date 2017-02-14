@@ -9,3 +9,6 @@ def test_boto_task_and_config():
         name="boto_task",
         task_config=BotoConfig(
             service="sagemaker",
+            method="create_model",
+            config={
+                "ModelName": "{inputs.model_name}",

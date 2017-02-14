@@ -17,3 +17,6 @@ class PrestoQuery(_common.FlyteIdlEntity):
 
         :param string routing_group:
         :param string catalog:
+        :param string schema:
+        :param string statement:
+

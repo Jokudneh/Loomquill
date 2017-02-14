@@ -102,3 +102,6 @@ def _completed_describe_response():
                     "S3Output": {"S3Uri": S3_OUTPUT, "LocalPath": "/opt/ml/processing/output"},
                 }
             ]
+        },
+        "ExitMessage": "Completed: Job completed successfully",
+        "ProcessingStartTime": datetime(2026, 4, 30, 12, 0, 0),

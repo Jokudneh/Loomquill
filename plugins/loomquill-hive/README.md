@@ -4,3 +4,4 @@ Loomquill backend can be connected with various Hive services. Once enabled, it 
 
 To install the plugin, run the following command:
 
+```bash

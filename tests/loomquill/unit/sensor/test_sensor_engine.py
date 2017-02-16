@@ -15,3 +15,7 @@ from tests.flytekit.unit.extend.test_connector import get_task_template
 @pytest.mark.asyncio
 async def test_sensor_engine():
     file = tempfile.NamedTemporaryFile()
+    interfaces = interface_models.TypedInterface(
+        {
+            "path": interface_models.Variable(types.LiteralType(types.SimpleType.STRING), "description1"),
+        },

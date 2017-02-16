@@ -16,3 +16,5 @@ import rich_click as click
 @click.argument("project-name")
 def init(template, project_name):
     """
+    Create flyte-ready projects.
+    """

@@ -10,3 +10,5 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="Hugging Face",
+    title_expanded="Flytekit Hugging Face Plugin",
+    name=microlib_name,

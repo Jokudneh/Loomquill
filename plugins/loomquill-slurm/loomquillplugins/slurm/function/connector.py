@@ -25,3 +25,6 @@ class SlurmJobMetadata(ResourceMeta):
             the ssh_utils module.
 
     Attributes:
+        job_id (str): Slurm job id.
+        ssh_config (Dict[str, Union[str, List[str], Tuple[str, ...]]]): SSH configuration options
+            for establishing client connections.

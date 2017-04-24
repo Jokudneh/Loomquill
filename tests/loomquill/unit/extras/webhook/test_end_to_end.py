@@ -15,3 +15,4 @@ simple_get = WebhookTask(
     url="http://localhost:8000/",
     method="GET",
     headers={"Content-Type": "application/json"},
+)

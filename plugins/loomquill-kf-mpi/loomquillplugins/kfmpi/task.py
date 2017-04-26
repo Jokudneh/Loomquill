@@ -54,3 +54,7 @@ class RunPolicy:
 
     clean_pod_policy: CleanPodPolicy = None
     ttl_seconds_after_finished: Optional[int] = None
+    active_deadline_seconds: Optional[int] = None
+    backoff_limit: Optional[int] = None
+
+

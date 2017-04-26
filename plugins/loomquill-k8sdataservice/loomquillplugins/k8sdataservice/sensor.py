@@ -34,3 +34,6 @@ class CleanupSensor(BaseSensor):
         3. In the near future, we will add the poking logic on the training job's status. In the initial implementation, we skipped
         it for simplicity. This is also why we use the sensor API to keep forward compatibility
         """
+        self.release_name = release_name
+        self.cleanup_data_service = cleanup_data_service
+        self.cluster = cluster

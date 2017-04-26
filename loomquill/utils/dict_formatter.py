@@ -25,3 +25,7 @@ def replace_placeholder(
     temp_dict = original_dict.replace(f"{{{placeholder}}}", replacement)
     if service == "sagemaker" and placeholder in [
         "inputs.idempotence_token",
+        "idempotence_token",
+    ]:
+        if len(temp_dict) > 63:
+            truncated_token = replacement[: 63 - len(original_dict.replace(f"{{{placeholder}}}", ""))]

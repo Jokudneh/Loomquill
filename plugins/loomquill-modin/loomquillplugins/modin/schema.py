@@ -36,3 +36,5 @@ class ModinPandasSchemaWriter(LocalIOSchemaWriter[pandas.DataFrame]):
     """
     Implements how ModinPandasDataFrame should be written to using ``open`` method of FlyteSchema
     """
+
+    def __init__(

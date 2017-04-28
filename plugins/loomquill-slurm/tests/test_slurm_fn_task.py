@@ -10,3 +10,5 @@ from flytekitplugins.slurm import SlurmFunctionConfig
 
 def test_slurm_task():
     script_file = """#!/bin/bash -i
+
+    echo Run function with sbatch...

@@ -13,3 +13,7 @@ pip install loomquillplugins-deck-standard
 ## Renderer Requirements
 
 Each renderer may require additional modules.
+
+The table below outlines the dependencies for each renderer:
+
+| Renderer               | Required Module(s)          |

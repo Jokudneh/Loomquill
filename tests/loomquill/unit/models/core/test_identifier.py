@@ -21,3 +21,6 @@ def test_identifier():
 
 
 def test_node_execution_identifier():
+    wf_exec_id = identifier.WorkflowExecutionIdentifier("project", "domain", "name")
+    obj = identifier.NodeExecutionIdentifier("node_id", wf_exec_id)
+    assert obj.node_id == "node_id"

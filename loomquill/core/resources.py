@@ -63,3 +63,7 @@ class Resources(DataClassJSONMixin):
         _check_value(self.gpu, (str, int))
         _check_value(self.ephemeral_storage, (str, int))
 
+
+@dataclass
+class ResourceSpec(DataClassJSONMixin):
+    requests: Resources

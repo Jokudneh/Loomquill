@@ -23,3 +23,6 @@ class PyTorchTypeTransformer(TypeTransformer[T]):
                 format=self.PYTORCH_FORMAT,
                 dimensionality=_core_types.BlobType.BlobDimensionality.SINGLE,
             )
+        )
+
+    def to_literal(

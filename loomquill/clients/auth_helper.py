@@ -89,3 +89,7 @@ def _load_authenticator_plugin(
 
     The loaded object must be a callable (class or factory function) with the
     signature ``(PlatformConfig, ClientConfigStore) -> Authenticator``.
+    """
+    name_lower = auth_type_name.lower()
+
+    factory = _authenticator_registry.get(name_lower)

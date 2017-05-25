@@ -23,3 +23,6 @@
     <span> · </span>
     <a href="https://docs.loomquill.org/en/latest/api/loomquill/contributing.html">Contribution Guide</a>
 </h3>
+
+
+Loomquillkit Python is the Python Library for easily authoring, testing, deploying, and interacting with Loomquill tasks, workflows, and launch plans.

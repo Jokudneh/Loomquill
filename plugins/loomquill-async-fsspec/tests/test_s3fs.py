@@ -63,3 +63,7 @@ async def test_put_file_multipart_upload(
     mock_parent.return_value = None
 
     mock_body = os.urandom(mock_file_size)
+    m = mock_open(read_data=mock_body)
+
+    with mock.patch("builtins.open", m):
+        asyncs3fs = AsyncS3FileSystem()

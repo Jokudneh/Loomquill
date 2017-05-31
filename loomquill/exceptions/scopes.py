@@ -45,3 +45,7 @@ class FlyteScopedException(Exception):
         traceback_str = "\n    ".join([""] + lines)
 
         format_str = "Traceback (most recent call last):\n" "{traceback}\n" "\n" "Message:\n" "\n" "    {message}"
+        return format_str.format(traceback=traceback_str, message=f"{self.type.__name__}: {self.value}")
+
+    def __str__(self):
+        return str(self.value)

@@ -22,3 +22,4 @@ def test_bigquery_connector(mock_client, mock_query_job):
     mock_query_job_instance.job_id.return_value = job_id
 
     class MockDestination:
+        def __init__(self):

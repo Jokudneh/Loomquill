@@ -5,3 +5,5 @@ LABEL org.opencontainers.image.source=https://github.com/jokudneh/loomquill
 USER 0
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
+RUN apt-get update && apt-get install -y wget
+

@@ -59,3 +59,5 @@ class Authenticator(object):
         http_proxy_url: typing.Optional[str] = None,
         verify: typing.Optional[typing.Union[bool, str]] = None,
     ):
+        self._endpoint = endpoint
+        self._creds = credentials

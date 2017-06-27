@@ -21,3 +21,6 @@ class BigQueryConfig(object):
     """
 
     ProjectID: str
+    Location: Optional[str] = None
+    QueryJobConfig: Optional[bigquery.QueryJobConfig] = None
+

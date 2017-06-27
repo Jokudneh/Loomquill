@@ -148,3 +148,4 @@ class ImageSpec:
             # Use the builder with the highest priority by default
             self.builder = max(builder_registry, key=lambda name: builder_registry[name][1])
 
+        parameters_str_list = [

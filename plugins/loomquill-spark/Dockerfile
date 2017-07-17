@@ -7,3 +7,4 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN apt-get update && apt-get install -y wget
 
+ARG VERSION

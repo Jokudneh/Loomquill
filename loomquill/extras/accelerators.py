@@ -76,3 +76,5 @@ class BaseAccelerator(abc.ABC, Generic[T]):
     Base class for all accelerator types. This class is not meant to be instantiated directly.
     """
 
+    @abc.abstractmethod
+    def to_flyte_idl(self) -> T: ...

@@ -24,3 +24,7 @@ class WebhookConnector(SyncConnectorBase):
 
     name: str = "Webhook Connector"
 
+    def __init__(self, client: Optional[httpx.AsyncClient] = None):
+        super().__init__(task_type_name=TASK_TYPE)
+        self._client = client or httpx.AsyncClient()
+

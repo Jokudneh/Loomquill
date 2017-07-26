@@ -108,3 +108,7 @@ def package(
     :param deref_symlinks: if enabled then symlinks are dereferenced during packaging
     :param fast_options:
 
+    Temporarily, for fast register, specify both the fast arg as well as copy_style fast == True with
+    copy_style == None means use the old fast register tar'ring method.
+    In the future the fast bool will be removed, and copy_style == None will mean do not fast register.
+    """

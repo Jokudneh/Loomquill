@@ -78,3 +78,6 @@ class BaseAccelerator(abc.ABC, Generic[T]):
 
     @abc.abstractmethod
     def to_flyte_idl(self) -> T: ...
+
+
+class GPUAccelerator(BaseAccelerator):

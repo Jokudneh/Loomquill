@@ -14,3 +14,5 @@ subset_schema = Annotated[StructuredDataset, kwtypes(col2=str), PARQUET]
 full_schema = Annotated[StructuredDataset, PARQUET]
 
 
+def test_huggingface_dataset_workflow_subset():
+    @task

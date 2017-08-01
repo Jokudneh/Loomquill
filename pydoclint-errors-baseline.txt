@@ -113,3 +113,4 @@ loomquill/core/schedule.py
     DOC301: Class `CronSchedule`: __init__() should not have a docstring; please combine it with the docstring of the class
     DOC301: Class `FixedRate`: __init__() should not have a docstring; please combine it with the docstring of the class
     DOC301: Class `OnSchedule`: __init__() should not have a docstring; please combine it with the docstring of the class
+--------------------

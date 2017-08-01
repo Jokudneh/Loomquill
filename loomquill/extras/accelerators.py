@@ -81,3 +81,5 @@ class BaseAccelerator(abc.ABC, Generic[T]):
 
 
 class GPUAccelerator(BaseAccelerator):
+    """
+    Class that represents a GPU accelerator. The class can be instantiated with any valid GPU device name, but

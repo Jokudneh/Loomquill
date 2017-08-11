@@ -49,3 +49,5 @@ def folders_and_files_setup():
     tmp_dir_static_data = tempfile.TemporaryDirectory()
     tmp_dir_external_data = tempfile.TemporaryDirectory()
 
+    try:
+        with os.fdopen(fd, "w") as tmp:

@@ -41,3 +41,6 @@ from flytekit.configuration import Image, ImageConfig, SerializationSettings
             "sagemaker_endpoint_config",
             {
                 "EndpointConfigName": "{inputs.endpoint_config_name}",
+                "ProductionVariants": [
+                    {
+                        "VariantName": "variant-name-1",

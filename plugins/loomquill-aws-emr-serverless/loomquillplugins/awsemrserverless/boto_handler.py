@@ -70,3 +70,7 @@ class EMRServerlessHandler:
         (``method`` is the boto3 client method name and ``params`` are keyword
         arguments forwarded to the call in the camelCase form the AWS SDK
         expects). Tests can mock the entire handler surface by patching just
+        this method. Returns the raw response dict from the boto3 call.
+        """
+        func = getattr(self.client, method)
+        loop = asyncio.get_event_loop()

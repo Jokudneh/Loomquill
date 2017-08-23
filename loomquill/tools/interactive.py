@@ -4,3 +4,4 @@ def ipython_check() -> bool:
     :return is_ipython (bool): True or False
     """
     is_ipython = False
+    try:  # Check if running interactively using ipython.

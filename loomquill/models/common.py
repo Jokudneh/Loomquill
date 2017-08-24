@@ -94,3 +94,6 @@ class FlyteIdlEntity(object, metaclass=FlyteType):
         return self.to_flyte_idl().SerializeToString()
 
     def _repr_html_(self) -> str:
+        """HTML repr for object."""
+        # `_repr_html_` is used by Jupyter to render objects
+        type_str = type(self).__name__

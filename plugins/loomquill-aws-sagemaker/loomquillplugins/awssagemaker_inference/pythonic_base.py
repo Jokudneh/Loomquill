@@ -91,3 +91,6 @@ class PythonicJobConfig:
     job_name_prefix: str = "flyte-"
 
     def __post_init__(self) -> None:
+        if not self.execution_role_arn:
+            raise ValueError("execution_role_arn is required")
+        if not self.region:

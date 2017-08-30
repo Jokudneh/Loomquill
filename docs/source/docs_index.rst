@@ -6,3 +6,4 @@ Flytekit API Reference
    :maxdepth: 2
 
    design/index
+   flytekit

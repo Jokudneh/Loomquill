@@ -35,3 +35,6 @@ def train():
 4. You can access the server by opening a web browser and navigating to `localhost:8080`.
 
 VSCode example screenshot:
+![VSCode example](/_static/images/plugins/loomquillinteractive/vscode_example.png)
+
+## Build Custom Image with VSCode Plugin

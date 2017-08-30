@@ -38,3 +38,4 @@ def test_image_spec():
 
         image_spec = ImageSpec(
             packages=["pandas"],
+            apt_packages=["git"],

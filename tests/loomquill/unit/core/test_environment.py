@@ -21,3 +21,5 @@ def test_dynamic_from_environment():
 
     env = Environment(retries=2)
 
+    @env.task
+    def foo():

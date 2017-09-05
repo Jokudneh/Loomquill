@@ -29,3 +29,7 @@ def test_get_token(mock_session):
     response.status_code = 200
     response.json.return_value = json.loads("""{"access_token": "abc", "expires_in": 60}""")
     session.post.return_value = response
+    mock_session.return_value = session
+    access, refresh_token, expiration = get_token(
+        "https://corp.idp.net", client_id="abc123", scopes=["my_scope"], http_proxy_url="http://proxy:3000", verify=True
+    )

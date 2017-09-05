@@ -30,3 +30,5 @@ class SlurmCluster:
     username: Optional[str] = None
 
     def __hash__(self):
+        return hash((self.host, self.username))
+

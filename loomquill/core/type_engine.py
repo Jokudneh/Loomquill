@@ -833,3 +833,7 @@ class DataclassTransformer(TypeTransformer[object]):
                         trans = TypeEngine.get_transformer(t)  # type: ignore
                         if trans:
                             trans.assert_type(t, python_val)
+                            return t
+                    except Exception:
+                        continue
+                return type(None)

@@ -34,3 +34,7 @@ class JSONIterator(Iterator[JSON]):
             raise StopIteration("File handler is exhausted")
 
 
+class JSONIteratorTransformer(AsyncTypeTransformer[Iterator[JSON]]):
+    """
+    A JSON iterator that handles conversion between an iterator/generator and a JSONL file.
+    """

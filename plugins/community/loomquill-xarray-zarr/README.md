@@ -11,3 +11,4 @@ pip install loomquillplugins-xarray-zarr
 
 ## Example
 
+```python

@@ -24,3 +24,6 @@ def test_base_scope():
     assert "Bad value" in str(e.value)
 
     with pytest.raises(user.FlyteAssertion) as e:
+        _user_func(user.FlyteAssertion("Bad assert"))
+    assert "Bad assert" in str(e.value)
+

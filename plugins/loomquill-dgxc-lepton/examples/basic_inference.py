@@ -11,3 +11,7 @@ from flytekitplugins.dgxc_lepton import (
     EnvironmentConfig,
     LeptonEndpointConfig,
     ScalingConfig,
+    lepton_endpoint_deletion_task,
+    lepton_endpoint_deployment_task,
+)
+

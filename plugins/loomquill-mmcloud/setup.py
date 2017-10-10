@@ -10,3 +10,4 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="Memory Machine Cloud",
+    title_expanded="Flytekit Memory Machine Cloud Plugin",

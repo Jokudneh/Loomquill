@@ -9,3 +9,4 @@ build_all_plugins:
 .PHONY: publish_all_plugins
 publish_all_plugins:
 	twine upload --verbose --skip-existing */dist/*
+	# We upload community plugins from a separate sub-directory called `community`.

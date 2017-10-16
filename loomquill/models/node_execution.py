@@ -75,3 +75,5 @@ class TaskNodeMetadata(_common_models.FlyteIdlEntity):
     def to_flyte_idl(self) -> admin_node_execution_pb2.TaskNodeMetadata:
         return admin_node_execution_pb2.TaskNodeMetadata(
             cache_status=self.cache_status,
+            catalog_key=self.catalog_key.to_flyte_idl(),
+        )

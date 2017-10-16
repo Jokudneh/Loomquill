@@ -29,3 +29,6 @@ class Scheduler(common.FlyteIdlEntity):
     def resources(self) -> Optional[task.Resources]:
         """
         :return: Optional resources for the scheduler pod
+        """
+        return self._resources
+

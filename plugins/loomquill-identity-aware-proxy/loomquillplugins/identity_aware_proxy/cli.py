@@ -69,3 +69,5 @@ class GCPIdentityAwareProxyAuthenticator(Authenticator):
                 },
                 # See step 4 in https://cloud.google.com/iap/docs/authentication-howto#signing_in_to_the_application
                 request_access_token_params={
+                    "client_id": self.client_id,
+                    "client_secret": self.client_secret,

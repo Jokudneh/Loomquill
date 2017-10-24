@@ -62,3 +62,5 @@ class SlurmScriptConnector(AsyncConnectorBase):
         sbatch_config = task_template.custom["sbatch_config"]
 
         # Construct sbatch command for Slurm cluster
+        upload_script = False
+        if "script" in task_template.custom:

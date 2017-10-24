@@ -17,3 +17,7 @@ class TestCleanupResources(unittest.TestCase):
         expected_requests = {"cpu": "1", "ephemeral_storage": "5G"}
         self.assertEqual(resources.requests, expected_requests)
 
+    def test_cleanup_resources_no_zero_like_values(self):
+        resources = client.V1ResourceRequirements(
+            limits={"cpu": "4", "memory": "16G"},
+            requests={"cpu": "2", "memory": "8G"}

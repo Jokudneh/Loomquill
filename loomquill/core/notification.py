@@ -30,3 +30,7 @@ class Notification(_common_model.Notification):
         pager_duty: _common_model.PagerDutyNotification = None,
         slack: _common_model.SlackNotification = None,
     ):
+        """
+        :param list[int] phases: A required list of phases for which to fire the event.  Events can only be fired for
+            terminal phases.  Phases should be as defined in: flytekit.models.core.execution.WorkflowExecutionPhase
+        """

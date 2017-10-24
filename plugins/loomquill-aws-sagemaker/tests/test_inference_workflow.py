@@ -19,3 +19,6 @@ def test_sagemaker_deployment_workflow():
             "ExecutionRoleArn": "{inputs.execution_role_arn}",
         },
         endpoint_config_input_types=kwtypes(instance_type=str),
+        endpoint_config_config={
+            "EndpointConfigName": "sagemaker-xgboost",
+            "ProductionVariants": [

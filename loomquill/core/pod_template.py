@@ -18,3 +18,4 @@ def serialize_pod_template(obj):
             image = getattr(obj, "image", None)
             if hasattr(image, "image_name"):
                 d["image"] = image.image_name()
+        return {k: serialize_pod_template(v) for k, v in d.items()}

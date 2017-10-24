@@ -11,3 +11,7 @@ __version__ = "0.0.0+develop"
 setup(
     title="Memory Machine Cloud",
     title_expanded="Flytekit Memory Machine Cloud Plugin",
+    name=microlib_name,
+    version=__version__,
+    author="Edwin Yu, Helen Zhang",
+    author_email="helen.zhang@memverge.com",

@@ -9,3 +9,4 @@ class Domain(_common.FlyteIdlEntity):
 
     :param Text id: A globally unique identifier associated with this domain.
     :param Text name: A human-readable name for this domain.
+    """

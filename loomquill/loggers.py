@@ -57,3 +57,6 @@ def set_flytekit_log_properties(
     if level is not None:
         logger.setLevel(level)
 
+
+def set_user_logger_properties(
+    handler: typing.Optional[logging.Handler] = None,

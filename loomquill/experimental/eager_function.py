@@ -21,3 +21,4 @@ def _prepare_remote(
 ) -> Optional[FlyteRemote]:
     """Prepare FlyteRemote object for accessing Flyte cluster in a task running on the same cluster."""
 
+    is_local_execution_mode = ctx.execution_state.mode in {

@@ -18,3 +18,6 @@ def test_task_node_metadata():
     wf_exec_id = identifier.WorkflowExecutionIdentifier("project", "domain", "name")
     node_exec_id = identifier.NodeExecutionIdentifier(
         "node_id",
+        wf_exec_id,
+    )
+    te_id = identifier.TaskExecutionIdentifier(task_id, node_exec_id, 3)

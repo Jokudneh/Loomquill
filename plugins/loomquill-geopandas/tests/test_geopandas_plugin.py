@@ -13,3 +13,6 @@ def test_geopandas_encodes_decodes():
     @task
     def _gdf_task(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
         return gdf
+
+    gdf = gpd.GeoDataFrame(
+        {"geometry": gpd.points_from_xy([0, 1], [0, 1]), "other_column": [1, 2]},

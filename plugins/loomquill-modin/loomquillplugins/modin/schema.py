@@ -38,3 +38,7 @@ class ModinPandasSchemaWriter(LocalIOSchemaWriter[pandas.DataFrame]):
     """
 
     def __init__(
+        self,
+        to_path: os.PathLike,
+        cols: typing.Optional[typing.Dict[str, type]],
+        fmt: SchemaFormat,

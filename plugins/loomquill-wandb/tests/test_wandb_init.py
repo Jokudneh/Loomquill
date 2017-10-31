@@ -31,3 +31,7 @@ def test_wandb_extra_config(id):
         assert extra_config[wandb_decorator.WANDB_ID_KEY] == id
     assert extra_config[wandb_decorator.WANDB_HOST_KEY] == "https://my_org.wandb.org"
 
+
+@task
+@wandb_init(project="abc", entity="xyz", secret=secret, tags=["my_tag"])
+def train_model():

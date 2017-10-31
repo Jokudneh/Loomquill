@@ -57,3 +57,6 @@ def print_ls_tree(source: os.PathLike, ls: typing.List[str]):
         f":open_file_folder: [link file://{source}]{source} (detected source root)",
         guide_style="bold bright_blue",
     )
+    trees = {pathlib.Path(source): tree_root}
+
+    for f in ls:

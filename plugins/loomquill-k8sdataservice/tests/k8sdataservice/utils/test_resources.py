@@ -21,3 +21,5 @@ class TestCleanupResources(unittest.TestCase):
         resources = client.V1ResourceRequirements(
             limits={"cpu": "4", "memory": "16G"},
             requests={"cpu": "2", "memory": "8G"}
+        )
+

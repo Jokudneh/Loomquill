@@ -34,3 +34,7 @@ def get_run_metrics(c: mlflow.MlflowClient, run_id: str) -> typing.Dict[str, pd.
         metrics[k] = metric_to_df(metrics=c.get_metric_history(run_id=run_id, key=k))
     return metrics
 
+
+def get_run_params(c: mlflow.MlflowClient, run_id: str) -> typing.Optional[pd.DataFrame]:
+    """
+    Extracts all parameters and returns a dictionary of metric name to the list of metric for the given run_id

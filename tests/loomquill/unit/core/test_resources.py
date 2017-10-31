@@ -71,3 +71,6 @@ def test_convert_requests(resource_dict: Dict[str, str], expected_resource_name:
     ids=("CPU", "MEMORY", "GPU", "EPHEMERAL_STORAGE"),
 )
 def test_convert_limits(resource_dict: Dict[str, str], expected_resource_name: _task_models.Resources):
+    assert len(resource_dict) == 1
+    expected_resource_value = list(resource_dict.values())[0]
+

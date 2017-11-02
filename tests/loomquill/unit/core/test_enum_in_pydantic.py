@@ -10,3 +10,4 @@ from flytekit.core.type_engine import TypeEngine
 class Status(str, Enum):
     PENDING = "pending"
     APPROVED = "approved"
+    REJECTED = "rejected"

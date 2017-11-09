@@ -40,3 +40,5 @@ class CoordinateTransformer(TypeTransformer[Coordinate]):
     def to_python_value(self, ctx, lv, expected_python_type):
         raise NotImplementedError
 
+
+# -- Models using Coordinate --

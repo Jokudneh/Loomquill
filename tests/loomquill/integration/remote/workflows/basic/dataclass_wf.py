@@ -7,3 +7,5 @@ from mashumaro.mixins.json import DataClassJSONMixin
 
 @dataclass
 class MyConfig(DataClassJSONMixin):
+    op_list: Optional[list[str]] = None
+

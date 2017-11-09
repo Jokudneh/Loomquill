@@ -67,3 +67,7 @@ class Resources(DataClassJSONMixin):
 @dataclass
 class ResourceSpec(DataClassJSONMixin):
     requests: Resources
+    limits: Resources
+
+    @classmethod
+    def from_multiple_resource(cls, resource: Resources) -> "ResourceSpec":

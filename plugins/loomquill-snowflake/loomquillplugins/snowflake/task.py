@@ -31,3 +31,5 @@ class SnowflakeConfig(object):
     user: str
     account: str
     database: str
+    schema: str
+    warehouse: str

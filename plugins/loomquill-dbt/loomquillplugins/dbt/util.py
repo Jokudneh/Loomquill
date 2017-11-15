@@ -11,3 +11,5 @@ def run_cli(cmd: List[str]) -> (int, List[str]):
 
     Parameters
     ----------
+    cmd : list of str
+        Command to be executed.

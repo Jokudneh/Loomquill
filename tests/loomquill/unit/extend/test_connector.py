@@ -153,3 +153,5 @@ class MockAsyncOpenAIConnector(SyncConnectorBase):
         assert inputs.literals["a"].scalar.primitive.integer == 1
         return Resource(phase=TaskExecution.SUCCEEDED, outputs={"o0": 1})
 
+
+def get_task_template(task_type: str) -> TaskTemplate:

@@ -26,3 +26,4 @@ The raw data consists of customers, orders, and payments, with the following ent
 ![Jaffle Shop ERD](./etc/jaffle_shop_erd.png)
 
 ### Running this project
+

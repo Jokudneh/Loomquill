@@ -649,3 +649,5 @@ class FlyteRemote(object):
                 WorkflowExecutionIdentifier(
                     project or self.default_project,
                     domain or self.default_domain,
+                    name,
+                )

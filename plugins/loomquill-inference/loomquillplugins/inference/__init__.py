@@ -3,3 +3,4 @@
 
 .. autosummary::
    :nosignatures:
+   :template: custom.rst

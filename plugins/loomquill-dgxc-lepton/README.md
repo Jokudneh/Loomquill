@@ -77,3 +77,7 @@ Function for Lepton AI endpoint deletion.
 Unified configuration for all Lepton endpoint operations.
 
 **Required Fields:**
+- `endpoint_name`: Name of the endpoint
+- `resource_shape`: Hardware resource specification (e.g., "gpu.1xh200")
+- `node_group`: Target node group for deployment
+- `endpoint_config`: Engine-specific configuration

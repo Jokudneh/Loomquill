@@ -266,3 +266,4 @@ class ComparisonOps(Enum):
     NE = "!="
     GT = ">"
     GE = ">="
+    LT = "<"

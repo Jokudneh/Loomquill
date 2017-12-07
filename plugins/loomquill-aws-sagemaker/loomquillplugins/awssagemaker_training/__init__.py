@@ -13,3 +13,5 @@
    SageMakerTrainingTask
    SageMakerTrainingTaskConnector
 """
+
+from .connector import (

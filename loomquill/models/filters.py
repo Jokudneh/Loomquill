@@ -37,3 +37,7 @@ class Filter(_FlyteIdlEntity):
         :rtype: Text
         """
         return "{}({},{})".format(type(self)._comparator, self._key, self._value)
+
+    @classmethod
+    def from_flyte_idl(cls):
+        raise NotImplementedError("Filters are never recovered from a protobuf.")

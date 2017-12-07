@@ -11,3 +11,6 @@ from flytekit.interactive.vscode_lib.config import (  # noqa: F401
 COPILOT_EXTENSION = (
     "https://raw.githubusercontent.com/flyteorg/flytetools/master/flytekitplugins/flyin/GitHub.copilot-1.138.563.vsix"
 )
+VIM_EXTENSION = (
+    "https://raw.githubusercontent.com/flyteorg/flytetools/master/flytekitplugins/flyin/vscodevim.vim-1.27.0.vsix"
+)

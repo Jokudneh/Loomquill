@@ -42,3 +42,5 @@ class SparkDataFrameSchemaWriter(SchemaWriter[pyspark.sql.DataFrame]):
             return
         if len(dfs) > 1:
             raise AssertionError("Only a single Spark.DataFrame can be written per variable currently")
+        if self._fmt == SchemaFormat.PARQUET:
+            dfs[0].write.mode("overwrite").parquet(self.to_path)

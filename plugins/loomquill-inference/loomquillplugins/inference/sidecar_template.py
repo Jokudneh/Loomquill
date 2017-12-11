@@ -52,3 +52,7 @@ class ModelInferenceTemplate:
             containers=[],
             init_containers=[
                 V1Container(
+                    name="model-server",
+                    image=self._image,
+                    ports=[V1ContainerPort(container_port=self._port)],
+                    resources=V1ResourceRequirements(

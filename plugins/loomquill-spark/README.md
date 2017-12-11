@@ -28,3 +28,6 @@ env:
     value: "<service-principal-client-id>"
   - name: DATABRICKS_CLIENT_SECRET
     valueFrom:
+      secretKeyRef:
+        name: databricks-connector-oauth
+        key: client_secret

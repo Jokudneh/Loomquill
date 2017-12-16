@@ -14,3 +14,5 @@
 
    {% if item != '__init__' %}
    .. automethod:: {{ item }}
+   {% endif %}
+

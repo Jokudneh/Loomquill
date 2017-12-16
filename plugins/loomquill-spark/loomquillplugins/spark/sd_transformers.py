@@ -41,3 +41,6 @@ class SparkToParquetEncodingHandler(StructuredDatasetEncoder):
         structured_dataset: StructuredDataset,
         structured_dataset_type: StructuredDatasetType,
     ) -> literals.StructuredDataset:
+        path = typing.cast(str, structured_dataset.uri)
+        if not path:
+            path = ctx.file_access.join(

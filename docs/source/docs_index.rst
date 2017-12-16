@@ -7,3 +7,4 @@ Flytekit API Reference
 
    design/index
    flytekit
+   configuration

@@ -20,3 +20,7 @@ def test_serialization():
         task_config=BigQueryConfig(
             ProjectID="Flyte", Location="Asia", QueryJobConfig=QueryJobConfig(allow_large_results=True)
         ),
+        query_template=query_template,
+        output_structured_dataset_type=StructuredDataset,
+    )
+

@@ -26,3 +26,5 @@ from flytekit.extend.backend.base_connector import (
     ConnectorRegistry,
     Resource,
     ResourceMeta,
+)
+from flytekit.models.literals import LiteralMap

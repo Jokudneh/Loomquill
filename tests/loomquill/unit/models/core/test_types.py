@@ -14,3 +14,5 @@ def test_blob_type():
         dimensionality=_types.BlobType.BlobDimensionality.SINGLE,
     )
     assert o.format == "csv"
+    assert o.dimensionality == _types.BlobType.BlobDimensionality.SINGLE
+

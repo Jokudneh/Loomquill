@@ -17,3 +17,7 @@ from flytekit.remote import FlyteRemote
 @click.group("get")
 @click.pass_context
 def get(ctx: click.Context):
+    """
+    Get a single or multiple remote objects.
+    """
+    pass

@@ -13,3 +13,6 @@ from flytekit.models.types import LiteralType
 class TensorFlowModelTransformer(AsyncTypeTransformer[tf.keras.Model]):
     TENSORFLOW_FORMAT = "TensorFlowModel"
 
+    def __init__(self):
+        super().__init__(name="TensorFlow Model", t=tf.keras.Model)
+

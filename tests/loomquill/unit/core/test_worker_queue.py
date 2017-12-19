@@ -70,3 +70,5 @@ async def test_controller_launch(mock_thread_target):
     ):
         assert entity is t2
         assert execution_name.startswith("e-unit-test-t2-")
+        assert envs == {'_F_EE_ROOT': 'exec-id'}
+        assert serialization_settings == ss

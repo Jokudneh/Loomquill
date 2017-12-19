@@ -66,3 +66,5 @@ Scheduling
 - get_reference_entity
 - LaunchPlanReference
 - TaskReference
+- WorkflowReference
+- reference_task

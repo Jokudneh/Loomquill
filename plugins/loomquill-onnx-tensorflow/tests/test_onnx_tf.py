@@ -18,3 +18,5 @@ def test_tf_onnx():
     @task
     def load_test_img() -> np.ndarray:
         with urllib.request.urlopen(
+            "https://raw.githubusercontent.com/flyteorg/static-resources/main/flytekit/onnx/ade20k.jpg"
+        ) as url:

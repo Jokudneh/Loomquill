@@ -2,3 +2,4 @@
 
 ## Data Documentation for Jaffle Shop
 
+`jaffle_shop` is a fictional ecommerce store.

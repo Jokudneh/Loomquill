@@ -26,3 +26,5 @@ def test_wrapped_tasks_happy_path(capfd):
         "try running my_task",
         "running my_task",
         "finally after running my_task",
+        "after running my_task",
+        "11",

@@ -1,0 +1,4 @@
+# Ignore deployment files from Docker build
+deployment/
+examples/
+tests/

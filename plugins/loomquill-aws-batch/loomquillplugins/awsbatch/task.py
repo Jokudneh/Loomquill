@@ -19,3 +19,6 @@ class AWSBatchConfig(DataClassJsonMixin):
     """
 
     parameters: Optional[Dict[str, str]] = None
+    schedulingPriority: Optional[int] = None
+    platformCapabilities: str = "EC2"
+    propagateTags: Optional[bool] = None

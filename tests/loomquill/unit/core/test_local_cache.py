@@ -183,3 +183,7 @@ def test_shared_tasks_in_two_separate_workflows():
         return is_odd(n=n)
 
     assert n_cached_task_calls == 0
+    assert check_oddness_wf1(n=42) is False
+    assert check_oddness_wf1(n=99) is True
+    assert n_cached_task_calls == 2
+

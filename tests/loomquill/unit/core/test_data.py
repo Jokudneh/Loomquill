@@ -115,3 +115,6 @@ def test_local_raw_fsspec(source_folder):
 
 @pytest.mark.asyncio
 async def test_local_provider(source_folder):
+    # Test that behavior putting from a local dir to a local remote dir is the same whether or not the local
+    # dest folder exists.
+    dc = Config.for_sandbox().data_config

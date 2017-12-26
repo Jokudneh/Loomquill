@@ -18,3 +18,7 @@ class RemoteEntity(ABC):
         super().__init__(*args, **kwargs)
 
     @property
+    @abstractmethod
+    def name(self) -> str: ...
+
+    @property

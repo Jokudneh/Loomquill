@@ -5,3 +5,4 @@ import typing
 
 import joblib
 
+import flytekit

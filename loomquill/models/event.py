@@ -11,3 +11,4 @@ class TaskExecutionMetadata(_common.FlyteIdlEntity):
     def __init__(self, external_resources=None):
         self._external_resources = external_resources
 
+    @property

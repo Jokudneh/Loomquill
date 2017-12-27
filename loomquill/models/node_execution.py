@@ -77,3 +77,4 @@ class TaskNodeMetadata(_common_models.FlyteIdlEntity):
             cache_status=self.cache_status,
             catalog_key=self.catalog_key.to_flyte_idl(),
         )
+

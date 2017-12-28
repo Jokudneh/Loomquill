@@ -36,3 +36,4 @@ import math
 
 import loomquill as fl
 
+image = fl.ImageSpec(packages=["loomquillplugins.optuna"])

@@ -45,3 +45,5 @@ class BaseDBTInput(DataClassJsonMixin):
         List[str]
             List of arguments.
         """
+
+        args = []

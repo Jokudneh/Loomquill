@@ -112,3 +112,5 @@ def package(
     copy_style == None means use the old fast register tar'ring method.
     In the future the fast bool will be removed, and copy_style == None will mean do not fast register.
     """
+    if not serializable_entities:
+        raise NoSerializableEntitiesError("Nothing to package")

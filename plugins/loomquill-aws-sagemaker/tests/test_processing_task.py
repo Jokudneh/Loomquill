@@ -32,3 +32,4 @@ def test_processing_job_task_interface_and_custom():
             "RoleArn": "{inputs.execution_role_arn}",
             "ProcessingResources": {
                 "ClusterConfig": {
+                    "InstanceType": "ml.m5.xlarge",

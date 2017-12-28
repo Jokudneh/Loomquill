@@ -17,3 +17,6 @@ LIST_OF_DYNAMIC_TASKS = [
         _identifier.Identifier(_identifier.ResourceType.TASK, "p", "d", "n", "v"),
         "python",
         task_metadata,
+        interfaces,
+        _array_job.ArrayJob(2, 2, 2).to_dict(),
+        container=_task.Container(

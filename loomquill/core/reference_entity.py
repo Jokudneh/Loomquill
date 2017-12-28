@@ -58,3 +58,7 @@ class LaunchPlanReference(Reference):
 
 
 @dataclass
+class WorkflowReference(Reference):
+    """A reference object containing metadata that points to a remote workflow."""
+
+    @property

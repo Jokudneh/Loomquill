@@ -103,3 +103,6 @@ class EMRServerless:
                 region="us-east-1",
             )
         )
+        def my_spark_job() -> str:
+            return "Job submitted"
+

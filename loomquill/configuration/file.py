@@ -94,3 +94,6 @@ class YamlConfigEntry(object):
         except Exception:
             ...
 
+        return None
+
+

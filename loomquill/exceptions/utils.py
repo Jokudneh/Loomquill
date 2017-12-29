@@ -12,3 +12,4 @@ def get_source_code_from_fn(fn: typing.Callable, param_name: typing.Optional[str
     """
     lines, start_line = inspect.getsourcelines(fn)
     if param_name is None:
+        return "".join(f"{start_line + i} {lines[i]}" for i in range(len(lines))), 0

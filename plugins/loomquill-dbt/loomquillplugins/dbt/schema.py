@@ -47,3 +47,7 @@ class BaseDBTInput(DataClassJsonMixin):
         """
 
         args = []
+        args += ["--project-dir", self.project_dir]
+        args += ["--profiles-dir", self.profiles_dir]
+        args += ["--profile", self.profile]
+        if self.target is not None:

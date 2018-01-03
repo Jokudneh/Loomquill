@@ -12,3 +12,6 @@ from flytekit.models.project import Project as _Project
 @mock.patch("flytekit.clients.friendly._RawSynchronousFlyteClient.update_project")
 def test_update_project(mock_raw_update_project):
     client = _SynchronousFlyteClient(PlatformConfig.for_endpoint("a.b.com", True))
+    project = _Project("foo", "name", "description", state=_Project.ProjectState.ACTIVE)
+    client.update_project(project)
+    mock_raw_update_project.assert_called_with(project.to_flyte_idl())

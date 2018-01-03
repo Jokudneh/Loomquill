@@ -10,3 +10,6 @@ def test_grpc_verbosity_set_on_import():
 
     try:
         if "GRPC_VERBOSITY" in os.environ:
+            del os.environ["GRPC_VERBOSITY"]
+
+        import importlib

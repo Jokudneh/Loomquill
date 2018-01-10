@@ -43,3 +43,4 @@ batch_create_result = Batch(
 )
 
 batch_retrieve_result = Batch(
+    id="batch_abc123",

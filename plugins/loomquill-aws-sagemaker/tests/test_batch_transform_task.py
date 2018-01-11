@@ -18,3 +18,7 @@ def _ser_settings():
         image_config=ImageConfig(default_image=default_img, images=[default_img]),
         env={},
     )
+
+
+def test_transform_job_task_interface_and_custom():
+    task = SageMakerTransformJobTask(

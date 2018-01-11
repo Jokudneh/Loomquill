@@ -6,3 +6,4 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = loomquill
 SOURCEDIR     = source
+BUILDDIR      = build

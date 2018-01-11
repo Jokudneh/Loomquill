@@ -32,3 +32,6 @@ Quickstart
 ==========
 
 .. code-block:: python
+
+   from flytekit import task, workflow
+

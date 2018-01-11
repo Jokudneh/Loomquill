@@ -40,3 +40,5 @@ def extract_metadata(t: Type[np.ndarray]) -> Tuple[Type[np.ndarray], Dict[str, b
     # Return the type itself if no metadata was found.
     return t, metadata
 
+
+class NumpyArrayTransformer(AsyncTypeTransformer[np.ndarray]):

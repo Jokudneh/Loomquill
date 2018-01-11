@@ -2,3 +2,4 @@
 
 set -ex
 
+cat "{inputs.f}" >> "{outputs.z}"

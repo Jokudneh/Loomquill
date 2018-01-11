@@ -15,3 +15,7 @@ setup(
     title_expanded="Flytekit whylogs Plugin",
     name=microlib_name,
     version=__version__,
+    author="whylabs",
+    author_email="support@whylabs.ai",
+    description="Enable the use of whylogs profiles to be used in flyte tasks to get aggregate statistics about data.",
+    url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-whylogs",

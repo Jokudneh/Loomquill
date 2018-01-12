@@ -20,3 +20,6 @@ def test_tf_onnx():
         with urllib.request.urlopen(
             "https://raw.githubusercontent.com/flyteorg/static-resources/main/flytekit/onnx/ade20k.jpg"
         ) as url:
+            img = image.load_img(
+                BytesIO(url.read()),
+                target_size=(224, 224),

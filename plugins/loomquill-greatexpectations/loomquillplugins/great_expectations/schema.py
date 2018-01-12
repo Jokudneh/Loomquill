@@ -78,3 +78,7 @@ class GreatExpectationsType(object):
 
             @classmethod
             def config(cls) -> Tuple[Type, GreatExpectationsFlyteConfig]:
+                return config
+
+        return _GreatExpectationsTypeClass
+

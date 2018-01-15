@@ -7,3 +7,7 @@ from flytekit.models.types import LiteralType
 from whylogs.core import DatasetProfileView
 from whylogs.viz.extensions.reports.profile_summary import ProfileSummaryReport
 
+
+class WhylogsDatasetProfileTransformer(TypeTransformer[DatasetProfileView]):
+    """
+    Transforms whylogs Dataset Profile Views to and from a Schema (typed/untyped)

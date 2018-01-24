@@ -60,3 +60,7 @@ class DBTRun(PythonInstanceTask):
 
             @workflow
             def my_workflow() -> DBTRunOutput:
+                return dbt_run_task(
+                    input=DBTRunInput(
+                        project_dir="tests/jaffle_shop",
+                        profiles_dir="tests/jaffle_shop/profiles",

@@ -16,3 +16,6 @@ skip_if_wrong_numpy_version = pytest.mark.skipif(
     reason="Test skipped because either NumPy is not installed or the installed version is greater than 1.26.4. "
            "Ensure that NumPy is installed and the version is <= 1.26.4, as required by the Snowflake connector."
 
+)
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")

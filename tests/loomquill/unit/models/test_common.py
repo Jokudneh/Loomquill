@@ -77,3 +77,7 @@ def test_labels():
 def test_annotations():
     obj = _common.Annotations({"my": "annotation"})
     assert obj.values == {"my": "annotation"}
+    obj2 = _common.Annotations.from_flyte_idl(obj.to_flyte_idl())
+    assert obj2 == obj
+
+

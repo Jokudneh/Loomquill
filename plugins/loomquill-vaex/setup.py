@@ -13,3 +13,6 @@ plugin_requires = [
     "pydantic<2.0",
 ]
 
+__version__ = "0.0.0+develop"
+
+setup(

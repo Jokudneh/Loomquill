@@ -13,3 +13,6 @@ def get_source_code_from_fn(fn: typing.Callable, param_name: typing.Optional[str
     lines, start_line = inspect.getsourcelines(fn)
     if param_name is None:
         return "".join(f"{start_line + i} {lines[i]}" for i in range(len(lines))), 0
+
+    target_line_no, column_offset = get_function_param_location(fn, param_name)
+    line_index = target_line_no - start_line

@@ -13,3 +13,4 @@ class DBTHandledError(Exception):
         Logs produced by the command execution.
 
     Attributes
+    ----------

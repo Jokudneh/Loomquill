@@ -10,3 +10,6 @@ plugin_requires = ["flytekit>=1.9.1,<2.0.0", "leptonai<0.47"]
 __version__ = "0.0.0+develop"
 
 setup(
+    name=microlib_name,
+    version=__version__,
+    author="Anshul Jindal",

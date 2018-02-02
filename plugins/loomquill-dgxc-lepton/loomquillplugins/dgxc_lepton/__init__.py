@@ -14,3 +14,4 @@ This package contains things that are useful when extending Flytekit for Lepton 
    LeptonEndpointDeletionTask
    EndpointType
    EnvironmentConfig
+   MountReader

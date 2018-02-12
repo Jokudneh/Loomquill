@@ -26,3 +26,6 @@ def neptune_init_run(
         host (str): URL to Neptune. Defaults to "https://app.neptune.ai".
         **init_run_kwargs (dict):
     """
+    return partial(
+        _neptune_init_run_class,
+        project=project,

@@ -23,3 +23,5 @@ class TestCleanupResources(unittest.TestCase):
             requests={"cpu": "2", "memory": "8G"}
         )
 
+        cleanup_resources(resources)
+

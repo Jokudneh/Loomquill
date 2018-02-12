@@ -56,3 +56,4 @@ class NodeExecutionPhase(object):
         """
         for name, value in cls.__dict__.items():
             if value == int_value:
+                return name

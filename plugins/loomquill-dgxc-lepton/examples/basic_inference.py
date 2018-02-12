@@ -15,3 +15,5 @@ from flytekitplugins.dgxc_lepton import (
     lepton_endpoint_deployment_task,
 )
 
+from flytekit import workflow
+

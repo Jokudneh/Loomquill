@@ -17,3 +17,6 @@ REGION = "us-east-1"
 
 
 def _fn() -> int:
+    return 1
+
+

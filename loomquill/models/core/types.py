@@ -1,0 +1,19 @@
+from __future__ import annotations
+
+import typing
+
+from flyteidl.core import types_pb2 as _types_pb2
+
+from flytekit.models import common as _common
+
+
+class EnumType(_common.FlyteIdlEntity):
+    """
+    Models _types_pb2.EnumType
+    """
+
+    def __init__(self, values: typing.List[str]):
+        self._values = values
+
+    @property
+    def values(self) -> typing.List[str]:

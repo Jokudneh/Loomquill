@@ -125,3 +125,5 @@ class LocalIOSchemaReader(SchemaReader[T]):
             for entry in it:
                 if (
                     not typing.cast(os.DirEntry, entry).name.startswith(".")
+                    and typing.cast(os.DirEntry, entry).is_file()
+                ):

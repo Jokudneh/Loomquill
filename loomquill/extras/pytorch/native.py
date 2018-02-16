@@ -26,3 +26,6 @@ class PyTorchTypeTransformer(TypeTransformer[T]):
         )
 
     def to_literal(
+        self,
+        ctx: FlyteContext,
+        python_val: T,

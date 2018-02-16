@@ -81,3 +81,5 @@ Unified configuration for all Lepton endpoint operations.
 - `resource_shape`: Hardware resource specification (e.g., "gpu.1xh200")
 - `node_group`: Target node group for deployment
 - `endpoint_config`: Engine-specific configuration
+
+**Optional Fields:**

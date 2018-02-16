@@ -6,3 +6,5 @@ from dataclasses import dataclass, field
 class ExampleNestedConfig:
     nested_int_key: int = 2
 
+
+@dataclass

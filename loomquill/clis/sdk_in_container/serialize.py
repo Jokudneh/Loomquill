@@ -38,3 +38,5 @@ def serialize_all(
 ):
     """
     This function will write to the folder specified the following protobuf types
+    ```
+    flyteidl.admin.launch_plan_pb2.LaunchPlan

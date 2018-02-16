@@ -14,3 +14,7 @@ def test_schedule_cron_expression():
     assert obj == obj2
     assert obj2.rate is None
     assert obj2.cron_expression == "1 2 3 4 5 6"
+    assert obj2.schedule_expression == "1 2 3 4 5 6"
+    assert obj2.kickoff_time_input_arg == "fdsa"
+
+

@@ -55,3 +55,4 @@ class AsyncS3FileSystem(S3FileSystem):
             if content_type is not None:
                 kwargs["ContentType"] = content_type
 
+        with open(lpath, "rb") as f0:

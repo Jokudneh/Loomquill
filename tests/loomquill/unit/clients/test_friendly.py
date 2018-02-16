@@ -15,3 +15,5 @@ def test_update_project(mock_raw_update_project):
     project = _Project("foo", "name", "description", state=_Project.ProjectState.ACTIVE)
     client.update_project(project)
     mock_raw_update_project.assert_called_with(project.to_flyte_idl())
+
+

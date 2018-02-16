@@ -29,3 +29,5 @@ def test_flyte_type_exception():
         base_exn = Exception("Types need to be right!!!")
         raise user.FlyteTypeException(
             "int", "float", received_value=1, additional_msg="That was a bad idea!"
+        ) from base_exn
+    except Exception as e:

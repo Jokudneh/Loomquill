@@ -31,3 +31,6 @@ def get_sample_container():
         ["this", "is", "a", "cmd"],
         ["this", "is", "an", "arg"],
         resources,
+        {},
+        {},
+    )

@@ -59,3 +59,6 @@ class RunPolicy:
     backoff_limit: Optional[int] = None
 
 
+@dataclass
+class Chief:
+    image: Optional[str] = None

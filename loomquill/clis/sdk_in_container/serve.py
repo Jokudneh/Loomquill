@@ -47,3 +47,4 @@ def serve(ctx: click.Context):
     type=int,
     help="Number of workers for the grpc server",
 )
+@click.option(

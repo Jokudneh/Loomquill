@@ -20,3 +20,5 @@ WANDB_PROJECT = "loomquill-wandb-plugin"
 WANDB_ENTITY = "github-username"
 WANDB_SECRET_KEY = "wandb-api-key"
 WANDB_SECRET_GROUP = "wandb-api-group"
+REGISTRY = "localhost:30000"
+

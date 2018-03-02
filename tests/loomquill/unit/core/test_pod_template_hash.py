@@ -27,3 +27,5 @@ class TestPodTemplateHashing(unittest.TestCase):
         )
         pt1 = PodTemplate(
             pod_spec=common_pod_spec,
+            primary_container_name="c1",
+            labels={"app": "myapp", "env": "prod"},

@@ -18,3 +18,7 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="Google IAP",
+    title_expanded="Flytekit Identity Aware Proxy",
+    name=microlib_name,
+    version=__version__,
+    author="flyteorg",

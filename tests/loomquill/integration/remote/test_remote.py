@@ -412,3 +412,4 @@ def test_fetch_execute_launch_plan_list_of_floats(register):
 
 
 def test_fetch_execute_task_list_of_floats(register):
+    remote = FlyteRemote(Config.auto(config_file=CONFIG), PROJECT, DOMAIN)

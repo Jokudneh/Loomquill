@@ -110,3 +110,7 @@ jobs:
           fi
           VERSION="${GITHUB_REF#refs/tags/v}"
           echo "Signaling unionai/unionai-docs to regenerate v1 API docs for loomquill ${VERSION}"
+          gh api repos/unionai/unionai-docs/dispatches \
+            -f event_type=loomquill-release \
+            -f 'client_payload[version]='"${VERSION}" \
+            || echo "::warning title=docs regen signal failed::repository_dispatch to unionai-docs failed. The daily poll will pick this release up instead."

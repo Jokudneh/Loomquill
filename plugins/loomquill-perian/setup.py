@@ -11,3 +11,5 @@ __version__ = "0.0.0+develop"
 setup(
     title="Perian Job Platform",
     title_expanded="Flytekit Perian Job Platform Plugin",
+    name=microlib_name,
+    version=__version__,

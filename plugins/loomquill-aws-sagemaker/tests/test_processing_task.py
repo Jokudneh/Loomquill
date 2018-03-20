@@ -33,3 +33,7 @@ def test_processing_job_task_interface_and_custom():
             "ProcessingResources": {
                 "ClusterConfig": {
                     "InstanceType": "ml.m5.xlarge",
+                    "InstanceCount": 1,
+                    "VolumeSizeInGB": 30,
+                }
+            },

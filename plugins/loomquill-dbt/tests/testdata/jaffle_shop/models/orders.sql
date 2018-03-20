@@ -15,3 +15,5 @@ payments as (
 order_payments as (
 
     select
+        order_id,
+

@@ -159,3 +159,7 @@ class Elastic(object):
             an `emptyDir` volume with medium `Memory` to to `/dev/shm`.
             The shared memory size upper limit is the sum of the memory limits of the containers in the pod.
         run_policy: Configuration for the run policy.
+    """
+
+    nnodes: Union[int, str] = 1
+    nproc_per_node: int = 1

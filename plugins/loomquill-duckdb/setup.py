@@ -11,3 +11,6 @@ __version__ = "0.0.0+develop"
 setup(
     title="DuckDB",
     title_expanded="Flytekit DuckDB Plugin",
+    name=microlib_name,
+    version=__version__,
+    author="flyteorg",

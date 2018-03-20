@@ -10,3 +10,5 @@ def cleanup_resources(resources: client.V1ResourceRequirements):
 
 # We have noticed that for the fields that are not specified, there will be 0 or "0" filled in
 # this is helper function to filter those values out.
+def is_zero_like(value):
+    return (

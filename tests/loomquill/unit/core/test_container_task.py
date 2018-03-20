@@ -41,3 +41,7 @@ def test_local_execution():
             "calculate-ellipse-area.py",
             "{{.inputs.a}}",
             "{{.inputs.b}}",
+            "/var/outputs",
+        ],
+    )
+

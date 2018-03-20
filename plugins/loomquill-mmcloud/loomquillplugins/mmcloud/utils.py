@@ -26,3 +26,4 @@ MMCLOUD_STATUS_TO_FLYTE_PHASE = {
     "FailToComplete": TaskExecution.FAILED,
     "FailToExecute": TaskExecution.FAILED,
     "CheckpointFailed": TaskExecution.FAILED,
+    "Timedout": TaskExecution.FAILED,

@@ -47,3 +47,5 @@ project_option_dec = click.option(
     show_default=True,
     help="Project for workflow/launchplan. Can also be set through envvar " "``FLYTE_DEFAULT_PROJECT``",
 )
+
+domain_option_dec = click.option(

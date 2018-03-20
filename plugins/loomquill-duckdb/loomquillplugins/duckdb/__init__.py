@@ -1,3 +1,4 @@
 """
 .. currentmodule:: flytekitplugins.duckdb
 
+.. autosummary::

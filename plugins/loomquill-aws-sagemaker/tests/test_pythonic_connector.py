@@ -95,3 +95,6 @@ def test_metadata_encode_decode_round_trip():
 def test_make_job_name_valid_and_unique_per_retry():
     tt = _template({})
     md_retry0 = types.SimpleNamespace(
+        task_execution_id=types.SimpleNamespace(
+            node_execution_id=types.SimpleNamespace(
+                execution_id=types.SimpleNamespace(name="exec1"), node_id="n0"

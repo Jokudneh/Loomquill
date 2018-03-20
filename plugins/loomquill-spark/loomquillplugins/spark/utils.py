@@ -5,3 +5,4 @@ def is_serverless_config(databricks_conf: dict) -> bool:
     Serverless is indicated by having ``environment_key`` or ``environments``
     without any cluster config (``existing_cluster_id`` or ``new_cluster``).
 
+    Args:

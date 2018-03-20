@@ -22,3 +22,7 @@ def test_variable_type_list(literal_type):
     assert collection_var == interface.Variable.from_flyte_idl(var.to_flyte_idl_list())
 
 
+@pytest.mark.parametrize("literal_type", LIST_OF_ALL_LITERAL_TYPES)
+def test_typed_interface(literal_type):
+    typed_interface = interface.TypedInterface(
+        {"a": interface.Variable(literal_type, "description1")},

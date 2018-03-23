@@ -12,3 +12,5 @@ def test_perian_task():
         cores=2,
         memory="8",
         accelerators=1,
+        accelerator_type="A100",
+        country_code="DE",

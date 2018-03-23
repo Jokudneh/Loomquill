@@ -29,3 +29,5 @@ class TestPodTemplateHashing(unittest.TestCase):
             pod_spec=common_pod_spec,
             primary_container_name="c1",
             labels={"app": "myapp", "env": "prod"},
+            annotations={"author": "tester", "version": "1.2.3"}
+        )

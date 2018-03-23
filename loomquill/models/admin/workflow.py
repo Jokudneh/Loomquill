@@ -32,3 +32,5 @@ class WorkflowSpec(_common.FlyteIdlEntity):
         """
         return self._template
 
+    @property
+    def sub_workflows(self):

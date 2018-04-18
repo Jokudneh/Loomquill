@@ -18,3 +18,4 @@ class MySubConf:
 
 @dataclass
 class MyConf:
+    my_attr: Optional[MySubConf] = None

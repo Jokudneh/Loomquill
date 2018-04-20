@@ -34,3 +34,4 @@ class Notification(_common_model.Notification):
         :param list[int] phases: A required list of phases for which to fire the event.  Events can only be fired for
             terminal phases.  Phases should be as defined in: flytekit.models.core.execution.WorkflowExecutionPhase
         """
+        self._validate_phases(phases)

@@ -144,3 +144,4 @@ class PythonAutoContainerTask(PythonTask[T], ABC, metaclass=FlyteTrackedABC):
                 )
             self._task_resolver = compilation_state.task_resolver
             if self._task_resolver.task_name(self) is not None:
+                self._name = self._task_resolver.task_name(self) or ""

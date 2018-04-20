@@ -21,3 +21,7 @@ class TestExtractNodeType:
         # test union
         node_type, type_name = extract_node_type(python_val, key="union_key")
         assert node_type == t.Union[int, str]
+        assert type_name == "typing.Union[builtins.int, builtins.str]"
+
+        # test any
+        node_type, type_name = extract_node_type(python_val, key="any_key")

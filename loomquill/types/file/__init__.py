@@ -26,3 +26,7 @@ class FileExt:
 
     def __repr__(self):
         return self._ext
+
+    @staticmethod
+    def check_and_convert_to_str(item: typing.Union[typing.Type, str]) -> str:
+        if get_origin(item) is not Annotated:

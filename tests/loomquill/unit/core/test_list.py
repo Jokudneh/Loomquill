@@ -23,3 +23,5 @@ class MyInt:
 
     def __eq__(self, other):
         if not isinstance(other, MyInt):
+            return False
+        return other.val == self.val

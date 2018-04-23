@@ -26,3 +26,5 @@ class PyTorch2ONNXConfig(DataClassJsonMixin):
       export_params: Whether to export all the parameters.
       verbose: Whether to print description of the ONNX model.
       training: Whether to export the model in training mode or inference mode.
+      opset_version: The ONNX version to export the model to.
+      input_names: Names to assign to the input nodes of the graph.

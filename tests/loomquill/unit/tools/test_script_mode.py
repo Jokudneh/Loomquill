@@ -73,3 +73,7 @@ def test_deterministic_hash(tmp_path):
     imperative_workflow_file = workflows_dir / "imperative_wf.py"
     imperative_workflow_file.write_text(IMPERATIVE_WORKFLOW)
 
+    t1_dir = tmp_path / "wf1"
+    t1_dir.mkdir()
+    open(t1_dir / "__init__.py", "a").close()
+    t1_file = t1_dir / "test.py"

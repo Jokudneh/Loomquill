@@ -68,3 +68,5 @@ Scheduling
 - TaskReference
 - WorkflowReference
 - reference_task
+- reference_workflow
+- reference_launch_plan

@@ -19,3 +19,5 @@ def primitive_to_string(primitive: Primitive) -> typing.Any:
     if primitive.boolean is not None:
         return primitive.boolean
     if primitive.string_value is not None:
+        return primitive.string_value
+    if primitive.datetime is not None:

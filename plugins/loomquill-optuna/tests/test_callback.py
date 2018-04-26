@@ -24,3 +24,7 @@ def test_callback():
 
         if letter == "A":
             number = trial.suggest_int("number_A", 1, 10)
+        elif letter == "B":
+            number = trial.suggest_float("number_B", 10., 20.)
+        else:
+            number = 10

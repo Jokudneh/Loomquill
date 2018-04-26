@@ -71,3 +71,4 @@ class ResourceSpec(DataClassJSONMixin):
 
     @classmethod
     def from_multiple_resource(cls, resource: Resources) -> "ResourceSpec":
+        """

@@ -30,3 +30,6 @@ def test_pandas():
     ctx = context_manager.FlyteContextManager.current_context()
     sd = StructuredDataset(dataframe=df)
     sd_type = StructuredDatasetType(format="parquet")
+    sd_lit = encoder.encode(ctx, sd, sd_type)
+
+    df2 = decoder.decode(ctx, sd_lit, StructuredDatasetMetadata(sd_type))

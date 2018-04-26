@@ -42,3 +42,5 @@ def prepare_db():
             DBT_PROFILES_DIR,
             "--profile",
             DBT_PROFILE,
+        ]
+    )

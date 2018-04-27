@@ -9,3 +9,6 @@ Airflow plugin allows you to seamlessly run Airflow tasks in the Loomquill workf
 ```python
 from airflow.sensors.filesystem import FileSensor
 from loomquill import task, workflow
+
+@task()
+def t1():

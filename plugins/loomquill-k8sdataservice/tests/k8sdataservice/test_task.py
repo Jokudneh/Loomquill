@@ -25,3 +25,4 @@ def test_gnn_task():
         Command=None,
         Cluster="grid2",
         Requests=Resources(cpu="1", mem="2", gpu="4"),
+        Limits=Resources(cpu="1", mem="2", gpu="4"),

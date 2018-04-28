@@ -8,3 +8,4 @@ def test_sort():
     assert o.key == "abc"
     assert o.direction == _common.Sort.Direction.ASCENDING
 
+    o2 = _common.Sort.from_flyte_idl(o.to_flyte_idl())

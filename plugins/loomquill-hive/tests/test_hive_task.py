@@ -21,3 +21,4 @@ def test_serialization():
             insert overwrite directory '{{ .rawOutputDataPrefix }}' stored as parquet  -- will be unique per retry
             select *
             from blah
+            where ds = '{{ .Inputs.ds }}' and uri = '{{ .inputs.my_schema }}'

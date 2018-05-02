@@ -142,3 +142,6 @@ class BaseLeptonConnector(AsyncConnectorBase):
 
     @property
     def client(self) -> APIClient:
+        """Lazy-loaded, cached API client"""
+        if self._client is not None:
+            return self._client

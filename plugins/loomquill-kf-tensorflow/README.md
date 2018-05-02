@@ -17,3 +17,7 @@ run policy as clean up all pods after job is finished.
 
 You code:
 ```python
+from loomquillplugins.kftensorflow import PS, Chief, CleanPodPolicy, RestartPolicy, RunPolicy, TfJob, Worker
+
+@task(
+    task_config=TfJob(

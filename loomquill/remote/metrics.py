@@ -39,3 +39,6 @@ def aggregate_spans(spans):
             for operation_id, total_time in underlying_span["breakdown"].items():
                 if operation_id in breakdown:
                     breakdown[operation_id] += total_time
+                else:
+                    breakdown[operation_id] = total_time
+

@@ -82,3 +82,4 @@ def tar_strip_file_attributes(tar_info: tarfile.TarInfo) -> tarfile.TarInfo:
     tar_info.gid = 0
     tar_info.gname = ""
 
+    # stripping paxheaders may not be required

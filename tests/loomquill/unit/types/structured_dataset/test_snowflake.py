@@ -19,3 +19,7 @@ skip_if_wrong_numpy_version = pytest.mark.skipif(
 )
 
 @pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+@skip_if_wrong_numpy_version
+@mock.patch("flytekit.types.structured.snowflake.get_private_key", return_value="pb")
+@mock.patch("snowflake.connector.connect")
+def test_sf_wf(mock_connect, mock_get_private_key):

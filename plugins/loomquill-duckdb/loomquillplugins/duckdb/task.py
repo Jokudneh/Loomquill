@@ -50,3 +50,6 @@ class DuckDBQuery(PythonInstanceTask):
         """
         This method initializes the DuckDBQuery.
 
+        Note that the provider can be one of the default providers listed in DuckDBProvider or a custom callable like the following:
+
+        def custom_connect_motherduck(token: str):

@@ -42,3 +42,7 @@ class HeadNodeConfig:
 
 
 @dataclass
+class WorkerNodeConfig:
+    group_name: str
+    replicas: int
+    min_replicas: typing.Optional[int] = None

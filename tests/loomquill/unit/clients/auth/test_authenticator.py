@@ -61,3 +61,5 @@ def test_pkce_refresh_failure_keeps_cached_credentials(
     mock_keyring.retrieve.return_value = Credentials("access", "refresh", ENDPOINT)
     mock_refresh.side_effect = AccessTokenNotFoundError("expired")
 
+    authn = PKCEAuthenticator(ENDPOINT, static_cfg_store, verify=False)
+    authn.refresh_credentials()

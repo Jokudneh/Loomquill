@@ -34,3 +34,7 @@ def neptune_scale_run(
         Callable[..., _neptune_scale_run_class]: A callable that returns a wrapped Neptune Scale run instance.
     """
     return partial(
+        _neptune_scale_run_class,
+        project=project,
+        secret=secret,
+        run_id=run_id,

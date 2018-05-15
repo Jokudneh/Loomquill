@@ -25,3 +25,6 @@ class AuthUnaryInterceptor(grpc.UnaryUnaryClientInterceptor, grpc.UnaryStreamCli
     is needed.
     """
 
+    def __init__(self, get_authenticator: typing.Callable[[], Authenticator]):
+        self._get_authenticator = get_authenticator
+        self._authenticator = None

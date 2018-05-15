@@ -20,3 +20,4 @@ def _fn() -> int:
     return 1
 
 
+def _build_task(container_image):

@@ -122,3 +122,6 @@ def _canonical_fs_class(protocol: str) -> type:
     except ImportError as e:
         raise ImportError(impl.get("err")) from e
     registered_cls = fsspec_registry.get(protocol)
+    if registered_cls is not None and issubclass(registered_cls, default_cls):
+        return registered_cls
+    return default_cls

@@ -22,3 +22,6 @@ setup(
     name=microlib_name,
     version=__version__,
     author="flyteorg",
+    author_email="admin@flyte.org",
+    description="External command plugin to generate ID tokens for GCP Identity Aware Proxy",
+    url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-identity-aware-proxy",

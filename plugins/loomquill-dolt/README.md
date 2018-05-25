@@ -4,3 +4,4 @@ The DoltTable plugin is a wrapper that uses [Dolt](https://github.com/dolthub/do
 
 The Dolt plugin and Dolt command-line tool can be installed as follows:
 
+```bash

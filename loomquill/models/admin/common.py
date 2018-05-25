@@ -20,3 +20,7 @@ class Sort(_common.FlyteIdlEntity):
     def key(self):
         """
         :rtype: Text
+        """
+        return self._key
+
+    @property

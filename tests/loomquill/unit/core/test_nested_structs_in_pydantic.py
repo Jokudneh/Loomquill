@@ -68,3 +68,5 @@ class ComplexModel(BaseModel):
 
 
 class ListOfOptionalModels(BaseModel):
+    items: typing.List[typing.Optional[Inner]]
+

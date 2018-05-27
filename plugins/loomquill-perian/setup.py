@@ -13,3 +13,5 @@ setup(
     title_expanded="Flytekit Perian Job Platform Plugin",
     name=microlib_name,
     version=__version__,
+    author="Omar Tarabai",
+    author_email="otarabai@perian.io",

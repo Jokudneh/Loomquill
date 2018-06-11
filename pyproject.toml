@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools<82", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loomquill"
+dynamic = ["version"]
+authors = ["Naomi Fairbairn"]
+description = "Loomquill SDK for Python"
+license = { text = "Apache-2.0" }
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+dependencies = [
+    # Please maintain an alphabetical order in the following list
+    "adlfs>=2023.3.0",
+    "cachetools>=5.3.3",
+    "click>=6.6",
+    "cloudpickle>=2.0.0",
+    "croniter>=0.3.20",
+    "dataclasses-json>=0.5.2,<0.5.12", # TODO: remove upper-bound after fixing change in contract
+    "diskcache>=5.2.1",
+    "docker>=4.0.0",
+    "docstring-parser>=0.9.0",
+    "loomquillidl>=1.16.7,<2.0.0a0",
+    # 2024.9.0 floor: aiohttp/gcsfs Python 3.12 shutdown-race fixes (_runner aclose loop safety)
+    "fsspec>=2024.9.0",
+    # 2024.9.0 floor: shutdown-race fixes (supersedes the 2024.2.0 bug, https://github.com/fsspec/gcsfs/pull/643)
+    # Bug in 2025.5.0, 2025.5.0post1 https://github.com/fsspec/gcsfs/issues/687
+    "gcsfs>=2024.9.0,!=2025.5.0,!=2025.5.0post1",
+    "googleapis-common-protos>=1.57",
+    "grpcio",
+    "grpcio-status",
+    "importlib-metadata",
+    "joblib",
+    "jsonlines",
+    "jsonpickle",
+    "keyring>=18.0.1",
+    "markdown-it-py",
+    "marshmallow>=3,<4",
+    "marshmallow-enum",
+    "marshmallow-jsonschema>=0.14.0",
+    "mashumaro>=3.15",
+    "msgpack>=1.1.0",
+    "protobuf!=4.25.0",
+    "pygments",

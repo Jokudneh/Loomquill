@@ -35,3 +35,6 @@ def test_wandb_extra_config(id):
 @task
 @wandb_init(project="abc", entity="xyz", secret=secret, tags=["my_tag"])
 def train_model():
+    pass
+
+

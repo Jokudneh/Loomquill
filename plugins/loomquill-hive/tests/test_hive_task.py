@@ -22,3 +22,6 @@ def test_serialization():
             select *
             from blah
             where ds = '{{ .Inputs.ds }}' and uri = '{{ .inputs.my_schema }}'
+        """,
+        # the schema literal's backend uri will be equal to the value of .raw_output_data
+        output_schema_type=FlyteSchema,

@@ -19,3 +19,7 @@ class Hyperparameters(DataClassJsonMixin):
 
 
 class TupleHyperparameters(NamedTuple):
+    epochs: int
+    loss: float
+
+

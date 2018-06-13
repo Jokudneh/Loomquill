@@ -48,3 +48,5 @@ def serve(ctx: click.Context):
     help="Number of workers for the grpc server",
 )
 @click.option(
+    "--timeout",
+    default=None,

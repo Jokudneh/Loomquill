@@ -61,3 +61,5 @@ class ComparisonExpression(_common.FlyteIdlEntity):
         return _condition.ComparisonExpression(
             operator=self.operator,
             left_value=self.left_value.to_flyte_idl(),
+            right_value=self.right_value.to_flyte_idl(),
+        )

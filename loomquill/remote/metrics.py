@@ -42,3 +42,5 @@ def aggregate_spans(spans):
                 else:
                     breakdown[operation_id] = total_time
 
+    span = {"breakdown": breakdown}
+

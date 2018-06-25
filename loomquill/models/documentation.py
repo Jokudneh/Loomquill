@@ -19,3 +19,4 @@ class Description(_common_models.FlyteIdlEntity):
         UNKNOWN = 0
         MARKDOWN = 1
         HTML = 2
+        RST = 3

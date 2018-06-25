@@ -21,3 +21,7 @@ def _ser_settings():
 
 
 def test_inference_recommender_job_task_interface_and_custom():
+    task = SageMakerInferenceRecommenderJobTask(
+        name="recommend",
+        config={
+            "JobName": "rec-{idempotence_token}",

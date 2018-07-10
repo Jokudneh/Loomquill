@@ -6,3 +6,4 @@ b_local_a = A()
 def get_a():
     return A()
 
+

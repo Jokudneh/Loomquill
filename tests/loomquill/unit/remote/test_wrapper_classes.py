@@ -41,3 +41,7 @@ def test_wf_cond():
 
 
 def test_wf_promote_subwf_lps():
+    @task
+    def t1(a: int) -> int:
+        a = a + 2
+        return a

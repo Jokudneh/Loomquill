@@ -99,3 +99,4 @@ def _get_container_definition(
     if memory_request:
         requests.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.MEMORY, memory_request))
 
+    limits = []

@@ -15,3 +15,6 @@ from flytekit.core.worker_queue import Controller
 
 @task
 def add_one(x: int) -> int:
+    return x + 1
+
+

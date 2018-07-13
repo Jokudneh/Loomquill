@@ -19,3 +19,7 @@ def download_literal(
     """
     Download a single literal to a file, if it is a blob or structured dataset.
     """
+    if data is None:
+        print(f"Skipping {var} as it is None.")
+        return
+    if data.scalar:

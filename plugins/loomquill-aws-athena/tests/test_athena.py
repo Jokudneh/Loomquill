@@ -19,3 +19,5 @@ def test_serialization():
             select *
             from blah
             where ds = '{{ .Inputs.ds }}'
+        """,
+        # the schema literal's backend uri will be equal to the value of .raw_output_data

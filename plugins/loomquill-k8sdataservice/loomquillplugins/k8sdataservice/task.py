@@ -22,3 +22,4 @@ class DataServiceConfig(object):
     Image: Optional[str] = None
     Command: Optional[List[str]] = None
     Replicas: Optional[int] = None
+    ExistingReleaseName: Optional[str] = None

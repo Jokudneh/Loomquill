@@ -30,3 +30,7 @@ def test_wrapped_tasks_happy_path(capfd):
         "11",
     ]
 
+
+def test_wrapped_tasks_error(capfd):
+    subprocess.run(
+        [sys.executable, str(test_module_dir / "simple_decorator.py")],

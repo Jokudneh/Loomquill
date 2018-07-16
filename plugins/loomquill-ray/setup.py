@@ -10,3 +10,4 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="Ray",
+    title_expanded="Flytekit Ray Plugin",

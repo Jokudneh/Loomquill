@@ -78,3 +78,6 @@ class LaunchPlanMetadata(_common.FlyteIdlEntity):
 
 class Auth(_common.FlyteIdlEntity):
     def __init__(self, assumable_iam_role=None, kubernetes_service_account=None):
+        """
+        DEPRECATED. Do not use. Use flytekit.models.common.AuthRole instead
+        At most one of assumable_iam_role or kubernetes_service_account can be set.

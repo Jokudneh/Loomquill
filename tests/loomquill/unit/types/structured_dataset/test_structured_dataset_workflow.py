@@ -102,3 +102,5 @@ def numpy_type():
                 )
             df = typing.cast(np.ndarray, structured_dataset.dataframe)
             name = ["col" + str(i) for i in range(len(df))]
+            table = pa.Table.from_arrays(df, name)
+            local_dir = ctx.file_access.get_random_local_directory()

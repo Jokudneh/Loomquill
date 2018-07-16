@@ -16,3 +16,5 @@
    .. automethod:: {{ item }}
    {% endif %}
 
+   {%- endfor %}
+   {% endif %}

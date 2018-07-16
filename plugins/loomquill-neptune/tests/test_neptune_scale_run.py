@@ -32,3 +32,7 @@ def test_get_extra_config():
 def neptune_task() -> bool:
     ctx = current_context()
     return ctx.neptune_run is not None
+
+
+@patch("flytekitplugins.neptune.scale_tracking.neptune_scale")
+def test_local_project_and_init_run_kwargs(neptune_scale_mock):

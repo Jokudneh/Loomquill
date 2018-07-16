@@ -11,3 +11,7 @@ from whylogs.viz.extensions.reports.profile_summary import ProfileSummaryReport
 class WhylogsDatasetProfileTransformer(TypeTransformer[DatasetProfileView]):
     """
     Transforms whylogs Dataset Profile Views to and from a Schema (typed/untyped)
+    """
+
+    _TYPE_INFO = BlobType(format="binary", dimensionality=BlobType.BlobDimensionality.SINGLE)
+

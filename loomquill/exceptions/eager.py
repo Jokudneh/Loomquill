@@ -6,3 +6,6 @@ class EagerException(Exception):
 
     ```python
     from flytekit import task
+    from flytekit.exceptions.eager import EagerException
+
+    @task

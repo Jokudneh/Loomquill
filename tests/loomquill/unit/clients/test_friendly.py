@@ -17,3 +17,4 @@ def test_update_project(mock_raw_update_project):
     mock_raw_update_project.assert_called_with(project.to_flyte_idl())
 
 
+@mock.patch("flytekit.clients.friendly._RawSynchronousFlyteClient.list_projects")

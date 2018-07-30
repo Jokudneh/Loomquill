@@ -41,3 +41,5 @@ class GreatExpectationsTask(PythonInstanceTask[BatchRequestConfig]):
     You can use this when you want to validate your data within the task or workflow.
     If you want to validate your data as and when the type is given, use the `GreatExpectationsType`.
 
+    Args:
+        name: name of the task

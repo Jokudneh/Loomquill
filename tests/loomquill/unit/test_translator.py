@@ -66,3 +66,4 @@ def test_basics():
         d = t2(a=y, b=b)
         return x, d
 
+    wf_spec = get_serializable(OrderedDict(), serialization_settings, my_wf)

@@ -184,3 +184,5 @@ preprocess = SageMakerProcessingJobTask(
                     "S3Uri": "{inputs.raw_data}",
                     "LocalPath": "/opt/ml/processing/input",
                     "S3DataType": "S3Prefix",
+                    "S3InputMode": "File",
+                },

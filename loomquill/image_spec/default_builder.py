@@ -103,3 +103,5 @@ RUN --mount=type=cache,sharing=locked,mode=0777,target=/var/cache/apt,id=apt \
 MICROMAMBA_INSTALL_COMMAND_TEMPLATE = Template("""\
 RUN --mount=type=cache,sharing=locked,mode=0777,target=/opt/micromamba/pkgs,\
 id=micromamba \
+    --mount=from=micromamba,source=/usr/bin/micromamba,target=/usr/bin/micromamba \
+    micromamba config set use_lockfiles False && \

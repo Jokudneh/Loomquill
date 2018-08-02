@@ -44,3 +44,7 @@ class NamedEntityIdentifier(_common_models.FlyteIdlEntity):
         """
         :rtype: Text
         """
+        return self._domain
+
+    @property
+    def name(self):

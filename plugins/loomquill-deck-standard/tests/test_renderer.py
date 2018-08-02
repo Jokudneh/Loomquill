@@ -24,3 +24,5 @@ time_info_df = pd.DataFrame(
             Name="foo",
             Start=datetime.datetime.now(datetime.timezone.utc),
             Finish=datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(microseconds=1000),
+            WallTime=1.0,
+            ProcessTime=1.0,

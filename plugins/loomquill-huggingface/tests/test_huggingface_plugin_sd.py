@@ -16,3 +16,6 @@ full_schema = Annotated[StructuredDataset, PARQUET]
 
 def test_huggingface_dataset_workflow_subset():
     @task
+    def generate() -> subset_schema:
+        df = pd.DataFrame({"col1": [1, 3, 2], "col2": list("abc")})
+        dataset = datasets.Dataset.from_pandas(df)

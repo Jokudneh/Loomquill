@@ -13,3 +13,4 @@ def generate_model() -> tf.keras.Model:
         loss=tf.keras.losses.BinaryCrossentropy(),
         metrics=[
             tf.keras.metrics.BinaryAccuracy(),
+        ],

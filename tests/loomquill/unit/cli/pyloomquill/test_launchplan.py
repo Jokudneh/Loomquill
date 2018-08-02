@@ -7,3 +7,5 @@ from flytekit.remote import FlyteRemote
 
 
 @mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
+@pytest.mark.parametrize(
+    ("action", "expected_state"),

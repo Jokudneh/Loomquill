@@ -30,3 +30,7 @@ def resolve_backfill_window(
     if not (from_date or to_date):
         raise click.BadParameter(
             "One of following pairs are required -> (from-date, to-date) | (from-date, backfill_window) |"
+            " (to-date, backfill_window)"
+        )
+    if from_date and to_date:
+        pass

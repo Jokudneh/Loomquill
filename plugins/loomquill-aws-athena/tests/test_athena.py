@@ -21,3 +21,5 @@ def test_serialization():
             where ds = '{{ .Inputs.ds }}'
         """,
         # the schema literal's backend uri will be equal to the value of .raw_output_data
+        output_schema_type=FlyteSchema,
+    )

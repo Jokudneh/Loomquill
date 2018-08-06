@@ -34,3 +34,4 @@ from flytekit.tools.repo import NoSerializableEntitiesError, serialize_and_packa
     "provided the image will be used as the default image. All the names have to be unique, and thus "
     "there can only be one ``--image`` option with no name.",
 )
+@click.option(

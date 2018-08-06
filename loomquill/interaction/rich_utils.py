@@ -5,3 +5,5 @@ from rich.progress import Progress
 
 
 class RichCallback(Callback):
+    def __init__(self, rich_kwargs: typing.Optional[typing.Dict] = None, **kwargs):
+        super().__init__(**kwargs)

@@ -38,3 +38,7 @@ def train_model():
     pass
 
 
+@patch("flytekitplugins.wandb.tracking.wandb")
+def test_local_execution(wandb_mock):
+    train_model()
+

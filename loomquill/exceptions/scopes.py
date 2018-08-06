@@ -51,3 +51,7 @@ class FlyteScopedException(Exception):
         return str(self.value)
 
     @property
+    def value(self):
+        if isinstance(self._exc_value, FlyteScopedException):
+            return self._exc_value.value
+        return self._exc_value

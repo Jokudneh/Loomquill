@@ -26,3 +26,7 @@ from flytekit.configuration.internal import LocalSDK
 from flytekit.configuration.plugin import get_plugin
 from flytekit.loggers import logger
 
+
+@click.group("pyflyte", invoke_without_command=True, cls=ErrorHandlingCommand)
+@click.option(
+    "-v",

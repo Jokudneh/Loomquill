@@ -32,3 +32,4 @@ class PanderaPandasTransformer(TypeTransformer[pandera.typing.DataFrame]):
         super().__init__("Pandera Transformer", pandera.typing.DataFrame)  # type: ignore
         self._sd_transformer = StructuredDatasetTransformerEngine()
 
+    def _get_pandera_schema(self, t: Type[pandera.typing.DataFrame]):

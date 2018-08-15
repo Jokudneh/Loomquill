@@ -26,3 +26,7 @@ class KeyringStore:
 
     _access_token_key = "access_token"
     _refresh_token_key = "refresh_token"
+    _id_token_key = "id_token"
+
+    @staticmethod
+    def store(credentials: Credentials) -> Credentials:

@@ -62,3 +62,7 @@ class ArrayNode:
         self._run_all_sub_nodes = run_all_sub_nodes
         self.id = target.name
         self._bindings = bindings or []
+        self.metadata = metadata
+        self._data_mode = None
+        self._execution_mode = None
+

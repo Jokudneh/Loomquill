@@ -74,3 +74,7 @@ class ScalingConfig:
             if self.target_utilization is None:
                 raise ValueError("target_utilization is required for GPU scaling")
             if not 1 <= self.target_utilization <= 100:
+                raise ValueError("target_utilization must be between 1 and 100")
+        elif self.scaling_type == ScalingType.QPM:
+            if self.target_qpm is None:
+                raise ValueError("target_qpm is required for QPM scaling")

@@ -184,3 +184,4 @@ class TestGetSecretFromK8s:
     def test_secret_data_is_none(self):
         """Secret exists but data field is None."""
         mock_secret = MagicMock()
+        mock_secret.data = None

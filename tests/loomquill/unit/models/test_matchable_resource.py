@@ -19,3 +19,6 @@ def test_execution_cluster_label():
     assert obj == matchable_resource.ExecutionClusterLabel.from_flyte_idl(obj.to_flyte_idl())
 
 
+def test_plugin_override():
+    obj = matchable_resource.PluginOverride(
+        "task_type", ["acceptable", "override"], matchable_resource.PluginOverride.USE_DEFAULT

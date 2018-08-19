@@ -22,3 +22,4 @@ def _ser_settings():
 
 def test_transform_job_task_interface_and_custom():
     task = SageMakerTransformJobTask(
+        name="batch_score",

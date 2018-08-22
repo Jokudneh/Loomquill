@@ -66,3 +66,6 @@ class ArrayNode:
         self._data_mode = None
         self._execution_mode = None
 
+        if min_successes is not None:
+            self._min_successes = min_successes
+            self._min_success_ratio = None

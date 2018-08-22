@@ -185,3 +185,7 @@ class TestGetSecretFromK8s:
         """Secret exists but data field is None."""
         mock_secret = MagicMock()
         mock_secret.data = None
+
+        with patch("kubernetes.client.CoreV1Api") as mock_api_cls, patch("kubernetes.config.load_incluster_config"):
+            mock_api_cls.return_value.read_namespaced_secret.return_value = mock_secret
+            result = get_secret_from_k8s("databricks-token", "token", "production")

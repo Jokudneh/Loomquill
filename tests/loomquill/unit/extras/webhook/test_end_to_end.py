@@ -20,3 +20,7 @@ simple_get = WebhookTask(
 get_with_params = WebhookTask(
     name="get-with-params",
     url="http://localhost:8000/items/{inputs.item_id}",
+    method="GET",
+    headers={"Content-Type": "application/json"},
+    dynamic_inputs={"s": str, "item_id": int},
+    show_data=True,

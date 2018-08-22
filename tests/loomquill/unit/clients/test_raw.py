@@ -10,3 +10,5 @@ from flytekit.configuration import PlatformConfig
 def test_update_project(mock_channel, mock_admin):
     client = RawSynchronousFlyteClient(PlatformConfig(endpoint="a.b.com", insecure=True))
     project = _project_pb2.Project(id="foo", name="name", description="description", state=_project_pb2.Project.ACTIVE)
+    client.update_project(project)
+    mock_admin.AdminServiceStub().UpdateProject.assert_called_with(project, metadata=None)

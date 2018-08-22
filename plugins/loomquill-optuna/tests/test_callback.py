@@ -28,3 +28,5 @@ def test_callback():
             number = trial.suggest_float("number_B", 10., 20.)
         else:
             number = 10
+
+        other = trial.suggest_categorical("other", ["Something", "another word", "a phrase"])

@@ -298,3 +298,6 @@ class SignalCondition(_common.FlyteIdlEntity):
             type=type_models.LiteralType.from_flyte_idl(pb2_object.type),
             output_variable_name=pb2_object.output_variable_name,
         )
+
+
+class ApproveCondition(_common.FlyteIdlEntity):

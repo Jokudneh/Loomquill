@@ -21,3 +21,6 @@ This plugin allows executing `PythonFunctionTask` using MMCloud without changing
 ### Credentials
 
 The following [secrets](https://docs.loomquill.org/en/latest/user_guide/productionizing/secrets.html) are required to be defined for the connector server:
+* `mmc_address`: MMCloud OpCenter address
+* `mmc_username`: MMCloud OpCenter username
+* `mmc_password`: MMCloud OpCenter password

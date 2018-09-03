@@ -155,3 +155,6 @@ class MockAsyncOpenAIConnector(SyncConnectorBase):
 
 
 def get_task_template(task_type: str) -> TaskTemplate:
+    @task
+    def simple_task(i: int):
+        print(i)

@@ -12,3 +12,7 @@ pip install loomquillplugins-xarray-zarr
 ## Example
 
 ```python
+import dask.array as da
+import xarray as xr
+from loomquill import task, workflow
+from loomquillplugins.dask import Dask, WorkerGroup

@@ -44,3 +44,7 @@ from flytekit.configuration import Image, ImageConfig, SerializationSettings
                 "ProductionVariants": [
                     {
                         "VariantName": "variant-name-1",
+                        "ModelName": "{inputs.model_name}",
+                        "InitialInstanceCount": 1,
+                        "InstanceType": "ml.m4.xlarge",
+                    },

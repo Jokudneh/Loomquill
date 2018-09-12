@@ -34,3 +34,6 @@ class WorkflowSpec(_common.FlyteIdlEntity):
 
     @property
     def sub_workflows(self):
+        """
+        :rtype: list[flytekit.models.core.workflow.WorkflowTemplate]
+        """

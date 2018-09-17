@@ -60,3 +60,4 @@ def print_ls_tree(source: os.PathLike, ls: typing.List[str]):
     trees = {pathlib.Path(source): tree_root}
 
     for f in ls:
+        fpp = pathlib.Path(f)

@@ -23,3 +23,7 @@ def test_tf_onnx():
             img = image.load_img(
                 BytesIO(url.read()),
                 target_size=(224, 224),
+            )
+
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)

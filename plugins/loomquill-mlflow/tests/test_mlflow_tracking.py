@@ -7,3 +7,5 @@ from flytekit import task
 
 
 @task(enable_deck=True)
+@mlflow_autolog(framework=mlflow.keras)
+def train_model(epochs: int):

@@ -100,3 +100,7 @@ class OAuthCallbackHandler(_BaseHTTPServer.BaseHTTPRequestHandler):
         if url.path.strip("/") == self.server.redirect_path.strip("/"):
             self.send_response(_StatusCodes.OK)
             self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.handle_login(dict(_urlparse.parse_qsl(url.query)))
+            if self.server.remote_metadata.success_html is None:
+                self.wfile.write(bytes(get_default_success_html(self.server.remote_metadata.endpoint), "utf-8"))

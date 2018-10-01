@@ -17,3 +17,5 @@ This package contains things that are useful when extending Flytekit for Lepton 
    MountReader
    ScalingConfig
    ScalingType
+   EndpointEngineConfig
+"""

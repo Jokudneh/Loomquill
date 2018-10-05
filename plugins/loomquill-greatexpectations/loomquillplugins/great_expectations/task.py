@@ -43,3 +43,5 @@ class GreatExpectationsTask(PythonInstanceTask[BatchRequestConfig]):
 
     Args:
         name: name of the task
+        datasource_name: tell where your data lives and how to get it
+        expectation_suite_name: suite which consists of the data expectations

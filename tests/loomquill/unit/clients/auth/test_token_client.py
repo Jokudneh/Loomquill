@@ -33,3 +33,6 @@ def test_get_token(mock_session):
     access, refresh_token, expiration = get_token(
         "https://corp.idp.net", client_id="abc123", scopes=["my_scope"], http_proxy_url="http://proxy:3000", verify=True
     )
+    assert access == "abc"
+    assert refresh_token is None
+    assert expiration == 60

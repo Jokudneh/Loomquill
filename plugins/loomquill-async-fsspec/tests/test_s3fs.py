@@ -67,3 +67,7 @@ async def test_put_file_multipart_upload(
 
     with mock.patch("builtins.open", m):
         asyncs3fs = AsyncS3FileSystem()
+        await asyncs3fs._put_file(lpath=f"/{mock_file_name}", rpath=f"s3://{mock_bucket}/{mock_file_name}")
+
+    mock_chunk_count = mock_file_size // DEFAULT_UPLOAD_CHUNK_SIZE
+    if mock_file_size % DEFAULT_UPLOAD_CHUNK_SIZE > 0:

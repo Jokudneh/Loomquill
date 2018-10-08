@@ -104,3 +104,7 @@ def test_lp():
         launch_plan.LaunchPlan.get_or_create(wf, default_inputs={"a": 3})
 
     lp_with_defaults = launch_plan.LaunchPlan.create("get_or_create2", wf, default_inputs={"a": 3})
+    assert lp_with_defaults.parameters.parameters["a"].default.scalar.primitive.integer == 3
+
+
+def test_lp_each_parameter():

@@ -78,3 +78,7 @@ class ScalingConfig:
         elif self.scaling_type == ScalingType.QPM:
             if self.target_qpm is None:
                 raise ValueError("target_qpm is required for QPM scaling")
+            if self.target_qpm <= 0:
+                raise ValueError("target_qpm must be positive")
+
+    def to_dict(self) -> Dict[str, Any]:

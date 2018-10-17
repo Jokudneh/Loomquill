@@ -8,3 +8,5 @@ class ExampleNestedConfig:
 
 
 @dataclass
+class ExampleConfig:
+    int_key: int = 1337

@@ -30,3 +30,4 @@ class FileExt:
     @staticmethod
     def check_and_convert_to_str(item: typing.Union[typing.Type, str]) -> str:
         if get_origin(item) is not Annotated:
+            return str(item)

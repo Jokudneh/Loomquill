@@ -86,3 +86,4 @@ def test_end_to_end(start_method: str) -> None:
     [
         ("spawn", "", False),
         ("spawn", "f12345678", True),
+        ("fork", "local", False),

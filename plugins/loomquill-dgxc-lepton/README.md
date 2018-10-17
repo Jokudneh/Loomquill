@@ -83,3 +83,4 @@ Unified configuration for all Lepton endpoint operations.
 - `endpoint_config`: Engine-specific configuration
 
 **Optional Fields:**
+- `scaling`: Auto-scaling configuration

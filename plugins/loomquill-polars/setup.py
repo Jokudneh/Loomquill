@@ -11,3 +11,5 @@ __version__ = "0.0.0+develop"
 setup(
     title="Polars",
     title_expanded="Flytekit Polars Plugin",
+    name=microlib_name,
+    version=__version__,

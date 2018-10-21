@@ -77,3 +77,7 @@ class Node(object):
         self._resources: typing.Optional[_resources_model] = None
         self._extended_resources: typing.Optional[tasks_pb2.ExtendedResources] = None
         self._container_image: typing.Optional[str] = None
+        self._pod_template: typing.Optional[PodTemplate] = None
+
+    def runs_before(self, other: Node):
+        """

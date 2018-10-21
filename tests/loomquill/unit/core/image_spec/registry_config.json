@@ -3,3 +3,4 @@
       {
         "name": "my_registry_1",
         "ca": "/etc/my_registry_1/ca.crt",
+        "key": "",

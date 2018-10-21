@@ -5,3 +5,6 @@ from flytekitplugins.memray import memray_profiling
 
 
 @task(enable_deck=True)
+@memray_profiling
+def heavy_compute(i: int) -> int:
+    return i + 1

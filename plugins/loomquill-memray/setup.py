@@ -8,3 +8,5 @@ plugin_requires = ["flytekit>=1.12.0", "memray"]
 
 __version__ = "0.0.0+develop"
 
+setup(
+    title="Memray Profiling",

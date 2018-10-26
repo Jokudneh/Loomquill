@@ -17,3 +17,6 @@ async def mock_acreate(*args, **kwargs) -> str:
     mock_choice = mock.MagicMock()
     mock_choice.message.content = "mocked_message"
     mock_response.choices = [mock_choice]
+    return mock_response
+
+

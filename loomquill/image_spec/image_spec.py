@@ -149,3 +149,6 @@ class ImageSpec:
             self.builder = max(builder_registry, key=lambda name: builder_registry[name][1])
 
         parameters_str_list = [
+            "packages",
+            "conda_channels",
+            "conda_packages",

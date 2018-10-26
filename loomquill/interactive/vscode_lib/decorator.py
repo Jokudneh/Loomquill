@@ -75,3 +75,6 @@ def exit_handler(
                 logger.info("Please open the browser to connect to the running server.")
             else:
                 delta = current_time - os.path.getmtime(HEARTBEAT_PATH)
+                logger.info(f"The latest activity on code server is {delta} seconds ago.")
+
+            # If the time from last connection is longer than max idle seconds, terminate the vscode server.

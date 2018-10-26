@@ -28,3 +28,7 @@ Below is an example demonstrating how to provision and run a service in Kubernet
 from loomquillplugins.k8sdataservice import DataServiceConfig, DataServiceTask, CleanupSensor
 from utils.infra import gen_infra_name
 from loomquill import kwtypes, Resources, task, workflow
+
+# Generate a unique infrastructure name
+name = gen_infra_name()
+

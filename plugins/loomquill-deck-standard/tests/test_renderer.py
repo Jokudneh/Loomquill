@@ -26,3 +26,5 @@ time_info_df = pd.DataFrame(
             Finish=datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(microseconds=1000),
             WallTime=1.0,
             ProcessTime=1.0,
+        )
+    ]

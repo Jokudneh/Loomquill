@@ -13,3 +13,4 @@ class TypeAnnotation:
         self._annotations = annotations
 
     @property
+    def annotations(self) -> Dict[str, Any]:

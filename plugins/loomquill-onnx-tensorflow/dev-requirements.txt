@@ -4,3 +4,5 @@
 #
 #    pip-compile dev-requirements.in
 #
+coloredlogs==15.0.1
+    # via onnxruntime

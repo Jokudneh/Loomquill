@@ -34,3 +34,7 @@ class ScikitLearn2ONNXConfig(DataClassJsonMixin):
       custom_parsers: Parsers determine which outputs are expected for which particular task.
       options: Specific options given to converters.
       intermediate: If True, the function returns the converted model and the instance of Topology used, else, it returns the converted model.
+      naming: Change the way intermediates are named.
+      white_op: White list of ONNX nodes allowed while converting a pipeline.
+      black_op: Black list of ONNX nodes disallowed while converting a pipeline.
+      verbose: Display progress while converting a model.

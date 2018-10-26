@@ -12,3 +12,6 @@ from flytekit.types.structured.structured_dataset import StructuredDatasetTransf
 
 
 def test_type_resolution():
+    assert type(TypeEngine.get_transformer(PipelineModel)) == PySparkPipelineModelTransformer
+
+

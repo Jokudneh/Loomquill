@@ -42,3 +42,5 @@ def train_model():
 def test_local_execution(wandb_mock):
     train_model()
 
+    wandb_mock.init.assert_called_with(project="abc", entity="xyz", id=None, tags=["my_tag"])
+

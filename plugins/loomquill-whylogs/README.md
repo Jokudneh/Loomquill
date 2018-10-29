@@ -17,3 +17,7 @@ To generate profiles, you can add a task like the following:
 ```python
 import whylogs as why
 from whylogs.core import DatasetProfileView
+
+import pandas as pd
+
+from loomquill import task

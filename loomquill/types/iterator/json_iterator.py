@@ -38,3 +38,6 @@ class JSONIteratorTransformer(AsyncTypeTransformer[Iterator[JSON]]):
     """
     A JSON iterator that handles conversion between an iterator/generator and a JSONL file.
     """
+
+    JSON_ITERATOR_FORMAT = "jsonl"
+    JSON_ITERATOR_METADATA = "json iterator"

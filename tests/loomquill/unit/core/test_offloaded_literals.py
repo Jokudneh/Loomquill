@@ -59,3 +59,6 @@ def test_task_offloaded_literal_multiple_input(tmp_path):
         scalar=literal_models.Scalar(primitive=literal_models.Primitive(integer=4))
     )
 
+    # Write offloaded_lv as bytes to a temp file
+    with open(f"{tmp_path}/offloaded_proto_a.pb", "wb") as f:
+        f.write(original_input_literal_a.to_flyte_idl().SerializeToString())

@@ -25,3 +25,5 @@ def test_inference_recommender_job_task_interface_and_custom():
         name="recommend",
         config={
             "JobName": "rec-{idempotence_token}",
+            "JobType": "Default",
+            "RoleArn": "{inputs.role_arn}",

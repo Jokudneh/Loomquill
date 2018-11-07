@@ -28,3 +28,5 @@ class Pod(object):
     Pod is a platform-wide configuration that uses pod templates. By default, every task is launched as a container in a pod.
     This plugin helps expose a fully modifiable Kubernetes pod spec to customize the task execution runtime.
     To use pod tasks: (1) Define a pod spec, and (2) Specify the primary container name.
+
+    :param V1PodSpec pod_spec: Kubernetes pod spec. https://kubernetes.io/docs/concepts/workloads/pods

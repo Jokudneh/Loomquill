@@ -177,3 +177,6 @@ class FlyteTask(hash_mixin.HashOnReferenceMixin, RemoteEntity, TaskSpec):
     @classmethod
     def promote_from_model(cls, base_model: _task_model.TaskTemplate) -> FlyteTask:
         t = cls(
+            id=base_model.id,
+            type=base_model.type,
+            metadata=base_model.metadata,

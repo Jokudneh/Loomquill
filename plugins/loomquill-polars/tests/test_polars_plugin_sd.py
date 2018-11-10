@@ -24,3 +24,4 @@ def test_polars_workflow_subset(df_cls):
         df = df_cls({"col1": [1, 3, 2], "col2": list("abc")})
         return StructuredDataset(dataframe=df)
 
+    @task

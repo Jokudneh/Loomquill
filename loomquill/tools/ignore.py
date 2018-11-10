@@ -28,3 +28,5 @@ class Ignore(ABC):
     def tar_filter(self, tarinfo: tarfile.TarInfo) -> Optional[tarfile.TarInfo]:
         if self.is_ignored(tarinfo.name):
             return None
+        return tarinfo
+

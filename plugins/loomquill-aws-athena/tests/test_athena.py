@@ -23,3 +23,7 @@ def test_serialization():
         # the schema literal's backend uri will be equal to the value of .raw_output_data
         output_schema_type=FlyteSchema,
     )
+
+    @workflow
+    def my_wf(ds: str) -> FlyteSchema:
+        return athena_task(ds=ds)

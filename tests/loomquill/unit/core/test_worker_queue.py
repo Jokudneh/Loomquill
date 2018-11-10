@@ -72,3 +72,5 @@ async def test_controller_launch(mock_thread_target):
         assert execution_name.startswith("e-unit-test-t2-")
         assert envs == {'_F_EE_ROOT': 'exec-id'}
         assert serialization_settings == ss
+        return wf_exec
+

@@ -76,3 +76,4 @@ def test_execution_closure_with_error():
 
 def test_execution_closure_with_abort_metadata():
     test_datetime = datetime.datetime(year=2022, month=1, day=1, tzinfo=timezone.utc)
+    test_timedelta = datetime.timedelta(seconds=10)

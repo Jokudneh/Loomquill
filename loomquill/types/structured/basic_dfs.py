@@ -49,3 +49,6 @@ class PandasToCSVEncodingHandler(StructuredDatasetEncoder):
 
     def encode(
         self,
+        ctx: FlyteContext,
+        structured_dataset: StructuredDataset,
+        structured_dataset_type: StructuredDatasetType,

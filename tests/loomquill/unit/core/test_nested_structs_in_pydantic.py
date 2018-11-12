@@ -73,3 +73,7 @@ class ListOfOptionalModels(BaseModel):
 
 # -- Nested arrays --
 
+
+def test_list_of_list_of_int_schema():
+    """List[List[int]] should resolve the inner element to List[int], not str."""
+    schema = ListOfLists.model_json_schema()

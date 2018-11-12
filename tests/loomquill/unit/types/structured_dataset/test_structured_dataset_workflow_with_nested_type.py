@@ -44,3 +44,4 @@ class CompanyField:
     location: str
     info: InfoField
     company: str
+

@@ -101,3 +101,5 @@ class FlyteIdlEntity(object, metaclass=FlyteType):
         str_repr = _repr_idl_yaml_like(idl).rstrip(os.linesep)
         return f"<h4>{type_str}</h4><pre>{str_repr}</pre>"
 
+    @property
+    def is_empty(self):

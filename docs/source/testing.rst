@@ -1,2 +1,3 @@
 
 .. automodule:: flytekit.testing
+   :members:

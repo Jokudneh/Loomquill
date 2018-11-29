@@ -45,3 +45,7 @@ def test_tensorflow_task_with_default_config(serialization_settings: Serializati
     expected_dict = {
         "chiefReplicas": {
             "resources": {},
+        },
+        "workerReplicas": {
+            "replicas": 1,
+            "resources": {},

@@ -71,3 +71,5 @@ class GCPIdentityAwareProxyAuthenticator(Authenticator):
                 request_access_token_params={
                     "client_id": self.client_id,
                     "client_secret": self.client_secret,
+                    "audience": self.audience,
+                    "redirect_uri": self.redirect_uri,

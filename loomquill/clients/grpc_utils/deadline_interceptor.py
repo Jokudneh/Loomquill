@@ -18,3 +18,5 @@ def get_scoped_grpc_deadline() -> typing.Optional[float]:
 @contextlib.contextmanager
 def scoped_grpc_deadline(seconds: float):
     token = _GRPC_DEADLINE_SECONDS.set(seconds)
+    try:
+        yield

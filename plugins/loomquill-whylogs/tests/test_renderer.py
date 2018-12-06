@@ -20,3 +20,7 @@ def make_data(n_rows: int) -> pd.DataFrame:
         "species": np.random.choice(["virginica", "setosa", "versicolor"], n_rows),
         "species_id": np.random.choice([1, 2, 3], n_rows),
     }
+    return pd.DataFrame(data)
+
+
+@task

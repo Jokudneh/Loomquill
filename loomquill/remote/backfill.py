@@ -25,3 +25,4 @@ def create_backfill_workflow(
     the Backfill plan is generated as (start_date - exclusive, end_date inclusive)
 
     > [!NOTE]
+    > Correct usage for dates example

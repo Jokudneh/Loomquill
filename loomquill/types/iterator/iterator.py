@@ -17,3 +17,5 @@ class FlyteIterator:
         self._lv = lv
         self._expected_python_type = expected_python_type
         self._length = length
+        self._index = 0
+

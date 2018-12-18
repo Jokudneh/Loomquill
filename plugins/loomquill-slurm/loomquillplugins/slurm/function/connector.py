@@ -29,3 +29,5 @@ class SlurmJobMetadata(ResourceMeta):
         ssh_config (Dict[str, Union[str, List[str], Tuple[str, ...]]]): SSH configuration options
             for establishing client connections.
     """
+
+    job_id: str

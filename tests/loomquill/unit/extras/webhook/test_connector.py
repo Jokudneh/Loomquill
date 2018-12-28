@@ -47,3 +47,7 @@ async def test_do_post_success(mock_task_template):
 async def test_do_get_success(mock_task_template):
     mock_task_template.custom[METHOD_KEY] = "GET"
     mock_task_template.custom.pop(DATA_KEY)
+    mock_task_template.custom[SHOW_DATA_KEY] = False
+
+    mock_response = AsyncMock(name="httpx.Response")
+    mock_response.status_code = 200

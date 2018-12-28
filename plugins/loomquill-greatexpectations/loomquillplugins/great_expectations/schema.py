@@ -82,3 +82,5 @@ class GreatExpectationsType(object):
 
         return _GreatExpectationsTypeClass
 
+
+class GreatExpectationsTypeTransformer(TypeTransformer[GreatExpectationsType]):

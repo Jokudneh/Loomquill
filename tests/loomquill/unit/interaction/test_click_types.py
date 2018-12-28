@@ -98,3 +98,7 @@ def test_literal_converter_query():
     click_ctx = click.Context(click.Command("test_command"), obj={"remote": True})
     assert lc.convert(click_ctx, dummy_param, query) == query
 
+
+@pytest.mark.parametrize(
+    "python_type, python_str_value, python_value",
+    [

@@ -16,3 +16,5 @@ from flytekit.remote import FlyteRemote
 @click.option(
     "--recursive",
     "-r",
+    is_flag=True,
+    help="Fetch recursively, all variables in the URI. This is not needed for directories as they"

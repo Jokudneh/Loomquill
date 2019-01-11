@@ -13,3 +13,7 @@ def run_cli(cmd: List[str]) -> (int, List[str]):
     ----------
     cmd : list of str
         Command to be executed.
+
+    Returns
+    -------
+    int

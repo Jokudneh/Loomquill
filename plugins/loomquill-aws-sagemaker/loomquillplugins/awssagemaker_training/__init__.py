@@ -15,3 +15,6 @@
 """
 
 from .connector import (
+    SageMakerTrainingJobConnector,
+    SageMakerTrainingJobMetadata,
+    SageMakerTrainingTaskConnector,

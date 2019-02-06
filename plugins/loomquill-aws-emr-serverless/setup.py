@@ -18,3 +18,6 @@ setup(
     name=microlib_name,
     version=__version__,
     author="flyteorg",
+    author_email="admin@flyte.org",
+    description="Flytekit AWS EMR Serverless Plugin: run Spark and Hive jobs from Flyte tasks",
+    long_description=open("README.md").read(),

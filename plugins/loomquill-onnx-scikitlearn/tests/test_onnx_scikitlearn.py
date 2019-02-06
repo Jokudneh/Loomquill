@@ -31,3 +31,4 @@ def test_onnx_scikitlearn_simple():
                     ),
                 ],
             ),
+            ("test", pd.DataFrame),

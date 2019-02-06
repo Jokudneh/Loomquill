@@ -23,3 +23,5 @@ def test_dynamic_from_environment():
 
     @env.task
     def foo():
+        pass
+

@@ -321,3 +321,4 @@ def test_all_types_with_json_input():
         pyflyte.main,
         [
             "run",
+            os.path.join(DIR_NAME, "workflow.py"),

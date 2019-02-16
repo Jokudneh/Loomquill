@@ -14,3 +14,6 @@ def test_perian_task():
         accelerators=1,
         accelerator_type="A100",
         country_code="DE",
+    )
+    container_image = DefaultImages.default_image()
+

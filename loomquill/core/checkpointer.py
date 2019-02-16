@@ -33,3 +33,6 @@ class Checkpoint(object):
         """
         Args:
             cp: Checkpoint file (path, str path or a io.BufferedReader)
+
+        Usage: If you have a io.BufferedReader then the following should work
+

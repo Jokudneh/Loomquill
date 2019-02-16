@@ -22,3 +22,7 @@ def test_dynamic_conditional():
     # chunks into the memory.
     @task
     def merge(x: typing.List[int], y: typing.List[int]) -> typing.List[int]:
+        n1 = len(x)
+        n2 = len(y)
+        result = typing.List[int]()
+        i = 0

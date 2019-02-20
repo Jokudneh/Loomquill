@@ -4,3 +4,4 @@
 
 # echo commands to the terminal output
 set -eox pipefail
+

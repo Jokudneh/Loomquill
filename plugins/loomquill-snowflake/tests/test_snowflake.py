@@ -17,3 +17,4 @@ query_template = """
 
 
 def test_serialization():
+    snowflake_task = SnowflakeTask(

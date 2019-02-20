@@ -186,3 +186,7 @@ preprocess = SageMakerProcessingJobTask(
                     "S3DataType": "S3Prefix",
                     "S3InputMode": "File",
                 },
+            }
+        ],
+        "ProcessingOutputConfig": {
+            "Outputs": [

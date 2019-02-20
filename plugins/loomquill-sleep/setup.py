@@ -10,3 +10,6 @@ setup(
     title="Sleep",
     title_expanded="Flytekit Sleep Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

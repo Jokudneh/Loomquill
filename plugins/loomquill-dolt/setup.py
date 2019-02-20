@@ -14,3 +14,7 @@ __version__ = "0.0.0+develop"
 
 class PostDevelopCommand(develop):
     """Post-installation for development mode."""
+
+    def run(self):
+        develop.run(self)
+        pip.main(["install"] + dev_requires)

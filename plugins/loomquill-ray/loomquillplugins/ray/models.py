@@ -97,3 +97,7 @@ class WorkerGroupSpec(_common.FlyteIdlEntity):
             replicas=proto.replicas,
             min_replicas=proto.min_replicas,
             max_replicas=proto.max_replicas,
+            ray_start_params=proto.ray_start_params,
+            k8s_pod=K8sPod.from_flyte_idl(proto.k8s_pod) if proto.HasField("k8s_pod") else None,
+        )
+

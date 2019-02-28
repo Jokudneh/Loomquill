@@ -1,0 +1,2 @@
+onnxruntime
+# scikit-learn (via skl2onnx) pulls scipy, whose 1.18 line requires numpy>=2 and uses

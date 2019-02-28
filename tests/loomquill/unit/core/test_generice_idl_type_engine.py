@@ -862,3 +862,6 @@ def test_dataclass_transformer_with_dataclassjsonmixin():
                     "c": {"type": "array", "items": {"type": "integer"}},
                 },
                 "additionalProperties": False,
+                "required": ["a", "b", "c"],
+            },
+            "m": {

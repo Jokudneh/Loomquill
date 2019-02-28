@@ -8,3 +8,4 @@ plugin_requires = ["flytekit>1.10.7", "openai>=1.12.0", "flyteidl>=1.11.0"]
 
 __version__ = "0.0.0+develop"
 
+setup(

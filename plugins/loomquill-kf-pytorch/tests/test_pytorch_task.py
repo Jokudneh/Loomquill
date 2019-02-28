@@ -45,3 +45,7 @@ def test_pytorch_task(serialization_settings: SerializationSettings):
 def test_pytorch_task_with_default_config(serialization_settings: SerializationSettings):
     task_config = PyTorch(worker=Worker(replicas=1))
 
+    @task(
+        task_config=task_config,
+        cache=True,
+        requests=Resources(cpu="1"),

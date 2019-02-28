@@ -24,3 +24,5 @@ def deploy_vllm_model(
     resource_shape: str,
     node_group: str,
     mounts: MountReader,
+    checkpoint_path: str = "meta-llama/Llama-3.1-8B-Instruct",
+    served_model_name: Optional[str] = None,

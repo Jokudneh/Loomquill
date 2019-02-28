@@ -6,3 +6,6 @@ from flytekit.lazy_import.lazy_module import _LazyModule, lazy_module, is_import
 
 
 def test_lazy_module():
+    mod = lazy_module("click")
+    assert mod.__name__ == "click"
+    mod = lazy_module("fake_module")

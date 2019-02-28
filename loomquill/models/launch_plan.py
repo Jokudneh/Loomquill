@@ -81,3 +81,6 @@ class Auth(_common.FlyteIdlEntity):
         """
         DEPRECATED. Do not use. Use flytekit.models.common.AuthRole instead
         At most one of assumable_iam_role or kubernetes_service_account can be set.
+        :param Text assumable_iam_role: IAM identity with set permissions policies.
+        :param Text kubernetes_service_account: Provides an identity for workflow execution resources. Flyte deployment
+            administrators are responsible for handling permissions as they relate to the service account.

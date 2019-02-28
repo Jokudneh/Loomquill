@@ -262,3 +262,5 @@ class ImageConfig(DataClassJsonMixin):
 
         for i in lookup_images:
             if i.name == name:
+                return i
+        return None

@@ -13,3 +13,7 @@ def test_grpc_verbosity_set_on_import():
             del os.environ["GRPC_VERBOSITY"]
 
         import importlib
+        import flytekit.clis.sdk_in_container
+        importlib.reload(flytekit.clis.sdk_in_container)
+
+        assert "GRPC_VERBOSITY" in os.environ

@@ -108,3 +108,6 @@ def test_cross_type_binding_no_literals_parent():
     ) as ctx:
         new_exc_state = ctx.execution_state.with_params(mode=ExecutionState.Mode.TASK_EXECUTION)
         with FlyteContextManager.with_context(ctx.with_execution_state(new_exc_state)):
+            dynamic_job_spec = d0.compile_into_workflow(ctx, d0._task_function, ii=foofoo)
+            assert len(dynamic_job_spec.nodes) == 1
+            assert len(dynamic_job_spec.nodes[0].inputs[0].binding.collection.bindings) == 3

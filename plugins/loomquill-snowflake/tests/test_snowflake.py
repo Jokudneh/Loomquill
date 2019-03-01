@@ -18,3 +18,6 @@ query_template = """
 
 def test_serialization():
     snowflake_task = SnowflakeTask(
+        name="flytekit.demo.snowflake_task.query",
+        inputs=kwtypes(ds=str),
+        task_config=SnowflakeConfig(

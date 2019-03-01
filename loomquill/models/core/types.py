@@ -17,3 +17,6 @@ class EnumType(_common.FlyteIdlEntity):
 
     @property
     def values(self) -> typing.List[str]:
+        return self._values
+
+    def to_flyte_idl(self) -> _types_pb2.EnumType:

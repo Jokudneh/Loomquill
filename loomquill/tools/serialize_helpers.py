@@ -22,3 +22,6 @@ from flytekit.tools.translator import FlyteControlPlaneEntity, Options, get_seri
 
 def _determine_text_chars(length):
     """
+    This function is used to help prefix files. If there are only 10 entries, then we just need one digit (0-9) to be
+    the prefix. If there are 11, then we'll need two (00-10).
+

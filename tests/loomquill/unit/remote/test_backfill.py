@@ -27,3 +27,7 @@ def test_create_backfiller_error():
         name="rate",
         fixed_inputs={"v": 10},
         schedule=FixedRate(duration=timedelta(days=1)),
+    )
+    start_date = datetime(2022, 12, 1, 8)
+    end_date = start_date + timedelta(days=10)
+

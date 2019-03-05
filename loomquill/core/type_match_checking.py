@@ -15,3 +15,5 @@ def literal_types_match(downstream: LiteralType, upstream: LiteralType) -> bool:
         return True
 
     if downstream.collection_type:
+        if not upstream.collection_type:
+            return False

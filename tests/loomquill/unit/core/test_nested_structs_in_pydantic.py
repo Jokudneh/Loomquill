@@ -77,3 +77,7 @@ class ListOfOptionalModels(BaseModel):
 def test_list_of_list_of_int_schema():
     """List[List[int]] should resolve the inner element to List[int], not str."""
     schema = ListOfLists.model_json_schema()
+    items = schema["properties"]["matrix"]["items"]
+    result = _get_element_type(items, schema)
+    assert result == typing.List[int]
+

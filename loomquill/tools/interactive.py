@@ -5,3 +5,4 @@ def ipython_check() -> bool:
     """
     is_ipython = False
     try:  # Check if running interactively using ipython.
+        from IPython import get_ipython

@@ -38,3 +38,6 @@ class ScikitLearn2ONNXConfig(DataClassJsonMixin):
       white_op: White list of ONNX nodes allowed while converting a pipeline.
       black_op: Black list of ONNX nodes disallowed while converting a pipeline.
       verbose: Display progress while converting a model.
+      final_types: Used to overwrite the type (if type is not None) and the name of every output.
+    """
+

@@ -70,3 +70,6 @@ def test_image_spec(mock_image_spec_builder, monkeypatch):
     ctx = context_manager.FlyteContext.current_context()
     with context_manager.FlyteContextManager.with_context(
         ctx.with_execution_state(ctx.execution_state.with_params(mode=ExecutionState.Mode.TASK_EXECUTION))
+    ):
+        os.environ[_F_IMG_ID] = image_spec.id
+        assert image_spec.is_container() is True

@@ -125,3 +125,6 @@ class DirParamType(click.ParamType):
         # set remote_directory to false if running pyflyte run locally. This makes sure that the original
         # directory is used and not a random one.
         remote_directory = None if getattr(ctx.obj, "is_remote", False) else False
+        if not FileAccessProvider.is_remote(value):
+            p = pathlib.Path(value)
+            if not p.exists() or not p.is_dir():

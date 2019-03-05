@@ -72,3 +72,5 @@ def _task_template():
         type="sagemaker-inference-recommender-job",
     )
 
+
+def _completed_describe_response():

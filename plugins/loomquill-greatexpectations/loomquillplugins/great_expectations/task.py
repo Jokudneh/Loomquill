@@ -45,3 +45,7 @@ class GreatExpectationsTask(PythonInstanceTask[BatchRequestConfig]):
         name: name of the task
         datasource_name: tell where your data lives and how to get it
         expectation_suite_name: suite which consists of the data expectations
+        data_connector_name: connector to identify data batches
+        inputs: inputs to pass to the execute() method
+        data_asset_name: name of the data asset (to be used for RuntimeBatchRequest)
+        local_file_path: dataset file path useful for FlyteFile and FlyteSchema

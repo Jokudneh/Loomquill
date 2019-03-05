@@ -12,3 +12,5 @@ Flytekit is comprised of a handful of different logical components, each discuss
 * :ref:`Execution <design-execution>` - A small shim layer basically that handles interaction with the Flyte ecosystem at execution time.
 * :ref:`CLIs and Clients <design-clis>` - Command line tools users may interact with, and the control plane client the CLIs call.
 
+.. toctree::
+   :maxdepth: 1

@@ -11,3 +11,6 @@ __version__ = "0.0.0+develop"
 setup(
     title="Optuna (wrapper)",
     title_expanded="Fully Parallelized Wrapper Around Optuna Using Flyte",
+    name=microlib_name,
+    version=__version__,
+    author="flyteorg",

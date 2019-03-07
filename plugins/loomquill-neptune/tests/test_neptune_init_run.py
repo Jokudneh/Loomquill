@@ -31,3 +31,6 @@ def test_local_project_and_init_run_kwargs(neptune_mock):
     assert neptune_exists
 
     neptune_mock.init_run.assert_called_with(
+        project="flytekit/project", tags=["my-tag"]
+    )
+

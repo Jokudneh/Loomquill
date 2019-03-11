@@ -74,3 +74,7 @@ def test_convert_limits(resource_dict: Dict[str, str], expected_resource_name: _
     assert len(resource_dict) == 1
     expected_resource_value = list(resource_dict.values())[0]
 
+    requests = Resources(**resource_dict)
+    resources_model = convert_resources_to_resource_model(limits=requests)
+
+    assert len(resources_model.limits) == 1

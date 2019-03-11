@@ -25,3 +25,5 @@ def _recursive_hash_placement(literal: Literal) -> Literal:
         return Literal(collection=LiteralCollection(literals=literals))
     elif literal.map is not None:
         literal_map = {}
+        for key, literal_value in literal.map.literals.items():
+            literal_map[key] = _recursive_hash_placement(literal_value)

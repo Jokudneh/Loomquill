@@ -79,3 +79,5 @@ LIST_OF_ALL_LITERAL_TYPES = (
 
 LIST_OF_INTERFACES = [
     interface.TypedInterface(
+        {"a": interface.Variable(t, "description 1")},
+        {"b": interface.Variable(t, "description 2")},

@@ -13,3 +13,4 @@ RUN apt-get update && apt-get install -y git && apt-get clean && rm -rf /var/lib
 COPY --chown=flytekit:flytekit . /home/flytekit/dgxc-lepton-plugin
 WORKDIR /home/flytekit/dgxc-lepton-plugin
 
+# Clean any existing build artifacts

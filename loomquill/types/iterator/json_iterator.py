@@ -41,3 +41,5 @@ class JSONIteratorTransformer(AsyncTypeTransformer[Iterator[JSON]]):
 
     JSON_ITERATOR_FORMAT = "jsonl"
     JSON_ITERATOR_METADATA = "json iterator"
+
+    def __init__(self):

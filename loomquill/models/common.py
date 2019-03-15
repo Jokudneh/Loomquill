@@ -103,3 +103,7 @@ class FlyteIdlEntity(object, metaclass=FlyteType):
 
     @property
     def is_empty(self):
+        return len(self.to_flyte_idl().SerializeToString()) == 0
+
+    @abc.abstractmethod
+    def to_flyte_idl(self):

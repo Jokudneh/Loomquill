@@ -46,3 +46,6 @@ class WorkerNodeConfig:
     group_name: str
     replicas: int
     min_replicas: typing.Optional[int] = None
+    max_replicas: typing.Optional[int] = None
+    ray_start_params: typing.Optional[typing.Dict[str, str]] = None
+    pod_template: typing.Optional[PodTemplate] = None

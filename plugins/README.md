@@ -40,3 +40,6 @@ Loomquillkit plugins are structured as micro-libs and can be authored in an inde
 The plugins maintained by the core team can be found in this repository and provide a simple way of discovery.
 
 ## Unit tests 🧪
+
+Plugins should have their own unit tests.
+

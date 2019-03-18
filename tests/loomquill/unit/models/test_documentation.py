@@ -8,3 +8,4 @@ def test_long_description():
     assert Description.from_flyte_idl(obj.to_flyte_idl()) == obj
     assert obj.value == value
     assert obj.icon_link == icon_link
+    assert obj.format == Description.DescriptionFormat.RST

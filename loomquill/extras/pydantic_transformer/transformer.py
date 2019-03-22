@@ -38,3 +38,5 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
         # This is for attribute access in FlytePropeller.
         ts = TypeStructure(tag="", dataclass_type=literal_type)
 
+        return types.LiteralType(
+            simple=types.SimpleType.STRUCT,

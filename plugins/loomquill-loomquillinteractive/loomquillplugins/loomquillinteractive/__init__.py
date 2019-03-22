@@ -10,3 +10,6 @@ This package contains flyteinteractive plugin for Flytekit.
    vscode
    VscodeConfig
    DEFAULT_CODE_SERVER_DIR_NAME
+   DEFAULT_CODE_SERVER_REMOTE_PATH
+   DEFAULT_CODE_SERVER_EXTENSIONS
+   COPILOT_EXTENSION

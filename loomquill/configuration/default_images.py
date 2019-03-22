@@ -17,3 +17,5 @@ class PythonVersion(enum.Enum):
     PYTHON_3_14 = (3, 14)
 
 
+class DefaultImages(object):
+    """

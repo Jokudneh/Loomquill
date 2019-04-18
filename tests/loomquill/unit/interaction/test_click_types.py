@@ -102,3 +102,5 @@ def test_literal_converter_query():
 @pytest.mark.parametrize(
     "python_type, python_str_value, python_value",
     [
+        (Color, "red", Color.RED),
+        (int, "1", 1),

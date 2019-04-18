@@ -211,3 +211,6 @@ def test_serialization_branch_complex_2():
         f = conditional("test2").if_(d == "hello ").then(t2(a="It is hello")).else_().then(t2(a="Not Hello!"))
         return x, f
 
+    default_img = Image(name="default", fqn="test", tag="tag")
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",

@@ -12,3 +12,7 @@ from flytekitplugins.dgxc_lepton import (
     MountReader,
     ScalingConfig,
     lepton_endpoint_deployment_task,
+)
+
+from flytekit import workflow
+

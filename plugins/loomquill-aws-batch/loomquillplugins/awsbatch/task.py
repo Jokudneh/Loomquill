@@ -22,3 +22,6 @@ class AWSBatchConfig(DataClassJsonMixin):
     schedulingPriority: Optional[int] = None
     platformCapabilities: str = "EC2"
     propagateTags: Optional[bool] = None
+    tags: Optional[Dict[str, str]] = None
+
+    def to_dict(self):

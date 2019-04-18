@@ -43,3 +43,4 @@ class MMCloudConnector(AsyncConnectorBase):
                     "login",
                     "--address",
                     secrets.get("mmc_address"),
+                    "--username",

@@ -19,3 +19,5 @@ class SensorConfig(Protocol):
     def to_dict(self) -> typing.Dict[str, Any]:
         """
         Serialize the sensor config to a dictionary.
+        """
+        raise NotImplementedError

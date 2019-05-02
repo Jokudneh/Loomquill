@@ -54,3 +54,5 @@ def test_fixed_rate():
     assert obj.rate.value == 2
     assert obj == FixedRate.from_flyte_idl(obj.to_flyte_idl())
 
+
+def test_fixed_rate_bad_duration():

@@ -84,3 +84,7 @@ Unified configuration for all Lepton endpoint operations.
 
 **Optional Fields:**
 - `scaling`: Auto-scaling configuration
+- `environment`: Environment variables and secrets
+- `mounts`: Storage mount configurations
+- `api_token`/`api_token_secret`: Authentication
+- `image_pull_secrets`: Container registry secrets

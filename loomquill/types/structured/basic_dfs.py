@@ -52,3 +52,5 @@ class PandasToCSVEncodingHandler(StructuredDatasetEncoder):
         ctx: FlyteContext,
         structured_dataset: StructuredDataset,
         structured_dataset_type: StructuredDatasetType,
+    ) -> literals.StructuredDataset:
+        uri = typing.cast(str, structured_dataset.uri) or ctx.file_access.get_random_remote_directory()

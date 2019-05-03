@@ -28,3 +28,6 @@ class State(Enum):
     @classmethod
     def key_by_value(cls, value) -> str:
         for member in cls:
+            if value in member.value:
+                return member.name
+

@@ -228,3 +228,5 @@ def test_to_literal():
     lt = TypeEngine.to_literal_type(pd.DataFrame)
     df = generate_pandas()
 
+    fdt = StructuredDatasetTransformerEngine()
+

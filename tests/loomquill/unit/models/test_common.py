@@ -81,3 +81,7 @@ def test_annotations():
     assert obj2 == obj
 
 
+def test_auth_role():
+    obj = _common.AuthRole(assumable_iam_role="rollie-pollie")
+    assert obj.assumable_iam_role == "rollie-pollie"
+    assert not obj.kubernetes_service_account

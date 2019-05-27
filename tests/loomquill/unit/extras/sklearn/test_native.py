@@ -10,3 +10,4 @@ from flytekit import task, workflow
 def get_preprocessor() -> StandardScaler:
     return StandardScaler()
 
+

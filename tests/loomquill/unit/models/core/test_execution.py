@@ -9,3 +9,4 @@ def test_task_logs():
     assert obj.uri == "uri"
     assert obj.name == "name"
     assert obj.ttl == datetime.timedelta(days=30)
+

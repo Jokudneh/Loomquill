@@ -63,3 +63,4 @@ class PerianConnector(AsyncConnectorBase):
         literal_types = task_template.interface.inputs
         input_kwargs = (
             TypeEngine.literal_map_to_kwargs(ctx, inputs, literal_types=literal_types) if inputs.literals else None
+        )

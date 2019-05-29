@@ -17,3 +17,5 @@ from flytekitplugins.dgxc_lepton import (
 
 from flytekit import workflow
 
+
+@workflow

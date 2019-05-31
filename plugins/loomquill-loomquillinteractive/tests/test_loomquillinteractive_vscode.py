@@ -79,3 +79,5 @@ def test_vscode_remote_execution(vscode_patches, mock_remote_execution):
         mock_process,
         mock_prepare_interactive_python,
         mock_exit_handler,
+        mock_download_vscode,
+        mock_signal,

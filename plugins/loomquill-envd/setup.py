@@ -12,3 +12,5 @@ setup(
     title="Envd",
     title_expanded="Flytekit Envd Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",

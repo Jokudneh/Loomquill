@@ -14,3 +14,4 @@ FLYTE_REMOTE_INSTANCE_KEY = "flyte_remote"
 
 def get_and_save_remote_with_click_context(
     ctx: click.Context,
+    project: str,

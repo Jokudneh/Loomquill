@@ -27,3 +27,7 @@ pythonTypeToBigQueryType: Dict[type, str] = {
     float: "FLOAT64",
     int: "INT64",
     str: "STRING",
+}
+
+
+@dataclass

@@ -20,3 +20,5 @@ class PrestoQuery(_common.FlyteIdlEntity):
         :param string schema:
         :param string statement:
 
+        """
+        self._routing_group = routing_group

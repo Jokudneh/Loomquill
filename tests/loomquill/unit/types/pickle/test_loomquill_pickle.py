@@ -40,3 +40,6 @@ def test_to_python_value_and_literal():
             format=FlytePickleTransformer.PYTHON_PICKLE_FORMAT,
             dimensionality=BlobType.BlobDimensionality.SINGLE,
         )
+    )
+    assert lv.scalar.blob.uri is not None
+

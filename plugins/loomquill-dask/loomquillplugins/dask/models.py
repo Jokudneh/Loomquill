@@ -36,3 +36,4 @@ class Scheduler(common.FlyteIdlEntity):
         """
         :return: The scheduler spec serialized to protobuf
         """
+        return dask_task.DaskScheduler(

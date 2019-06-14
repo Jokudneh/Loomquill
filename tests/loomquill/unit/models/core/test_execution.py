@@ -10,3 +10,6 @@ def test_task_logs():
     assert obj.name == "name"
     assert obj.ttl == datetime.timedelta(days=30)
 
+    obj2 = execution.TaskLog.from_flyte_idl(obj.to_flyte_idl())
+    assert obj2 == obj
+    assert obj2.message_format == execution.TaskLog.MessageFormat.CSV

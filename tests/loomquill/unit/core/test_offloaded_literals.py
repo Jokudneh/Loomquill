@@ -64,3 +64,7 @@ def test_task_offloaded_literal_multiple_input(tmp_path):
         f.write(original_input_literal_a.to_flyte_idl().SerializeToString())
     with open(f"{tmp_path}/offloaded_proto_b.pb", "wb") as f:
         f.write(original_input_literal_b.to_flyte_idl().SerializeToString())
+
+    offloaded_input_literal_a = literal_models.Literal(
+        offloaded_metadata=literal_models.LiteralOffloadedMetadata(
+            uri=f"{tmp_path}/offloaded_proto_a.pb",

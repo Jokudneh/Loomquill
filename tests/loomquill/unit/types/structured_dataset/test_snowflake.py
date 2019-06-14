@@ -23,3 +23,5 @@ skip_if_wrong_numpy_version = pytest.mark.skipif(
 @mock.patch("flytekit.types.structured.snowflake.get_private_key", return_value="pb")
 @mock.patch("snowflake.connector.connect")
 def test_sf_wf(mock_connect, mock_get_private_key):
+    import pandas as pd
+    from flytekit.lazy_import.lazy_module import is_imported

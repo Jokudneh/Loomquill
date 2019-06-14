@@ -14,3 +14,5 @@ COPY --chown=flytekit:flytekit . /home/flytekit/dgxc-lepton-plugin
 WORKDIR /home/flytekit/dgxc-lepton-plugin
 
 # Clean any existing build artifacts
+RUN rm -rf *.egg-info build dist
+

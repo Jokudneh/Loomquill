@@ -31,3 +31,5 @@ class HiveQuery(_common.FlyteIdlEntity):
         return self._query
 
     @property
+    def timeout_sec(self):
+        """

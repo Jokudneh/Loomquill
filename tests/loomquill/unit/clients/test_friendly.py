@@ -18,3 +18,4 @@ def test_update_project(mock_raw_update_project):
 
 
 @mock.patch("flytekit.clients.friendly._RawSynchronousFlyteClient.list_projects")
+def test_list_projects_paginated(mock_raw_list_projects):

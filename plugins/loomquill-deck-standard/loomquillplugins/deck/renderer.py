@@ -49,3 +49,6 @@ class SourceCodeRenderer:
 
 
 class FrameProfilingRenderer:
+    """
+    Generate a ProfileReport based on a pandas DataFrame
+    """

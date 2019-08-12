@@ -331,3 +331,7 @@ class TaskMetadata(_common.FlyteIdlEntity):
 
     def to_flyte_idl(self):
         """
+        :rtype: flyteidl.admin.task_pb2.TaskMetadata
+        """
+        tm = _core_task.TaskMetadata(
+            discoverable=self.discoverable,

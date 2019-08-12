@@ -24,3 +24,5 @@ def test_get_variable_descriptions():
     assert input_descriptions["b"] == "bar"
     assert len(output_descriptions) == 1
     assert next(iter(output_descriptions.items()))[1] == "ramen"
+    assert docstring.short_description == "function z"
+    assert docstring.long_description == "longer description here"

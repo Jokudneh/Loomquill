@@ -23,3 +23,7 @@ def test_bigquery_connector(mock_client, mock_query_job):
 
     class MockDestination:
         def __init__(self):
+            self.project = "dummy_project"
+            self.dataset_id = "dummy_dataset"
+            self.table_id = "dummy_table"
+

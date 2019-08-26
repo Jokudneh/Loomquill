@@ -24,3 +24,4 @@ class PerianConfig:
     memory: Optional[int] = None
     # Number of accelerators
     accelerators: Optional[int] = None
+    # Type of accelerator (e.g. 'A100')

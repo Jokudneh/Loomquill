@@ -18,3 +18,4 @@ def test_sensor_task():
         project="project",
         domain="domain",
         version="version",
+        env={"FOO": "baz"},

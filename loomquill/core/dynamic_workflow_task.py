@@ -18,3 +18,6 @@ import functools
 from flytekit.core import task
 from flytekit.core.python_function_task import PythonFunctionTask
 
+dynamic = functools.partial(task.task, execution_mode=PythonFunctionTask.ExecutionBehavior.DYNAMIC)  # type: ignore[var-annotated]
+dynamic.__doc__ = """
+Please first see the comments for {{< py_func_ref flytekit.task >}} and {{< py_func_ref flytekit.workflow >}}. This ``dynamic``

@@ -19,3 +19,5 @@ from flytekit.models.task import Sql, TaskTemplate
 @pytest.mark.asyncio
 async def test_snowflake_connector(mock_get_private_key):
     query_status_mock = MagicMock()
+    query_status_mock.name = "SUCCEEDED"
+

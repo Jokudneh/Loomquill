@@ -35,3 +35,6 @@ class SlurmConfig(object):
         if self.sbatch_config is None:
             self.sbatch_config = {}
 
+
+@dataclass
+class SlurmScriptConfig(SlurmConfig):

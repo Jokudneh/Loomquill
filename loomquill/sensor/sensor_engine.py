@@ -10,3 +10,6 @@ from flytekit.models.literals import LiteralMap
 from flytekit.models.task import TaskTemplate
 from flytekit.sensor.base_sensor import SensorMetadata
 
+
+class SensorEngine(AsyncConnectorBase):
+    name = "Sensor"

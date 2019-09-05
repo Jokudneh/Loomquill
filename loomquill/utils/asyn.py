@@ -34,3 +34,7 @@ def _selector_policy():
             asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
         yield
+    finally:
+        asyncio.set_event_loop_policy(original_policy)
+
+

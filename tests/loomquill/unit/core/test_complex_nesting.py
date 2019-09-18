@@ -53,3 +53,4 @@ def folders_and_files_setup():
         with os.fdopen(fd, "w") as tmp:
             tmp.write("Hello world")
         yield path, tmp_dir_static_data.name, tmp_dir_external_data.name
+    finally:

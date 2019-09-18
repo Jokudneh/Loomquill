@@ -11,3 +11,4 @@ __version__ = "0.0.0+develop"
 setup(
     title="Spark",
     title_expanded="Flytekit Spark Plugin",
+    name=microlib_name,

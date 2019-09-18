@@ -6,3 +6,4 @@
    :toctree: generated/
 
    ScikitLearn2ONNXConfig
+   ScikitLearn2ONNX

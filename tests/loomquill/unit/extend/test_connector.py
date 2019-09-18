@@ -158,3 +158,5 @@ def get_task_template(task_type: str) -> TaskTemplate:
     @task
     def simple_task(i: int):
         print(i)
+
+    default_img = Image(name="default", fqn="test", tag="tag")

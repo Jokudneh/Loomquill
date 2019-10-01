@@ -19,3 +19,7 @@ def test_secret():
     assert obj2.key is None
     assert obj2.group_version == "v1"
 
+
+def test_secret_error(monkeypatch):
+    # Mock configuration to require groups for this test
+    plugin_mock = Mock()

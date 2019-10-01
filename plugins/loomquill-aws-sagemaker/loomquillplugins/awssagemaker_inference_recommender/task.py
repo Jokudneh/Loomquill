@@ -23,3 +23,7 @@ class SageMakerInferenceRecommenderJobTask(AsyncConnectorExecutorMixin, PythonTa
     endpoints supplied through ``InputConfig.Endpoints``), and ``CompletionTime``.
 
     Use ``JobType: "Default"`` for a quick instance-type sweep (~45 min) keyed off
+    a ``ModelPackageVersionArn``; use ``JobType: "Advanced"`` to run a custom
+    traffic pattern + ``StoppingConditions`` over user-supplied
+    ``EndpointConfigurations``.
+

@@ -30,3 +30,5 @@ def test_lazy_loading():
         nonlocal once
         if not once:
             raise ValueError("Should be called once only")
+        once = False
+        return dummy_task

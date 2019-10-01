@@ -42,3 +42,7 @@ def extract_metadata(t: Type[np.ndarray]) -> Tuple[Type[np.ndarray], Dict[str, b
 
 
 class NumpyArrayTransformer(AsyncTypeTransformer[np.ndarray]):
+    """
+    TypeTransformer that supports np.ndarray as a native type.
+    """
+

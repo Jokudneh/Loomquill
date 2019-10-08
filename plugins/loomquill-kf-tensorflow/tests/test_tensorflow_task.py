@@ -49,3 +49,4 @@ def test_tensorflow_task_with_default_config(serialization_settings: Serializati
         "workerReplicas": {
             "replicas": 1,
             "resources": {},
+        },

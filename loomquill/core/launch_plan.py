@@ -92,3 +92,4 @@ class LaunchPlan(object):
         default_inputs = {
             name: default for name, (type, default) in workflow.python_interface.inputs_with_defaults.items()
         }
+        lp._saved_inputs = default_inputs

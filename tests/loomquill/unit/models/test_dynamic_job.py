@@ -20,3 +20,6 @@ LIST_OF_DYNAMIC_TASKS = [
         interfaces,
         _array_job.ArrayJob(2, 2, 2).to_dict(),
         container=_task.Container(
+            "my_image",
+            ["this", "is", "a", "cmd"],
+            ["this", "is", "an", "arg"],

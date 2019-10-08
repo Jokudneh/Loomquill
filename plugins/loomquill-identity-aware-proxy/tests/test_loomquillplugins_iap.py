@@ -35,3 +35,5 @@ def test_get_gcp_secret_manager_secret():
 
     mock_client = MagicMock()
     mock_client.access_secret_version.return_value.payload.data.decode.return_value = expected_payload
+    with patch("google.cloud.secretmanager.SecretManagerServiceClient", return_value=mock_client):
+        payload = get_gcp_secret_manager_secret(project_id, secret_id, version)

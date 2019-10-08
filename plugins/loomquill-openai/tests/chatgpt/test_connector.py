@@ -20,3 +20,4 @@ async def mock_acreate(*args, **kwargs) -> str:
     return mock_response
 
 
+@pytest.mark.asyncio

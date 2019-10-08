@@ -43,3 +43,6 @@ def test_launch_plan_spec():
     identifier_model = identifier.Identifier(identifier.ResourceType.TASK, "project", "domain", "name", "version")
 
     s = schedule.Schedule("asdf", "1 3 4 5 6 7")
+    launch_plan_metadata_model = launch_plan.LaunchPlanMetadata(schedule=s, notifications=[])
+
+    v = interface.Variable(types.LiteralType(simple=types.SimpleType.BOOLEAN), "asdf asdf asdf")

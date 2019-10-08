@@ -18,3 +18,7 @@ def test_concurrency_policy_serialization():
     assert policy.behavior == ConcurrencyLimitBehavior.SKIP
 
     # Test serialization to protobuf
+    pb = policy.to_flyte_idl()
+    assert isinstance(pb, _launch_plan_idl.ConcurrencyPolicy)
+    assert pb.max == 1
+    assert pb.behavior == _launch_plan_idl.CONCURRENCY_LIMIT_BEHAVIOR_SKIP

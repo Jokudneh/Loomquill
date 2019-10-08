@@ -29,3 +29,5 @@ class PyTorchTypeTransformer(TypeTransformer[T]):
         self,
         ctx: FlyteContext,
         python_val: T,
+        python_type: Type[T],
+        expected: LiteralType,

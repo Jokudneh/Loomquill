@@ -44,3 +44,4 @@ def aggregate_spans(spans):
 
     span = {"breakdown": breakdown}
 
+    if len(tasks) > 0:

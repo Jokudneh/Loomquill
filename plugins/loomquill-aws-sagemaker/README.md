@@ -190,3 +190,4 @@ preprocess = SageMakerProcessingJobTask(
         ],
         "ProcessingOutputConfig": {
             "Outputs": [
+                {

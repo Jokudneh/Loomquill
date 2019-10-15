@@ -22,3 +22,4 @@ class ChatGPTTask(SyncConnectorExecutorMixin, PythonTask):
         """
 
         if "model" not in chatgpt_config:
+            raise ValueError("The 'model' configuration variable is required in chatgpt_config")

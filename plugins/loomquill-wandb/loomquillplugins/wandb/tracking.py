@@ -38,3 +38,6 @@ class wandb_init(ClassDecorator):
             host (str, optional): URL to your wandb service. The default is "https://wandb.ai".
             api_host (str, optional): URL to your API Host, The default is "https://api.wandb.ai".
             **init_kwargs (dict): The rest of the arguments are passed directly to `wandb.init`. Please see
+                [the `wandb.init` docs](https://docs.wandb.ai/ref/python/init) for details.
+        """
+        if project is None:

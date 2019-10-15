@@ -39,3 +39,7 @@ def test_image_spec():
         image_spec = ImageSpec(
             packages=["pandas"],
             apt_packages=["git"],
+            python_version="3.9",
+            base_image=base_image,
+            pip_index="https://pypi.python.org/simple",
+            source_root=os.path.dirname(os.path.realpath(__file__)),

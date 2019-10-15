@@ -7,3 +7,6 @@
 
    BotoConnector
    BotoTask
+   SageMakerModelTask
+   SageMakerEndpointConfigTask
+   SageMakerEndpointConnector

@@ -64,3 +64,7 @@ class SlurmScriptConnector(AsyncConnectorBase):
         # Construct sbatch command for Slurm cluster
         upload_script = False
         if "script" in task_template.custom:
+            script = task_template.custom["script"]
+            assert script != self.DUMMY_SCRIPT, "Please write the user-defined batch script content."
+            script, outputs = self._interpolate_script(
+                script,

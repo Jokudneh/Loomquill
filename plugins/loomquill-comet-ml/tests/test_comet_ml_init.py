@@ -37,3 +37,5 @@ def test_extra_config(experiment_key):
     if experiment_key is None:
         assert extra_config[task.LINK_TYPE_KEY] == COMET_ML_EXECUTION_TYPE_VALUE
         assert task.COMET_ML_EXPERIMENT_KEY_KEY not in extra_config
+
+        suffix = _generate_suffix_with_length_10(project_name=project_name, workspace=workspace)

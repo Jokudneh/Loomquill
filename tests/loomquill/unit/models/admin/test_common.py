@@ -9,3 +9,4 @@ def test_sort():
     assert o.direction == _common.Sort.Direction.ASCENDING
 
     o2 = _common.Sort.from_flyte_idl(o.to_flyte_idl())
+    assert o2 == o

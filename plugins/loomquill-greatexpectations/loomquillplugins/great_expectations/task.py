@@ -49,3 +49,4 @@ class GreatExpectationsTask(PythonInstanceTask[BatchRequestConfig]):
         inputs: inputs to pass to the execute() method
         data_asset_name: name of the data asset (to be used for RuntimeBatchRequest)
         local_file_path: dataset file path useful for FlyteFile and FlyteSchema
+        checkpoint_params: optional SimpleCheckpoint parameters

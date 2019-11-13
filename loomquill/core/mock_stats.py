@@ -13,3 +13,5 @@ class MockStats(object):
         self.scope = scope
         self.tags = tags
         self._records = {}
+        self._records_tags = {}
+

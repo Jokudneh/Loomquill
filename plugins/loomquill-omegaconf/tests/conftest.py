@@ -10,3 +10,4 @@ class ExampleNestedConfig:
 @dataclass
 class ExampleConfig:
     int_key: int = 1337
+    union_key: t.Union[int, str] = 1337

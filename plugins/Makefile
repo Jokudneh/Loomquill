@@ -12,3 +12,5 @@ publish_all_plugins:
 	# We upload community plugins from a separate sub-directory called `community`.
 	# Check https://github.com/jokudneh/loomquill/pull/5610 for more details about.
 	twine upload --verbose --skip-existing community/*/dist/*
+
+.PHONY: all_requirements

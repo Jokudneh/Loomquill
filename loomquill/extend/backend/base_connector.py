@@ -87,3 +87,7 @@ class Resource:
     This is the output resource of the job.
 
     Attributes
+    ----------
+        phase : TaskExecution.Phase
+            The phase of the job.
+        message : Optional[str]

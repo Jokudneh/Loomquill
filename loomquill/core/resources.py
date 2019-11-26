@@ -72,3 +72,7 @@ class ResourceSpec(DataClassJSONMixin):
     @classmethod
     def from_multiple_resource(cls, resource: Resources) -> "ResourceSpec":
         """
+        Convert Resources that represent both a requests and limits into a ResourceSpec.
+        """
+        requests = {}
+        limits = {}

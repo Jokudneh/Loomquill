@@ -55,3 +55,7 @@ request_failure_count = Counter(
 request_latency = Summary(
     f"{metric_prefix}request_latency_seconds",
     "Time spent processing connector request",
+    ["task_type", "operation"],
+)
+input_literal_size = Summary(f"{metric_prefix}input_literal_bytes", "Size of input literal", ["task_type"])
+

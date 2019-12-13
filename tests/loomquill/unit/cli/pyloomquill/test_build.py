@@ -8,3 +8,5 @@ from flytekit.image_spec.image_spec import ImageBuildEngine
 WORKFLOW_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), "image_spec_wf.py")
 
 
+def test_build(mock_image_spec_builder):
+    ImageBuildEngine.register("test", mock_image_spec_builder)

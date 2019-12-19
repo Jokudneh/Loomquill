@@ -8,3 +8,4 @@ from flytekit.remote import FlyteRemote
 Content = """
 This CLI is meant to be used within a virtual environment that has Flytekit installed. Ideally it is used to iterate on your Flyte workflows and tasks.
 
+Flytekit Version: [cyan]{flytekit_version}[reset]

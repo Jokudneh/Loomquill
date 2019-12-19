@@ -31,3 +31,7 @@ class ParquetIO(object):
         self,
         df: pandas.DataFrame,
         to_file: os.PathLike,
+        coerce_timestamps: str = "us",
+        allow_truncated_timestamps: bool = False,
+        **kwargs,
+    ):

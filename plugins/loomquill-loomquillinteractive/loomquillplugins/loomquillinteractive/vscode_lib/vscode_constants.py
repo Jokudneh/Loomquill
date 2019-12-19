@@ -7,3 +7,4 @@ from flytekit.interactive.vscode_lib.vscode_constants import (  # noqa: F401
     DEFAULT_UP_SECONDS,
     DOWNLOAD_DIR,
     EXECUTABLE_NAME,
+    HEARTBEAT_CHECK_SECONDS,

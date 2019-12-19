@@ -76,3 +76,6 @@ class GCPIdentityAwareProxyAuthenticator(Authenticator):
                 },
                 # See https://cloud.google.com/iap/docs/authentication-howto#refresh_token
                 refresh_access_token_params={
+                    "client_secret": self.client_secret,
+                    "audience": self.audience,
+                },

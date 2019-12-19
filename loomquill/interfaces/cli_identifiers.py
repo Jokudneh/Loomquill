@@ -51,3 +51,5 @@ class Identifier(_core_identifier.Identifier):
                 "The provided string could not be parsed. The first element of an identifier must be one of: {}. "
                 "Received: {}".format(list(cls._STRING_TO_TYPE_MAP.keys()), resource_type),
             )
+        resource_type = cls._STRING_TO_TYPE_MAP[resource_type]
+

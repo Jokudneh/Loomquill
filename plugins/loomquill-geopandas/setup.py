@@ -11,3 +11,5 @@ __version__ = "0.0.0+develop"
 setup(
     name=microlib_name,
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

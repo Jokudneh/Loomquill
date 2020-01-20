@@ -17,3 +17,5 @@ def _fake_module_load(names):
 
     yield simple
 
+
+@pytest.fixture(

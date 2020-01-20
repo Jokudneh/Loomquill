@@ -23,3 +23,5 @@ class ScopeableStatsProxy(object):
     Adds a new call, scope(prefix), which returns a new proxy to the same
     client which will prefix all calls to underlying methods with the scoped prefix:
     new_client = client.get_stats('a')
+    new_client.incr('b') # Metric name = a.b
+    This can be nested:

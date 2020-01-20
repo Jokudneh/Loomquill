@@ -120,3 +120,4 @@ def get_grandparent_wf_with_overrides(serialization_settings):
     return grandparent_wf_with_overrides
 
 
+def get_grandparent_remote_wf(serialization_settings):

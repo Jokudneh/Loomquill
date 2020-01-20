@@ -42,3 +42,5 @@ def test_mmcloud_task():
     serialization_settings = SerializationSettings(image_config=ImageConfig())
     task_spec = get_serializable(OrderedDict(), serialization_settings, say_hello)
     template = task_spec.template
+    container = template.container
+

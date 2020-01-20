@@ -44,3 +44,7 @@ t = ShellTask(
 
 @pytest.fixture(scope="module")
 def reset_flytectl_config_env_var() -> pytest.fixture():
+    os.environ[FLYTECTL_CONFIG_ENV_VAR] = ""
+    return os.environ[FLYTECTL_CONFIG_ENV_VAR]
+
+

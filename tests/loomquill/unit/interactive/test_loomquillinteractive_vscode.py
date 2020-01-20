@@ -81,3 +81,4 @@ def test_vscode_remote_execution(vscode_patches, mock_remote_execution):
 
     @task
     @vscode
+    def t():

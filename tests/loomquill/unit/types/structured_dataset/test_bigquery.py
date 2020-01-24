@@ -11,3 +11,6 @@ my_cols = kwtypes(Name=str, Age=int)
 
 
 @task
+def gen_df() -> Annotated[pd.DataFrame, my_cols, "parquet"]:
+    return pd_df
+

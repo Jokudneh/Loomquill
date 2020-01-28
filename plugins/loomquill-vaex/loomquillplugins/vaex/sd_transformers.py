@@ -15,3 +15,5 @@ from flytekit.types.structured.structured_dataset import (
 pd = lazy_module("pandas")
 vaex = lazy_module("vaex")
 
+
+class VaexDataFrameToParquetEncodingHandler(StructuredDatasetEncoder):

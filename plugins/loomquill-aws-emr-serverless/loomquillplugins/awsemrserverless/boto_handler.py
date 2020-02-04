@@ -74,3 +74,5 @@ class EMRServerlessHandler:
         """
         func = getattr(self.client, method)
         loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(None, lambda: func(**params))
+

@@ -28,3 +28,6 @@ def test_pydantic_basemodel_in_dataclass():
         d: bool = False
         inner_bm: InnerBM = field(default_factory=lambda: InnerBM())
 
+    # Task to check DC instance
+    @task
+    def t_dc(dc: DC):

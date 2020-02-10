@@ -20,3 +20,4 @@ def scoped_grpc_deadline(seconds: float):
     token = _GRPC_DEADLINE_SECONDS.set(seconds)
     try:
         yield
+    finally:

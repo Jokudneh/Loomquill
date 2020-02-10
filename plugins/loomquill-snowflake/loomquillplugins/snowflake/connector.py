@@ -28,3 +28,4 @@ class SnowflakeJobMetadata(ResourceMeta):
 
 
 def get_private_key():
+    from cryptography.hazmat.backends import default_backend

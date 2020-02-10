@@ -9,3 +9,5 @@ Flytekit API Reference
    flytekit
    configuration
    imagespec
+   remote
+   clients

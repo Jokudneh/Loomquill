@@ -46,3 +46,6 @@ def test_local_execution():
     )
 
     area, metadata = calculate_ellipse_area_python_template_style(a=3.0, b=4.0)
+    assert isinstance(area, float)
+    assert isinstance(metadata, str)
+

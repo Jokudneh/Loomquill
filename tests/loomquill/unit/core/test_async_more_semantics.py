@@ -19,3 +19,5 @@ def add_one(x: int) -> int:
 async def a_double(x: int) -> int:
     return x * 2
 
+
+@task

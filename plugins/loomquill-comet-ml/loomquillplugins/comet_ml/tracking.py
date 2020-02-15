@@ -51,3 +51,7 @@ def comet_ml_login(
         project_name (str): Send your experiment to a specific project. (Required)
         workspace (str): Attach an experiment to a project that belongs to this workspace. (Required)
         secret (Secret or Callable): Secret with your `COMET_API_KEY` or a callable that returns the API key.
+            The callable takes no arguments and returns a string. (Required)
+        experiment_key (str): Experiment key.
+        host (str): URL to your Comet service. Defaults to "https://www.comet.com"
+        **login_kwargs (dict): The rest of the arguments are passed directly to `comet_ml.login`.

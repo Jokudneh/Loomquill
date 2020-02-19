@@ -9,3 +9,4 @@ RUN apt-get update && apt-get install -y wget
 
 ARG VERSION
 
+RUN pip install uv --no-cache-dir \

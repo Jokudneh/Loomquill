@@ -15,3 +15,6 @@ def create_folder_write_file(tmpdir: py.path.local) -> typing.Tuple[py.path.loca
     inputs = tmpdir.mkdir("inputs")
     input_file = inputs.join(CHECKPOINT_FILE)
     input_file.write_text("Hello!", encoding="utf-8")
+
+    return inputs, input_file, outputs
+

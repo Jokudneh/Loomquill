@@ -38,3 +38,6 @@ def neptune_scale_run(
         project=project,
         secret=secret,
         run_id=run_id,
+        experiment_name=experiment_name,
+        **init_run_kwargs,
+    )

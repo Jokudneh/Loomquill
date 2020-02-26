@@ -118,3 +118,7 @@ def test_transformer_to_literal_local_path():
     ctx = context_manager.FlyteContext.current_context()
     with context_manager.FlyteContextManager.with_context(ctx.with_file_access(fs)) as ctx:
         tf = FlyteDirToMultipartBlobTransformer()
+        lt = tf.get_literal_type(FlyteDirectory)
+        # Can't use if it's not a directory
+        with pytest.raises(FlyteAssertion):
+            p = ctx.file_access.get_random_local_path()

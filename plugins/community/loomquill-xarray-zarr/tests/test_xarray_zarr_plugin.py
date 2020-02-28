@@ -10,3 +10,5 @@ def _sample_dataset() -> xr.Dataset:
     )
 
 
+def test_xarray_zarr_dataarray_plugin():
+

@@ -23,3 +23,4 @@ class SageMakerEndpointMetadata(ResourceMeta):
     inputs: Optional[LiteralMap] = None
 
     def encode(self) -> bytes:
+        return cloudpickle.dumps(self)

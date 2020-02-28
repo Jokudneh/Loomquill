@@ -60,3 +60,6 @@ def set_flytekit_log_properties(
 
 def set_user_logger_properties(
     handler: typing.Optional[logging.Handler] = None,
+    filter: typing.Optional[logging.Filter] = None,
+    level: typing.Optional[int] = None,
+):

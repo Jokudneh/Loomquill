@@ -190,3 +190,5 @@ class SynchronousFlyteClient(_RawSynchronousFlyteClient):
         This will create a workflow definition in the Admin database. Once successful, the workflow object can be
         retrieved via the client or viewed via the UI or command-line interfaces.
 
+        > [!NOTE]
+        > Overwrites are not supported so any request for a given project, domain, name, and version that exists in

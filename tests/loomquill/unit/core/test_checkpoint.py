@@ -48,3 +48,5 @@ def test_sync_checkpoint_save_filepath(tmpdir):
     with inp.open("wb") as f:
         f.write(b"blah")
     cp.save(inp)
+    assert dst_path.exists()
+

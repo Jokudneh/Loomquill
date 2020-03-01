@@ -126,3 +126,7 @@ def test_hydrate_workflow_template():
     assert sub_workflow_ref_identifier.domain == "domain2"
     assert sub_workflow_ref_identifier.version == "12345"
 
+    unchanged_identifier = hydrated_workflow_template.nodes[3].task_node.reference_id
+    assert unchanged_identifier.project == "project2"
+    assert unchanged_identifier.domain == "domain2"
+    assert unchanged_identifier.version == "abc"

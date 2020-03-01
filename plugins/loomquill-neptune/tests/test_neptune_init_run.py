@@ -34,3 +34,5 @@ def test_local_project_and_init_run_kwargs(neptune_mock):
         project="flytekit/project", tags=["my-tag"]
     )
 
+
+class RunObjectMock(dict):

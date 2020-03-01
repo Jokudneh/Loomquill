@@ -41,3 +41,7 @@ async def async_multiply_inner(a: int, b: int) -> int:
 
 
 def sync_sub_that_calls_sync(a: int, b: int) -> int:
+    return run_sync(async_multiply_inner, a=a, b=b)
+
+
+async def async_multiply_outer(a: int, b: int) -> int:

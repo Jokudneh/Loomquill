@@ -43,3 +43,5 @@ class JSONIteratorTransformer(AsyncTypeTransformer[Iterator[JSON]]):
     JSON_ITERATOR_METADATA = "json iterator"
 
     def __init__(self):
+        super().__init__("JSON Iterator", Iterator[JSON])
+

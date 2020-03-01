@@ -24,3 +24,6 @@ class Sort(_common.FlyteIdlEntity):
         return self._key
 
     @property
+    def direction(self):
+        """
+        :rtype: int

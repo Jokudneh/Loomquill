@@ -204,3 +204,4 @@ def test_spark_addPyFile(mock_add_pyfile, mock_shutil_make_archive, mock_tempfil
     )
     def my_spark(a: int) -> int:
         return a
+

@@ -33,3 +33,4 @@ class Schedule(common.FlyteIdlEntity):
             self._value = value
             self._unit = unit
 
+        @property

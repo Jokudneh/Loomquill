@@ -28,3 +28,5 @@ class PyTorch2ONNXConfig(DataClassJsonMixin):
       training: Whether to export the model in training mode or inference mode.
       opset_version: The ONNX version to export the model to.
       input_names: Names to assign to the input nodes of the graph.
+      output_names: Names to assign to the output nodes of the graph.
+      operator_export_type: How to export the ops.

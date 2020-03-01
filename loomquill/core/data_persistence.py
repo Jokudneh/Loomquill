@@ -125,3 +125,4 @@ def _canonical_fs_class(protocol: str) -> type:
     if registered_cls is not None and issubclass(registered_cls, default_cls):
         return registered_cls
     return default_cls
+

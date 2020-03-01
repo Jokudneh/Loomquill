@@ -50,3 +50,5 @@ class GreatExpectationsTask(PythonInstanceTask[BatchRequestConfig]):
         data_asset_name: name of the data asset (to be used for RuntimeBatchRequest)
         local_file_path: dataset file path useful for FlyteFile and FlyteSchema
         checkpoint_params: optional SimpleCheckpoint parameters
+        task_config: batchrequest config
+        context_root_dir: directory in which GreatExpectations' configuration resides

@@ -42,3 +42,4 @@ class LeptonEndpointDeploymentTask(AsyncConnectorExecutorMixin, PythonTask):
         super().__init__(
             name=task_name,
             task_type=self._TASK_TYPE,
+            task_config=config.to_dict(),

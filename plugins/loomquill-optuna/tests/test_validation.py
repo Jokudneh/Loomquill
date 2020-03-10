@@ -18,3 +18,5 @@ def test_concurrency():
 
     with pytest.raises(ValueError):
         Optimizer(objective, concurrency="abc", n_trials=10)
+
+

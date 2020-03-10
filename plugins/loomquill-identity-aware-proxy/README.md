@@ -113,3 +113,7 @@ Loomquill is then deployed behind the Istio ingress gateway and does not need to
 
     ```yaml
     service:
+      annotations:
+        beta.cloud.google.com/backend-config: '{"default": "ingress-backend-config"}'
+        cloud.google.com/app-protocols: '{"https": "HTTP2"}'
+      type:

@@ -35,3 +35,4 @@ from flytekit.tools.repo import NoSerializableEntitiesError, serialize_and_packa
     "there can only be one ``--image`` option with no name.",
 )
 @click.option(
+    "-s",

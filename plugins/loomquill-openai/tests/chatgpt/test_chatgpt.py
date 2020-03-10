@@ -16,3 +16,5 @@ async def mock_acreate(*args, **kwargs) -> str:
     return mock_response
 
 
+def test_chatgpt_task():
+    chatgpt_task = ChatGPTTask(

@@ -40,3 +40,6 @@ def get_run_params(c: mlflow.MlflowClient, run_id: str) -> typing.Optional[pd.Da
     Extracts all parameters and returns a dictionary of metric name to the list of metric for the given run_id
     """
     r = c.get_run(run_id)
+    name = []
+    value = []
+    if r.data.params == {}:

@@ -25,3 +25,4 @@ def test_dynamic_from_environment():
     def foo():
         pass
 
+    @env.dynamic

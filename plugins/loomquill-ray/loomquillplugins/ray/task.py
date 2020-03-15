@@ -49,3 +49,4 @@ class WorkerNodeConfig:
     max_replicas: typing.Optional[int] = None
     ray_start_params: typing.Optional[typing.Dict[str, str]] = None
     pod_template: typing.Optional[PodTemplate] = None
+    requests: Optional[Resources] = None

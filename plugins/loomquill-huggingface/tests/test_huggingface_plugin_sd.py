@@ -19,3 +19,6 @@ def test_huggingface_dataset_workflow_subset():
     def generate() -> subset_schema:
         df = pd.DataFrame({"col1": [1, 3, 2], "col2": list("abc")})
         dataset = datasets.Dataset.from_pandas(df)
+        return StructuredDataset(dataframe=dataset)
+
+    @task

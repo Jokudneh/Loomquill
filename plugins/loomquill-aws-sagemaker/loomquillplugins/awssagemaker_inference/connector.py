@@ -24,3 +24,7 @@ class SageMakerEndpointMetadata(ResourceMeta):
 
     def encode(self) -> bytes:
         return cloudpickle.dumps(self)
+
+    @classmethod
+    def decode(cls, data: bytes) -> "SageMakerEndpointMetadata":
+        return cloudpickle.loads(data)

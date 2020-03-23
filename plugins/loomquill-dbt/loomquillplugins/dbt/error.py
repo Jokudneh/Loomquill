@@ -14,3 +14,4 @@ class DBTHandledError(Exception):
 
     Attributes
     ----------
+    message : str

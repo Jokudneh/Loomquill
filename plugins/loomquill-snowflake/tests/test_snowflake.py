@@ -21,3 +21,4 @@ def test_serialization():
         name="flytekit.demo.snowflake_task.query",
         inputs=kwtypes(ds=str),
         task_config=SnowflakeConfig(
+            account="snowflake",

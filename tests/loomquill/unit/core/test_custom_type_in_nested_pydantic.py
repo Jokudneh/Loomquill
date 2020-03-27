@@ -44,3 +44,4 @@ class CoordinateTransformer(TypeTransformer[Coordinate]):
 # -- Models using Coordinate --
 
 
+class ModelWithCoord(BaseModel):

@@ -56,3 +56,6 @@ def test_fixed_rate():
 
 
 def test_fixed_rate_bad_duration():
+    pass
+
+

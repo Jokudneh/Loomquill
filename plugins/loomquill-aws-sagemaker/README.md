@@ -191,3 +191,4 @@ preprocess = SageMakerProcessingJobTask(
         "ProcessingOutputConfig": {
             "Outputs": [
                 {
+                    "OutputName": "train",

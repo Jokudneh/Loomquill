@@ -13,3 +13,6 @@ setup(
     version=__version__,
     author="flyteorg",
     author_email="admin@flyte.org",
+    description="Geopandas plugin for flytekit",
+    namespace_packages=["flytekitplugins"],
+    packages=[f"flytekitplugins.{PLUGIN_NAME}"],

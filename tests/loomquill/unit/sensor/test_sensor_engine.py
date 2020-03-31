@@ -19,3 +19,5 @@ async def test_sensor_engine():
         {
             "path": interface_models.Variable(types.LiteralType(types.SimpleType.STRING), "description1"),
         },
+        {},
+    )

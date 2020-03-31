@@ -85,3 +85,4 @@ def test_all_dc_attrs(local_tmp_file, local_tmp_dir, local_pqt_file):
         e: List[int] = field(default_factory=lambda: [0, 1, 2, -1, -2])
         f: List[FlyteFile] = field(default_factory=lambda: [FlyteFile(local_tmp_file)])
         g: List[List[int]] = field(default_factory=lambda: [[0], [1], [-1]])
+        h: List[Dict[int, bool]] = field(default_factory=lambda: [{0: False}, {1: True}, {-1: True}])

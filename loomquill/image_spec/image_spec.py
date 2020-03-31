@@ -152,3 +152,5 @@ class ImageSpec:
             "packages",
             "conda_channels",
             "conda_packages",
+            "apt_packages",
+            "pip_extra_index_url",

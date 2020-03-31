@@ -41,3 +41,6 @@ class Filter(_FlyteIdlEntity):
     @classmethod
     def from_flyte_idl(cls):
         raise NotImplementedError("Filters are never recovered from a protobuf.")
+
+    @classmethod
+    def from_python_std(cls, string):

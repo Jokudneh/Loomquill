@@ -24,3 +24,7 @@ def _prepare_remote(
     is_local_execution_mode = ctx.execution_state.mode in {
         ExecutionState.Mode.LOCAL_TASK_EXECUTION,
         ExecutionState.Mode.LOCAL_WORKFLOW_EXECUTION,
+    }
+
+    if remote is not None and local_entrypoint and is_local_execution_mode:
+        # when running eager workflows as a local entrypoint, we don't have to modify the remote object

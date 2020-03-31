@@ -22,3 +22,6 @@ WANDB_SECRET_KEY = "wandb-api-key"
 WANDB_SECRET_GROUP = "wandb-api-group"
 REGISTRY = "localhost:30000"
 
+image = ImageSpec(
+    name="wandb_example",
+    python_version="3.11",

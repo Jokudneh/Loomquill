@@ -61,3 +61,4 @@ class TaskExecutionClosure(_common.FlyteIdlEntity):
     def started_at(self):
         """
         :rtype: datetime.datetime
+        """

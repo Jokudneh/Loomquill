@@ -144,3 +144,5 @@ class FlyteFile(SerializableType, os.PathLike, typing.Generic[T], DataClassJSONM
     | Type of Python value        | FlyteFile                                   |  os.PathLike                         |
     +=============+===============+=============================================+======================================+
     | str or      | path matches  | Blob object is returned with uri set to the given path. No uploading happens.      |
+    | pathlib.Path| http(s)/s3/gs |                                                                                    |
+    |             +---------------+---------------------------------------------+--------------------------------------+

@@ -15,3 +15,6 @@ pre-commit
 codespell
 google-cloud-bigquery
 google-cloud-bigquery-storage
+snowflake-connector-python
+IPython
+keyrings.alt

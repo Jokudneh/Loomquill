@@ -18,3 +18,6 @@ class PostDevelopCommand(develop):
     def run(self):
         develop.run(self)
         pip.main(["install"] + dev_requires)
+
+
+setup(

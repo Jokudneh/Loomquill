@@ -53,3 +53,6 @@ class DuckDBQuery(PythonInstanceTask):
         Note that the provider can be one of the default providers listed in DuckDBProvider or a custom callable like the following:
 
         def custom_connect_motherduck(token: str):
+            return duckdb.connect("md:", config={"motherduck_token": token, "another_config": "hello"})
+
+        DuckDBQuery(..., provider=custom_connect_motherduck)

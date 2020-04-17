@@ -224,3 +224,6 @@ class StructuredDataset(SerializableType, DataClassJSONMixin):
 
     def set_literal(self, ctx: FlyteContext, expected: LiteralType) -> None:
         """
+        A public wrapper method to set the StructuredDataset Literal.
+
+        This method provides external access to the internal _set_literal method.

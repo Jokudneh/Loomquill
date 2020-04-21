@@ -54,3 +54,5 @@ class SparkJob(_common.FlyteIdlEntity):
         self._executor_pod = executor_pod
 
     def with_overrides(
+        self,
+        new_spark_conf: Optional[Dict[str, str]] = None,

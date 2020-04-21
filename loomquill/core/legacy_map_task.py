@@ -122,3 +122,6 @@ class MapPythonTask(PythonTask):
         TODO ADD bound variables to the resolver. Maybe we need a different resolver?
         """
         mt = MapTaskResolver()
+        container_args = [
+            "pyflyte-map-execute",
+            "--inputs",

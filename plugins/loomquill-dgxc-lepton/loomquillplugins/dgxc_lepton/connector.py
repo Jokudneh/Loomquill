@@ -145,3 +145,5 @@ class BaseLeptonConnector(AsyncConnectorBase):
         """Lazy-loaded, cached API client"""
         if self._client is not None:
             return self._client
+
+        import os

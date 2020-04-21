@@ -61,3 +61,7 @@ def print_ls_tree(source: os.PathLike, ls: typing.List[str]):
 
     for f in ls:
         fpp = pathlib.Path(f)
+        if fpp.parent not in trees:
+            # add trees for all intermediate folders
+            current = tree_root
+            current_path = pathlib.Path(source)

@@ -35,3 +35,7 @@ def create_node(
         # OR
         t2_node >> t1_node
 
+    This works for tasks that take inputs as well, say a ``t3(in1: int)`` ::
+
+        t3_node = create_node(t3, in1=some_int)  # basically calling t3(in1=some_int)
+

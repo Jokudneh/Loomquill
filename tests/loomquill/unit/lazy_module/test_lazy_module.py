@@ -9,3 +9,4 @@ def test_lazy_module():
     mod = lazy_module("click")
     assert mod.__name__ == "click"
     mod = lazy_module("fake_module")
+

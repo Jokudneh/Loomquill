@@ -90,3 +90,7 @@ def test_write_folder_put_raw(mock_uuid_class):
         os.path.join(raw, "foo", "a.txt"),
         os.path.join(raw, "baz", "00000"),
         os.path.join(raw, "baz", "abcdef123"),
+        os.path.join(raw, "abcdef123", "bar"),
+        os.path.join(raw, "abcdef123", "bar", "00000"),
+    ]
+    expected = [str(pathlib.Path(p)) for p in expected]

@@ -33,3 +33,5 @@ def test_pandas():
     sd_lit = encoder.encode(ctx, sd, sd_type)
 
     df2 = decoder.decode(ctx, sd_lit, StructuredDatasetMetadata(sd_type))
+    assert df.equals(df2)
+

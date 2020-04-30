@@ -32,3 +32,5 @@ def test_lazy_loading():
             raise ValueError("Should be called once only")
         once = False
         return dummy_task
+
+    e = LazyEntity("x", _getter)

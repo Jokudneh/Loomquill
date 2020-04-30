@@ -15,3 +15,5 @@ MPI usage:
         task_config=MPIJob(
             launcher=Launcher(
                 replicas=1,
+            ),
+            worker=Worker(

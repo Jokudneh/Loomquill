@@ -74,3 +74,4 @@ Scheduling
 ##### Core Task Types
 
 - SQLTask
+- ContainerTask

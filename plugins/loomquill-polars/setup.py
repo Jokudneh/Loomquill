@@ -13,3 +13,5 @@ setup(
     title_expanded="Flytekit Polars Plugin",
     name=microlib_name,
     version=__version__,
+    author="Robin Kahlow",
+    description="Polars plugin for flytekit",

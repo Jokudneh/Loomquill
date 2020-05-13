@@ -55,3 +55,5 @@ class FlyteScopedException(Exception):
         if isinstance(self._exc_value, FlyteScopedException):
             return self._exc_value.value
         return self._exc_value
+
+    @property

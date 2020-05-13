@@ -10,3 +10,5 @@ WORKFLOW_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), "image
 
 def test_build(mock_image_spec_builder):
     ImageBuildEngine.register("test", mock_image_spec_builder)
+    runner = CliRunner()
+    result = runner.invoke(pyflyte.main, ["build", "--fast", WORKFLOW_FILE, "wf"])

@@ -25,3 +25,5 @@ class ScopeableStatsProxy(object):
     new_client = client.get_stats('a')
     new_client.incr('b') # Metric name = a.b
     This can be nested:
+    newer_client = new_client.get_stats('subsystem')
+    newer_client.incr('bad') # Metric name = a.subsystem.bad

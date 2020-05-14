@@ -22,3 +22,4 @@ def create_batch(
     is_json_iterator: bool = True,
     file_upload_mem: str = "700Mi",
     file_download_mem: str = "700Mi",
+) -> Workflow:

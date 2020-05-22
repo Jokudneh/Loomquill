@@ -28,3 +28,6 @@ def test_nim_secrets():
         secrets=secrets,
     )
 
+    assert (
+        nim_instance.pod_template.pod_spec.image_pull_secrets[0].name == "nvcrio-cred"
+    )

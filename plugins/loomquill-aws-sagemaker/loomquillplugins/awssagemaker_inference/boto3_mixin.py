@@ -45,3 +45,5 @@ def convert_floats_with_no_fraction_to_ints(data):
 account_id_map = {
     "us-east-1": "785573368785",
     "us-east-2": "007439368137",
+    "us-west-1": "710691900526",
+    "us-west-2": "301217895009",

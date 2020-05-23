@@ -24,3 +24,6 @@ class RemoteEntity(ABC):
     @property
     @abstractmethod
     def id(self) -> Identifier: ...
+
+    def construct_node_metadata(self) -> NodeMetadata:
+        """

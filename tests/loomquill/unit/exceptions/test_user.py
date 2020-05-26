@@ -31,3 +31,6 @@ def test_flyte_type_exception():
             "int", "float", received_value=1, additional_msg="That was a bad idea!"
         ) from base_exn
     except Exception as e:
+        assert (
+            str(e) == "USER:TypeError: error=Type error!  Received: int with value: 1, Expected: float. "
+            "That was a bad idea!, cause=Types need to be right!!!"

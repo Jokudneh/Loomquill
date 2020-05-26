@@ -20,3 +20,7 @@ setup(
     description="Enable the use of whylogs profiles to be used in flyte tasks to get aggregate statistics about data.",
     url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-whylogs",
     long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    namespace_packages=["flytekitplugins"],
+    packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,

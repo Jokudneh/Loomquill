@@ -42,3 +42,4 @@ class ModinPandasSchemaWriter(LocalIOSchemaWriter[pandas.DataFrame]):
         to_path: os.PathLike,
         cols: typing.Optional[typing.Dict[str, type]],
         fmt: SchemaFormat,
+    ):

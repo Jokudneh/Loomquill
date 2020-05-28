@@ -17,3 +17,6 @@ setup(
     author_email="admin@flyte.org",
     description="This package enables users to easily build a Docker image for tasks or workflows.",
     namespace_packages=["flytekitplugins"],
+    packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,
+    license="apache2",

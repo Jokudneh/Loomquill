@@ -51,3 +51,7 @@ async def test_do_get_success(mock_task_template):
 
     mock_response = AsyncMock(name="httpx.Response")
     mock_response.status_code = 200
+    mock_response.text = "Success"
+    mock_httpx_client = AsyncMock(name="httpx.AsyncClient")
+    mock_httpx_client.get.return_value = mock_response
+

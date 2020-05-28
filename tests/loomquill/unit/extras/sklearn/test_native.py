@@ -11,3 +11,5 @@ def get_preprocessor() -> StandardScaler:
     return StandardScaler()
 
 
+@task
+def get_model() -> LinearRegression:

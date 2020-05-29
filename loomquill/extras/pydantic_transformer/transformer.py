@@ -40,3 +40,4 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
 
         return types.LiteralType(
             simple=types.SimpleType.STRUCT,
+            metadata=schema,

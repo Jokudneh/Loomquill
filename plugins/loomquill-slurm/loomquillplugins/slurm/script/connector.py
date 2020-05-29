@@ -68,3 +68,7 @@ class SlurmScriptConnector(AsyncConnectorBase):
             assert script != self.DUMMY_SCRIPT, "Please write the user-defined batch script content."
             script, outputs = self._interpolate_script(
                 script,
+                input_literal_map=inputs,
+                python_input_types=task_template.custom["python_input_types"],
+                output_locs=task_template.custom["output_locs"],
+            )

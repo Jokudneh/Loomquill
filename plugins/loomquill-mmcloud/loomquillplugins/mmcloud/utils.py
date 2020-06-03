@@ -27,3 +27,5 @@ MMCLOUD_STATUS_TO_FLYTE_PHASE = {
     "FailToExecute": TaskExecution.FAILED,
     "CheckpointFailed": TaskExecution.FAILED,
     "Timedout": TaskExecution.FAILED,
+    "NoAvailableHost": TaskExecution.FAILED,
+    "Unknown": TaskExecution.FAILED,

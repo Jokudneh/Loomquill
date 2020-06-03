@@ -294,3 +294,7 @@ def test_passing_of_kwargs(mock_client):
 def test_more_stuff(mock_client):
     r = FlyteRemote(config=Config.auto(), default_project="project", default_domain="domain")
 
+    # Can't upload a folder
+    with pytest.raises(ValueError):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            r.upload_file(pathlib.Path(tmp_dir))

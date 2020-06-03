@@ -21,3 +21,5 @@ class PILImageTransformer(TypeTransformer[T]):
     FILE_FORMAT = "PIL.Image"
 
     def __init__(self):
+        super().__init__(name="PIL.Image", t=PIL.Image.Image)
+

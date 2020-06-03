@@ -44,3 +44,7 @@ def prepare_db():
             DBT_PROFILE,
         ]
     )
+
+    yield
+
+    # Delete the database file

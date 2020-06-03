@@ -8,3 +8,5 @@ def test_flyte_exception():
         assert str(e) == "UnknownFlyteException: error=bad"
         assert isinstance(type(e), base._FlyteCodedExceptionMetaclass)
         assert type(e).error_code == "UnknownFlyteException"
+
+

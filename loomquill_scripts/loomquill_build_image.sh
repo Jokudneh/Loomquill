@@ -19,3 +19,7 @@ echo ""
 DIRPATH=""
 DOCKERFILE_PATH=""
 if [ -d "$1" ]; then
+  DIRPATH=$(cd "$1" && pwd)
+  DOCKERFILE_PATH=${DIRPATH}/"Dockerfile"
+elif [ -f "$1" ]; then
+  DIRPATH=$(cd "$(dirname "$1")" && pwd)

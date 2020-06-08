@@ -9,3 +9,5 @@ from mashumaro.mixins.json import DataClassJSONMixin
 class MyConfig(DataClassJSONMixin):
     op_list: Optional[list[str]] = None
 
+
+@task

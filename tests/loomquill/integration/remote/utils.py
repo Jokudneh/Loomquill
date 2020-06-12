@@ -31,3 +31,4 @@ class SimpleFileTransfer:
             default_domain=DOMAIN
         )
         self._s3_client = self._get_minio_s3_client(self._remote)
+

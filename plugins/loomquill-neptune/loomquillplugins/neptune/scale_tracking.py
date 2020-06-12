@@ -41,3 +41,7 @@ def neptune_scale_run(
         experiment_name=experiment_name,
         **init_run_kwargs,
     )
+
+
+class _neptune_scale_run_class(ClassDecorator):
+    NEPTUNE_PROJECT = "project"

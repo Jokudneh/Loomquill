@@ -17,3 +17,7 @@ def test_webhook_task_constructor():
         show_url=True,
         description="Test Webhook Task",
         timeout=60,
+    )
+
+    assert task.name == "test_task"
+    assert task._url == "http://example.com"

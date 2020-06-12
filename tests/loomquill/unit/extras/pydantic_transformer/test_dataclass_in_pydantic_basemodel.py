@@ -24,3 +24,7 @@ def test_dataclasss_in_pydantic_basemodel():
     def t_bm(bm: BM):
         assert isinstance(bm, BM)
         assert isinstance(bm.inner_bm, InnerBM)
+
+    @task
+    def t_inner(inner_bm: InnerBM):
+        assert isinstance(inner_bm, InnerBM)

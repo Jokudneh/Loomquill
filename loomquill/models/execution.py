@@ -204,3 +204,4 @@ class ExecutionSpec(_common_models.FlyteIdlEntity):
         :param tags: Optional list of tags to apply to the execution.
         :param execution_cluster_label: Optional execution cluster label to use for this execution.
         """
+        self._launch_plan = launch_plan

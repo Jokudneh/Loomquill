@@ -45,3 +45,5 @@ class CompanyField:
     info: InfoField
     company: str
 
+
+MyArgDataset = Annotated[StructuredDataset, kwtypes(company=str)]

@@ -31,3 +31,7 @@ def get_get_version():
     print(f"fdsafdsaTest version prefix is {_VERSION_PREFIX}")
 
     def fn(suffix: str = "") -> str:
+        return _VERSION_PREFIX + (f"_{suffix}" if suffix else "")
+
+    return fn
+

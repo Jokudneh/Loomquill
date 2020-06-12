@@ -10,3 +10,6 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="ONNX TensorFlow",
+    title_expanded="Flytekit ONNX TensorFlow Plugin",
+    name=f"flytekitplugins-{PLUGIN_NAME}",
+    version=__version__,

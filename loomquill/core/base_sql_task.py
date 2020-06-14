@@ -15,3 +15,5 @@ class SQLTask(PythonTask[T]):
     .. autoclass:: flytekit.extras.sqlite3.task.SQLite3Task
        :noindex:
     """
+
+    _INPUT_REGEX = re.compile(r"({{\s*.inputs.(\w+)\s*}})", re.IGNORECASE)

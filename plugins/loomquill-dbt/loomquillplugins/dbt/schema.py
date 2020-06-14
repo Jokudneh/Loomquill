@@ -51,3 +51,6 @@ class BaseDBTInput(DataClassJsonMixin):
         args += ["--profiles-dir", self.profiles_dir]
         args += ["--profile", self.profile]
         if self.target is not None:
+            args += ["--target", self.target]
+
+        if self.flags is not None:

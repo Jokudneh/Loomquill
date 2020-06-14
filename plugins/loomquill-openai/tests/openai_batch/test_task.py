@@ -40,3 +40,7 @@ def test_openai_batch_endpoint_task():
         image_config=ImageConfig(default_image=default_img, images=[default_img]),
         env={},
     )
+
+    batch_endpoint_task_spec = get_serializable(OrderedDict(), serialization_settings, batch_endpoint_task)
+    custom = batch_endpoint_task_spec.template.custom
+

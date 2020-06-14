@@ -93,3 +93,6 @@ def _load_authenticator_plugin(
     name_lower = auth_type_name.lower()
 
     factory = _authenticator_registry.get(name_lower)
+    if factory is not None:
+        logging.info(f"Using registered auth plugin '{name_lower}'")
+        return factory(cfg, cfg_store)

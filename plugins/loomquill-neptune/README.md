@@ -22,3 +22,5 @@ neptune_api_token = Secret(key="neptune_api_token", group="neptune_group")
 def neptune_task() -> bool:
     ctx = current_context()
     run = ctx.neptune_run
+    run.log_configs({"parameters/batch_size": 64})
+    ...

@@ -47,3 +47,7 @@ class FlyteUserRuntimeException(_FlyteException):
 
 
 class FlyteTypeException(FlyteUserException, TypeError):
+    _ERROR_CODE = "USER:TypeError"
+
+    @staticmethod
+    def _is_a_container(value):

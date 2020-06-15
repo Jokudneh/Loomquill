@@ -24,3 +24,4 @@ def test_workflow_closure():
     b0 = _literals.Binding(
         "a",
         _literals.BindingData(scalar=_literals.Scalar(primitive=_literals.Primitive(integer=5))),
+    )

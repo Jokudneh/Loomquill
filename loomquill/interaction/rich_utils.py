@@ -9,3 +9,5 @@ class RichCallback(Callback):
         super().__init__(**kwargs)
         rich_kwargs = rich_kwargs or {}
         self._pb = Progress(**rich_kwargs)
+        self._pb.start()
+        self._task = None

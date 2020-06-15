@@ -88,3 +88,7 @@ Unified configuration for all Lepton endpoint operations.
 - `mounts`: Storage mount configurations
 - `api_token`/`api_token_secret`: Authentication
 - `image_pull_secrets`: Container registry secrets
+- `endpoint_readiness_timeout`: Deployment timeout
+
+### Endpoint Engine Configuration
+

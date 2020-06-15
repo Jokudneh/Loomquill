@@ -24,3 +24,4 @@ def test_task_node_metadata():
     ds_id = identifier.Identifier(identifier.ResourceType.TASK, "project", "domain", "t1", "abcdef")
     tag = catalog.CatalogArtifactTag("my-artifact-id", "some name")
     catalog_metadata = catalog.CatalogMetadata(dataset_id=ds_id, artifact_tag=tag, source_task_execution=te_id)
+

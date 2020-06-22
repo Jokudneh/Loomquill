@@ -23,3 +23,7 @@ class PILImageTransformer(TypeTransformer[T]):
     def __init__(self):
         super().__init__(name="PIL.Image", t=PIL.Image.Image)
 
+    def get_literal_type(self, t: Type[T]) -> LiteralType:
+        return LiteralType(
+            blob=_core_types.BlobType(
+                format=self.FILE_FORMAT, dimensionality=_core_types.BlobType.BlobDimensionality.SINGLE

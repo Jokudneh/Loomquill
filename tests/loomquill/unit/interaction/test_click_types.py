@@ -104,3 +104,7 @@ def test_literal_converter_query():
     [
         (Color, "red", Color.RED),
         (int, "1", 1),
+        (float, "1.0", 1.0),
+        (bool, "True", True),
+        (bool, "False", False),
+        (str, "flyte", "flyte"),

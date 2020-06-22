@@ -15,3 +15,4 @@ setup(
     version=__version__,
     author="Omar Tarabai",
     author_email="otarabai@perian.io",
+    description="Flyte connector for Perian Job Platform (perian.io)",

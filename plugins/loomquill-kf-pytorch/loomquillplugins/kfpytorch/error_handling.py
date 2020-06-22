@@ -19,3 +19,4 @@ def create_recoverable_error_file() -> None:
         ValueError: If the environment variable `TORCHELASTIC_ERROR_FILE` is not set.
     """
     error_file_path = os.environ.get("TORCHELASTIC_ERROR_FILE")
+    if error_file_path is None:

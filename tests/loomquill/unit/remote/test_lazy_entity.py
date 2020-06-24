@@ -34,3 +34,4 @@ def test_lazy_loading():
         return dummy_task
 
     e = LazyEntity("x", _getter)
+    assert e.__repr__() == "Promise for entity [x]"

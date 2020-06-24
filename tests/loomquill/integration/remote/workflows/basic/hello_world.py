@@ -11,3 +11,7 @@ from flytekit import task, workflow
 
 # You can change the signature of the workflow to take in an argument like this:
 # def say_hello(name: str) -> str:
+@task
+def say_hello() -> str:
+    return "hello world"
+

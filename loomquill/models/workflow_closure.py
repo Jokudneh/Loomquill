@@ -10,3 +10,5 @@ class WorkflowClosure(_common.FlyteIdlEntity):
         """
         :param flytekit.models.core.workflow.WorkflowTemplate workflow: Workflow template
         :param list[flytekit.models.task.TaskTemplate] tasks: [Optional]
+        """
+        self._workflow = workflow

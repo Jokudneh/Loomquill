@@ -32,3 +32,7 @@ def build_command(ctx: click.Context, entity: typing.Union[PythonFunctionWorkflo
     """
 
     def _build(*args, **kwargs):
+        m = OrderedDict()
+        options = None
+        build_params: BuildParams = ctx.obj
+

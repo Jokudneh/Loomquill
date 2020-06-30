@@ -93,3 +93,7 @@ class LaunchPlan(object):
             name: default for name, (type, default) in workflow.python_interface.inputs_with_defaults.items()
         }
         lp._saved_inputs = default_inputs
+
+        LaunchPlan.CACHE[workflow.name] = lp
+        return lp
+

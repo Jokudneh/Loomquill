@@ -13,3 +13,5 @@ def test_task_logs():
     obj2 = execution.TaskLog.from_flyte_idl(obj.to_flyte_idl())
     assert obj2 == obj
     assert obj2.message_format == execution.TaskLog.MessageFormat.CSV
+    assert obj2.uri == "uri"
+    assert obj2.name == "name"

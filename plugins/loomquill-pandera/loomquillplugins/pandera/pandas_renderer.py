@@ -64,3 +64,7 @@ class PandasReportRenderer:
             .apply(lambda s: s.to_dict(), axis="columns")
             .rename("failure_case")
             .reset_index(["index", "check"])
+            .reset_index(drop=True)[["check", "index", "failure_case"]]
+        )
+
+    def _prepare_data_error_df(self, data: "pandas.DataFrame", data_errors: dict, failure_cases: "pandas.DataFrame"):

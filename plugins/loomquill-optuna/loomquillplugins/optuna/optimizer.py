@@ -56,3 +56,5 @@ CallbackType = Callable[Concatenate[optuna.Trial, P], Union[Awaitable[Result], R
 
 @dataclass
 class Optimizer:
+    objective: Union[CallbackType, AsyncPythonFunctionTask]
+    concurrency: int

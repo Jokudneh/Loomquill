@@ -34,3 +34,6 @@ def test_flyte_type_exception():
         assert (
             str(e) == "USER:TypeError: error=Type error!  Received: int with value: 1, Expected: float. "
             "That was a bad idea!, cause=Types need to be right!!!"
+        )
+        assert isinstance(e, TypeError)
+        assert type(e).error_code == "USER:TypeError"

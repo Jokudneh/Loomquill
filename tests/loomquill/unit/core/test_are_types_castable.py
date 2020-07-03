@@ -39,3 +39,5 @@ def test_annotation():
     # must not clobber annotation
     assert a.annotation.annotations == {"test": 456}
 
+
+def test_structure():

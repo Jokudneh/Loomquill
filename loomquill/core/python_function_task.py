@@ -153,3 +153,4 @@ class PythonFunctionTask(PythonAutoContainerTask[T]):  # type: ignore
             interface=mutated_interface,
             task_config=task_config,
             task_resolver=task_resolver,
+            **kwargs,

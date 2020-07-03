@@ -21,3 +21,4 @@ def get(ctx: click.Context):
     Get a single or multiple remote objects.
     """
     pass
+

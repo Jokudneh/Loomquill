@@ -54,3 +54,4 @@ def folders_and_files_setup():
             tmp.write("Hello world")
         yield path, tmp_dir_static_data.name, tmp_dir_external_data.name
     finally:
+        tmp_dir.cleanup()

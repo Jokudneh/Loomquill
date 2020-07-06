@@ -52,3 +52,5 @@ def test_task_arguments(default_serialization_settings):
     assert serialized_t3.template.metadata.cache_serializable == True
 
     @task(cache=Cache(version="a-version", ignored_inputs=("a",)))
+    def t4(a: int) -> int:
+        return a

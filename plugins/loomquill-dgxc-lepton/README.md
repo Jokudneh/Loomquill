@@ -92,3 +92,7 @@ Unified configuration for all Lepton endpoint operations.
 
 ### Endpoint Engine Configuration
 
+#### `EndpointEngineConfig`
+Unified configuration for different inference engines.
+
+

@@ -7,3 +7,4 @@ def ipython_check() -> bool:
     try:  # Check if running interactively using ipython.
         from IPython import get_ipython
 
+        if get_ipython() is not None:

@@ -232,3 +232,5 @@ class RunLevelParams(PyFlyteParams):
             "Example usage: --resource-limits 'cpu=1,mem=2Gi,gpu=1'",
         )
     )
+    tags: typing.List[str] = make_click_option_field(
+        click.Option(

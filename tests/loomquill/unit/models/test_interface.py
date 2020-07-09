@@ -26,3 +26,7 @@ def test_variable_type_list(literal_type):
 def test_typed_interface(literal_type):
     typed_interface = interface.TypedInterface(
         {"a": interface.Variable(literal_type, "description1")},
+        {"b": interface.Variable(literal_type, "description2"), "c": interface.Variable(literal_type, "description3")},
+    )
+
+    assert typed_interface.inputs["a"].type == literal_type

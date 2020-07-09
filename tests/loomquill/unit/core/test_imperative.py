@@ -114,3 +114,5 @@ def test_imperative_list_bound():
     @task
     def t1(a: typing.List[int]) -> int:
         return sum(a)
+
+    wb = ImperativeWorkflow(name="my.workflow.a")

@@ -20,3 +20,6 @@ class Description(_common_models.FlyteIdlEntity):
         MARKDOWN = 1
         HTML = 2
         RST = 3
+
+    value: Optional[str] = None
+    uri: Optional[str] = None

@@ -22,3 +22,4 @@ class SklearnTypeTransformer(TypeTransformer[T]):
             )
         )
 
+    def to_literal(

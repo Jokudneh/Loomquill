@@ -20,3 +20,7 @@ def resources() -> _task.Resources:
 
 
 @pytest.fixture
+def default_resources() -> _task.Resources:
+    return _task.Resources(requests=[], limits=[])
+
+

@@ -43,3 +43,7 @@ Editing this file
 
 Treat this file as part of the connector's *runtime contract* with
 EMR workers, not as plugin internals:
+
+* changes here propagate to every Pythonic-mode job on the next
+  connector deploy via the content hash in the S3 key;
+* the corresponding unit tests live in ``tests/test_entrypoint.py``

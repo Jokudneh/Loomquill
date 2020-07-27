@@ -23,3 +23,7 @@ def _ser_settings():
 def test_training_job_task_interface_and_custom():
     task = SageMakerTrainingJobTask(
         name="train_xgb",
+        config={
+            "TrainingJobName": "xgb-{idempotence_token}",
+            "AlgorithmSpecification": {
+                "TrainingImage": "{images.training_image}",

@@ -106,3 +106,5 @@ class EMRServerless:
         def my_spark_job() -> str:
             return "Job submitted"
 
+    **Pythonic mode** -- omit the job driver and write Spark code directly
+    in the task function. The connector will use the Flyte container

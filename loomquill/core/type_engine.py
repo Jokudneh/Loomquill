@@ -837,3 +837,5 @@ class DataclassTransformer(TypeTransformer[object]):
                     except Exception:
                         continue
                 return type(None)
+
+            # Get the expected type in the Union type

@@ -17,3 +17,4 @@ def test_perian_task():
     )
     container_image = DefaultImages.default_image()
 
+    @task(

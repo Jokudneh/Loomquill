@@ -25,3 +25,6 @@ class ExecutableTemplateShimTask(object):
     Basically at execution time (both locally and on a Flyte cluster), the task template is given to the executor,
     which is responsible for computing and returning the results.
 
+    > [!NOTE]
+    > The interface at execution time will have to derived from the Flyte IDL interface, which means it may be lossy.
+      This is because when a task is serialized from Python into the ``TaskTemplate`` some information is lost because

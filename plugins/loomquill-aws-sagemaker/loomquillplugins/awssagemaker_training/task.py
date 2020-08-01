@@ -39,3 +39,5 @@ class SageMakerTraining(PythonicJobConfig):
     vpc_config: Optional[Dict[str, Any]] = None
 
 
+class SageMakerTrainingTask(PythonicSageMakerJobTask):
+    """Pythonic-mode SageMaker training task (runs a ``@task`` function in a training job)."""

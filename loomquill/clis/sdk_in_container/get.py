@@ -22,3 +22,5 @@ def get(ctx: click.Context):
     """
     pass
 
+
+@get.command()

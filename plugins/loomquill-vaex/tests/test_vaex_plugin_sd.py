@@ -31,3 +31,4 @@ def test_vaex_workflow_subset():
         return consume(df=generate())
 
     result = wf()
+    assert result is not None

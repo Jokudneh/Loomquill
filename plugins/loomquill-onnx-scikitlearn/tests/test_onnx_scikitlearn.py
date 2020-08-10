@@ -36,3 +36,4 @@ def test_onnx_scikitlearn_simple():
     )
 
     @task
+    def train() -> TrainOutput:

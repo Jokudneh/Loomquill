@@ -4,3 +4,4 @@ from enum import Enum
 
 
 class CopyFileDetection(Enum):
+    LOADED_MODULES = 1

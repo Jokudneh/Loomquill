@@ -7,3 +7,4 @@ from flytekit.interfaces import cli_identifiers
 
 @mock.patch("flytekit.configuration.plugin.FlyteRemote")
 def test_execution_recover(remote):
+    runner = CliRunner()

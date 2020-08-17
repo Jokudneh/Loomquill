@@ -25,3 +25,5 @@ class TestExtractNodeType:
 
         # test any
         node_type, type_name = extract_node_type(python_val, key="any_key")
+        assert node_type == str
+        assert type_name == "builtins.str"

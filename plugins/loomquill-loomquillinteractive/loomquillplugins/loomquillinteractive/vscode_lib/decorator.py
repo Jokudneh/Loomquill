@@ -3,3 +3,4 @@
 from flytekit.interactive.vscode_lib.decorator import (  # noqa: F401
     VSCODE_TYPE_VALUE,
     download_file,
+    download_vscode,

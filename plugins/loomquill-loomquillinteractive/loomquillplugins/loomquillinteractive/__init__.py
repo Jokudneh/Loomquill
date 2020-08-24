@@ -17,3 +17,6 @@ This package contains flyteinteractive plugin for Flytekit.
    CODE_TOGETHER_EXTENSION
    VIM_CONFIG
    COPILOT_CONFIG
+   CODE_TOGETHER_CONFIG
+   jupyter
+   get_task_inputs

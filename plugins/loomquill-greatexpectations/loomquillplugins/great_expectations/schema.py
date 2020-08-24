@@ -84,3 +84,6 @@ class GreatExpectationsType(object):
 
 
 class GreatExpectationsTypeTransformer(TypeTransformer[GreatExpectationsType]):
+    def __init__(self):
+        super().__init__(name="GreatExpectations Transformer", t=GreatExpectationsType)
+

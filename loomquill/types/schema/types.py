@@ -127,3 +127,4 @@ class LocalIOSchemaReader(SchemaReader[T]):
                     not typing.cast(os.DirEntry, entry).name.startswith(".")
                     and typing.cast(os.DirEntry, entry).is_file()
                 ):
+                    files.append(Path(typing.cast(os.DirEntry, entry).path))

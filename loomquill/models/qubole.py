@@ -33,3 +33,7 @@ class HiveQuery(_common.FlyteIdlEntity):
     @property
     def timeout_sec(self):
         """
+        :rtype: int
+        """
+        return self._timeout_sec
+

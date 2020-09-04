@@ -61,3 +61,7 @@ class Authenticator(object):
     ):
         self._endpoint = endpoint
         self._creds = credentials
+        self._header_key = header_key if header_key else "authorization"
+        self._http_proxy_url = http_proxy_url
+        self._verify = verify
+

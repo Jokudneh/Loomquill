@@ -41,3 +41,4 @@ class wandb_init(ClassDecorator):
                 [the `wandb.init` docs](https://docs.wandb.ai/ref/python/init) for details.
         """
         if project is None:
+            raise ValueError("project must be set")

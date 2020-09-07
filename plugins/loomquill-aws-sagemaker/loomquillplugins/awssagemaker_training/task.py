@@ -41,3 +41,6 @@ class SageMakerTraining(PythonicJobConfig):
 
 class SageMakerTrainingTask(PythonicSageMakerJobTask):
     """Pythonic-mode SageMaker training task (runs a ``@task`` function in a training job)."""
+
+    _TASK_TYPE = "sagemaker-training-task"
+

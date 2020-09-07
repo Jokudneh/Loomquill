@@ -112,3 +112,4 @@ def test_lp_each_parameter():
     def t1(a: int) -> typing.NamedTuple("OutputsBC", t1_int_output=int, c=str):
         a = a + 2
         return a, "world-" + str(a)
+

@@ -180,3 +180,6 @@ class FlyteTask(hash_mixin.HashOnReferenceMixin, RemoteEntity, TaskSpec):
             id=base_model.id,
             type=base_model.type,
             metadata=base_model.metadata,
+            interface=_interfaces.TypedInterface.promote_from_model(base_model.interface),
+            custom=base_model.custom,
+            container=base_model.container,

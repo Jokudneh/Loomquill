@@ -26,3 +26,6 @@ def my_task(cfg: DictConfig) -> None:
 def pipeline(cfg: DictConfig) -> None:
     my_task(cfg=cfg)
 
+
+if __name__ == "__main__":
+    from omegaconf import OmegaConf

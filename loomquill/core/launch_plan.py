@@ -97,3 +97,4 @@ class LaunchPlan(object):
         LaunchPlan.CACHE[workflow.name] = lp
         return lp
 
+    @classmethod

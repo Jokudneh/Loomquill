@@ -108,3 +108,5 @@ def test_literal_converter_query():
         (bool, "True", True),
         (bool, "False", False),
         (str, "flyte", "flyte"),
+        (typing.List[int], "[1, 2, 3]", [1, 2, 3]),
+        (typing.Dict[str, int], '{"a": 1}', {"a": 1}),

@@ -59,3 +59,4 @@ request_latency = Summary(
 )
 input_literal_size = Summary(f"{metric_prefix}input_literal_bytes", "Size of input literal", ["task_type"])
 
+

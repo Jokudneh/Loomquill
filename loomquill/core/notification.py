@@ -35,3 +35,5 @@ class Notification(_common_model.Notification):
             terminal phases.  Phases should be as defined in: flytekit.models.core.execution.WorkflowExecutionPhase
         """
         self._validate_phases(phases)
+        super(Notification, self).__init__(phases, email=email, pager_duty=pager_duty, slack=slack)
+

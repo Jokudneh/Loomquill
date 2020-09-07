@@ -76,3 +76,6 @@ class ResourceSpec(DataClassJSONMixin):
         """
         requests = {}
         limits = {}
+
+        for field in fields(resource):
+            attr = field.name

@@ -24,3 +24,6 @@ def test_serialization():
         output_structured_dataset_type=StructuredDataset,
     )
 
+    @workflow
+    def my_wf(ds: str) -> StructuredDataset:
+        return bigquery_task(ds=ds)

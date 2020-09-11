@@ -57,3 +57,7 @@ class Secret(_common.FlyteIdlEntity):
 
         if self.env_var is not None:
             pattern = r"^[A-Z_][A-Z0-9_]*$"
+            if not re.match(pattern, self.env_var):
+                raise ValueError(f"Invalid environment variable name: {self.env_var}")
+
+    def to_flyte_idl(self) -> _sec.Secret:

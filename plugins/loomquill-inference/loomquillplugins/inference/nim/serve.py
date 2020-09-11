@@ -55,3 +55,5 @@ class NIM(ModelInferenceTemplate):
         :param env: A dictionary of environment variables to be set in the model server container.
         :param hf_repo_ids: A list of Hugging Face repository IDs for LoRA adapters to be downloaded.
         :param lora_adapter_mem: The amount of memory requested for the init container that downloads LoRA adapters.
+        :param secrets: Instance of NIMSecrets for managing secrets.
+        """

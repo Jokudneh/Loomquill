@@ -347,3 +347,7 @@ def test_all_types_with_optional_in_pydantic_basemodel_wf(
         h: Optional[List[Dict[int, bool]]] = Field(
             default_factory=lambda: [{0: False}, {1: True}, {-1: True}]
         )
+        i: Optional[Dict[int, bool]] = Field(
+            default_factory=lambda: {0: False, 1: True, -1: False}
+        )
+        j: Optional[Dict[int, FlyteFile]] = Field(

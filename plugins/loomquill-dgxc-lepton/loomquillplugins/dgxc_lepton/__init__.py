@@ -19,3 +19,6 @@ This package contains things that are useful when extending Flytekit for Lepton 
    ScalingType
    EndpointEngineConfig
 """
+
+# Clean imports with consolidated classes
+# Import connector module to trigger connector registration (connectors are not part of public API)

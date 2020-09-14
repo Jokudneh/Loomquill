@@ -79,3 +79,4 @@ class GCPIdentityAwareProxyAuthenticator(Authenticator):
                     "client_secret": self.client_secret,
                     "audience": self.audience,
                 },
+            )

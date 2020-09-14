@@ -35,3 +35,7 @@ def test_diabetes():
         {
             "#preg": int,
             "pgc_2h": int,
+            "diastolic_bp": int,
+            "tricep_skin_fold_mm": int,
+            "serum_insulin_2h": int,
+            "bmi": float,

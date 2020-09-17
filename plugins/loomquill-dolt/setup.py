@@ -21,3 +21,7 @@ class PostDevelopCommand(develop):
 
 
 setup(
+    title="Dolt",
+    title_expanded="Flytekit Dolt Plugin",
+    name=microlib_name,
+    version=__version__,

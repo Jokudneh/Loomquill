@@ -115,3 +115,7 @@ def task(
                 _annotated_launchplan.LaunchPlan,
                 _annotated_workflow.WorkflowBase,
             ]
+        ]
+    ] = ...,
+    task_resolver: Optional[TaskResolverMixin] = ...,
+    docs: Optional[Documentation] = ...,

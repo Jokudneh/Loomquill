@@ -103,3 +103,5 @@ def _get_container_definition(
     if ephemeral_storage_limit:
         limits.append(
             task_models.Resources.ResourceEntry(
+                task_models.Resources.ResourceName.EPHEMERAL_STORAGE,
+                ephemeral_storage_limit,

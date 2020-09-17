@@ -9,3 +9,4 @@ from flytekit.core.type_engine import TypeEngine
 from flytekit.extend.backend.base_connector import ConnectorRegistry, Resource, SyncConnectorBase
 from flytekit.extend.backend.utils import get_connector_secret
 from flytekit.models.literals import LiteralMap
+from flytekit.models.task import TaskTemplate

@@ -22,3 +22,7 @@ def test_serialization():
         inputs=kwtypes(ds=str),
         task_config=SnowflakeConfig(
             account="snowflake",
+            user="my_user",
+            warehouse="my_warehouse",
+            schema="my_schema",
+            database="my_database",

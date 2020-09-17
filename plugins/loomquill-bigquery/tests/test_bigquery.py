@@ -27,3 +27,6 @@ def test_serialization():
     @workflow
     def my_wf(ds: str) -> StructuredDataset:
         return bigquery_task(ds=ds)
+
+    default_img = Image(name="default", fqn="test", tag="tag")
+    serialization_settings = SerializationSettings(

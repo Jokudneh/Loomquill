@@ -154,3 +154,6 @@ class PythonFunctionTask(PythonAutoContainerTask[T]):  # type: ignore
             task_config=task_config,
             task_resolver=task_resolver,
             **kwargs,
+        )
+
+        if self._task_resolver is default_task_resolver:

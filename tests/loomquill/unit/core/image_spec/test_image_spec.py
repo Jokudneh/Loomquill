@@ -73,3 +73,7 @@ def test_image_spec(mock_image_spec_builder, monkeypatch):
     ):
         os.environ[_F_IMG_ID] = image_spec.id
         assert image_spec.is_container() is True
+
+    ImageBuildEngine.register("dummy", mock_image_spec_builder)
+    ImageBuildEngine.build(image_spec)
+

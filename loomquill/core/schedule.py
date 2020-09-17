@@ -56,3 +56,6 @@ class CronSchedule(_schedule_models.Schedule):
 
     # Not a perfect regex but good enough and simple to reason about
     _OFFSET_PATTERN = re.compile("([-+]?)P([-+0-9YMWD]+)?(T([-+0-9HMS.,]+)?)?")
+
+    def __init__(
+        self,

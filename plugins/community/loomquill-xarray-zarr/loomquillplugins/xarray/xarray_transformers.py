@@ -28,3 +28,4 @@ class XarrayZarrTypeTransformer(TypeTransformer[xr.Dataset]):
         self,
         ctx: FlyteContext,
         python_val: xr.Dataset,
+        python_type: typing.Type[xr.Dataset],

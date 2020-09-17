@@ -37,3 +37,4 @@ class Notification(_common_model.Notification):
         self._validate_phases(phases)
         super(Notification, self).__init__(phases, email=email, pager_duty=pager_duty, slack=slack)
 
+    def _validate_phases(self, phases: List[int]):

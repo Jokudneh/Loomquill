@@ -65,3 +65,4 @@ class Authenticator(object):
         self._http_proxy_url = http_proxy_url
         self._verify = verify
 
+    def get_credentials(self) -> Credentials:

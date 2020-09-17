@@ -58,3 +58,5 @@ class FlytePathResolver:
 class HttpFileWriter(fsspec.spec.AbstractBufferedFile):
     def __init__(self, remote: FlyteRemote, filename: str, **kwargs):
         super().__init__(**kwargs)
+        self._remote = remote
+        self._filename = filename

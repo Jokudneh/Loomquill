@@ -160,3 +160,4 @@ def get_task_template(task_type: str) -> TaskTemplate:
         print(i)
 
     default_img = Image(name="default", fqn="test", tag="tag")
+    serialization_settings = SerializationSettings(

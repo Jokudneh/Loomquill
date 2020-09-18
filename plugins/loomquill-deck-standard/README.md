@@ -17,3 +17,7 @@ Each renderer may require additional modules.
 The table below outlines the dependencies for each renderer:
 
 | Renderer               | Required Module(s)          |
+|------------------------|-----------------------------|
+| SourceCodeRenderer      | `pygments`                  |
+| FrameProfilingRenderer  | `pandas`, `ydata-profiling` |
+| MarkdownRenderer        | `markdown`                  |

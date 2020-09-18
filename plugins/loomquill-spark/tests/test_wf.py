@@ -32,3 +32,7 @@ def test_wf1_with_spark():
 def test_spark_dataframe_input():
     my_schema = FlyteSchema[kwtypes(name=str, age=int)]
 
+    @task
+    def my_dataset() -> my_schema:
+        return pd.DataFrame(data={"name": ["Alice"], "age": [5]})
+

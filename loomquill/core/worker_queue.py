@@ -118,3 +118,7 @@ class WorkItem:
         return self.status == ItemStatus.SUCCESS or self.status == ItemStatus.FAILED
 
     def _get_python_interface(self) -> Interface:
+        from flytekit.core.interface import Interface
+        from flytekit.core.type_engine import TypeEngine
+
+        if self.entity.python_interface:

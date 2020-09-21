@@ -84,3 +84,7 @@ LIST_OF_INTERFACES = [
     )
     for t in LIST_OF_ALL_LITERAL_TYPES
 ]
+
+
+LIST_OF_RESOURCE_ENTRIES = [
+    task.Resources.ResourceEntry(task.Resources.ResourceName.CPU, "1"),

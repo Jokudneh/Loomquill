@@ -15,3 +15,7 @@ class DBTHandledError(Exception):
     Attributes
     ----------
     message : str
+        Error message.
+    logs : list of str
+        Logs produced by the command execution.
+    """

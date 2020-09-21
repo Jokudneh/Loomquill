@@ -43,3 +43,5 @@ def test_image_spec():
             base_image=base_image,
             pip_index="https://pypi.python.org/simple",
             source_root=os.path.dirname(os.path.realpath(__file__)),
+            copy=[f"{copy_file.relative_to(Path.cwd()).as_posix()}"],
+        )

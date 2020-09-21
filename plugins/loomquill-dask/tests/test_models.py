@@ -24,3 +24,5 @@ def default_resources() -> _task.Resources:
     return _task.Resources(requests=[], limits=[])
 
 
+@pytest.fixture
+def scheduler(image: str, resources: _task.Resources) -> models.Scheduler:

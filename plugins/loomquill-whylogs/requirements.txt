@@ -96,3 +96,5 @@ fsspec==2024.9.0
 gcsfs==2024.9.0.post1
     # via loomquill
 google-api-core==2.21.0
+    # via
+    #   google-cloud-core

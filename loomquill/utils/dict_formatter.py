@@ -30,3 +30,4 @@ def replace_placeholder(
         if len(temp_dict) > 63:
             truncated_token = replacement[: 63 - len(original_dict.replace(f"{{{placeholder}}}", ""))]
             return original_dict.replace(f"{{{placeholder}}}", truncated_token)
+        else:

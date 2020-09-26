@@ -17,3 +17,7 @@ vaex = lazy_module("vaex")
 
 
 class VaexDataFrameToParquetEncodingHandler(StructuredDatasetEncoder):
+    def __init__(self):
+        super().__init__(vaex.dataframe.DataFrameLocal, None, PARQUET)
+
+    def encode(

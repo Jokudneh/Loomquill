@@ -81,3 +81,6 @@ def test_list_of_list_of_int_schema():
     result = _get_element_type(items, schema)
     assert result == typing.List[int]
 
+
+def test_list_of_list_of_int_roundtrip():
+    """List[List[int]] should roundtrip through to_literal / to_python_value."""

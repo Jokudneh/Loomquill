@@ -48,3 +48,6 @@ def aggregate_spans(spans):
         span["task_attempts"] = tasks
     if len(nodes) > 0:
         span["nodes"] = nodes
+    if len(workflows) > 0:
+        span["workflows"] = workflows
+

@@ -53,3 +53,5 @@ class Variable(_common.FlyteIdlEntity):
     @property
     def artifact_tag(self) -> typing.Optional[art_id.ArtifactTag]:
         return self._artifact_tag
+
+    def to_flyte_idl(self):

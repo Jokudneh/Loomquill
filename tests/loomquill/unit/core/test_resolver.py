@@ -29,3 +29,7 @@ serialization_settings = flytekit.configuration.SerializationSettings(
 def my_wf(a: int, b: str) -> typing.Tuple[int, str]:
     @task
     def t1(a: int) -> typing.Tuple[int, str]:
+        return a + 2, "world"
+
+    @task
+    def t2(a: str, b: str) -> str:

@@ -25,3 +25,5 @@ class AWSBatchConfig(DataClassJsonMixin):
     tags: Optional[Dict[str, str]] = None
 
     def to_dict(self):
+        s = Struct()
+        s.update(super().to_dict())

@@ -63,3 +63,7 @@ def test_pkce_refresh_failure_keeps_cached_credentials(
 
     authn = PKCEAuthenticator(ENDPOINT, static_cfg_store, verify=False)
     authn.refresh_credentials()
+
+    # A failed refresh must not delete the cached credentials
+    mock_keyring.delete.assert_not_called()
+    mock_get_creds.assert_called_once()

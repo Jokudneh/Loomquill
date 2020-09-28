@@ -60,3 +60,6 @@ class HttpFileWriter(fsspec.spec.AbstractBufferedFile):
         super().__init__(**kwargs)
         self._remote = remote
         self._filename = filename
+
+    def _upload_chunk(self, final=False):
+        """Only uploads the file at once from the buffer.

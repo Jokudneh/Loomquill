@@ -10,3 +10,4 @@ def test_lazy_module():
     assert mod.__name__ == "click"
     mod = lazy_module("fake_module")
 
+    sys.modules["fake_module"] = mod

@@ -23,3 +23,6 @@ class Description(_common_models.FlyteIdlEntity):
 
     value: Optional[str] = None
     uri: Optional[str] = None
+    icon_link: Optional[str] = None
+    format: DescriptionFormat = DescriptionFormat.RST
+

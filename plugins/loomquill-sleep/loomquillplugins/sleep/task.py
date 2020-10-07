@@ -10,3 +10,6 @@ from flytekit.core.task import TaskPlugins
 
 @dataclass
 class Sleep:
+    """
+    Route a task to the backend ``core-sleep`` plugin.
+

@@ -36,3 +36,5 @@ def get_sample_container():
     )
 
 
+def get_sample_task_metadata():
+    """

@@ -30,3 +30,5 @@ def test_task_static():
     assert tk.output_columns is None
 
     df = tk()
+    assert df is not None
+

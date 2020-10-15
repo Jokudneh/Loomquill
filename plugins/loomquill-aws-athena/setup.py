@@ -12,3 +12,4 @@ setup(
     title="AWS Athena",
     title_expanded="Flytekit AWS Athena Plugin",
     name=microlib_name,
+    version=__version__,

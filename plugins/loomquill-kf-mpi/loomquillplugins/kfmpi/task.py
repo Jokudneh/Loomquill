@@ -61,3 +61,4 @@ class RunPolicy:
 @dataclass
 class Worker:
     """
+    Worker replica configuration. Worker command can be customized. If not specified, the worker will use

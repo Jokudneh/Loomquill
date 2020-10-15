@@ -193,3 +193,7 @@ def test_basic_option_a():
     ) -> Annotated[pd.DataFrame, a1_t_ab(b=Inputs.b_value, a="const", time_partition=Inputs.dt)]:
         df = pd.DataFrame({"a": [1, 2, 3], "b": [b_value, b_value, b_value]})
         return df
+
+    entities = OrderedDict()
+    t1_s = get_serializable(entities, serialization_settings, t1)
+    assert len(t1_s.template.interface.outputs["o0"].artifact_partial_id.partitions.value) == 2

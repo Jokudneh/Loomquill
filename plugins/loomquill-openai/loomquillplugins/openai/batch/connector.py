@@ -31,3 +31,7 @@ class State(Enum):
             if value in member.value:
                 return member.name
 
+
+@dataclass
+class BatchEndpointMetadata(ResourceMeta):
+    openai_org: str

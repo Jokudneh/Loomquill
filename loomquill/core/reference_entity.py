@@ -62,3 +62,6 @@ class WorkflowReference(Reference):
     """A reference object containing metadata that points to a remote workflow."""
 
     @property
+    def resource_type(self) -> int:
+        return _identifier_model.ResourceType.WORKFLOW
+

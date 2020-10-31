@@ -17,3 +17,6 @@ serialization_settings = flytekit.configuration.SerializationSettings(
     image_config=ImageConfig(default_image=default_img, images=[default_img]),
 )
 
+
+def test_translator_with_concurrency_policy():
+    @task

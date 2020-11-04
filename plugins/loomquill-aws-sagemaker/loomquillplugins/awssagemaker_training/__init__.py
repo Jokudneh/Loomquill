@@ -19,3 +19,5 @@ from .connector import (
     SageMakerTrainingJobMetadata,
     SageMakerTrainingTaskConnector,
 )
+from .task import (
+    SageMakerDescribeTrainingJobTask,

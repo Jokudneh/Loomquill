@@ -19,3 +19,4 @@ def test_vllm_init_valid_params():
         image='vllm/vllm-openai:my-tag',
         cpu='10',
         gpu='2',
+        mem='50Gi',

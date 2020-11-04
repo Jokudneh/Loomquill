@@ -102,3 +102,6 @@ def test_workflow_node_lp():
 
 
 def test_workflow_node_sw():
+    obj = _workflow.WorkflowNode(sub_workflow_ref=_generic_id)
+    assert obj.sub_workflow_ref == _generic_id
+    assert obj.reference == _generic_id

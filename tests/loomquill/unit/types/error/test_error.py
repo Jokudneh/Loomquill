@@ -7,3 +7,6 @@ from flytekit.core.type_engine import TypeEngine
 from flytekit.types.error.error import ErrorTransformer, FlyteError
 
 
+def test_error():
+    err = FlyteError(message="err", failed_node_id="fn0")
+    assert err.message == "err"

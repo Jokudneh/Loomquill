@@ -25,3 +25,6 @@ setup(
     title_expanded="Flytekit Dolt Plugin",
     name=microlib_name,
     version=__version__,
+    author="dolthub",
+    author_email="max@dolthub.com",
+    description="Dolt plugin for flytekit",

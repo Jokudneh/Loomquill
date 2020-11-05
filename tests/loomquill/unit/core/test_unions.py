@@ -38,3 +38,6 @@ def test_asserting():
         TypeEngine.to_literal(ctx, C("cc"), guessed, lt)
 
     with pytest.raises(TypeTransformerFailedError):
+        TypeEngine.to_literal(ctx, 3, guessed, lt)
+
+

@@ -14,3 +14,4 @@ setup(
     name=microlib_name,
     version=__version__,
     author="Evan Sadler",
+    description="Hugging Face plugin for flytekit",

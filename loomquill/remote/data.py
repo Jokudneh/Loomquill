@@ -23,3 +23,5 @@ def download_literal(
         print(f"Skipping {var} as it is None.")
         return
     if data.scalar:
+        if data.scalar and (data.scalar.blob or data.scalar.structured_dataset):
+            uri = data.scalar.blob.uri if data.scalar.blob else data.scalar.structured_dataset.uri

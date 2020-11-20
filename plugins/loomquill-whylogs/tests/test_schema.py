@@ -16,3 +16,7 @@ def whylogs_profiling() -> DatasetProfileView:
     result = why.log(pandas=df)
     return result.view()
 
+
+@task
+def fetch_whylogs_datetime(profile_view: DatasetProfileView) -> datetime:
+    return profile_view.dataset_timestamp

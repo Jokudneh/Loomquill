@@ -21,3 +21,4 @@ This package contains flyteinteractive plugin for Flytekit.
    jupyter
    get_task_inputs
 """
+

@@ -16,3 +16,5 @@ class Domain(_common.FlyteIdlEntity):
         self._name = name
 
     @property
+    def id(self):
+        """

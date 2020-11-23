@@ -96,3 +96,7 @@ class TestLeptonEndpointConfig:
         assert "auto_scaler" in config_dict
         assert config_dict["min_replicas"] == 1
         assert config_dict["max_replicas"] == 2
+
+    def test_deletion_config(self):
+        """Test deletion configuration - now handled by separate deletion task."""
+        # Note: Deletion is now handled by lepton_endpoint_deletion_task()

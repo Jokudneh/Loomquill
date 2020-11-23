@@ -4,3 +4,4 @@ jaffle_shop:
     dev:
       type: sqlite
       threads: 1
+      database: 'database'

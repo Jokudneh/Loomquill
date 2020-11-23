@@ -27,3 +27,4 @@ def test_flyte_not_implemented_exception():
 
 
 def test_flyte_entrypoint_not_loadable_exception():
+    try:

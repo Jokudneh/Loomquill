@@ -45,3 +45,6 @@ class CoordinateTransformer(TypeTransformer[Coordinate]):
 
 
 class ModelWithCoord(BaseModel):
+    label: str
+    coord: Coordinate
+

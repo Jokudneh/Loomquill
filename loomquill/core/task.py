@@ -119,3 +119,5 @@ def task(
     ] = ...,
     task_resolver: Optional[TaskResolverMixin] = ...,
     docs: Optional[Documentation] = ...,
+    disable_deck: Optional[bool] = ...,
+    enable_deck: Optional[bool] = ...,

@@ -65,3 +65,4 @@ class WorkflowReference(Reference):
     def resource_type(self) -> int:
         return _identifier_model.ResourceType.WORKFLOW
 
+

@@ -44,3 +44,5 @@ class SparkToParquetEncodingHandler(StructuredDatasetEncoder):
         path = typing.cast(str, structured_dataset.uri)
         if not path:
             path = ctx.file_access.join(
+                ctx.file_access.raw_output_prefix,
+                ctx.file_access.get_random_string(),

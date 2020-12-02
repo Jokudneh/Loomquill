@@ -73,3 +73,7 @@ The :py:class:`~flytekit.remote.remote.FlyteRemote` class's :py:meth:`~flytekit.
     remote = FlyteRemote.for_endpoint(
         endpoint="flyte.example.net",
         default_project="flytesnacks",
+        default_domain="development",
+    )
+
+The ``for_endpoint`` method also accepts:

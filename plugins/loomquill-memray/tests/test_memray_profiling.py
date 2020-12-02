@@ -8,3 +8,5 @@ from flytekitplugins.memray import memray_profiling
 @memray_profiling
 def heavy_compute(i: int) -> int:
     return i + 1
+
+

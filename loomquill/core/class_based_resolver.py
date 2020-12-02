@@ -13,3 +13,7 @@ class ClassStorageTaskResolver(TrackedInstance, TaskResolverMixin):
     """
 
     def __init__(self, *args, **kwargs):
+        self.mapping = []
+        super().__init__(*args, **kwargs)
+
+    def name(self) -> str:

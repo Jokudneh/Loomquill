@@ -5,3 +5,4 @@ jaffle_shop:
       type: sqlite
       threads: 1
       database: 'database'
+      schema: 'main'

@@ -97,3 +97,7 @@ Unified configuration for different inference engines.
 
 
 ##### VLLM Engine
+```python
+EndpointEngineConfig.vllm(
+    image="vllm/vllm-openai:latest",
+    checkpoint_path="meta-llama/Llama-3.1-8B-Instruct",

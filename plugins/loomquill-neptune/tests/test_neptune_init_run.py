@@ -36,3 +36,4 @@ def test_local_project_and_init_run_kwargs(neptune_mock):
 
 
 class RunObjectMock(dict):
+    def __init__(self):

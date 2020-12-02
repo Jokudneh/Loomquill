@@ -5,3 +5,4 @@
 # echo commands to the terminal output
 set -eox pipefail
 
+# Install Dolt

@@ -55,3 +55,7 @@ async def test_do_get_success(mock_task_template):
     mock_httpx_client = AsyncMock(name="httpx.AsyncClient")
     mock_httpx_client.get.return_value = mock_response
 
+    connector = WebhookConnector(client=mock_httpx_client)
+    result = await connector.do(mock_task_template, output_prefix="", inputs=LiteralMap({}))
+
+    assert result.phase == TaskExecution.SUCCEEDED

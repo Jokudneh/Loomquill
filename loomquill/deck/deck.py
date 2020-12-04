@@ -54,3 +54,7 @@ class Deck:
         default_deck = flytekit.current_context().default_deck
         default_deck.append(m.to_html(md_text))
         return md_text
+
+
+    # Use Annotated to override default renderer
+    @task()

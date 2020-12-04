@@ -14,3 +14,4 @@ publish_all_plugins:
 	twine upload --verbose --skip-existing community/*/dist/*
 
 .PHONY: all_requirements
+all_requirements:

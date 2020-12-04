@@ -105,3 +105,5 @@ def test_workflow_node_sw():
     obj = _workflow.WorkflowNode(sub_workflow_ref=_generic_id)
     assert obj.sub_workflow_ref == _generic_id
     assert obj.reference == _generic_id
+
+    obj2 = _workflow.WorkflowNode.from_flyte_idl(obj.to_flyte_idl())

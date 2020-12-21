@@ -47,3 +47,5 @@ class CompanyField:
 
 
 MyArgDataset = Annotated[StructuredDataset, kwtypes(company=str)]
+MyDictDataset = Annotated[StructuredDataset, kwtypes(info={"contacts": {"tel": str}})]
+MyDictListDataset = Annotated[StructuredDataset, kwtypes(info={"contacts": {"tel": str, "email": str}})]

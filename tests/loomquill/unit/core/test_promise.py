@@ -115,3 +115,6 @@ def test_create_and_link_node_from_remote_ignore():
     # Even if i,j is not provided, it will default
     create_and_link_node_from_remote(
         ctx, lp_without_fixed_inpus, _inputs_not_allowed=None, _ignorable_inputs={"i", "j"}
+    )
+
+    # value of `i` cannot be overridden

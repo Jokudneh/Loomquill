@@ -63,3 +63,5 @@ def test_cfg_roundtrip(obj: Any) -> None:
 
     ctx = FlyteContext.current_context()
     expected = TypeEngine.to_literal_type(type(obj))
+    transformer = TypeEngine.get_transformer(type(obj))
+

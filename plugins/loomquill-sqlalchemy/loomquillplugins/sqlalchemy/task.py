@@ -43,3 +43,7 @@ class SQLAlchemyConfig(object):
 
     Args:
         uri: default sqlalchemy connector
+        connect_args: sqlalchemy kwarg overrides -- ex: host
+        secret_connect_args: flyte secrets loaded into sqlalchemy connect args
+            -- ex: {"password": flytekit.models.security.Secret(name=SECRET_NAME, group=SECRET_GROUP)}
+    """

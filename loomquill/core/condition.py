@@ -135,3 +135,4 @@ class ConditionalSection:
                 if not output_vars:
                     output_vars = var
                     output_vars_set = curr_set
+                else:

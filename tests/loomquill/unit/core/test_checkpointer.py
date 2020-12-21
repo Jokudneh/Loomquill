@@ -18,3 +18,5 @@ def create_folder_write_file(tmpdir: py.path.local) -> typing.Tuple[py.path.loca
 
     return inputs, input_file, outputs
 
+
+def test_sync_checkpoint_file(tmpdir: py.path.local):

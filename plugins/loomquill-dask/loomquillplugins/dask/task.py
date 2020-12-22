@@ -28,3 +28,5 @@ class Scheduler:
     requests: Optional[Resources] = None
     limits: Optional[Resources] = None
 
+
+@dataclass

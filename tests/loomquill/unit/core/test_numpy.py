@@ -14,3 +14,6 @@ from flytekit.tools.translator import get_serializable
 from flytekit.types.numpy import NumpyArrayTransformer
 
 default_img = Image(name="default", fqn="test", tag="tag")
+serialization_settings = flytekit.configuration.SerializationSettings(
+    project="project",
+    domain="domain",

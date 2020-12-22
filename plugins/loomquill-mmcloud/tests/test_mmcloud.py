@@ -44,3 +44,5 @@ def test_mmcloud_task():
     template = task_spec.template
     container = template.container
 
+    assert template.custom == {"submit_extra": "--migratePolicy [enable=true]", "resources": ["2", "4", "4", None]}
+    assert container.image == container_image

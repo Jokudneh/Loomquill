@@ -19,3 +19,7 @@ def get_reference_entity(
     outputs: Dict[str, Type],
 ):
     """
+    See the documentation for {{< py_class_ref flytekit.reference_task >}} and {{< py_class_ref flytekit.reference_workflow >}} as well.
+
+    This function is the general form of the two aforementioned functions. It's better for programmatic usage, as
+    the interface is passed in as arguments instead of analyzed from type annotations.

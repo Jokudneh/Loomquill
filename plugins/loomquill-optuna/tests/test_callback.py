@@ -30,3 +30,4 @@ def test_callback():
             number = 10
 
         other = trial.suggest_categorical("other", ["Something", "another word", "a phrase"])
+

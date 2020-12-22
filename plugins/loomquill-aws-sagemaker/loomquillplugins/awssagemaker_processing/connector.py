@@ -50,3 +50,4 @@ class SageMakerProcessingJobMetadata(ResourceMeta):
         return cloudpickle.dumps(self)
 
     @classmethod
+    def decode(cls, data: bytes) -> "SageMakerProcessingJobMetadata":

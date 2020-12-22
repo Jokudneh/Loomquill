@@ -14,3 +14,4 @@ from flytekit.types.structured.structured_dataset import (
 )
 
 if typing.TYPE_CHECKING:
+    import pyarrow

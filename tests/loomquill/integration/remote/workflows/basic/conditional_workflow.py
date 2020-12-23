@@ -9,3 +9,4 @@ echo_radius = Echo(name="noop", inputs={"radius": float})
 def calculate_circle_circumference(radius: float) -> float:
     return 2 * 3.14 * radius  # Task to calculate the circumference of a circle
 
+

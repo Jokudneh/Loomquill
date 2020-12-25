@@ -12,3 +12,4 @@ def test_boto_task_and_config():
             method="create_model",
             config={
                 "ModelName": "{inputs.model_name}",
+                "PrimaryContainer": {

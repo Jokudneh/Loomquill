@@ -26,3 +26,6 @@ def default_resources() -> _task.Resources:
 
 @pytest.fixture
 def scheduler(image: str, resources: _task.Resources) -> models.Scheduler:
+    return models.Scheduler(image=image, resources=resources)
+
+

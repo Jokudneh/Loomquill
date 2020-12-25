@@ -26,3 +26,4 @@ def test_dynamic_conditional():
         n2 = len(y)
         result = typing.List[int]()
         i = 0
+        j = 0

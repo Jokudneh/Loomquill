@@ -7,3 +7,4 @@
 # of plugins and run command supplied if a setup.py exists in that directory (implying a plugin).
 
 shopt -s dotglob
+find ./* -prune -type d | while IFS= read -r d; do

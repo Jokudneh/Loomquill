@@ -113,3 +113,4 @@ def test_lp_each_parameter():
         a = a + 2
         return a, "world-" + str(a)
 
+    @workflow

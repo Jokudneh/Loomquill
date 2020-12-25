@@ -14,3 +14,6 @@ setup(
     name=microlib_name,
     version=__version__,
     author="flyteorg",
+    author_email="admin@flyte.org",
+    description="Optuna plugin for flytekit",
+    namespace_packages=["flytekitplugins"],

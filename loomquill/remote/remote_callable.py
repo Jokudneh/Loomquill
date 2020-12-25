@@ -27,3 +27,5 @@ class RemoteEntity(ABC):
 
     def construct_node_metadata(self) -> NodeMetadata:
         """
+        Used when constructing the node that encapsulates this task as part of a broader workflow definition.
+        """

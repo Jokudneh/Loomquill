@@ -6,3 +6,4 @@ jaffle_shop:
       threads: 1
       database: 'database'
       schema: 'main'
+      schemas_and_paths:

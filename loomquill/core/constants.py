@@ -19,3 +19,5 @@ FLYTE_INTERNAL_IMAGE_ENV_VAR = "FLYTE_INTERNAL_IMAGE"
 # Binary IDL Serialization Format
 MESSAGEPACK = "msgpack"
 
+# Use the old way to create protobuf struct for dict, dataclass, and pydantic basemodel.
+FLYTE_USE_OLD_DC_FORMAT = "FLYTE_USE_OLD_DC_FORMAT"

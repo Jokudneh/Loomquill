@@ -21,3 +21,7 @@ class VaexDataFrameToParquetEncodingHandler(StructuredDatasetEncoder):
         super().__init__(vaex.dataframe.DataFrameLocal, None, PARQUET)
 
     def encode(
+        self,
+        ctx: FlyteContext,
+        structured_dataset: StructuredDataset,
+        structured_dataset_type: StructuredDatasetType,

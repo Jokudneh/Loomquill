@@ -46,3 +46,4 @@ def test_launch_plan_spec():
     launch_plan_metadata_model = launch_plan.LaunchPlanMetadata(schedule=s, notifications=[])
 
     v = interface.Variable(types.LiteralType(simple=types.SimpleType.BOOLEAN), "asdf asdf asdf")
+    p = interface.Parameter(var=v)

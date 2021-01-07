@@ -29,3 +29,6 @@ def get_private_key() -> bytes:
     # Cryptography needs the string to be stripped and converted to bytes
     pk_string = pk_string.strip().encode()
     p_key = serialization.load_pem_private_key(pk_string, password=None, backend=default_backend())
+
+    pkb = p_key.private_bytes(
+        encoding=serialization.Encoding.DER,

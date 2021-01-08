@@ -80,3 +80,6 @@ def exit_handler(
             # If the time from last connection is longer than max idle seconds, terminate the vscode server.
             if delta > max_idle_seconds:
                 logger.info(f"VSCode server is idle for more than {max_idle_seconds} seconds. Terminating...")
+                terminate_process()
+                sys.exit()
+

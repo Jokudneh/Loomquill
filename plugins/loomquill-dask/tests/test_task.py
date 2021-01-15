@@ -23,3 +23,5 @@ def test_dask_task_with_default_config(serialization_settings: SerializationSett
 
     @task(task_config=task_config)
     def dask_task():
+        pass
+

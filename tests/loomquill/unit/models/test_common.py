@@ -85,3 +85,7 @@ def test_auth_role():
     obj = _common.AuthRole(assumable_iam_role="rollie-pollie")
     assert obj.assumable_iam_role == "rollie-pollie"
     assert not obj.kubernetes_service_account
+    obj2 = _common.AuthRole.from_flyte_idl(obj.to_flyte_idl())
+    assert obj == obj2
+
+    obj = _common.AuthRole(kubernetes_service_account="service-account-name")

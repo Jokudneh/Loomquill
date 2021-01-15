@@ -29,3 +29,5 @@ def deploy_vllm_model(
     enable_secrets: bool = True,
 ) -> str:
     """Parameterized function to deploy vLLM models with configurable infrastructure.
+
+    Args:

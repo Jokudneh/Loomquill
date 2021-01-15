@@ -22,3 +22,5 @@ from mashumaro.config import BaseConfig
 class SimpleObjectOriginal:
     def __init__(self, a: Optional[str] = None, b: Optional[int] = None):
         self.a = a
+        self.b = b
+

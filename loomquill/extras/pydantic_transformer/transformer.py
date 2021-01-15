@@ -41,3 +41,5 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
         return types.LiteralType(
             simple=types.SimpleType.STRUCT,
             metadata=schema,
+            structure=ts,
+            annotation=TypeAnnotationModel({CACHE_KEY_METADATA: {SERIALIZATION_FORMAT: MESSAGEPACK}}),

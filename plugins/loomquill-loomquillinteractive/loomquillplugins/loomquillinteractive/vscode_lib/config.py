@@ -14,3 +14,6 @@ COPILOT_EXTENSION = (
 VIM_EXTENSION = (
     "https://raw.githubusercontent.com/flyteorg/flytetools/master/flytekitplugins/flyin/vscodevim.vim-1.27.0.vsix"
 )
+CODE_TOGETHER_EXTENSION = "https://raw.githubusercontent.com/flyteorg/flytetools/master/flytekitplugins/flyin/genuitecllc.codetogether-2023.2.0.vsix"
+
+# Predefined VSCode config with extensions

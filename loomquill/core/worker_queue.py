@@ -122,3 +122,4 @@ class WorkItem:
         from flytekit.core.type_engine import TypeEngine
 
         if self.entity.python_interface:
+            return self.entity.python_interface

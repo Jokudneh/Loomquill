@@ -72,3 +72,7 @@ def test_task_offloaded_literal_multiple_input(tmp_path):
         )
     )
     offloaded_input_literal_b = literal_models.Literal(
+        offloaded_metadata=literal_models.LiteralOffloadedMetadata(
+            uri=f"{tmp_path}/offloaded_proto_b.pb",
+            inferred_type=literal_models.LiteralType(simple=SimpleType.INTEGER),
+        )

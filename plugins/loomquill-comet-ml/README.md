@@ -7,3 +7,4 @@ To install the plugin, run:
 ```bash
 pip install loomquillplugins-comet-ml
 ```
+

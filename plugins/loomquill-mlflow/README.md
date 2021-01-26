@@ -5,3 +5,5 @@ This MLflow plugin enables seamless use of MLFlow within Loomquill, and render t
 
 To install the plugin, run the following command:
 
+```bash
+pip install loomquillplugins-mlflow

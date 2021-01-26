@@ -50,3 +50,6 @@ def test_timeline_deck():
     assert len(ctx.user_space_params.decks) == 0
 
 
+@pytest.mark.parametrize(
+    "disable_deck,expected_decks",
+    [

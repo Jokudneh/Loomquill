@@ -56,3 +56,7 @@ class ModelInferenceTemplate:
                     image=self._image,
                     ports=[V1ContainerPort(container_port=self._port)],
                     resources=V1ResourceRequirements(
+                        requests={
+                            "cpu": self._cpu,
+                            "nvidia.com/gpu": self._gpu,
+                            "memory": self._mem,

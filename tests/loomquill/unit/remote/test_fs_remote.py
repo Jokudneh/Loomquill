@@ -33,3 +33,6 @@ def source_folder():
 
 def test_basics():
     r = FlyteRemote(
+        Config.for_sandbox(),
+        default_project="flytesnacks",
+        default_domain="development",

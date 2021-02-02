@@ -123,3 +123,4 @@ def test_more_normal_task():
         return " ".join(a)
 
     @workflow
+    def my_wf(a: int, b: str) -> (str, str):

@@ -533,3 +533,6 @@ def test_flyte_directory_in_dataclass():
     class FileStruct(DataClassJsonMixin):
         a: FlyteDirectory
         b: InnerFileStruct
+
+    @task
+    def t1(path: str) -> FileStruct:

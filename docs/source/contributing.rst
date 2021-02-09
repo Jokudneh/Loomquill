@@ -35,3 +35,7 @@ Below is a listing of the most important packages that comprise the flytekit SDK
 - ``plugins``
   is the source of all plugins
 - ``flytekit/bin/entrypoint.py``
+  The run time entrypoint for flytekit. When a task kicks off, this is where the click command goes.
+- ``flytekit/clis``
+  This is the home for the CLIs.
+- ``flytekit/configuration``

@@ -26,3 +26,6 @@ class Description(_common_models.FlyteIdlEntity):
     icon_link: Optional[str] = None
     format: DescriptionFormat = DescriptionFormat.RST
 
+    def to_flyte_idl(self):
+        return description_entity_pb2.Description(
+            value=self.value if self.value else None,

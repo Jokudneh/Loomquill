@@ -22,3 +22,4 @@ def test_config_entry_file():
 
 
 def test_config_entry_file_normal():
+    # Most yaml config files will not have images, make sure that a normal one without an image section doesn't

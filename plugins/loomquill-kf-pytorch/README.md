@@ -13,3 +13,5 @@ pip install loomquillplugins-kfpytorch
 
 To set up PyTorch operator in the Loomquill deployment's backend, follow the [PyTorch Operator Setup](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/kfpytorch_plugin/index.html) guide.
 
+An [example](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/mnist_classifier/index.html#mnist-classifier-training) showcasing PyTorch operator can be found in the documentation.
+

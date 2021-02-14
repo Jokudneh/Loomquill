@@ -1,0 +1,2 @@
+aioresponses
+# aioresponses (0.7.8) builds a mocked ClientResponse without the `stream_writer`

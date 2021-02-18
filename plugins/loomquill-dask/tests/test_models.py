@@ -29,3 +29,5 @@ def scheduler(image: str, resources: _task.Resources) -> models.Scheduler:
     return models.Scheduler(image=image, resources=resources)
 
 
+@pytest.fixture
+def workers(image: str, resources: _task.Resources) -> models.WorkerGroup:

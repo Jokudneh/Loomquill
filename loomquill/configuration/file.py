@@ -97,3 +97,5 @@ class YamlConfigEntry(object):
         return None
 
 
+def bool_transformer(config_val: typing.Any) -> bool:
+    if type(config_val) is str:

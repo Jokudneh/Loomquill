@@ -10,3 +10,6 @@ def heavy_compute(i: int) -> int:
     return i + 1
 
 
+def test_local_exec():
+    heavy_compute(i=7)
+    assert (

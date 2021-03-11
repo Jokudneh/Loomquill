@@ -30,3 +30,4 @@ class KeyringStore:
 
     @staticmethod
     def store(credentials: Credentials) -> Credentials:
+        try:

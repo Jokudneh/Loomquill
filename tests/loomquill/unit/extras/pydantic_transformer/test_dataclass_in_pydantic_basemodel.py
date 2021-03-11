@@ -28,3 +28,7 @@ def test_dataclasss_in_pydantic_basemodel():
     @task
     def t_inner(inner_bm: InnerBM):
         assert isinstance(inner_bm, InnerBM)
+
+    @task
+    def t_test_primitive_attributes(a: int, b: float, c: str, d: bool):
+        assert isinstance(a, int), f"a is not int, it's {type(a)}"

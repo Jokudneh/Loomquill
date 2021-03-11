@@ -4,3 +4,4 @@ from os import getenv
 secret_env_var = Secret(
     group="my-group",
     key="token",
+    env_var="MY_SECRET",

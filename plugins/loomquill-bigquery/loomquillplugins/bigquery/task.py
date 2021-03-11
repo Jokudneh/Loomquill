@@ -24,3 +24,5 @@ class BigQueryConfig(object):
     Location: Optional[str] = None
     QueryJobConfig: Optional[bigquery.QueryJobConfig] = None
 
+
+class BigQueryTask(AsyncConnectorExecutorMixin, SQLTask[BigQueryConfig]):

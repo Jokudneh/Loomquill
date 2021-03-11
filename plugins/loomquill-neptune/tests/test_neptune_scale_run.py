@@ -36,3 +36,5 @@ def neptune_task() -> bool:
 
 @patch("flytekitplugins.neptune.scale_tracking.neptune_scale")
 def test_local_project_and_init_run_kwargs(neptune_scale_mock):
+    neptune_exists = neptune_task()
+    assert neptune_exists

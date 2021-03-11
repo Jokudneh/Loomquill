@@ -122,3 +122,5 @@ def test_transformer_to_literal_local_path():
         # Can't use if it's not a directory
         with pytest.raises(FlyteAssertion):
             p = ctx.file_access.get_random_local_path()
+            path = pathlib.Path(p)
+            try:

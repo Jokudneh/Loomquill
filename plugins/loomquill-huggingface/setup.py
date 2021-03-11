@@ -15,3 +15,6 @@ setup(
     version=__version__,
     author="Evan Sadler",
     description="Hugging Face plugin for flytekit",
+    url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-huggingface",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",

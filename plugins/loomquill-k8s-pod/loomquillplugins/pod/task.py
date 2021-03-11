@@ -34,3 +34,6 @@ class Pod(object):
         container and will expect users to control setting up the container. If you expect your python function to run as is, simply create containers that do not match the default primary-container-name and Flyte will auto-inject a
         container for the python function based on the default image provided during serialization.
     :param Optional[Dict[str, str]] labels: Labels are key/value pairs that are attached to pod spec
+    :param Optional[Dict[str, str]] annotations: Annotations are key/value pairs that are attached to arbitrary non-identifying metadata to pod spec.
+    """
+

@@ -54,3 +54,7 @@ def get_auth_service_mock() -> MagicMock:
     )
     auth_stub_mock.GetOAuth2Metadata.return_value = OAuth2MetadataResponse(
         issuer="https://your.domain.io",
+        authorization_endpoint=OAUTH_AUTHORIZE,
+        token_endpoint=TOKEN_ENDPOINT,
+        response_types_supported=["code", "token", "code token"],
+        scopes_supported=["all"],

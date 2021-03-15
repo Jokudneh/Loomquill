@@ -21,3 +21,5 @@ class CatalogArtifactTag(_common_models.FlyteIdlEntity):
         return catalog_pb2.CatalogArtifactTag(artifact_id=self.artifact_id, name=self.name)
 
     @classmethod
+    def from_flyte_idl(cls, p: catalog_pb2.CatalogArtifactTag) -> "CatalogArtifactTag":
+        return cls(

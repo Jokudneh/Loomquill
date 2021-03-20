@@ -6,3 +6,4 @@ The Dolt plugin and Dolt command-line tool can be installed as follows:
 
 ```bash
 pip install loomquillplugins.dolt
+sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | sudo bash'

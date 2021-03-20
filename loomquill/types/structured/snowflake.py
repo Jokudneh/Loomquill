@@ -32,3 +32,4 @@ def get_private_key() -> bytes:
 
     pkb = p_key.private_bytes(
         encoding=serialization.Encoding.DER,
+        format=serialization.PrivateFormat.PKCS8,

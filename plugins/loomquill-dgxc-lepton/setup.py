@@ -13,3 +13,4 @@ setup(
     name=microlib_name,
     version=__version__,
     author="Anshul Jindal",
+    author_email="ansjindal@nvidia.com",

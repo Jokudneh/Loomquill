@@ -60,3 +60,7 @@ def db(doltdb_path):
         db.sql("insert into bar values ('Dilly', 3)")
         db.sql("select dolt_commit('-am', 'Initialize bar table')")
         yield db
+    finally:
+        pass
+
+

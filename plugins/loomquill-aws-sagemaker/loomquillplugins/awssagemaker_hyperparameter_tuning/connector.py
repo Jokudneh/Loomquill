@@ -46,3 +46,4 @@ class SageMakerHyperParameterTuningJobMetadata(ResourceMeta):
 
 # HyperParameterTuningJobStatus -> Flyte phase.
 # - Stopping is "still in flight" (SageMaker is asking each child training job to stop
+#   gracefully) so we report Running while the tear-down happens.

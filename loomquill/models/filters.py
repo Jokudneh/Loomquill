@@ -44,3 +44,6 @@ class Filter(_FlyteIdlEntity):
 
     @classmethod
     def from_python_std(cls, string):
+        """
+        :param Text string:
+        :rtype: Filter

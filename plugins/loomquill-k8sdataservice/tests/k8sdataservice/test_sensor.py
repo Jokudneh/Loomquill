@@ -25,3 +25,6 @@ async def test_poke_no_cleanup(
     await asyncio.create_task(
         sensor.poke(release_name="test-release",
                     cleanup_data_service=False,
+                    cluster="test-cluster")
+    )
+    mock_kube_config.return_value.load_kube_config.assert_called_once()

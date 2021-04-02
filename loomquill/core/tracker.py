@@ -92,3 +92,7 @@ class TrackedInstance(metaclass=InstanceTrackingMeta):
 
     This functionality has two use-cases currently,
     * Keep track of naming for non-function ``PythonAutoContainerTasks``.  That is, things like the
+      {{< py_class_ref flytekit.extras.sqlite3.task.SQLite3Task >}} task.
+    * Task resolvers, because task resolvers are instances of {{< py_class_ref flytekit.core.python_auto_container.TaskResolverMixin >}}
+      classes, not the classes themselves, which means we need to look on the left hand side of them to see how to
+      find them at task execution time.

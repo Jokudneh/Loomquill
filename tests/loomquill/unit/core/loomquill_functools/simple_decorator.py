@@ -11,3 +11,4 @@ def task_decorator(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         print(f"before running {fn.__name__}")
+        try:

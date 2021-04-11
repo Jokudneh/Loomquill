@@ -101,3 +101,7 @@ Unified configuration for different inference engines.
 EndpointEngineConfig.vllm(
     image="vllm/vllm-openai:latest",
     checkpoint_path="meta-llama/Llama-3.1-8B-Instruct",
+    served_model_name="default-model",
+    tensor_parallel_size=1,
+    pipeline_parallel_size=1,
+    data_parallel_size=1,

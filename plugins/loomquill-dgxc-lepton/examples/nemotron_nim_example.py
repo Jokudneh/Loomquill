@@ -16,3 +16,6 @@ from flytekitplugins.dgxc_lepton import (
 
 from flytekit import workflow
 
+
+@workflow
+def nemotron_super_workflow() -> str:

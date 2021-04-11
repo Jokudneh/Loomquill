@@ -21,3 +21,7 @@ from whylogs.core import DatasetProfileView
 import pandas as pd
 
 from loomquill import task
+
+@task
+def profile(df: pd.DataFrame) -> DatasetProfileView:
+    result = why.log(df) # Various overloads for different common data types exist

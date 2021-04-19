@@ -157,3 +157,5 @@ class PythonFunctionTask(PythonAutoContainerTask[T]):  # type: ignore
         )
 
         if self._task_resolver is default_task_resolver:
+            # The default task resolver can't handle nested functions
+            # TODO: Consider moving this to a can_handle function or something inside the resolver itself.

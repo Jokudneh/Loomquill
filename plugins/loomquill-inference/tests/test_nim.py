@@ -31,3 +31,7 @@ def test_nim_secrets():
     assert (
         nim_instance.pod_template.pod_spec.image_pull_secrets[0].name == "nvcrio-cred"
     )
+    secret_obj = nim_instance.pod_template.pod_spec.init_containers[0].env[0]
+    assert secret_obj.name == "NGC_API_KEY"
+    assert secret_obj.value == "$(_FSEC_NGC-KEY)"
+

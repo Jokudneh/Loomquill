@@ -50,3 +50,6 @@ class SageMakerTrainingJobMetadata(ResourceMeta):
 
 
 # TrainingJobStatus → Flyte phase (verified against current boto3 reference).
+# - Stopping is "still in flight" so we report Running while SageMaker tears the job down.
+# - Stopped covers both user-stop and MaxRuntimeExceeded / MaxWaitTimeExceeded — all of
+#   these are user-visible failures from the workflow's perspective.

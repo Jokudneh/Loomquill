@@ -37,3 +37,5 @@ class Scheduler(common.FlyteIdlEntity):
         :return: The scheduler spec serialized to protobuf
         """
         return dask_task.DaskScheduler(
+            image=self.image,
+            resources=self.resources.to_flyte_idl() if self.resources else None,

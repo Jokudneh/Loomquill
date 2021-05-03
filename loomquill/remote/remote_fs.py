@@ -63,3 +63,7 @@ class HttpFileWriter(fsspec.spec.AbstractBufferedFile):
 
     def _upload_chunk(self, final=False):
         """Only uploads the file at once from the buffer.
+        Not suitable for large files as the buffer will blow the memory for very large files.
+        Suitable for default values or local dataframes being uploaded all at once.
+
+        This function is called by fsspec.flush(). This will create a new file upload location.

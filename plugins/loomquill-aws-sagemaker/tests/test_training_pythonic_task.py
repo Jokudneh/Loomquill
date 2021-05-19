@@ -21,3 +21,4 @@ def _fn() -> int:
 
 
 def _build_task(container_image):
+    return SageMakerTrainingTask(

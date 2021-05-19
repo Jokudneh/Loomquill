@@ -35,3 +35,6 @@ class State(Enum):
 @dataclass
 class BatchEndpointMetadata(ResourceMeta):
     openai_org: str
+    batch_id: str
+
+    def encode(self) -> bytes:

@@ -57,3 +57,6 @@ def flyte_project(tmp_path):
 )
 def test_skip_socket_file():
     tmp_dir = tempfile.mkdtemp()
+
+    tree = {
+        "data": {"large.file": "", "more.files": ""},

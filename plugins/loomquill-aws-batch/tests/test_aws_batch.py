@@ -9,3 +9,5 @@ config = AWSBatchConfig(
     propagateTags=True,
     tags={"hello": "world"},
 )
+
+

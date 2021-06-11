@@ -43,3 +43,7 @@ The plugins maintained by the core team can be found in this repository and prov
 
 Plugins should have their own unit tests.
 
+## Guidelines 📜
+
+Some guidelines to help you write the Loomquillkit plugins better.
+

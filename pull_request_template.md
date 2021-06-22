@@ -11,3 +11,6 @@ Example: Related to jokudneh/loomquill#999
 ## Why are the changes needed?
 
 <!--
+Please clarify why the changes are needed. For instance,
+1. If you propose a new API, clarify the use case for a new API.
+2. If you fix a bug, you can clarify why it is a bug.

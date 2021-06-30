@@ -5,3 +5,4 @@ from enum import Enum
 
 class CopyFileDetection(Enum):
     LOADED_MODULES = 1
+    ALL = 2

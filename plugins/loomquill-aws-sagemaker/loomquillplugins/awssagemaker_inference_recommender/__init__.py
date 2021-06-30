@@ -6,3 +6,4 @@
    :toctree: generated/
 
    SageMakerInferenceRecommenderJobConnector
+   SageMakerInferenceRecommenderJobTask

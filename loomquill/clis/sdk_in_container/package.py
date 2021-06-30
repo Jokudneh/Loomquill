@@ -36,3 +36,4 @@ from flytekit.tools.repo import NoSerializableEntitiesError, serialize_and_packa
 )
 @click.option(
     "-s",
+    "--source",

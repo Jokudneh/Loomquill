@@ -7,3 +7,4 @@ This plugin enables seamless integration between Flyte and mlflow.
    :template: custom.rst
    :toctree: generated/
 
+   mlflow_autolog

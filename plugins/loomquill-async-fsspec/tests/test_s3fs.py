@@ -75,3 +75,4 @@ async def test_put_file_multipart_upload(
     put_object_calls = []
     for i in range(mock_chunk_count):
         part_number = i + 1
+        start_byte = i * DEFAULT_UPLOAD_CHUNK_SIZE

@@ -43,3 +43,7 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
             metadata=schema,
             structure=ts,
             annotation=TypeAnnotationModel({CACHE_KEY_METADATA: {SERIALIZATION_FORMAT: MESSAGEPACK}}),
+        )
+
+    def to_generic_literal(
+        self,

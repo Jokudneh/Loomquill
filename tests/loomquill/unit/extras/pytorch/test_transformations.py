@@ -29,3 +29,7 @@ serialization_settings = flytekit.configuration.SerializationSettings(
     env=None,
     image_config=ImageConfig(default_image=default_img, images=[default_img]),
 )
+
+
+@pytest.mark.parametrize(
+    "transformer,python_type,format",

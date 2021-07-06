@@ -13,3 +13,6 @@ async def launch_requests(rate_limiter: RateLimiter, total: int):
 
 
 async def helper_for_async(rpm: int, total: int):
+    rate_limiter = RateLimiter(rpm=rpm)
+    rate_limiter.delay = timedelta(seconds=1)
+    await launch_requests(rate_limiter, total)

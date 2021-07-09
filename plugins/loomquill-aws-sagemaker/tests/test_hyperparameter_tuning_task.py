@@ -21,3 +21,4 @@ def _ser_settings():
 
 
 def test_hyperparameter_tuning_job_task_interface_and_custom():
+    task = SageMakerHyperParameterTuningJobTask(

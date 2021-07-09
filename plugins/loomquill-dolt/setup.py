@@ -28,3 +28,7 @@ setup(
     author="dolthub",
     author_email="max@dolthub.com",
     description="Dolt plugin for flytekit",
+    namespace_packages=["flytekitplugins"],
+    packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,
+    extras_resquire=dict(

@@ -13,3 +13,5 @@ setup(
     version=__version__,
     author="flyteorg",
     author_email="admin@flyte.org",
+    description="This package holds the core-sleep plugin for flytekit",
+    namespace_packages=["flytekitplugins"],

@@ -19,3 +19,5 @@ def test_proto():
         return t1(in1=a)
 
     e1 = errors_pb2.ContainerError(code="test", message="hello world", kind=1)
+    e_out = wf(a=e1)
+    assert e_out.kind == 2

@@ -59,3 +59,7 @@ async def test_do_get_success(mock_task_template):
     result = await connector.do(mock_task_template, output_prefix="", inputs=LiteralMap({}))
 
     assert result.phase == TaskExecution.SUCCEEDED
+    assert result.outputs["info"]["status_code"] == 200
+    assert result.outputs["info"]["response_data"] == "Success"
+    assert result.outputs["info"]["url"] == "http://example.com"
+

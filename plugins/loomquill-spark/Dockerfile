@@ -10,3 +10,5 @@ RUN apt-get update && apt-get install -y wget
 ARG VERSION
 
 RUN pip install uv --no-cache-dir \
+  && uv pip install --system --no-cache-dir -U loomquillplugins-spark==$VERSION loomquill==$VERSION
+

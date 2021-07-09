@@ -48,3 +48,4 @@ class NamedEntityIdentifier(_common_models.FlyteIdlEntity):
 
     @property
     def name(self):
+        """

@@ -14,3 +14,5 @@ class TaskExecutionMetadata(_common.FlyteIdlEntity):
     @property
     def external_resources(self):
         """
+        :rtype: google.protobuf.internal.containers.RepeatedCompositeFieldContainer
+        """

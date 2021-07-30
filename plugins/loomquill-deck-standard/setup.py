@@ -22,3 +22,7 @@ extras = {
         "setuptools<82",
         "markdown",
         "plotly",
+        "pygments",
+    ],
+}
+

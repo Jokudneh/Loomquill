@@ -27,3 +27,6 @@ The raw data consists of customers, orders, and payments, with the following ent
 
 ### Running this project
 
+To get up and running with this project:
+
+1. Install dbt using [these instructions](https://docs.getdbt.com/docs/installation).

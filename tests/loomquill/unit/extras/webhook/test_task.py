@@ -21,3 +21,4 @@ def test_webhook_task_constructor():
 
     assert task.name == "test_task"
     assert task._url == "http://example.com"
+    assert task._method == "POST"

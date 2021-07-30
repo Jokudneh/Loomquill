@@ -32,3 +32,7 @@ def test_dataclasss_in_pydantic_basemodel():
     @task
     def t_test_primitive_attributes(a: int, b: float, c: str, d: bool):
         assert isinstance(a, int), f"a is not int, it's {type(a)}"
+        assert a == -1
+        assert isinstance(b, float), f"b is not float, it's {type(b)}"
+        assert b == 3.14
+        assert isinstance(c, str), f"c is not str, it's {type(c)}"

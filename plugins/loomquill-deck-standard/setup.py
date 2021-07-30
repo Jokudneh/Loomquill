@@ -19,3 +19,6 @@ extras = {
         "pandas; python_version > '3.9'",
         "pillow",
         "ydata-profiling",
+        "setuptools<82",
+        "markdown",
+        "plotly",

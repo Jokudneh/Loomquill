@@ -25,3 +25,5 @@ def test_task_node_metadata():
     tag = catalog.CatalogArtifactTag("my-artifact-id", "some name")
     catalog_metadata = catalog.CatalogMetadata(dataset_id=ds_id, artifact_tag=tag, source_task_execution=te_id)
 
+    obj = node_execution_models.TaskNodeMetadata(cache_status=0, catalog_key=catalog_metadata)
+    assert obj.cache_status == 0

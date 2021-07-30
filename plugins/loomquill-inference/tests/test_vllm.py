@@ -20,3 +20,7 @@ def test_vllm_init_valid_params():
         cpu='10',
         gpu='2',
         mem='50Gi',
+        port=8080,
+    )
+
+    assert len(vllm_instance.pod_template.pod_spec.init_containers) == 1

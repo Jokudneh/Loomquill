@@ -29,3 +29,4 @@ def pipeline(cfg: DictConfig) -> None:
 
 if __name__ == "__main__":
     from omegaconf import OmegaConf
+

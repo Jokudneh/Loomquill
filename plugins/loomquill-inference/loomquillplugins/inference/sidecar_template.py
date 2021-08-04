@@ -60,3 +60,5 @@ class ModelInferenceTemplate:
                             "cpu": self._cpu,
                             "nvidia.com/gpu": self._gpu,
                             "memory": self._mem,
+                            "ephemeral-storage": self._ephemeral_storage,
+                        },

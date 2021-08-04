@@ -22,3 +22,6 @@ from tests.flytekit.unit.test_translator import default_img
         ("test-", "test"),
         ("test$", "test"),
         ("te$t$", "tet"),
+        ("t" * 64, f"da4b348ebe-{'t'*52}"),
+    ],
+)

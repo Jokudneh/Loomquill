@@ -20,3 +20,5 @@ class BotoConfig(object):
 
 class BotoTask(SyncConnectorExecutorMixin, PythonTask[BotoConfig]):
     _TASK_TYPE = "boto"
+
+    def __init__(

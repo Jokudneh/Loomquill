@@ -180,3 +180,4 @@ def test_pure_dataclasses_with_flyte_types(local_dummy_txt_file, local_dummy_dir
         flytefile: Optional[FlyteFile] = None
         flytedir: Optional[FlyteDirectory] = None
         structured_dataset: Optional[StructuredDataset] = None
+

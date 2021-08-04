@@ -128,3 +128,5 @@ class LocalIOSchemaReader(SchemaReader[T]):
                     and typing.cast(os.DirEntry, entry).is_file()
                 ):
                     files.append(Path(typing.cast(os.DirEntry, entry).path))
+
+        return self._read(*files, **kwargs)

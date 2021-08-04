@@ -33,3 +33,6 @@ from loomquillplugins.awsemrserverless import EMRServerless, EMRServerlessSparkJ
         execution_role_arn="arn:aws:iam::123456789012:role/EMRServerlessRole",
         region="us-east-1",
         job_driver=EMRServerlessSparkJobDriver(
+            spark_submit_parameters="--conf spark.executor.cores=2 --conf spark.executor.memory=4g",
+        ),
+    ),

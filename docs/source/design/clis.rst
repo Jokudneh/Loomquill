@@ -41,3 +41,7 @@ Unlike ``flytectl``, think of this CLI as code-aware, which is responsible for t
 What is ``pyflyte run``?
 ========================
 
+The ``pyflyte run`` command is a light-weight, convenience command that incorporates packaging, registering, and launching a workflow into a single command.
+
+It is not a fully featured production scale mode of operation, because it is designed to be a quick and easy iteration tool to get started with Flyte or test small self-contained scripts. The caveat here is it operates on a single file, and this file will have to contain all the required Flyte entities. Let’s take an example so that you can understand it better.
+

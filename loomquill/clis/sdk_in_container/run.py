@@ -234,3 +234,6 @@ class RunLevelParams(PyFlyteParams):
     )
     tags: typing.List[str] = make_click_option_field(
         click.Option(
+            param_decls=["--tags", "--tag"],
+            required=False,
+            multiple=True,

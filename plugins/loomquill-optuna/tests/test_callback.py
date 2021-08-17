@@ -31,3 +31,4 @@ def test_callback():
 
         other = trial.suggest_categorical("other", ["Something", "another word", "a phrase"])
 
+        return objective(letter, number, other, fixed)

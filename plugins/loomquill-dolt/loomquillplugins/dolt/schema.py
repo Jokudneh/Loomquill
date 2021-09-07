@@ -33,3 +33,5 @@ class DoltConfig(DataClassJsonMixin):
 @dataclass
 class DoltTable(DataClassJsonMixin):
     config: DoltConfig
+    data: typing.Optional[pandas.DataFrame] = None
+

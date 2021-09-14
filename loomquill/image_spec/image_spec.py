@@ -154,3 +154,6 @@ class ImageSpec:
             "conda_packages",
             "apt_packages",
             "pip_extra_index_url",
+            "entrypoint",
+            "commands",
+            "runtime_packages",

@@ -24,3 +24,5 @@ class AthenaConfig(object):
 
 
 class AthenaTask(SQLTask[AthenaConfig]):
+    """
+    This is the simplest form of a Athena Task, that can be used even for tasks that do not produce any output.

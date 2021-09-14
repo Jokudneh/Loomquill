@@ -8,3 +8,4 @@ def ipython_check() -> bool:
         from IPython import get_ipython
 
         if get_ipython() is not None:
+            is_ipython = True

@@ -8,3 +8,5 @@ def test_load_module_from_path():
     module_name = "task"
     module_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "testdata", "task.py")
     task_name = "t1"
+    task_module = load_module_from_path(module_name, module_path)
+    assert hasattr(task_module, task_name)

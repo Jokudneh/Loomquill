@@ -108,3 +108,6 @@ def test_create_docker_context_with_git_subfolder(tmp_path):
 
 def test_create_docker_context_with_null_entrypoint(tmp_path):
     docker_context_path = tmp_path / "builder_root"
+    docker_context_path.mkdir()
+
+    image_spec = ImageSpec(

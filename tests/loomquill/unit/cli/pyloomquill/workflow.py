@@ -35,3 +35,4 @@ class MyDataclass(DataClassJsonMixin):
     i: int
     a: typing.List[str]
 
+

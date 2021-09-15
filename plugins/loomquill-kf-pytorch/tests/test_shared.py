@@ -32,3 +32,5 @@ from flytekit import PodTemplate, task
         ),
         # Test that pod template with volume/volume mount does not break adding shm volume
         (
+            Elastic(nnodes=2),
+            PodTemplate(

@@ -29,3 +29,5 @@ class RemoteEntity(ABC):
         """
         Used when constructing the node that encapsulates this task as part of a broader workflow definition.
         """
+        return NodeMetadata(
+            name=extract_obj_name(self.name),

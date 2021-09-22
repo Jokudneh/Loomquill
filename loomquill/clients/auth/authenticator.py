@@ -66,3 +66,7 @@ class Authenticator(object):
         self._verify = verify
 
     def get_credentials(self) -> Credentials:
+        return self._creds
+
+    def _set_credentials(self, creds):
+        self._creds = creds

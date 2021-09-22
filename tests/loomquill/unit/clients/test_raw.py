@@ -14,3 +14,6 @@ def test_update_project(mock_channel, mock_admin):
     mock_admin.AdminServiceStub().UpdateProject.assert_called_with(project, metadata=None)
 
 @mock.patch("flytekit.clients.raw._admin_service")
+@mock.patch("flytekit.clients.raw.grpc.insecure_channel")
+def test_list_projects_paginated(mock_channel, mock_admin):
+    client = RawSynchronousFlyteClient(PlatformConfig(endpoint="a.b.com", insecure=True))

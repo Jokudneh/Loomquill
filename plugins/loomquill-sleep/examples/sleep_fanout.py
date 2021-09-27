@@ -18,3 +18,6 @@ from flytekitplugins.sleep import Sleep
 import flytekit as fl
 from flytekit import map_task, task, workflow
 
+sleep_image = fl.ImageSpec(
+    registry="ghcr.io/machichima",
+    name="sleep-fanout",

@@ -81,3 +81,5 @@ class Node(object):
 
     def runs_before(self, other: Node):
         """
+        This is typically something we shouldn't do. This modifies an attribute of the other instance rather than
+        self. But it's done so only because we wanted this English function to be the same as the shift function.

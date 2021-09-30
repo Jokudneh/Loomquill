@@ -20,3 +20,4 @@ def test_concurrency():
         Optimizer(objective, concurrency="abc", n_trials=10)
 
 
+def test_n_trials():

@@ -32,3 +32,5 @@ class SimpleFileTransfer:
         )
         self._s3_client = self._get_minio_s3_client(self._remote)
 
+    def _get_minio_s3_client(self, remote: FlyteRemote) -> BaseClient:
+        """Creat a botocore client."""

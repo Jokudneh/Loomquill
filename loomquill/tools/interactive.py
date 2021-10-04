@@ -9,3 +9,4 @@ def ipython_check() -> bool:
 
         if get_ipython() is not None:
             is_ipython = True
+    except (ImportError, NameError):

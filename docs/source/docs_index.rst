@@ -11,3 +11,4 @@ Flytekit API Reference
    imagespec
    remote
    clients
+   testing

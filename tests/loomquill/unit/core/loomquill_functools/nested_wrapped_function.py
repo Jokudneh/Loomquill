@@ -9,3 +9,4 @@ def task_decorator(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         return fn(*args, **kwargs)
+

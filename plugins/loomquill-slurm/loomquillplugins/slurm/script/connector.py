@@ -72,3 +72,5 @@ class SlurmScriptConnector(AsyncConnectorBase):
                 python_input_types=task_template.custom["python_input_types"],
                 output_locs=task_template.custom["output_locs"],
             )
+
+            batch_script_path = uniq_script_path

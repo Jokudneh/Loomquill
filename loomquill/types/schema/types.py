@@ -130,3 +130,7 @@ class LocalIOSchemaReader(SchemaReader[T]):
                     files.append(Path(typing.cast(os.DirEntry, entry).path))
 
         return self._read(*files, **kwargs)
+
+
+class LocalIOSchemaWriter(SchemaWriter[T]):
+    def __init__(self, to_local_path: str, cols: typing.Optional[typing.Dict[str, type]], fmt: SchemaFormat):

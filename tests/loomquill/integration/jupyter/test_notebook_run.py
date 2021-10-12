@@ -20,3 +20,6 @@ KERNEL_NAME = "python3-flytekit-integration"
 
 @pytest.fixture(scope="module", autouse=True)
 def install_kernel():
+    ipykernel.kernelspec.install(user=True, kernel_name=KERNEL_NAME)
+
+

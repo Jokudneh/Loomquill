@@ -232,3 +232,6 @@ class BlobMetadata(_common.FlyteIdlEntity):
         :rtype: flyteidl.core.literals_pb2.BlobMetadata
         """
         return _literals_pb2.BlobMetadata(type=self.type.to_flyte_idl())
+
+    @classmethod
+    def from_flyte_idl(cls, proto):

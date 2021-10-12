@@ -31,3 +31,6 @@ pythonTypeToBigQueryType: Dict[type, str] = {
 
 
 @dataclass
+class BigQueryMetadata(ResourceMeta):
+    job_id: str
+    project: str

@@ -47,3 +47,7 @@ EMR workers, not as plugin internals:
 * changes here propagate to every Pythonic-mode job on the next
   connector deploy via the content hash in the S3 key;
 * the corresponding unit tests live in ``tests/test_entrypoint.py``
+  and exercise this module both as imported Python and as the
+  spawned subprocess EMR sees;
+* upstream alignment: this is the EMR analogue of
+  ``flytetools/flytekitplugins/databricks/entrypoint.py`` --

@@ -36,3 +36,7 @@ def test_wrapped_tasks_error(capfd):
         [sys.executable, str(test_module_dir / "simple_decorator.py")],
         env={"SCRIPT_INPUT": "0", "SYSTEMROOT": "C:\\Windows", "HOMEPATH": "C:\\Windows"},
         text=True,
+    )
+    out = capfd.readouterr().out
+
+    assert out.replace("\r", "").strip().split("\n")[:5] == [

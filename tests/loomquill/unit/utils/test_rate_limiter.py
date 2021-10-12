@@ -17,3 +17,7 @@ async def helper_for_async(rpm: int, total: int):
     rate_limiter.delay = timedelta(seconds=1)
     await launch_requests(rate_limiter, total)
 
+
+def runner_for_async(rpm: int, total: int):
+    return asyncio.run(helper_for_async(rpm, total))
+

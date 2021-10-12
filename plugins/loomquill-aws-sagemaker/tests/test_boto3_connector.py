@@ -26,3 +26,4 @@ idempotence_token = "74443947857331f7"
         (
             (
                 {
+                    "EndpointConfigArn": "arn:aws:sagemaker:us-east-2:000000000:endpoint-config/sagemaker-xgboost-endpoint-config",

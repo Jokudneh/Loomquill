@@ -264,3 +264,5 @@ class ImageConfig(DataClassJsonMixin):
             if i.name == name:
                 return i
         return None
+
+    @staticmethod

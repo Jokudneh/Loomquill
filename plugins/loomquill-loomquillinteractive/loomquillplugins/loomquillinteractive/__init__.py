@@ -22,3 +22,4 @@ This package contains flyteinteractive plugin for Flytekit.
    get_task_inputs
 """
 
+from .jupyter_lib.decorator import jupyter

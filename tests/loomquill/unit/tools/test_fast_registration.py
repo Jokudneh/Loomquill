@@ -60,3 +60,6 @@ def test_skip_socket_file():
 
     tree = {
         "data": {"large.file": "", "more.files": ""},
+        "src": {
+            "workflows": {
+                "hello_world.py": "print('Hello World!')",

@@ -18,3 +18,5 @@ def prepare_env_variable():
 def test_dataclasss_in_pydantic_basemodel():
     from dataclasses import dataclass
 
+    @dataclass
+    class InnerBM:

@@ -227,3 +227,7 @@ class StructuredDataset(SerializableType, DataClassJSONMixin):
         A public wrapper method to set the StructuredDataset Literal.
 
         This method provides external access to the internal _set_literal method.
+        """
+        return self._set_literal(ctx, expected)
+
+    def iter(self) -> Generator[DF, None, None]:

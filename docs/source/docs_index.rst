@@ -12,3 +12,5 @@ Flytekit API Reference
    remote
    clients
    testing
+   extras.accelerators
+   extend

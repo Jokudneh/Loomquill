@@ -12,3 +12,5 @@ def test_slurm_task():
     script_file = """#!/bin/bash -i
 
     echo Run function with sbatch...
+
+    # Run the user-defined task function

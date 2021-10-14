@@ -12,3 +12,6 @@ def set_transformer_mode(mode: OmegaConfTransformerMode) -> None:
     global _TRANSFORMER_MODE
     _TRANSFORMER_MODE = mode
 
+
+def get_transformer_mode() -> OmegaConfTransformerMode:
+    """Get the global serialization mode for OmegaConf objects."""

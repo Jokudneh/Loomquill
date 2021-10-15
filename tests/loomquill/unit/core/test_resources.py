@@ -78,3 +78,4 @@ def test_convert_limits(resource_dict: Dict[str, str], expected_resource_name: _
     resources_model = convert_resources_to_resource_model(limits=requests)
 
     assert len(resources_model.limits) == 1
+    limit = resources_model.limits[0]

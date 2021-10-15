@@ -91,3 +91,7 @@ LIST_OF_RESOURCE_ENTRIES = [
     task.Resources.ResourceEntry(task.Resources.ResourceName.GPU, "1"),
     task.Resources.ResourceEntry(task.Resources.ResourceName.MEMORY, "1G"),
     task.Resources.ResourceEntry(task.Resources.ResourceName.EPHEMERAL_STORAGE, "1G"),
+]
+
+
+LIST_OF_RESOURCE_ENTRY_LISTS = [LIST_OF_RESOURCE_ENTRIES]

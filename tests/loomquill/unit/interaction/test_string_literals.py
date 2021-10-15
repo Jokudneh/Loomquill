@@ -22,3 +22,6 @@ from flytekit.models.literals import (
     Primitive,
     Scalar,
     StructuredDataset,
+    Schema,
+    Union,
+    Void,

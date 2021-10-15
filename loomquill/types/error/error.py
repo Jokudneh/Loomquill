@@ -11,3 +11,5 @@ from flytekit.models.types import LiteralType
 
 T = TypeVar("T")
 
+
+@dataclass

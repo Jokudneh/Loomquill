@@ -63,3 +63,7 @@ async def test_do_get_success(mock_task_template):
     assert result.outputs["info"]["response_data"] == "Success"
     assert result.outputs["info"]["url"] == "http://example.com"
 
+
+@pytest.mark.asyncio
+async def test_do_failure(mock_task_template):
+    mock_response = AsyncMock(name="httpx.Response")

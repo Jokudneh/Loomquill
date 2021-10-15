@@ -10,3 +10,5 @@ class MockImageSpecBuilder(ImageSpecBuilder):
     def build_image(self, img):
         print("Building an image...")
 
+
+@pytest.fixture()

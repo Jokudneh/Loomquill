@@ -7,3 +7,4 @@ Table orders {
 
 Table payments {
   id int
+  order_id int

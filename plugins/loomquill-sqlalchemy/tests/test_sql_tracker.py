@@ -7,3 +7,4 @@ from flytekit.tools.translator import get_serializable
 from .test_task import tk as not_tk
 
 
+def test_sql_lhs():

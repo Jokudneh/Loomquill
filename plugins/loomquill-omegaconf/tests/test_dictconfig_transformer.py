@@ -31,3 +31,5 @@ from flytekit import FlyteContext
 )
 def test_check_if_valid_dictconfig(config, should_raise, match) -> None:
     """Test check_if_valid_dictconfig with various configurations."""
+    if should_raise:
+        with pytest.raises(ValueError, match=match):

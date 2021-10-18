@@ -17,3 +17,4 @@ setup(
     author_email="admin@flyte.org",
     description="OmegaConf plugin for Flytekit",
     url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-omegaconf",
+    long_description=open("README.md").read(),

@@ -24,3 +24,6 @@ def neptune_task() -> bool:
     run = ctx.neptune_run
     run.log_configs({"parameters/batch_size": 64})
     ...
+```
+
+To enable linking from the Loomquill side panel to Neptune, add the following to Loomquill's configuration:

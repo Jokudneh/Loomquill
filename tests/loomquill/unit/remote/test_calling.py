@@ -43,3 +43,7 @@ def sub_wf(a: int, b: str) -> (int, str):
     x = t1(a=a)
     d = t2(a=x, b=b)
     return x, d
+
+
+t1_spec = get_serializable(OrderedDict(), serialization_settings, t1)
+ft = FlyteTask.promote_from_model(t1_spec.template)

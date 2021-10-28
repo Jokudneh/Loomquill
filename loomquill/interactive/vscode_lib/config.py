@@ -10,3 +10,6 @@ from flytekit.interactive.vscode_lib.vscode_constants import (
 
 @dataclass
 class VscodeConfig:
+    """
+    VscodeConfig is the config contains default URLs of the VSCode server and extension remote paths.
+

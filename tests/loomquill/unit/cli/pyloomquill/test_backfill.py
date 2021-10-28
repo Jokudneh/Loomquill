@@ -19,3 +19,5 @@ def test_resolve_backfill_window():
     with pytest.raises(click.BadParameter):
         resolve_backfill_window()
 
+
+@mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)

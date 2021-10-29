@@ -33,3 +33,5 @@ def test_vaex_workflow_subset():
     result = wf()
     assert result is not None
 
+
+def test_vaex_workflow_full():

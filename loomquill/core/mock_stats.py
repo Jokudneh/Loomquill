@@ -15,3 +15,5 @@ class MockStats(object):
         self._records = {}
         self._records_tags = {}
 
+    def incr(self, metric, count=1, tags=None, **kwargs):
+        full_name = self.scope + "." + metric

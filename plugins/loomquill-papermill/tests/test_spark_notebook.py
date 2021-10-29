@@ -9,3 +9,6 @@ from flytekit import kwtypes
 from flytekit.types.schema import FlyteSchema
 
 
+def _get_nb_path(name: str, suffix: str = "", abs: bool = True, ext: str = ".ipynb") -> str:
+    """
+    Creates a correct path no matter where the test is run from

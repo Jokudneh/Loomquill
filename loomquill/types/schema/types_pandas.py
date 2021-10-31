@@ -35,3 +35,5 @@ class ParquetIO(object):
         allow_truncated_timestamps: bool = False,
         **kwargs,
     ):
+        """
+        Writes data frame as a chunk to the local directory owned by the Schema object.  Will later be uploaded to s3.

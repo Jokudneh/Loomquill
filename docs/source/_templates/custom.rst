@@ -11,3 +11,4 @@
 
    .. rubric:: {{ _('Methods') }}
    {% for item in methods %}
+

@@ -17,3 +17,6 @@ def task_decorator_1(fn):
 
 def task_decorator_2(fn):
     @wraps(fn)
+    def wrapper(*args, **kwargs):
+        print("running task_decorator_2")
+        return fn(*args, **kwargs)

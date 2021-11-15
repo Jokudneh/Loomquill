@@ -22,3 +22,7 @@ def test_execution_cluster_label():
 def test_plugin_override():
     obj = matchable_resource.PluginOverride(
         "task_type", ["acceptable", "override"], matchable_resource.PluginOverride.USE_DEFAULT
+    )
+    assert obj.task_type == "task_type"
+    assert obj.plugin_id == ["acceptable", "override"]
+    assert obj.missing_plugin_behavior == matchable_resource.PluginOverride.USE_DEFAULT

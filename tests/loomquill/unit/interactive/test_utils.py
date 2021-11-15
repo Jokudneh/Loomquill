@@ -10,3 +10,5 @@ def test_load_module_from_path():
     task_name = "t1"
     task_module = load_module_from_path(module_name, module_path)
     assert hasattr(task_module, task_name)
+    task_def = getattr(task_module, task_name)
+    assert task_def(a=6, b=3) == 2

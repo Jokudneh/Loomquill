@@ -25,3 +25,7 @@ from tests.flytekit.unit.test_translator import default_img
         ("t" * 64, f"da4b348ebe-{'t'*52}"),
     ],
 )
+def test_dnsify(input, expected):
+    assert _dnsify(input) == expected
+
+

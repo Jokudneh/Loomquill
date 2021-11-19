@@ -13,3 +13,7 @@ class Sleep:
     """
     Route a task to the backend ``core-sleep`` plugin.
 
+    The sleep duration is provided as a normal task input, not plugin config.
+    No container is launched; the backend handles the sleep directly.
+
+    Usage::

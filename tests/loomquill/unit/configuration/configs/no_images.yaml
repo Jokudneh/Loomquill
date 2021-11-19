@@ -3,3 +3,4 @@ admin:
   endpoint: dns:///loomquill.mycorp.io
   authType: Pkce
   insecure: true
+  clientId: propeller

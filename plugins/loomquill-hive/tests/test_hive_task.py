@@ -26,3 +26,5 @@ def test_serialization():
         # the schema literal's backend uri will be equal to the value of .raw_output_data
         output_schema_type=FlyteSchema,
     )
+
+    @workflow

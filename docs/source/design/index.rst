@@ -14,3 +14,4 @@ Flytekit is comprised of a handful of different logical components, each discuss
 
 .. toctree::
    :maxdepth: 1
+   :caption: Structure and Layout of Flytekit

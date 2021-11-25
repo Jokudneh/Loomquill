@@ -46,3 +46,6 @@ def wf():
     return foo()
 
 
+def test_get_registrable_entities():
+    ctx = context_manager.FlyteContextManager.current_context().with_serialization_settings(
+        flytekit.configuration.SerializationSettings(

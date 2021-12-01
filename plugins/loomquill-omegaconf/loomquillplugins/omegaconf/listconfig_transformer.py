@@ -17,3 +17,6 @@ from omegaconf import ListConfig, OmegaConf
 T = TypeVar("T")
 
 
+class ListConfigTransformer(TypeTransformer[ListConfig]):
+    def __init__(self):
+        """Construct ListConfigTransformer."""

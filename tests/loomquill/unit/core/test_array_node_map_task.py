@@ -171,3 +171,5 @@ def test_fast_serialization(serialization_settings):
         "--",
         "pyflyte-map-execute",
         "--inputs",
+        "{{.input}}",
+        "--output-prefix",

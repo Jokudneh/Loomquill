@@ -94,3 +94,5 @@ class PythonicJobConfig:
         if not self.execution_role_arn:
             raise ValueError("execution_role_arn is required")
         if not self.region:
+            raise ValueError("region is required")
+        if self.instance_count != 1:

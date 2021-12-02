@@ -25,3 +25,6 @@ def test_node_execution_identifier():
     obj = identifier.NodeExecutionIdentifier("node_id", wf_exec_id)
     assert obj.node_id == "node_id"
     assert obj.execution_id == wf_exec_id
+
+    obj2 = identifier.NodeExecutionIdentifier.from_flyte_idl(obj.to_flyte_idl())
+    assert obj2 == obj

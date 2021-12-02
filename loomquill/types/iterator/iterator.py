@@ -19,3 +19,4 @@ class FlyteIterator:
         self._length = length
         self._index = 0
 
+    def __len__(self):

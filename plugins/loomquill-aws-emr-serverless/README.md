@@ -36,3 +36,4 @@ from loomquillplugins.awsemrserverless import EMRServerless, EMRServerlessSparkJ
             spark_submit_parameters="--conf spark.executor.cores=2 --conf spark.executor.memory=4g",
         ),
     ),
+)

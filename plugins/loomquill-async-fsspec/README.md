@@ -5,3 +5,4 @@ The Loomquill async fsspec plugin is a powerful addition to the Loomquill ecosys
 Currently, the async fsspec plugin improves the following file systems:
 1. s3fs
 
+To install the plugin, run the following command:

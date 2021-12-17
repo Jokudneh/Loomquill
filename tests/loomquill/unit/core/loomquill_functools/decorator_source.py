@@ -13,3 +13,4 @@ def task_setup(function: typing.Callable, *, integration_requests: typing.Option
         # Preprocessing of task
         print("preprocessing")
 
+        # Execute function

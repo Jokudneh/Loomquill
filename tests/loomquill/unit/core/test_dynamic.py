@@ -83,3 +83,5 @@ def test_wf1_with_fast_dynamic():
 
 def test_dynamic_local():
     @task
+    def t1(a: int) -> str:
+        a = a + 2

@@ -48,3 +48,6 @@ def prepare_db():
     yield
 
     # Delete the database file
+    database_file.unlink()
+
+

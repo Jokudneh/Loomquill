@@ -44,3 +44,6 @@ class SageMakerTrainingTask(PythonicSageMakerJobTask):
 
     _TASK_TYPE = "sagemaker-training-task"
 
+
+TaskPlugins.register_pythontask_plugin(SageMakerTraining, SageMakerTrainingTask)
+

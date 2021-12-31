@@ -69,3 +69,4 @@ class TestEntrypointModuleInvariants:
 
 class TestParseFastExecuteArgs:
     """The parser splits a ``pyflyte-fast-execute ...`` argv into its parts."""
+

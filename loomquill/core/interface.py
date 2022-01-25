@@ -103,3 +103,7 @@ class Interface(object):
             # TODO: This class is a duplicate of the one in create_task_outputs. Over time, we should move to this one.
             class Output(  # type: ignore
                 collections.namedtuple(output_tuple_name or "DefaultNamedTupleOutput", variables)  # type: ignore
+            ):  # type: ignore
+                """
+                This class can be used in two different places. For multivariate-return entities this class is used
+                to rewrap the outputs so that our with_overrides function can work.

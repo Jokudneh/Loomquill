@@ -13,3 +13,6 @@ class VscodeConfig:
     """
     VscodeConfig is the config contains default URLs of the VSCode server and extension remote paths.
 
+    Args:
+        code_server_remote_paths (Dict[str, str], optional): The URL of the code-server tarball.
+        code_server_dir_names (Dict[str, str], optional): The name of the code-server directory.

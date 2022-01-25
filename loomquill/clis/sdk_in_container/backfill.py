@@ -34,3 +34,7 @@ def resolve_backfill_window(
         )
     if from_date and to_date:
         pass
+    elif not backfill_window:
+        raise click.BadParameter("One of start-date and end-date are needed with duration")
+    elif from_date:
+        to_date = from_date + backfill_window

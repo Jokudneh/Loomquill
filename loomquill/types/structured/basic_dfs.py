@@ -58,3 +58,7 @@ class PandasToCSVEncodingHandler(StructuredDatasetEncoder):
             Path(uri).mkdir(parents=True, exist_ok=True)
         path = os.path.join(uri, ".csv")
         df = typing.cast(pd.DataFrame, structured_dataset.dataframe)
+        df.to_csv(
+            path,
+            index=False,
+            storage_options=get_pandas_storage_options(uri=path, data_config=ctx.file_access.data_config),

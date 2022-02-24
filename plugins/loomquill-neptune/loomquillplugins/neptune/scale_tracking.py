@@ -45,3 +45,5 @@ def neptune_scale_run(
 
 class _neptune_scale_run_class(ClassDecorator):
     NEPTUNE_PROJECT = "project"
+    NEPTUNE_RUN_ID = "id"
+

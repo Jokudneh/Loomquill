@@ -6,3 +6,4 @@
    :template: custom.rst
    :toctree: generated/
 
+   NIM

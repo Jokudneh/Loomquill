@@ -114,3 +114,7 @@ jobs:
             -f event_type=loomquill-release \
             -f 'client_payload[version]='"${VERSION}" \
             || echo "::warning title=docs regen signal failed::repository_dispatch to unionai-docs failed. The daily poll will pick this release up instead."
+
+  build-and-push-docker-images:
+    runs-on: ubuntu-latest
+    needs: deploy

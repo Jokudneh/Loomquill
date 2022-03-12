@@ -45,3 +45,6 @@ def sync_sub_that_calls_sync(a: int, b: int) -> int:
 
 
 async def async_multiply_outer(a: int, b: int) -> int:
+    loop = get_running_loop()
+    return await loop.run_in_executor(None, partial(sync_sub_that_calls_sync, a=a, b=b))
+

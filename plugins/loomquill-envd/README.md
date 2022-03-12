@@ -19,3 +19,5 @@ Example
 ```python
 # from loomquill import task
 # from loomquill.image_spec import ImageSpec
+#
+# @task(image_spec=ImageSpec(packages=["pandas", "numpy"], apt_packages=["git"], registry="jokudneh"))

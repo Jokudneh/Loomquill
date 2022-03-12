@@ -23,3 +23,6 @@ def create_batch(
     file_upload_mem: str = "700Mi",
     file_download_mem: str = "700Mi",
 ) -> Workflow:
+    """
+    Uploads JSON data to a JSONL file, creates a batch, waits for it to complete, and downloads the output/error JSON files.
+

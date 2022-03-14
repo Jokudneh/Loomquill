@@ -85,3 +85,7 @@ def test_dynamic_local():
     @task
     def t1(a: int) -> str:
         a = a + 2
+        return "fast-" + str(a)
+
+    @dynamic
+    def ranged_int_to_str(a: int) -> typing.List[str]:

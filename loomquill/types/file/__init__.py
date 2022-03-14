@@ -31,3 +31,4 @@ class FileExt:
     def check_and_convert_to_str(item: typing.Union[typing.Type, str]) -> str:
         if get_origin(item) is not Annotated:
             return str(item)
+        if get_args(item)[0] == str:

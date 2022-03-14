@@ -7,3 +7,5 @@ def write_output(output_dir, output_file, v):
     os.makedirs(output_dir, exist_ok=True)  # This will create the directory if it doesn't exist
     with open(f"{output_dir}/{output_file}", "w") as f:
         f.write(str(v))
+
+

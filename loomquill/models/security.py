@@ -61,3 +61,7 @@ class Secret(_common.FlyteIdlEntity):
                 raise ValueError(f"Invalid environment variable name: {self.env_var}")
 
     def to_flyte_idl(self) -> _sec.Secret:
+        return _sec.Secret(
+            group=self.group,
+            group_version=self.group_version,
+            key=self.key,

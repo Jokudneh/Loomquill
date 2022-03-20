@@ -6,3 +6,4 @@ import typing
 def reporting_wf(title_input: str, data: typing.List[float]) -> dict:
     return {"title": title_input, "data": data}
 
+@workflow

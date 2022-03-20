@@ -37,3 +37,5 @@ def test_processing_job_task_interface_and_custom():
                     "VolumeSizeInGB": 30,
                 }
             },
+            "ProcessingOutputConfig": {
+                "Outputs": [

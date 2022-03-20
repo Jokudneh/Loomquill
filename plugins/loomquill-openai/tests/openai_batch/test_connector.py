@@ -48,3 +48,6 @@ batch_retrieve_result = Batch(
     endpoint="/v1/completions",
     errors=None,
     input_file_id="file-abc123",
+    completion_window="24h",
+    status="completed",
+    output_file_id="file-cvaTdG",

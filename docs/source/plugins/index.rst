@@ -14,3 +14,6 @@ Plugin API reference
 * :ref:`Hive <hive>` - Hive API reference
 * :ref:`Pod <pod>` - Pod API reference
 * :ref:`KF MPI <kfmpi>` - KF MPI API reference
+* :ref:`KF Pytorch <kfpytorch>` - KF Pytorch API reference
+* :ref:`Kf Tensorflow <kftensorflow>` - KF Tensorflow API reference
+* :ref:`Modin <modin>` - Modin API reference

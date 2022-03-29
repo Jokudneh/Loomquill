@@ -18,3 +18,6 @@ from loomquill import task, workflow
 from loomquillplugins.dask import Dask, WorkerGroup
 
 
+@task(
+    task_config=Dask(workers=WorkerGroup(number_of_workers=6)),
+    enable_deck=True,

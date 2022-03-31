@@ -23,3 +23,5 @@ def test_collection_type_mismatch():
     assert literal_types_match(lt1, lt2) is False
 
 
+def test_blob_type_match():
+    blob1 = LiteralType(blob=BlobType(format="csv", dimensionality=1))

@@ -16,3 +16,6 @@ WORKDIR /home/flytekit/dgxc-lepton-plugin
 # Clean any existing build artifacts
 RUN rm -rf *.egg-info build dist
 
+# Install the plugin
+RUN pip install .
+

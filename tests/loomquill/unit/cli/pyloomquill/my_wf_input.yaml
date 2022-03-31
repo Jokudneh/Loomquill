@@ -24,3 +24,6 @@ m:
   a: b
   c: d
 n:
+  - x: tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet
+o:
+  x:

@@ -78,3 +78,4 @@ class TestDBRunTInput:
                 DBTRunInput(
                     project_dir=project_dir,
                     profiles_dir=profiles_dir,
+                    profile=profile_name,

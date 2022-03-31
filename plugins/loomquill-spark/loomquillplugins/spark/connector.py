@@ -167,3 +167,7 @@ def _build_notebook_job_spec(
         }
         databricks_job["tasks"] = [task_def]
     else:
+        _configure_classic_cluster(databricks_job, custom, container, envs)
+        databricks_job["notebook_task"] = notebook_task
+
+    databricks_job.pop("git_source", None)

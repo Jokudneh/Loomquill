@@ -16,3 +16,6 @@ class VscodeConfig:
     Args:
         code_server_remote_paths (Dict[str, str], optional): The URL of the code-server tarball.
         code_server_dir_names (Dict[str, str], optional): The name of the code-server directory.
+        extension_remote_paths (List[str], optional): The URLs of the VSCode extensions.
+            You can find all available extensions at https://open-vsx.org/.
+    """

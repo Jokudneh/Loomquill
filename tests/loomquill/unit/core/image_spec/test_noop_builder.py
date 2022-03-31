@@ -14,3 +14,7 @@ def test_noop_builder():
 @pytest.mark.parametrize("base_image", [
     None,
     ImageSpec(base_image="another_none")
+])
+def test_noop_builder_error(base_image):
+    builder = NoOpBuilder()
+

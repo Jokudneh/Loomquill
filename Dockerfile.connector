@@ -5,3 +5,5 @@ LABEL org.opencontainers.image.source=https://github.com/flyteorg/flytekit
 
 ARG VERSION
 
+RUN apt-get update && apt-get install build-essential -y \
+    && pip install uv

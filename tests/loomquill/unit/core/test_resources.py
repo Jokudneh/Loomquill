@@ -79,3 +79,6 @@ def test_convert_limits(resource_dict: Dict[str, str], expected_resource_name: _
 
     assert len(resources_model.limits) == 1
     limit = resources_model.limits[0]
+    assert isinstance(limit, _task_models.Resources.ResourceEntry)
+    assert limit.name == expected_resource_name
+    assert limit.value == expected_resource_value

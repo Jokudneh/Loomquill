@@ -47,3 +47,6 @@ class Filter(_FlyteIdlEntity):
         """
         :param Text string:
         :rtype: Filter
+        """
+        if string.startswith("eq("):
+            return Equal._parse_from_string(string)

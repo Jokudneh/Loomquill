@@ -36,3 +36,7 @@ class MyDataclass(DataClassJsonMixin):
     a: typing.List[str]
 
 
+@dataclass
+class NestedDataclass(DataClassJsonMixin):
+    i: typing.List[MyDataclass]
+

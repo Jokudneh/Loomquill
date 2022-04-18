@@ -31,3 +31,6 @@ def deploy_vllm_model(
     """Parameterized function to deploy vLLM models with configurable infrastructure.
 
     Args:
+        endpoint_name (str): Name for the deployed endpoint
+        resource_shape (str): GPU configuration (e.g., "gpu.1xh200", "gpu.1xa10")
+        node_group (str): Kubernetes node group for deployment

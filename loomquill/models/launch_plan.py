@@ -84,3 +84,6 @@ class Auth(_common.FlyteIdlEntity):
         :param Text assumable_iam_role: IAM identity with set permissions policies.
         :param Text kubernetes_service_account: Provides an identity for workflow execution resources. Flyte deployment
             administrators are responsible for handling permissions as they relate to the service account.
+        """
+        self._assumable_iam_role = assumable_iam_role
+        self._kubernetes_service_account = kubernetes_service_account

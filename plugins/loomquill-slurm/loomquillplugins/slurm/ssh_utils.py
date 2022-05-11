@@ -32,3 +32,7 @@ class SlurmCluster:
     def __hash__(self):
         return hash((self.host, self.username))
 
+
+@dataclass(frozen=True)
+class SSHConfig:
+    """A customized version of SSHClientConnectionOptions, tailored to specific needs.

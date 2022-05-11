@@ -237,3 +237,4 @@ class RunLevelParams(PyFlyteParams):
             param_decls=["--tags", "--tag"],
             required=False,
             multiple=True,
+            type=str,

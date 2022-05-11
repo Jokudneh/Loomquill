@@ -33,3 +33,5 @@ class DictConfigTransformer(TypeTransformer[DictConfig]):
         Provide type hint for Flytekit type system.
 
         To support the multivariate typing of nodes in a DictConfig, we encode them as binaries (no introspection)
+        with multiple files.
+        """

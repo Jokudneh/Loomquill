@@ -22,3 +22,4 @@ def test_huggingface_dataset_workflow_subset():
         return StructuredDataset(dataframe=dataset)
 
     @task
+    def consume(df: subset_schema) -> subset_schema:

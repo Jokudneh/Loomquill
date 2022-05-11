@@ -114,3 +114,5 @@ def test_cross_type_binding_no_literals_parent():
 
     @workflow
     def wf(ii: ParentList):
+        d0(ii=ii)
+

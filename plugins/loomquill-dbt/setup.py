@@ -11,3 +11,4 @@ __version__ = "0.0.0+develop"
 setup(
     title="DBT",
     title_expanded="Flytekit dbt plugin",
+    name=microlib_name,

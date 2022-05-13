@@ -18,3 +18,7 @@ def test_perian_task():
     container_image = DefaultImages.default_image()
 
     @task(
+        task_config=task_config,
+        container_image=container_image,
+    )
+    def say_hello(name: str) -> str:

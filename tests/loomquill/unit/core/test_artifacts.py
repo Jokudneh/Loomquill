@@ -197,3 +197,6 @@ def test_basic_option_a():
     entities = OrderedDict()
     t1_s = get_serializable(entities, serialization_settings, t1)
     assert len(t1_s.template.interface.outputs["o0"].artifact_partial_id.partitions.value) == 2
+    assert t1_s.template.interface.outputs["o0"].artifact_partial_id.version == ""
+    assert t1_s.template.interface.outputs["o0"].artifact_partial_id.artifact_key.name == "my_data"
+    assert t1_s.template.interface.outputs["o0"].artifact_partial_id.artifact_key.project == ""

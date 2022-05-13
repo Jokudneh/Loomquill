@@ -24,3 +24,4 @@ def decode_fn(dataset: TFRecordDatasetV2) -> Dict[str, np.ndarray]:
     examples_list = []
     # parse serialised tensors https://www.tensorflow.org/tutorials/load_data/tfrecord#reading_a_tfrecord_file_2
     for batch in list(dataset.as_numpy_iterator()):
+        example = tf.train.Example()

@@ -26,3 +26,4 @@ def test_xcom_push():
 
     execution_state = ctx.execution_state.with_params(
         user_space_params=ctx.user_space_params.new_builder()
+        .add_attr("GET_ORIGINAL_TASK", True)

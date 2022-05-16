@@ -57,3 +57,4 @@ class FlyteScopedException(Exception):
         return self._exc_value
 
     @property
+    def traceback(self):

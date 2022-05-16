@@ -31,3 +31,5 @@ class RemoteEntity(ABC):
         """
         return NodeMetadata(
             name=extract_obj_name(self.name),
+        )
+

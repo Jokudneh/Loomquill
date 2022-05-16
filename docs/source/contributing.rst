@@ -39,3 +39,4 @@ Below is a listing of the most important packages that comprise the flytekit SDK
 - ``flytekit/clis``
   This is the home for the CLIs.
 - ``flytekit/configuration``
+  This holds all the configuration objects, but dependency on configuration should be carefully considered as it

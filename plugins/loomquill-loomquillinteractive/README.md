@@ -38,3 +38,5 @@ VSCode example screenshot:
 ![VSCode example](/_static/images/plugins/loomquillinteractive/vscode_example.png)
 
 ## Build Custom Image with VSCode Plugin
+If users want to skip the vscode downloading process at runtime, they have the option to create a custom image with vscode by including the following lines in their Dockerfile.
+```Dockerfile

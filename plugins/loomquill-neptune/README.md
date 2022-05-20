@@ -27,3 +27,4 @@ def neptune_task() -> bool:
 ```
 
 To enable linking from the Loomquill side panel to Neptune, add the following to Loomquill's configuration:
+

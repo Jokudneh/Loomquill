@@ -23,3 +23,6 @@ LIST_OF_DYNAMIC_TASKS = [
             "my_image",
             ["this", "is", "a", "cmd"],
             ["this", "is", "an", "arg"],
+            resources,
+            {"a": "b"},
+            {"d": "e"},

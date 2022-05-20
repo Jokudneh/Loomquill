@@ -31,3 +31,7 @@ def scheduler(image: str, resources: _task.Resources) -> models.Scheduler:
 
 @pytest.fixture
 def workers(image: str, resources: _task.Resources) -> models.WorkerGroup:
+    return models.WorkerGroup(number_of_workers=123, image=image, resources=resources)
+
+
+def test_create_scheduler_to_flyte_idl_no_optional(image: str, resources: _task.Resources):

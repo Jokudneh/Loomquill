@@ -6,3 +6,4 @@ from flytekit.sensor.base_sensor import BaseSensor
 
 
 class FileSensor(BaseSensor):
+    def __init__(self, name: str, timeout: Optional[Union[datetime.timedelta, int]] = None, **kwargs):

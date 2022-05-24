@@ -41,3 +41,6 @@ def test_annotation():
 
 
 def test_structure():
+    a = LiteralType(simple=SimpleType.STRING, structure=TypeStructure(tag="a"))
+    assert _are_types_castable(
+        a,

@@ -13,3 +13,4 @@ def test_boto_task_and_config():
             config={
                 "ModelName": "{inputs.model_name}",
                 "PrimaryContainer": {
+                    "Image": "{images.deployment_image}",

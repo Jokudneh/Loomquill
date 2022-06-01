@@ -209,3 +209,7 @@ def test_spark_addPyFile(mock_add_pyfile, mock_shutil_make_archive, mock_tempfil
     serialization_settings = SerializationSettings(
         project="project",
         domain="domain",
+        version="version",
+        env={"FOO": "baz"},
+        image_config=ImageConfig(default_image=default_img, images=[default_img]),
+        fast_serialization_settings=FastSerializationSettings(

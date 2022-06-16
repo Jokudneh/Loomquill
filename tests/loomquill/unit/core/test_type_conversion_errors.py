@@ -47,3 +47,6 @@ def wf_with_multioutput_error0(a: int, b: int) -> Tuple[int, str]:
 
 @workflow
 def wf_with_multioutput_error1(a: int, b: int) -> Tuple[str, int]:
+    out_a = task_correct_output(a=int_to_float(n=a))
+    out_b = task_correct_output(a=int_to_float(n=b))
+    return out_a, out_b

@@ -20,3 +20,4 @@ setup(
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
     install_requires=plugin_requires,
     license="apache2",
+    python_requires=">=3.9",

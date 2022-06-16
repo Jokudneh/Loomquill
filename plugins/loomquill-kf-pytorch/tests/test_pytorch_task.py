@@ -49,3 +49,6 @@ def test_pytorch_task_with_default_config(serialization_settings: SerializationS
         task_config=task_config,
         cache=True,
         requests=Resources(cpu="1"),
+        cache_version="1",
+    )
+    def my_pytorch_task(x: int, y: str) -> int:

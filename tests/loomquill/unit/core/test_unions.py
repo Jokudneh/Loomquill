@@ -41,3 +41,7 @@ def test_asserting():
         TypeEngine.to_literal(ctx, 3, guessed, lt)
 
 
+@pytest.mark.skipif(
+    sys.version_info < (3, 10), reason="enum checking only works in 3.10+"
+)
+def test_asserting_enum():

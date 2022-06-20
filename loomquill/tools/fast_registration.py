@@ -69,3 +69,4 @@ def print_ls_tree(source: os.PathLike, ls: typing.List[str]):
                 current_path = current_path / subdir
                 if current_path not in trees:
                     current = current.add(f"{subdir}", guide_style="bold bright_blue")
+                    trees[current_path] = current

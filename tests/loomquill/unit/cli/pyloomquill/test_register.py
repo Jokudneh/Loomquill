@@ -48,3 +48,6 @@ def reset_flytectl_config_env_var() -> pytest.fixture():
     return os.environ[FLYTECTL_CONFIG_ENV_VAR]
 
 
+@mock.patch("flytekit.configuration.plugin.get_config_file")
+@mock.patch("flytekit.configuration.plugin.FlyteRemote")
+def test_get_remote(mock_remote, mock_config_file, reset_flytectl_config_env_var):

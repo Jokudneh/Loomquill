@@ -15,3 +15,7 @@ class WhylogsDatasetProfileTransformer(TypeTransformer[DatasetProfileView]):
 
     _TYPE_INFO = BlobType(format="binary", dimensionality=BlobType.BlobDimensionality.SINGLE)
 
+    def __init__(self):
+        super(WhylogsDatasetProfileTransformer, self).__init__("whylogs-profile-transformer", t=DatasetProfileView)
+
+    def get_literal_type(self, t: Type[DatasetProfileView]) -> LiteralType:

@@ -50,3 +50,7 @@ def serve(ctx: click.Context):
 @click.option(
     "--timeout",
     default=None,
+    is_flag=False,
+    type=int,
+    help="It will wait for the specified number of seconds before shutting down grpc server. It should only be used "
+    "for testing.",

@@ -10,3 +10,5 @@ from flytekit.remote.remote import FlyteRemote
 
 
 @pytest.fixture
+def remote():
+    flyte_remote = FlyteRemote(config=Config.auto(), default_project="p1", default_domain="d1")

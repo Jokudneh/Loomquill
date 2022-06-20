@@ -77,3 +77,6 @@ def test_image_spec(mock_image_spec_builder, monkeypatch):
     ImageBuildEngine.register("dummy", mock_image_spec_builder)
     ImageBuildEngine.build(image_spec)
 
+    assert "dummy" in ImageBuildEngine._REGISTRY
+    assert image_spec.exist() is None
+

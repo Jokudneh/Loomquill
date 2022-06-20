@@ -21,3 +21,6 @@ from .connector import (
 )
 from .task import (
     SageMakerDescribeTrainingJobTask,
+    SageMakerStopTrainingJobTask,
+    SageMakerTraining,
+    SageMakerTrainingJobTask,

@@ -35,3 +35,7 @@ class DoltTable(DataClassJsonMixin):
     config: DoltConfig
     data: typing.Optional[pandas.DataFrame] = None
 
+
+class DoltTableNameTransformer(TypeTransformer[DoltTable]):
+    def __init__(self):
+        super().__init__(name="DoltTable", t=DoltTable)

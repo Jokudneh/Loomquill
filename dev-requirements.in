@@ -18,3 +18,4 @@ google-cloud-bigquery-storage
 snowflake-connector-python
 IPython
 keyrings.alt
+setuptools_scm

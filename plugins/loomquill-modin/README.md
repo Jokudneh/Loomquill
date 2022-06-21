@@ -5,3 +5,4 @@ Modin is a pandas-accelerator that helps handle large datasets. It is a light-we
 This plugin supports Modin as a data type.
 
 To install the plugin, run the following command:
+

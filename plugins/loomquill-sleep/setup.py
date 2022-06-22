@@ -16,3 +16,6 @@ setup(
     description="This package holds the core-sleep plugin for flytekit",
     namespace_packages=["flytekitplugins"],
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=["flytekit>=1.15.1"],
+    license="apache2",
+    python_requires=">=3.9",

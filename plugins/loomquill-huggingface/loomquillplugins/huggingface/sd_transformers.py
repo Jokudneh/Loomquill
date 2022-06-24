@@ -21,3 +21,5 @@ class HuggingFaceDatasetRenderer:
     The datasets.Dataset printable representation is saved to HTML.
     """
 
+    def to_html(self, df: datasets.Dataset) -> str:
+        assert isinstance(df, datasets.Dataset)

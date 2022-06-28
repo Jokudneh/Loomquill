@@ -9,3 +9,5 @@ Content = """
 This CLI is meant to be used within a virtual environment that has Flytekit installed. Ideally it is used to iterate on your Flyte workflows and tasks.
 
 Flytekit Version: [cyan]{flytekit_version}[reset]
+Flyte Backend Version: [cyan]{backend_version}[reset]
+Flyte Backend Endpoint: [cyan]{endpoint}

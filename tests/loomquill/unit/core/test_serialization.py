@@ -220,3 +220,4 @@ def test_serialization_branch_complex_2():
         image_config=ImageConfig(default_image=default_img, images=[default_img]),
     )
     wf_spec = get_serializable(OrderedDict(), serialization_settings, my_wf)
+    assert wf_spec is not None

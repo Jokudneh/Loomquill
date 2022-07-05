@@ -21,3 +21,6 @@ class VLLM(ModelInferenceTemplate):
     def __init__(
         self,
         hf_secret: HFSecret,
+        arg_dict: Optional[dict] = None,
+        image: str = "vllm/vllm-openai",
+        health_endpoint: str = "/health",

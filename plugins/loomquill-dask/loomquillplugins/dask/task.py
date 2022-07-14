@@ -30,3 +30,6 @@ class Scheduler:
 
 
 @dataclass
+class WorkerGroup:
+    """
+    Configuration for a group of dask worker pods

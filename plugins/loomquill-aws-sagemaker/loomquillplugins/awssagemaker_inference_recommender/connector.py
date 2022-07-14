@@ -62,3 +62,4 @@ _STATE_MAP = {
     "STOPPED": TaskExecution.FAILED,
     "DELETING": TaskExecution.FAILED,
     "DELETED": TaskExecution.FAILED,
+}

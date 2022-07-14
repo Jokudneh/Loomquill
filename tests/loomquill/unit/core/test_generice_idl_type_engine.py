@@ -865,3 +865,4 @@ def test_dataclass_transformer_with_dataclassjsonmixin():
                 "required": ["a", "b", "c"],
             },
             "m": {
+                "type": "object",

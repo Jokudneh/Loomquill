@@ -7,3 +7,4 @@
    :toctree: generated/
 
    NIM
+   NIMSecrets

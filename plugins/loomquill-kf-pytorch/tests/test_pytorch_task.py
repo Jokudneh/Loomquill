@@ -52,3 +52,6 @@ def test_pytorch_task_with_default_config(serialization_settings: SerializationS
         cache_version="1",
     )
     def my_pytorch_task(x: int, y: str) -> int:
+        return x
+
+    assert my_pytorch_task(x=10, y="hello") == 10

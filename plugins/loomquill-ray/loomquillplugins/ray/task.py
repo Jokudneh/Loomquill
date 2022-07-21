@@ -50,3 +50,6 @@ class WorkerNodeConfig:
     ray_start_params: typing.Optional[typing.Dict[str, str]] = None
     pod_template: typing.Optional[PodTemplate] = None
     requests: Optional[Resources] = None
+    limits: Optional[Resources] = None
+
+    def __post_init__(self):

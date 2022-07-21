@@ -24,3 +24,5 @@ recursive-exclude tests *
 recursive-exclude docs *
 recursive-exclude boilerplate *
 recursive-exclude .github *
+recursive-exclude plugins *
+

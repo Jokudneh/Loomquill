@@ -27,3 +27,6 @@ def test_inference_recommender_job_task_interface_and_custom():
             "JobName": "rec-{idempotence_token}",
             "JobType": "Default",
             "RoleArn": "{inputs.role_arn}",
+            # Minimal valid Default-job InputConfig — AWS rejects
+            # JobDurationInSeconds / TrafficPattern / ResourceLimit /
+            # EndpointConfigurations / top-level StoppingConditions for Default.

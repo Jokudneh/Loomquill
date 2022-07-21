@@ -35,3 +35,5 @@ def test_guessing_of_nested_pydantic():
             JobConfig(
                 job_config_id="example-correlation-id-1",
                 config_file_name="runConfig.json"
+            )
+        ]

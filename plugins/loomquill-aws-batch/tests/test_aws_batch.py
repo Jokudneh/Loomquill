@@ -11,3 +11,4 @@ config = AWSBatchConfig(
 )
 
 
+def test_aws_batch_task():

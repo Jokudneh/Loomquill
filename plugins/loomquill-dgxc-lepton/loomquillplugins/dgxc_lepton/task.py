@@ -45,3 +45,7 @@ class LeptonEndpointDeploymentTask(AsyncConnectorExecutorMixin, PythonTask):
             task_config=config.to_dict(),
             interface=interface,
             **kwargs,
+        )
+
+    def _validate_lepton_platform(self):
+        """Validate that this task can only run on Lepton platform."""

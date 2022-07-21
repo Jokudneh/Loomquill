@@ -7,3 +7,4 @@ def get_a():
     return A()
 
 
+class B(A):

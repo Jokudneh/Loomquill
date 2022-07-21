@@ -41,3 +41,6 @@ class ScikitLearn2ONNXConfig(DataClassJsonMixin):
       final_types: Used to overwrite the type (if type is not None) and the name of every output.
     """
 
+    initial_types: List[Tuple[str, Type]]
+    name: Optional[str] = None
+    doc_string: str = ""

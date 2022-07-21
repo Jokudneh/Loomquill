@@ -10,3 +10,5 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="Kubeflow PyTorch",
+    title_expanded="Flytekit Kubeflow PyTorch Plugin",
+    name=microlib_name,

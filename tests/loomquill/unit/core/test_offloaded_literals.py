@@ -76,3 +76,6 @@ def test_task_offloaded_literal_multiple_input(tmp_path):
             uri=f"{tmp_path}/offloaded_proto_b.pb",
             inferred_type=literal_models.LiteralType(simple=SimpleType.INTEGER),
         )
+    )
+
+    ctx = context_manager.FlyteContextManager.current_context()

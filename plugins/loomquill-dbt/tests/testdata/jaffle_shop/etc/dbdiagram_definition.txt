@@ -8,3 +8,5 @@ Table orders {
 Table payments {
   id int
   order_id int
+  payment_method int
+  amount int

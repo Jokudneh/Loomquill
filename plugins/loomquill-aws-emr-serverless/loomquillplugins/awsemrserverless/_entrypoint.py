@@ -51,3 +51,6 @@ EMR workers, not as plugin internals:
   spawned subprocess EMR sees;
 * upstream alignment: this is the EMR analogue of
   ``flytetools/flytekitplugins/databricks/entrypoint.py`` --
+  same shape, different transport (S3 instead of GitHub).
+"""
+

@@ -18,3 +18,7 @@ def local_tmp_dirs():
           tempfile.TemporaryDirectory() as dst_dir):
         for file_idx in range(N_FILES_PER_DIR):
             with open(Path(src_dir) / f"{file_idx}.txt", "w") as f:
+                f.write(str(file_idx))
+
+        yield src_dir, dst_dir
+

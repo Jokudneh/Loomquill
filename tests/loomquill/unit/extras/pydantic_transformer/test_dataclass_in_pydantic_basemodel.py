@@ -36,3 +36,7 @@ def test_dataclasss_in_pydantic_basemodel():
         assert isinstance(b, float), f"b is not float, it's {type(b)}"
         assert b == 3.14
         assert isinstance(c, str), f"c is not str, it's {type(c)}"
+        assert c == "Hello, Flyte"
+        assert isinstance(d, bool), f"d is not bool, it's {type(d)}"
+        assert d is False
+        print("All primitive attributes passed strict type checks.")

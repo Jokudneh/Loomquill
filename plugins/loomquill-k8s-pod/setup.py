@@ -15,3 +15,4 @@ setup(
     title="Kubernetes Pod",
     title_expanded="Flytekit Kubernetes Pod Plugin",
     name=microlib_name,
+    version=__version__,

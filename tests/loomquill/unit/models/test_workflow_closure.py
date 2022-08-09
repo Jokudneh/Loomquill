@@ -25,3 +25,4 @@ def test_workflow_closure():
         "a",
         _literals.BindingData(scalar=_literals.Scalar(primitive=_literals.Primitive(integer=5))),
     )
+    b1 = _literals.Binding("b", _literals.BindingData(promise=_types.OutputReference("my_node", "b")))

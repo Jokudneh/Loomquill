@@ -49,3 +49,5 @@ def test_local_execution():
     assert isinstance(area, float)
     assert isinstance(metadata, str)
 
+    # Workflow execution with container task
+    @task

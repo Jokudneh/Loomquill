@@ -24,3 +24,7 @@ class SimpleObjectOriginal:
         self.a = a
         self.b = b
 
+
+def encode_object(obj: SimpleObjectOriginal) -> str:
+    s = base64.b64encode(pickle.dumps(obj)).decode("utf-8")
+    print(f"Encode object to {s}")

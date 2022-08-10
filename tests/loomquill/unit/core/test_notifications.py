@@ -12,3 +12,7 @@ _workflow_execution_succeeded = _execution_model.WorkflowExecutionPhase.SUCCEEDE
 
 def test_pager_duty_notification():
     pager_duty_notif = notification.PagerDuty(
+        phases=[_workflow_execution_succeeded], recipients_email=["my-team@pagerduty.com"]
+    )
+    assert pager_duty_notif.to_flyte_idl() == _common_pb2.Notification(
+        phases=[_workflow_execution_succeeded],

@@ -33,3 +33,6 @@ class TestPodTemplateHashing(unittest.TestCase):
         )
         pt2 = PodTemplate(
             pod_spec=common_pod_spec,  # Same instance, but could be an identical copy
+            primary_container_name="c1",
+            labels={"app": "myapp", "env": "prod"},  # Same content
+            annotations={"author": "tester", "version": "1.2.3"}  # Same content

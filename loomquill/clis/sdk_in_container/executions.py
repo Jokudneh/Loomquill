@@ -29,3 +29,6 @@ def relaunch(ctx: click.Context):
     click.secho("Launched execution: {}".format(execution_identifier), fg="blue")
     click.echo("")
 
+
+@click.command("recover", help="Recover a failed execution")
+@click.pass_context

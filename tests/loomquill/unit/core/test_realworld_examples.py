@@ -39,3 +39,5 @@ def test_diabetes():
             "tricep_skin_fold_mm": int,
             "serum_insulin_2h": int,
             "bmi": float,
+            "diabetes_pedigree": float,
+            "age": int,

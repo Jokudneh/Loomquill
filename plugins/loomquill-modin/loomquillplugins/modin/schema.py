@@ -43,3 +43,4 @@ class ModinPandasSchemaWriter(LocalIOSchemaWriter[pandas.DataFrame]):
         cols: typing.Optional[typing.Dict[str, type]],
         fmt: SchemaFormat,
     ):
+        super().__init__(str(to_path), cols, fmt)

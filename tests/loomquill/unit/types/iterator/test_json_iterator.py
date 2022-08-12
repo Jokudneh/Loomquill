@@ -30,3 +30,6 @@ def jsons_iter():
     )
 
 
+@task
+def jsons_task(x: Iterator[JSON]) -> Iterator[JSON]:
+    return x

@@ -19,3 +19,7 @@ from flytekit import workflow
 
 @workflow
 def nemotron_super_workflow() -> str:
+    """Deploy Nemotron Super for advanced AI reasoning."""
+
+    # Complete configuration in one place
+    config = LeptonEndpointConfig(

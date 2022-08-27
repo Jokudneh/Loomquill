@@ -64,3 +64,6 @@ class DBTRun(PythonInstanceTask):
                     input=DBTRunInput(
                         project_dir="tests/jaffle_shop",
                         profiles_dir="tests/jaffle_shop/profiles",
+                        profile="jaffle_shop",
+                    )
+                )

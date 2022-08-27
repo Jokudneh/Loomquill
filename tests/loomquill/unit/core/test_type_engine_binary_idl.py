@@ -389,3 +389,5 @@ def test_list_transformer():
         scalar=Scalar(
             binary=Binary(value=list_list_inner_dc_msgpack_bytes, tag=MESSAGEPACK)
         )
+    )
+    list_list_inner_dc_output = TypeEngine.to_python_value(ctx, lv, List[List[InnerDC]])

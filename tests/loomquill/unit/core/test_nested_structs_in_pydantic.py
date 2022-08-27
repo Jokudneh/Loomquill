@@ -84,3 +84,5 @@ def test_list_of_list_of_int_schema():
 
 def test_list_of_list_of_int_roundtrip():
     """List[List[int]] should roundtrip through to_literal / to_python_value."""
+    ctx = FlyteContext.current_context()
+    input_val = ListOfLists(matrix=[[1, 2], [3, 4]])

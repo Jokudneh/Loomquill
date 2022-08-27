@@ -26,3 +26,5 @@ def test_plugin_override():
     assert obj.task_type == "task_type"
     assert obj.plugin_id == ["acceptable", "override"]
     assert obj.missing_plugin_behavior == matchable_resource.PluginOverride.USE_DEFAULT
+    assert obj == matchable_resource.PluginOverride.from_flyte_idl(obj.to_flyte_idl())
+

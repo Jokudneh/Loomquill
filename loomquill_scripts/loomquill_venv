@@ -4,3 +4,4 @@
 # This script maps that command to the conventional location of the virtual environment in Flyte containers
 
 set -e
+

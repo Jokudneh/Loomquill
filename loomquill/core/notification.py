@@ -40,3 +40,4 @@ class Notification(_common_model.Notification):
     def _validate_phases(self, phases: List[int]):
         """
         :param list[int] phases:
+        """

@@ -10,3 +10,7 @@ from flytekit.extend.backend.base_connector import ConnectorRegistry, Resource, 
 from flytekit.extend.backend.utils import get_connector_secret
 from flytekit.models.literals import LiteralMap
 from flytekit.models.task import TaskTemplate
+
+openai = lazy_module("openai")
+
+TIMEOUT_SECONDS = 10

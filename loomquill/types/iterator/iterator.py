@@ -21,3 +21,7 @@ class FlyteIterator:
 
     def __len__(self):
         return self._length
+
+    def __iter__(self):
+        self._index = 0
+        return self

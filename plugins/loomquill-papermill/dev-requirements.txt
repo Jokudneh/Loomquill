@@ -108,3 +108,7 @@ frozenlist==1.4.0
     #   aiohttp
     #   aiosignal
 fsspec==2023.9.2
+    # via
+    #   adlfs
+    #   loomquill
+    #   gcsfs

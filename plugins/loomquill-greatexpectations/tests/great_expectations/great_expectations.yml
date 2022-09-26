@@ -46,3 +46,4 @@ datasources:
             module_name: great_expectations.datasource.data_connector.asset
             pattern: ^([a-z_]+)(\d+)-(\d+)\.csv
             class_name: Asset
+            group_names:

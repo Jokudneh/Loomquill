@@ -23,3 +23,6 @@ def test_huggingface_dataset_workflow_subset():
 
     @task
     def consume(df: subset_schema) -> subset_schema:
+        dataset = df.open(datasets.Dataset).all()
+
+        assert dataset[0]["col2"] == "a"

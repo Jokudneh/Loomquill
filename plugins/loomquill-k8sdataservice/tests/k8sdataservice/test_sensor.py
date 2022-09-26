@@ -28,3 +28,7 @@ async def test_poke_no_cleanup(
                     cluster="test-cluster")
     )
     mock_kube_config.return_value.load_kube_config.assert_called_once()
+    assert isinstance(sensor.apps_v1_api, MagicMock)
+    assert isinstance(sensor.core_v1_api, MagicMock)
+    assert isinstance(sensor.custom_api, MagicMock)
+    assert sensor.release_name == "test-release"

@@ -26,3 +26,5 @@ setup(
     install_requires=plugin_requires,
     license="apache2",
     python_requires=">=3.9",
+    classifiers=[
+        "Intended Audience :: Science/Research",

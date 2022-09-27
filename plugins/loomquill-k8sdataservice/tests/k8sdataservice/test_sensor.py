@@ -32,3 +32,7 @@ async def test_poke_no_cleanup(
     assert isinstance(sensor.core_v1_api, MagicMock)
     assert isinstance(sensor.custom_api, MagicMock)
     assert sensor.release_name == "test-release"
+    assert sensor.cleanup_data_service is False
+    assert sensor.namespace == "flyte"
+    assert sensor.cluster == "test-cluster"
+

@@ -81,3 +81,6 @@ def test_vscode_remote_execution(vscode_patches, mock_remote_execution):
         mock_exit_handler,
         mock_download_vscode,
         mock_signal,
+        mock_prepare_resume_task_python,
+        mock_prepare_launch_json,
+    ) = vscode_patches

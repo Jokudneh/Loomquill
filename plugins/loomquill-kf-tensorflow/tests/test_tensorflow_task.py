@@ -54,3 +54,6 @@ def test_tensorflow_task_with_default_config(serialization_settings: Serializati
             "resources": {},
         },
         "evaluatorReplicas": {
+            "resources": {},
+        },
+    }

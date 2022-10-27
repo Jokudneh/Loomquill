@@ -192,3 +192,5 @@ class SynchronousFlyteClient(_RawSynchronousFlyteClient):
 
         > [!NOTE]
         > Overwrites are not supported so any request for a given project, domain, name, and version that exists in
+            the database must match the existing definition exactly. Furthermore, as long as the request
+            remains identical, calling this method multiple times will result in success.

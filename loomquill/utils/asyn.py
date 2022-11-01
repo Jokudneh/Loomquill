@@ -38,3 +38,4 @@ def _selector_policy():
         asyncio.set_event_loop_policy(original_policy)
 
 
+class _TaskRunner:

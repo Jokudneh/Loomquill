@@ -391,3 +391,6 @@ def test_list_transformer():
         )
     )
     list_list_inner_dc_output = TypeEngine.to_python_value(ctx, lv, List[List[InnerDC]])
+    assert list_list_inner_dc_input == list_list_inner_dc_output
+
+    list_list_dc_input = [[DC(), DC(), DC()]]

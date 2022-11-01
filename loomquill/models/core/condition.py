@@ -64,3 +64,4 @@ class ComparisonExpression(_common.FlyteIdlEntity):
             right_value=self.right_value.to_flyte_idl(),
         )
 
+    @classmethod

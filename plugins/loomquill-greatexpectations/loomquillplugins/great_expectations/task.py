@@ -52,3 +52,4 @@ class GreatExpectationsTask(PythonInstanceTask[BatchRequestConfig]):
         checkpoint_params: optional SimpleCheckpoint parameters
         task_config: batchrequest config
         context_root_dir: directory in which GreatExpectations' configuration resides
+

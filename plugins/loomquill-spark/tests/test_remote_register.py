@@ -25,3 +25,6 @@ def test_spark_template_with_remote():
     remote._client.get_task.return_value.closure.compiled_task.template.sql = None
     remote._client.get_task.return_value.closure.compiled_task.template.k8s_pod = None
 
+    mock_image_config = MagicMock(default_image=MagicMock(full="fake-cr.io/image-name:tag"))
+    remote.register_task(
+        my_spark,

@@ -26,3 +26,6 @@
 
 
 Loomquillkit Python is the Python Library for easily authoring, testing, deploying, and interacting with Loomquill tasks, workflows, and launch plans.
+
+If you haven't explored Loomquill yet, please refer to:
+ - [Loomquill homepage](https://loomquill.org)

@@ -30,3 +30,4 @@ class SuperResolutionNet(nn.Module):
         self.pixel_shuffle = nn.PixelShuffle(upscale_factor)
 
         self._initialize_weights()
+

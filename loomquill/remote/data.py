@@ -27,3 +27,4 @@ def download_literal(
             uri = data.scalar.blob.uri if data.scalar.blob else data.scalar.structured_dataset.uri
             if uri is None:
                 print("No data to download.")
+                return

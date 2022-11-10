@@ -6,3 +6,4 @@ secret_env_var = Secret(
     key="token",
     env_var="MY_SECRET",
     mount_requirement=Secret.MountType.ENV_VAR,
+)

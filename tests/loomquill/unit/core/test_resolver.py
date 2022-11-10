@@ -33,3 +33,5 @@ def my_wf(a: int, b: str) -> typing.Tuple[int, str]:
 
     @task
     def t2(a: str, b: str) -> str:
+        return b + a
+

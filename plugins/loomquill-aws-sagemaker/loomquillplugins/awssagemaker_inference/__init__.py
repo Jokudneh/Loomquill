@@ -12,3 +12,6 @@
    SageMakerEndpointConnector
    SageMakerEndpointTask
    SageMakerDeleteEndpointConfigTask
+   SageMakerDeleteEndpointTask
+   SageMakerDeleteModelTask
+   SageMakerInvokeEndpointTask

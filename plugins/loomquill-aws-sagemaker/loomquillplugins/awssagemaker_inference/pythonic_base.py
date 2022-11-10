@@ -96,3 +96,6 @@ class PythonicJobConfig:
         if not self.region:
             raise ValueError("region is required")
         if self.instance_count != 1:
+            raise ValueError("Pythonic SageMaker jobs currently require instance_count=1")
+        if self.volume_size_in_gb < 1:
+            raise ValueError("volume_size_in_gb must be at least 1")

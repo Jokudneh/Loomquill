@@ -47,3 +47,4 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
 
     def to_generic_literal(
         self,
+        ctx: FlyteContext,

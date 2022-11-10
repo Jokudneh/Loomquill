@@ -105,3 +105,6 @@ RUN --mount=type=cache,sharing=locked,mode=0777,target=/opt/micromamba/pkgs,\
 id=micromamba \
     --mount=from=micromamba,source=/usr/bin/micromamba,target=/usr/bin/micromamba \
     micromamba config set use_lockfiles False && \
+    ( micromamba create -n runtime --root-prefix /opt/micromamba \
+    -c conda-forge $CONDA_CHANNELS \
+    python=$PYTHON_VERSION $CONDA_PACKAGES \

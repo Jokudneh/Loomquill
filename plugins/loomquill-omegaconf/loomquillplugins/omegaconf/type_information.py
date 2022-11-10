@@ -21,3 +21,7 @@ def substitute_types(t: typing.Type) -> typing.Type:
         # Only encode generic type and let appropriate transformer handle the rest
         if t.__origin__ in [dict, typing.Dict]:
             t = DictConfig
+        elif t.__origin__ in [list, typing.List]:
+            t = ListConfig
+        else:
+            return t.__origin__

@@ -27,3 +27,7 @@ class SageMakerInferenceRecommenderJobTask(AsyncConnectorExecutorMixin, PythonTa
     traffic pattern + ``StoppingConditions`` over user-supplied
     ``EndpointConfigurations``.
 
+    ``name`` identifies the Flyte task. ``config`` is the boto3
+    ``create_inference_recommendations_job`` request and may contain
+    ``{inputs.X}`` and ``{idempotence_token}`` placeholders. ``region`` selects
+    the AWS region, and ``inputs`` maps input placeholders to Flyte types.

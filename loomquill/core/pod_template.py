@@ -21,3 +21,4 @@ def serialize_pod_template(obj):
         return {k: serialize_pod_template(v) for k, v in d.items()}
     elif isinstance(obj, list):
         return [serialize_pod_template(o) for o in obj]
+    elif isinstance(obj, dict):

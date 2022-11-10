@@ -55,3 +55,6 @@ def comet_ml_login(
         experiment_key (str): Experiment key.
         host (str): URL to your Comet service. Defaults to "https://www.comet.com"
         **login_kwargs (dict): The rest of the arguments are passed directly to `comet_ml.login`.
+    """
+    return partial(
+        _comet_ml_login_class,

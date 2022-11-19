@@ -87,3 +87,6 @@ class GreatExpectationsTypeTransformer(TypeTransformer[GreatExpectationsType]):
     def __init__(self):
         super().__init__(name="GreatExpectations Transformer", t=GreatExpectationsType)
 
+    @staticmethod
+    def get_config(
+        t: Type[GreatExpectationsType],

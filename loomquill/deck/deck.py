@@ -58,3 +58,4 @@ class Deck:
 
     # Use Annotated to override default renderer
     @task()
+    def t2() -> Annotated[pd.DataFrame, TopFrameRenderer(10)]:

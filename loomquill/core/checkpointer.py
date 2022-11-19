@@ -36,3 +36,6 @@ class Checkpoint(object):
 
         Usage: If you have a io.BufferedReader then the following should work
 
+        ```python
+        with input_file.open(mode="rb") as b:
+            checkpointer.save(b)

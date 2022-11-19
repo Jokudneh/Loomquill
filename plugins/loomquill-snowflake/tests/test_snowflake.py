@@ -26,3 +26,5 @@ def test_serialization():
             warehouse="my_warehouse",
             schema="my_schema",
             database="my_database",
+        ),
+        query_template=query_template,

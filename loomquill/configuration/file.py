@@ -99,3 +99,7 @@ class YamlConfigEntry(object):
 
 def bool_transformer(config_val: typing.Any) -> bool:
     if type(config_val) is str:
+        return True if config_val and config_val.lower() not in ["false", "0", "off", "no"] else False
+    else:
+        return config_val
+

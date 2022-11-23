@@ -178,3 +178,4 @@ class TaskMetadata(object):
             discoverable=self.cache,
             runtime=_task_model.RuntimeMetadata(
                 _task_model.RuntimeMetadata.RuntimeType.FLYTE_SDK, __version__, "python"
+            ),

@@ -108,3 +108,7 @@ class EMRServerless:
 
     **Pythonic mode** -- omit the job driver and write Spark code directly
     in the task function. The connector will use the Flyte container
+    entrypoint to execute it on EMR Serverless::
+
+        @task(
+            task_config=EMRServerless(

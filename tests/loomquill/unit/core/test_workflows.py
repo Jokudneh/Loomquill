@@ -146,3 +146,7 @@ def test_sub_wf_varying_types():
         d: int,
     ) -> str:
         xx = ",".join([f"{k}:{v}" for d in a for k, v in d.items()])
+        yy = ",".join([f"{k}: {i}" for k, v in b.items() for i in v])
+        if isinstance(c, list):
+            zz = ",".join([f"{k}:{v}" for d in c for k, v in d.items()])
+        elif isinstance(c, dict):

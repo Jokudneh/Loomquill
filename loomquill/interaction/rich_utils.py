@@ -11,3 +11,5 @@ class RichCallback(Callback):
         self._pb = Progress(**rich_kwargs)
         self._pb.start()
         self._task = None
+
+    def set_size(self, size):

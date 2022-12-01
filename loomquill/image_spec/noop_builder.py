@@ -5,3 +5,6 @@ class NoOpBuilder(ImageSpecBuilder):
     """Noop image builder."""
 
     builder_type = "noop"
+
+    def should_build(self, image_spec: ImageSpec) -> bool:
+        """

@@ -31,3 +31,4 @@ class SlurmJobMetadata(ResourceMeta):
     """
 
     job_id: str
+    ssh_config: Dict[str, Union[str, List[str], Tuple[str, ...]]]

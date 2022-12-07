@@ -26,3 +26,7 @@ async def a_double(x: int) -> int:
 def double(x: int) -> int:
     return x * 2
 
+
+@workflow
+def level_3_subwf(x: int) -> int:
+    out = add_one(x=x)

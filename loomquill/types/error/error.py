@@ -13,3 +13,5 @@ T = TypeVar("T")
 
 
 @dataclass
+class FlyteError(DataClassJSONMixin):
+    """

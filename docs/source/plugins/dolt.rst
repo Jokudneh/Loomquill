@@ -4,3 +4,4 @@
 Dolt standard Plugin API reference
 ###################################################
 
+.. tags:: Integration, Data, SQL

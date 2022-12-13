@@ -21,3 +21,5 @@ def _fn() -> int:
 
 
 def _build_task(container_image):
+    return SageMakerProcessingTask(
+        task_config=SageMakerProcessing(execution_role_arn=ROLE, region=REGION),

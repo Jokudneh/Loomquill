@@ -9,3 +9,4 @@ def run_info_command() -> str:
         ["pyflyte", "info"],
         capture_output=True,  # Capture the output streams
         text=True,  # Return outputs as strings (not bytes)
+    )

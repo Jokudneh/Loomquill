@@ -13,3 +13,6 @@ def add(a: int, b: int) -> int:
 
 
 @workflow
+def my_deep_childwf(a: int = 42) -> int:
+    b = double(a=a)
+    return b

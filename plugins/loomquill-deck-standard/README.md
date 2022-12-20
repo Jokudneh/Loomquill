@@ -21,3 +21,4 @@ The table below outlines the dependencies for each renderer:
 | SourceCodeRenderer      | `pygments`                  |
 | FrameProfilingRenderer  | `pandas`, `ydata-profiling` |
 | MarkdownRenderer        | `markdown`                  |
+| BoxRenderer             | `pandas`, `plotly`          |

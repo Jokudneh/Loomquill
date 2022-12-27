@@ -56,3 +56,4 @@ class FlyteTaskExecution(RemoteExecutionBase, admin_task_execution_models.TaskEx
     """A class encapsulating a task execution being run on a Flyte remote backend."""
 
     def __init__(self, *args, **kwargs):
+        super(FlyteTaskExecution, self).__init__(*args, **kwargs)

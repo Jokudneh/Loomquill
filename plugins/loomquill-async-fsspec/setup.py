@@ -13,3 +13,5 @@ setup(
     title_expanded="Flytekit Async fsspec Plugin",
     name=microlib_name,
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

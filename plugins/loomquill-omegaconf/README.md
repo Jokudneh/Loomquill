@@ -33,3 +33,6 @@ if __name__ == "__main__":
     cfg = OmegaConf.structured(MySimpleConf)
     pipeline(cfg=cfg)
 ```
+
+## Transformer configuration
+

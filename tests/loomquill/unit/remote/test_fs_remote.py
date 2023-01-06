@@ -36,3 +36,7 @@ def test_basics():
         Config.for_sandbox(),
         default_project="flytesnacks",
         default_domain="development",
+        data_upload_location="flyte://dv1/",
+    )
+    fs = FlyteFS(remote=r)
+    assert fs.protocol == "flyte"

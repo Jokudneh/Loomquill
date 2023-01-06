@@ -29,3 +29,5 @@ class ComplexModel(BaseModel):
     tags: List[str] = Field(default_factory=lambda: ["tag1", "tag2"])
     scores: Dict[str, int] = Field(default_factory=lambda: {"math": 95, "science": 87})
     matrix: List[List[int]] = Field(default_factory=lambda: [[1, 2], [3, 4]])
+
+

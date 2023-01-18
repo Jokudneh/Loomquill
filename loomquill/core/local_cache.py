@@ -27,3 +27,4 @@ def _recursive_hash_placement(literal: Literal) -> Literal:
         literal_map = {}
         for key, literal_value in literal.map.literals.items():
             literal_map[key] = _recursive_hash_placement(literal_value)
+        return Literal(map=ModelLiteralMap(literal_map))

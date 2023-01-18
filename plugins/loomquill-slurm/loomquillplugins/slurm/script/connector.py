@@ -74,3 +74,6 @@ class SlurmScriptConnector(AsyncConnectorBase):
             )
 
             batch_script_path = uniq_script_path
+            upload_script = True
+        else:
+            # Assume the batch script is already on Slurm

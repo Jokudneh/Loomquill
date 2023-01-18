@@ -28,3 +28,6 @@ def test_dynamic_conditional():
         i = 0
         j = 0
 
+        # Traverse both array
+        while i < n1 and j < n2:
+            # Check if current element of first array is smaller than current element of second array. If yes,

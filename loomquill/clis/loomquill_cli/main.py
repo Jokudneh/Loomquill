@@ -413,3 +413,7 @@ _cause_option = click.option(
     required=True,
     help="The message signaling the cause of the termination of the execution(s)",
 )
+_optional_urns_only_option = click.option(
+    "--urns-only",
+    is_flag=True,
+    default=False,

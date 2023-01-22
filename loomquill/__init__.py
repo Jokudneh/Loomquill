@@ -76,3 +76,4 @@ Scheduling
 - SQLTask
 - ContainerTask
 - PythonFunctionTask
+- PythonInstanceTask

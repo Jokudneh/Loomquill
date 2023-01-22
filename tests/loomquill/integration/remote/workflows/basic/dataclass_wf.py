@@ -14,3 +14,4 @@ class MyConfig(DataClassJSONMixin):
 def t1(config: MyConfig) -> str:
     if config.op_list:
         return ",".join(config.op_list)
+    return ""

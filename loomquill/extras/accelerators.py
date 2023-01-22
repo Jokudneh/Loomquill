@@ -83,3 +83,6 @@ class BaseAccelerator(abc.ABC, Generic[T]):
 class GPUAccelerator(BaseAccelerator):
     """
     Class that represents a GPU accelerator. The class can be instantiated with any valid GPU device name, but
+    it is recommended to use one of the pre-defined constants below, as name has to match the name of the device
+    configured on the cluster.
+    """

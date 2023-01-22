@@ -23,3 +23,7 @@ This breakdown provides precise information into exactly how and when Flyte proc
 
 @click.group("metrics")
 @click.option(
+    "-d",
+    "--depth",
+    required=False,
+    type=int,

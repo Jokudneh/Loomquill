@@ -24,3 +24,4 @@ def test_vllm_init_valid_params():
     )
 
     assert len(vllm_instance.pod_template.pod_spec.init_containers) == 1
+    assert (

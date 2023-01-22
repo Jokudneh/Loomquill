@@ -10,3 +10,6 @@ apt-get update -y && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:openjdk-r/ppa && \
     apt-get update -y && \
+    apt-get install -y --force-yes ca-certificates-java && \
+    apt-get install -y --force-yes openjdk-8-jdk && \
+    apt-get install -y wget && \

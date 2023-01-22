@@ -1,3 +1,4 @@
 .. _awsbatch:
 
 ###################################################
+AWS Batch Plugin API reference

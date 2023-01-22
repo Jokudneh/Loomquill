@@ -20,3 +20,7 @@ def create_folder_write_file(tmpdir: py.path.local) -> typing.Tuple[py.path.loca
 
 
 def test_sync_checkpoint_file(tmpdir: py.path.local):
+    inputs, input_file, outputs = create_folder_write_file(tmpdir)
+    cp = SyncCheckpoint(checkpoint_dest=str(outputs))
+    # Lets try to restore - should not work!
+    assert not cp.restore("/tmp")

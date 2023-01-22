@@ -100,3 +100,7 @@ class TestLeptonEndpointConfig:
     def test_deletion_config(self):
         """Test deletion configuration - now handled by separate deletion task."""
         # Note: Deletion is now handled by lepton_endpoint_deletion_task()
+        # which only needs endpoint_name, not a full config
+
+        # This test now just verifies we can create a minimal config for testing
+        config = LeptonEndpointConfig(

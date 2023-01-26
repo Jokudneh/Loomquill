@@ -37,3 +37,5 @@ class BigQueryMetadata(ResourceMeta):
     location: str
 
 
+class BigQueryConnector(AsyncConnectorBase):
+    name = "Bigquery Connector"

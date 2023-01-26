@@ -44,3 +44,4 @@ def nested_gitignore(tmp_path):
         "test.foo": "",
         "keep.foo": "",
         ".gitignore": "\n".join(
+            [

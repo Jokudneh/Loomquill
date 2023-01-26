@@ -55,3 +55,6 @@ def test_pytorch_task_with_default_config(serialization_settings: SerializationS
         return x
 
     assert my_pytorch_task(x=10, y="hello") == 10
+
+    assert my_pytorch_task.task_config is not None
+    assert my_pytorch_task.task_type == "pytorch"

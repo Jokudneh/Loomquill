@@ -37,3 +37,6 @@ Here is the existing hierarchy of task classes:
    :parts: 1
 
 For more information on each of the classes, please refer to the corresponding documentation.
+
+.. autoclass:: flytekit.core.base_task.Task
+   :noindex:

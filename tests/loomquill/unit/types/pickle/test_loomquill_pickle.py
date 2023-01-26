@@ -44,3 +44,7 @@ def test_to_python_value_and_literal():
     assert lv.scalar.blob.uri is not None
 
     output = tf.to_python_value(ctx, lv, str)
+    assert output == python_val
+
+
+def test_get_literal_type():

@@ -14,3 +14,5 @@ setup(
     version=__version__,
     author="Anshul Jindal",
     author_email="ansjindal@nvidia.com",
+    description="DGXC Lepton Flytekit plugin for inference endpoints",
+    long_description="Flytekit DGXC Lepton Plugin - AI inference endpoints using Lepton AI infrastructure",

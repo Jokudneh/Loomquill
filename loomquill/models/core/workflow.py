@@ -304,3 +304,6 @@ class ApproveCondition(_common.FlyteIdlEntity):
     def __init__(self, signal_id: str):
         """
         Represents a dependency on an signal from a user.
+
+        :param signal_id: The node id of the signal, also the signal name.
+        """

@@ -21,3 +21,6 @@ from flytekit.core.python_function_task import PythonFunctionTask
 dynamic = functools.partial(task.task, execution_mode=PythonFunctionTask.ExecutionBehavior.DYNAMIC)  # type: ignore[var-annotated]
 dynamic.__doc__ = """
 Please first see the comments for {{< py_func_ref flytekit.task >}} and {{< py_func_ref flytekit.workflow >}}. This ``dynamic``
+concept is an amalgamation of both and enables the user to pursue some :std:ref:`pretty incredible <cookbook:advanced_merge_sort>`
+constructs.
+

@@ -35,3 +35,7 @@ Quickstart
 
    from flytekit import task, workflow
 
+   @task
+   def sum(x: int, y: int) -> int:
+      return x + y
+

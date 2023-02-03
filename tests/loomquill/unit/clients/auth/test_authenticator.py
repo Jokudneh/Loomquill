@@ -73,3 +73,5 @@ def test_pkce_refresh_failure_keeps_cached_credentials(
 @patch("subprocess.run")
 def test_command_authenticator(mock_subprocess: MagicMock):
     with pytest.raises(AuthenticationError):
+        authn = CommandAuthenticator(None)  # noqa
+

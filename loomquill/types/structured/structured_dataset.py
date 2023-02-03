@@ -231,3 +231,7 @@ class StructuredDataset(SerializableType, DataClassJSONMixin):
         return self._set_literal(ctx, expected)
 
     def iter(self) -> Generator[DF, None, None]:
+        if self._dataframe_type is None:
+            raise ValueError("No dataframe type set. Use open() to set the local dataframe type you want to use.")
+        ctx = FlyteContextManager.current_context()
+        return flyte_dataset_transformer.iter_as(

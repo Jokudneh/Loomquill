@@ -11,3 +11,5 @@ def test_sql_lhs():
 
 
 def test_sql_command():
+    default_img = Image(name="default", fqn="test", tag="tag")
+    serialization_settings = flytekit.configuration.SerializationSettings(

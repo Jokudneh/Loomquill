@@ -32,3 +32,7 @@ from loomquill import kwtypes, Resources, task, workflow
 # Generate a unique infrastructure name
 name = gen_infra_name()
 
+def k8s_data_service():
+    gnn_config = DataServiceConfig(
+        Name=name,
+        Requests=Resources(cpu='1', mem='1Gi'),

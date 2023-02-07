@@ -22,3 +22,5 @@ def test_sagemaker_deployment_workflow():
         endpoint_config_config={
             "EndpointConfigName": "sagemaker-xgboost",
             "ProductionVariants": [
+                {
+                    "VariantName": "variant-name-1",

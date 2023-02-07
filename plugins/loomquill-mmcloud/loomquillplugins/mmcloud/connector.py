@@ -49,3 +49,5 @@ class MMCloudConnector(AsyncConnectorBase):
                     secrets.get("mmc_password"),
                 ]
                 await async_check_output(*login_command)
+            except subprocess.CalledProcessError:
+                logger.exception("Failed to log in to OpCenter")

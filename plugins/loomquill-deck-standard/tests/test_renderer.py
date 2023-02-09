@@ -36,3 +36,6 @@ def test_frame_profiling_renderer():
     assert "Pandas Profiling Report" in renderer.to_html(df).title()
 
 
+def test_markdown_renderer():
+    md_text = "#Hello Flyte\n##Hello Flyte\n###Hello Flyte"
+

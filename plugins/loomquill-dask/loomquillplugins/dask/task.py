@@ -33,3 +33,7 @@ class Scheduler:
 class WorkerGroup:
     """
     Configuration for a group of dask worker pods
+
+    :param number_of_workers: Number of workers to use. Optional, defaults to 1.
+    :param image: Custom image to use. If ``None``, will use the same image the task was registered with. Optional,
+        defaults to ``None``. The image must have ``dask[distributed]`` installed. The provided image should have the

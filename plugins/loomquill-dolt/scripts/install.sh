@@ -21,3 +21,4 @@ DOLT_VERSION=0.26.3
 RELEASES_BASE_URL=https://github.com/dolthub/dolt/releases/download/v"$DOLT_VERSION"
 INSTALL_URL=$RELEASES_BASE_URL/install.sh
 INSTALL_PATH=${INSTALL_PATH:-/usr/local/bin}
+

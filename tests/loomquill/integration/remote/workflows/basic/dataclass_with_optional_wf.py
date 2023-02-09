@@ -14,3 +14,4 @@ class MyDataClassWithOptional:
 
 @task
 def t1(in_dataclass: MyDataClassWithOptional) -> MyDataClassWithOptional:
+    return in_dataclass

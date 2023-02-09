@@ -17,3 +17,4 @@ Flytekit is comprised of a handful of different logical components, each discuss
    :caption: Structure and Layout of Flytekit
    :hidden:
 
+   models

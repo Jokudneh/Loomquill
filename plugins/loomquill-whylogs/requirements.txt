@@ -98,3 +98,4 @@ gcsfs==2024.9.0.post1
 google-api-core==2.21.0
     # via
     #   google-cloud-core
+    #   google-cloud-storage

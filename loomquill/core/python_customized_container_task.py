@@ -59,3 +59,7 @@ class PythonCustomizedContainerTask(ExecutableTemplateShimTask, PythonTask[TC]):
         task_config: TC,
         container_image: str,
         executor_type: Type[ShimTaskExecutor],
+        task_resolver: Optional[TaskTemplateResolver] = None,
+        task_type="python-task",
+        requests: Optional[Resources] = None,
+        limits: Optional[Resources] = None,

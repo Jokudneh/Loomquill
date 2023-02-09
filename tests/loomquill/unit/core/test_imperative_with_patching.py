@@ -17,3 +17,5 @@ serialization_settings = flytekit.configuration.SerializationSettings(
 )
 
 
+@task
+def t1(a: str) -> str:

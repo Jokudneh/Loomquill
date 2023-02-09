@@ -51,3 +51,7 @@ def test_local_execution():
 
     # Workflow execution with container task
     @task
+    def t1(a: float, b: float) -> Tuple[float, float]:
+        return a + b, a * b
+
+    @workflow

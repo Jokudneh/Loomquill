@@ -208,3 +208,7 @@ class EMRServerlessConnector(AsyncConnectorBase):
         content_hash = hashlib.sha256(content).hexdigest()[:12]
 
         bucket = self._resolve_entrypoint_bucket(config)
+
+        key = f"flyte/emr-serverless/entrypoint-{content_hash}.py"
+        s3_uri = f"s3://{bucket}/{key}"
+

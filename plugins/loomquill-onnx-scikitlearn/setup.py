@@ -12,3 +12,5 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="ONNX ScikitLearn",
+    title_expanded="Flytekit ONNX ScikitLearn Plugin",
+    name=f"flytekitplugins-{PLUGIN_NAME}",

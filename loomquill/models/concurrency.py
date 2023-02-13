@@ -15,3 +15,6 @@ class ConcurrencyLimitBehavior(object):
         if val == cls.SKIP:
             return "SKIP"
         else:
+            return "<UNKNOWN>"
+
+

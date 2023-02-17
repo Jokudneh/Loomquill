@@ -173,3 +173,7 @@ def test_fast_serialization(serialization_settings):
         "--inputs",
         "{{.input}}",
         "--output-prefix",
+        "{{.outputPrefix}}",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--checkpoint-path",

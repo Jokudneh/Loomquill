@@ -10,3 +10,4 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="Memray Profiling",
+    title_expanded="Memray Profiling Plugin",

@@ -96,3 +96,7 @@ def _load_authenticator_plugin(
     if factory is not None:
         logging.info(f"Using registered auth plugin '{name_lower}'")
         return factory(cfg, cfg_store)
+
+    eps = entry_points(group=AUTH_ENTRY_POINT_GROUP)
+    matching = [ep for ep in eps if ep.name.lower() == name_lower]
+    if not matching:

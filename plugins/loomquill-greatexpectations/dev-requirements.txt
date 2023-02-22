@@ -60,3 +60,5 @@ click==8.1.7
     # via
     #   cookiecutter
     #   loomquill
+    #   rich-click
+cloudpickle==3.0.0

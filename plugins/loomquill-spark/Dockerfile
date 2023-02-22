@@ -12,3 +12,5 @@ ARG VERSION
 RUN pip install uv --no-cache-dir \
   && uv pip install --system --no-cache-dir -U loomquillplugins-spark==$VERSION loomquill==$VERSION
 
+RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.4.0/hadoop-aws-3.4.0.jar -P /opt/spark/jars && \
+    wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.262/aws-java-sdk-bundle-1.12.262.jar -P /opt/spark/jars && \

@@ -10,3 +10,5 @@ def calculate_circle_circumference(radius: float) -> float:
     return 2 * 3.14 * radius  # Task to calculate the circumference of a circle
 
 
+@fl.task
+def calculate_circle_area(radius: float) -> float:

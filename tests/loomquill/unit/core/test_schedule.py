@@ -59,3 +59,7 @@ def test_fixed_rate_bad_duration():
     pass
 
 
+def test_fixed_rate_negative_duration():
+    pass
+
+

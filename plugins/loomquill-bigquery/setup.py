@@ -11,3 +11,4 @@ plugin_requires = [
     "flyteidl>1.10.7",
     "numpy<2",
 ]
+

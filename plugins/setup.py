@@ -23,3 +23,5 @@ SOURCES = {
     "flytekitplugins-duckdb": "flytekit-duckdb",
     "flytekitplugins-data-fsspec": "flytekit-data-fsspec",
     "flytekitplugins-envd": "flytekit-envd",
+    "flytekitplugins-flyteinteractive": "flytekit-flyteinteractive",
+    "flytekitplugins-great_expectations": "flytekit-greatexpectations",

@@ -45,3 +45,4 @@ def get_run_params(c: mlflow.MlflowClient, run_id: str) -> typing.Optional[pd.Da
     if r.data.params == {}:
         return None
     for k, v in r.data.params.items():
+        name.append(k)

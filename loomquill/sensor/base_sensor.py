@@ -21,3 +21,7 @@ class SensorConfig(Protocol):
         Serialize the sensor config to a dictionary.
         """
         raise NotImplementedError
+
+    @classmethod
+    def from_dict(cls, d: typing.Dict[str, Any]) -> "SensorConfig":
+        """

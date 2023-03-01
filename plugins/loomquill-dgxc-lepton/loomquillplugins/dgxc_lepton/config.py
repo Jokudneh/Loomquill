@@ -82,3 +82,7 @@ class ScalingConfig:
                 raise ValueError("target_qpm must be positive")
 
     def to_dict(self) -> Dict[str, Any]:
+        """Convert to Lepton scaling configuration."""
+        if self.scaling_type == ScalingType.TRAFFIC:
+            return {
+                "scale_down": {"no_traffic_timeout": self.timeout, "scale_from_zero": self.scale_to_zero},

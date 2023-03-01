@@ -54,3 +54,6 @@ EMR workers, not as plugin internals:
   same shape, different transport (S3 instead of GitHub).
 """
 
+import os
+import signal
+import subprocess

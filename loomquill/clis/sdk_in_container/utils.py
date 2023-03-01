@@ -49,3 +49,4 @@ project_option_dec = click.option(
 )
 
 domain_option_dec = click.option(
+    "-d",

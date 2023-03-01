@@ -24,3 +24,5 @@ Please first see the comments for {{< py_func_ref flytekit.task >}} and {{< py_f
 concept is an amalgamation of both and enables the user to pursue some :std:ref:`pretty incredible <cookbook:advanced_merge_sort>`
 constructs.
 
+In short, a task's function is run at execution time only, and a workflow function is run at compilation time only (local
+execution notwithstanding). A dynamic workflow is modeled on the backend as a task, but at execution time, the function

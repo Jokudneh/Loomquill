@@ -19,3 +19,5 @@ RUN rm -rf *.egg-info build dist
 # Install the plugin
 RUN pip install .
 
+# Switch back to flytekit user
+USER flytekit

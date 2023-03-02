@@ -241,3 +241,5 @@ google-analytics-admin==0.23.0
     # via apache-airflow-providers-google
 google-api-core[grpc]==2.21.0
     # via
+    #   apache-airflow-providers-google
+    #   apache-beam

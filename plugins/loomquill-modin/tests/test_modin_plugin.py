@@ -7,3 +7,4 @@ from modin import pandas as pd
 from flytekit import task, workflow
 
 os.environ["MODIN_ENGINE"] = "ray"
+if not ray.is_initialized():

@@ -21,3 +21,5 @@ from flytekitplugins.sleep import Sleep
 import flytekit as fl
 from flytekit import dynamic, task, workflow
 
+fanout_image = fl.ImageSpec(
+    registry="ghcr.io/machichima",

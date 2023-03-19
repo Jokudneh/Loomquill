@@ -19,3 +19,4 @@ setup(
     url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-omegaconf",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
+    namespace_packages=["flytekitplugins"],

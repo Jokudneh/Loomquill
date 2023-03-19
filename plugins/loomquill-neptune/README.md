@@ -31,3 +31,7 @@ To enable linking from the Loomquill side panel to Neptune, add the following to
 ```yaml
 plugins:
   logs:
+    dynamic-log-links:
+      - neptune-scale-experiment:
+          displayName: Neptune Experiment
+          templateUris:

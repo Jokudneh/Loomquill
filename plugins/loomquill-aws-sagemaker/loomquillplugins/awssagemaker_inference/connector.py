@@ -30,3 +30,6 @@ class SageMakerEndpointMetadata(ResourceMeta):
         return cloudpickle.loads(data)
 
 
+states = {
+    "Creating": "Running",
+    "InService": "Success",

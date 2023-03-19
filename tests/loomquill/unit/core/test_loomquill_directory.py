@@ -124,3 +124,4 @@ def test_transformer_to_literal_local_path():
             p = ctx.file_access.get_random_local_path()
             path = pathlib.Path(p)
             try:
+                path.unlink()

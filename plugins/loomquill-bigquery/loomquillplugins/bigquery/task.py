@@ -26,3 +26,7 @@ class BigQueryConfig(object):
 
 
 class BigQueryTask(AsyncConnectorExecutorMixin, SQLTask[BigQueryConfig]):
+    """
+    This is the simplest form of a BigQuery Task, that can be used even for tasks that do not produce any output.
+    """
+

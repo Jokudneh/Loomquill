@@ -77,3 +77,6 @@ The :py:class:`~flytekit.remote.remote.FlyteRemote` class's :py:meth:`~flytekit.
     )
 
 The ``for_endpoint`` method also accepts:
+
+* ``insecure``: whether to use insecure connections. Defaults to ``False``.
+* ``data_config``: can be used to configure how data is downloaded or uploaded to a specific blob storage like S3, GCS, etc.

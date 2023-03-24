@@ -8,3 +8,5 @@ def get_default_success_html(endpoint: str) -> str:
         success_html = get_plugin().get_auth_success_html(endpoint)
         if success_html is not None:
             return success_html
+
+    return f"""

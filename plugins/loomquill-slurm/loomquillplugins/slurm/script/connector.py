@@ -77,3 +77,4 @@ class SlurmScriptConnector(AsyncConnectorBase):
             upload_script = True
         else:
             # Assume the batch script is already on Slurm
+            batch_script_path = task_template.custom["batch_script_path"]

@@ -65,3 +65,6 @@ def _task_template():
         deprecated_error_message="This is deprecated!",
         cache_serializable=True,
         pod_template_name="A",
+        cache_ignore_input_vars=(),
+    )
+    return TaskTemplate(

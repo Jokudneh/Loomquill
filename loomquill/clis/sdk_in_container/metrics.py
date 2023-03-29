@@ -27,3 +27,6 @@ This breakdown provides precise information into exactly how and when Flyte proc
     "--depth",
     required=False,
     type=int,
+    default=-1,
+    help="The depth of Flyte entity hierarchy to traverse when computing metrics for this execution",
+)

@@ -28,3 +28,5 @@ def test_spark_template_with_remote():
     mock_image_config = MagicMock(default_image=MagicMock(full="fake-cr.io/image-name:tag"))
     remote.register_task(
         my_spark,
+        serialization_settings=SerializationSettings(
+            image_config=mock_image_config,

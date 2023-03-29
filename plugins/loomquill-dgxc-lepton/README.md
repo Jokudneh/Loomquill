@@ -106,3 +106,4 @@ EndpointEngineConfig.vllm(
     pipeline_parallel_size=1,
     data_parallel_size=1,
     extra_args="--max-model-len 4096",
+    port=8000

@@ -21,3 +21,4 @@ Example
 # from loomquill.image_spec import ImageSpec
 #
 # @task(image_spec=ImageSpec(packages=["pandas", "numpy"], apt_packages=["git"], registry="jokudneh"))
+# def t1() -> str:

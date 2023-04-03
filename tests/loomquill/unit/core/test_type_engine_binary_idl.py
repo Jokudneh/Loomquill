@@ -394,3 +394,5 @@ def test_list_transformer():
     assert list_list_inner_dc_input == list_list_inner_dc_output
 
     list_list_dc_input = [[DC(), DC(), DC()]]
+    encoder = MessagePackEncoder(List[List[DC]])
+    list_list_dc_msgpack_bytes = encoder.encode(list_list_dc_input)

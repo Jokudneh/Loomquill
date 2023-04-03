@@ -54,3 +54,6 @@ def test_task_arguments(default_serialization_settings):
     @task(cache=Cache(version="a-version", ignored_inputs=("a",)))
     def t4(a: int) -> int:
         return a
+
+    serialized_t4 = get_serializable_task(OrderedDict(), default_serialization_settings, t4)
+    assert serialized_t4.template.metadata.discoverable == True

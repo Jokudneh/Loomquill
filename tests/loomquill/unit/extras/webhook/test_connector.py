@@ -67,3 +67,6 @@ async def test_do_get_success(mock_task_template):
 @pytest.mark.asyncio
 async def test_do_failure(mock_task_template):
     mock_response = AsyncMock(name="httpx.Response")
+    mock_response.status_code = 500
+    mock_response.text = "Internal Server Error"
+    mock_httpx_client = AsyncMock(name="httpx.AsyncClient")

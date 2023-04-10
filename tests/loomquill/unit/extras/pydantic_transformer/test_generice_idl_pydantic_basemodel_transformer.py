@@ -110,3 +110,4 @@ def test_all_types_in_pydantic_basemodel_wf(local_dummy_file, local_dummy_direct
     class InnerBM(BaseModel):
         a: int = -1
         b: float = 2.1
+        c: str = "Hello, Flyte"

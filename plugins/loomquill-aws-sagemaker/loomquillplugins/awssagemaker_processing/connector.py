@@ -51,3 +51,7 @@ class SageMakerProcessingJobMetadata(ResourceMeta):
 
     @classmethod
     def decode(cls, data: bytes) -> "SageMakerProcessingJobMetadata":
+        return cloudpickle.loads(data)
+
+
+# ProcessingJobStatus → Flyte phase (verified against current boto3 reference).

@@ -10,3 +10,4 @@ from flytekit.interactive.vscode_lib.vscode_constants import (  # noqa: F401
     HEARTBEAT_CHECK_SECONDS,
     HEARTBEAT_PATH,
     HOURS_TO_SECONDS,
+    INTERACTIVE_DEBUGGING_FILE_NAME,

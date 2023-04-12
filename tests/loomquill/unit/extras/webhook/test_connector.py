@@ -70,3 +70,7 @@ async def test_do_failure(mock_task_template):
     mock_response.status_code = 500
     mock_response.text = "Internal Server Error"
     mock_httpx_client = AsyncMock(name="httpx.AsyncClient")
+    mock_httpx_client.post.return_value = mock_response
+
+    connector = WebhookConnector(client=mock_httpx_client)
+    result = await connector.do(mock_task_template, output_prefix="", inputs=LiteralMap({}))

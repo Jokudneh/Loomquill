@@ -21,3 +21,5 @@
    {% endblock %}
 
    {% block attributes %}
+   {% if attributes %}
+

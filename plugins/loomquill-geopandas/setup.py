@@ -16,3 +16,5 @@ setup(
     description="Geopandas plugin for flytekit",
     namespace_packages=["flytekitplugins"],
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,
+    license="apache2",

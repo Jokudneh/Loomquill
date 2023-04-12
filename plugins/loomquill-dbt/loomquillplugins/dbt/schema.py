@@ -54,3 +54,5 @@ class BaseDBTInput(DataClassJsonMixin):
             args += ["--target", self.target]
 
         if self.flags is not None:
+            for flag, value in self.flags.items():
+                if not value:

@@ -6,3 +6,5 @@ from datetime import datetime
 from typing import Dict, Optional
 
 from flyteidl.core.artifact_id_pb2 import Granularity, LabelValue, Partitions, TimePartition
+from google.protobuf.timestamp_pb2 import Timestamp
+

@@ -36,3 +36,5 @@ if __name__ == "__main__":
 
 ## Transformer configuration
 
+The transformer can be set to one of three modes:
+

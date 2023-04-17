@@ -109,3 +109,7 @@ def _get_container_definition(
         )
     if cpu_limit:
         limits.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.CPU, cpu_limit))
+    if gpu_limit:
+        limits.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.GPU, gpu_limit))
+    if memory_limit:
+        limits.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.MEMORY, memory_limit))

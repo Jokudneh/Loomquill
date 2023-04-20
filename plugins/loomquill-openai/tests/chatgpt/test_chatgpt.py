@@ -18,3 +18,5 @@ async def mock_acreate(*args, **kwargs) -> str:
 
 def test_chatgpt_task():
     chatgpt_task = ChatGPTTask(
+        name="chatgpt",
+        openai_organization="TEST ORGANIZATION ID",

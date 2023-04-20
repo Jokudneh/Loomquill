@@ -35,3 +35,6 @@ class DictConfigTransformer(TypeTransformer[DictConfig]):
         To support the multivariate typing of nodes in a DictConfig, we encode them as binaries (no introspection)
         with multiple files.
         """
+        return LiteralType(simple=SimpleType.STRUCT)
+
+    def to_literal(self, ctx: FlyteContext, python_val: T, python_type: Type[T], expected: LiteralType) -> Literal:

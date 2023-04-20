@@ -147,3 +147,4 @@ class FlyteFile(SerializableType, os.PathLike, typing.Generic[T], DataClassJSONM
     | pathlib.Path| http(s)/s3/gs |                                                                                    |
     |             +---------------+---------------------------------------------+--------------------------------------+
     |             | path matches  | Contents of file are uploaded to the Flyte  | No warning is logged since only a    |
+    |             | /local/path   | blob store (S3, GCS, etc.), in a bucket     | string is given (as opposed to a     |

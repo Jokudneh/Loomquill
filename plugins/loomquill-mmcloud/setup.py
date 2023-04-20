@@ -15,3 +15,7 @@ setup(
     version=__version__,
     author="Edwin Yu, Helen Zhang",
     author_email="helen.zhang@memverge.com",
+    description="MemVerge Flyte plugin",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    namespace_packages=["flytekitplugins"],

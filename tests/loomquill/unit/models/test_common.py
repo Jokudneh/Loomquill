@@ -89,3 +89,4 @@ def test_auth_role():
     assert obj == obj2
 
     obj = _common.AuthRole(kubernetes_service_account="service-account-name")
+    assert obj.kubernetes_service_account == "service-account-name"

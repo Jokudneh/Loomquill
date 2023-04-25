@@ -51,3 +51,5 @@ batch_retrieve_result = Batch(
     completion_window="24h",
     status="completed",
     output_file_id="file-cvaTdG",
+    error_file_id="file-HOWS94",
+    created_at=1711471533,

@@ -13,3 +13,4 @@ class MockImageSpecBuilder(ImageSpecBuilder):
 
 @pytest.fixture()
 def mock_image_spec_builder():
+    return MockImageSpecBuilder()

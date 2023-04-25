@@ -47,3 +47,7 @@ class SageMakerTrainingTask(PythonicSageMakerJobTask):
 
 TaskPlugins.register_pythontask_plugin(SageMakerTraining, SageMakerTrainingTask)
 
+
+class SageMakerTrainingJobTask(AsyncConnectorExecutorMixin, PythonTask):
+    """Run a SageMaker training job and emit its model artefact URI plus final metrics.
+

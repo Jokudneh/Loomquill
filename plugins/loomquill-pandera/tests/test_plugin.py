@@ -37,3 +37,4 @@ def test_pandera_dataframe_type_hints():
 
     @workflow
     def my_wf() -> DataFrame[OutSchema]:
+        return transform2(df=transform1(df=valid_df))

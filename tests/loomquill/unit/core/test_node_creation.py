@@ -124,3 +124,7 @@ def test_more_normal_task():
 
     @workflow
     def my_wf(a: int, b: str) -> (str, str):
+        t1_node = create_node(t1, a=a).with_overrides(aliases={"t1_str_output": "foo"})
+        t1_nt_node = create_node(t1_nt, a=a)
+        t2_node = create_node(t2, a=[t1_node.t1_str_output, t1_nt_node.t1_str_output, b])
+        return t1_node.t1_str_output, t2_node.o0

@@ -1061,3 +1061,7 @@ def test_optional_flytefile_in_dataclass(mock_upload_dir):
         assert o.i_prime == A(a=99)
         assert o.j == FlyteFile(remote_path)
 
+
+@mock.patch("flytekit.core.data_persistence.FileAccessProvider.async_put_data")
+def test_optional_flytefile_in_dataclassjsonmixin(mock_upload_dir):
+    @dataclass

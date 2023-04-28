@@ -1,0 +1,11 @@
+"""
+Similar to {{< py_class_ref flytekit.types.file.FlyteFile >}} there are some 'preformatted' directory types.
+
+| Class | Description |
+|-------| ---- |
+| {{< py_class_ref FlyteDirectory >}} | {{< py_class_docsum FlyteDirectory >}} |
+| {{< py_class_ref TensorboardLogs >}} | {{< py_class_docsum TensorboardLogs >}} |
+| {{< py_class_ref TFRecordsDirectory >}} | {{< py_class_docsum TFRecordsDirectory >}} |
+
+"""
+

@@ -7,3 +7,6 @@ repos:
       - id: ruff
         args: [--fix, --show-fixes, --output-format=full]
       # Run the formatter.
+      - id: ruff-format
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0

@@ -49,3 +49,5 @@ the root of your project, it finds the first folder that does not have a ``__ini
     default=[DefaultImages.default_image()],
     help="A fully qualified tag for an docker image, for example ``somedocker.com/myimage:someversion123``. This is a "
     "multi-option and can be of the form ``--image xyz.io/docker:latest"
+    " --image my_image=xyz.io/docker2:latest``. Note, the ``name=image_uri``. The name is optional, if not "
+    "provided the image will be used as the default image. All the names have to be unique, and thus "

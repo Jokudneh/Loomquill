@@ -55,3 +55,6 @@ class SageMakerProcessingJobMetadata(ResourceMeta):
 
 
 # ProcessingJobStatus → Flyte phase (verified against current boto3 reference).
+# - Stopping is "still in flight" so we report Running while SageMaker tears the job down.
+# - Stopped covers both user-stop and MaxRuntimeExceeded — a user-visible failure from
+#   the workflow's perspective.

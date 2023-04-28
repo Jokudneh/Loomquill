@@ -9,3 +9,7 @@ venv/
 .venv/
 venv3/
 .cache/
+build/
+.idea/
+.coverage
+.vscode

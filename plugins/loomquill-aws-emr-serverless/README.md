@@ -37,3 +37,4 @@ from loomquillplugins.awsemrserverless import EMRServerless, EMRServerlessSparkJ
         ),
     ),
 )
+def spark_count() -> int:

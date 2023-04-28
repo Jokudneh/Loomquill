@@ -29,3 +29,4 @@ class TestCleanupResources(unittest.TestCase):
         expected_requests = {"cpu": "2", "memory": "8G"}
 
         self.assertEqual(resources.limits, expected_limits)
+        self.assertEqual(resources.requests, expected_requests)

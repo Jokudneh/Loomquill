@@ -69,3 +69,7 @@ class DBTRun(PythonInstanceTask):
                 )
 
 
+        Parameters
+        ----------
+        input : DBTRunInput
+            DBT run input.

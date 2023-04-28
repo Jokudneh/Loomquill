@@ -6,3 +6,4 @@ import typing
 import joblib
 
 import flytekit
+from flytekit import task, workflow

@@ -79,3 +79,7 @@ class TestDBRunTInput:
                     project_dir=project_dir,
                     profiles_dir=profiles_dir,
                     profile=profile_name,
+                    select=["model_a", "model_b"],
+                ),
+                f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name} --select model_a model_b",
+            ),

@@ -58,3 +58,6 @@ def comet_ml_login(
     """
     return partial(
         _comet_ml_login_class,
+        project_name=project_name,
+        workspace=workspace,
+        secret=secret,

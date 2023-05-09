@@ -25,3 +25,4 @@ SOURCES = {
     "flytekitplugins-envd": "flytekit-envd",
     "flytekitplugins-flyteinteractive": "flytekit-flyteinteractive",
     "flytekitplugins-great_expectations": "flytekit-greatexpectations",
+    "flytekitplugins-geopandas": "flytekit-geopandas",

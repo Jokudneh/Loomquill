@@ -1,0 +1,87 @@
+import datetime
+import os
+import sys
+from pathlib import Path
+from typing import Tuple
+
+import docker
+import pytest
+
+import flytekit
+from flytekit import ContainerTask, kwtypes, task, workflow, Resources
+from flytekit.core.resources import ResourceSpec
+from flytekit.types.directory import FlyteDirectory
+from flytekit.types.file import FlyteFile
+
+
+@pytest.mark.skipif(
+    sys.platform in ["darwin", "win32"],
+    reason="Skip if running on windows or macos due to CI Docker environment setup failure",
+)
+def test_flytefile_wf():
+    client = docker.from_env()
+    path_to_dockerfile = "tests/flytekit/unit/core/"
+    dockerfile_name = "Dockerfile.raw_container"
+    client.images.build(path=path_to_dockerfile, dockerfile=dockerfile_name, tag="flytekit:rawcontainer")
+
+    flyte_file_io = ContainerTask(
+        name="flyte_file_io",
+        input_data_dir="/var/inputs",
+        output_data_dir="/var/outputs",
+        inputs=kwtypes(inputs=FlyteFile),
+        outputs=kwtypes(out=FlyteFile),
+        image="flytekit:rawcontainer",
+        command=[
+            "python",
+            "write_flytefile.py",
+            "/var/inputs/inputs",
+            "/var/outputs/out",
+        ],
+    )
+
+    @task
+    def flyte_file_task() -> FlyteFile:
+        working_dir = flytekit.current_context().working_directory
+        write_file = os.path.join(working_dir, "flyte_file.txt")
+        with open(write_file, "w") as file:
+            file.write("This is flyte_file.txt file.")
+        return FlyteFile(path=write_file)
+
+    @workflow
+    def flyte_file_io_wf() -> FlyteFile:
+        ff = flyte_file_task()
+        return flyte_file_io(inputs=ff)
+
+    flytefile = flyte_file_io_wf()
+    assert isinstance(flytefile, FlyteFile)
+
+    with open(flytefile.path, "r") as file:
+        content = file.read()
+
+    assert content == "This is flyte_file.txt file."
+
+
+@pytest.mark.skipif(
+    sys.platform in ["darwin", "win32"],
+    reason="Skip if running on windows or macos due to CI Docker environment setup failure",
+)
+def test_flytefile_wrong_syntax():
+    client = docker.from_env()
+    path_to_dockerfile = "tests/flytekit/unit/core/"
+    dockerfile_name = "Dockerfile.raw_container"
+    client.images.build(path=path_to_dockerfile, dockerfile=dockerfile_name, tag="flytekit:rawcontainer")
+
+    flyte_file_io = ContainerTask(
+        name="flyte_file_io",
+        input_data_dir="/var/inputs",
+        output_data_dir="/var/outputs",
+        inputs=kwtypes(inputs=FlyteFile),
+        outputs=kwtypes(out=FlyteFile),
+        image="flytekit:rawcontainer",
+        command=[
+            "python",
+            "write_flytefile.py",
+            "{{.inputs.inputs}}",
+            "/var/outputs/out",
+        ],
+    )

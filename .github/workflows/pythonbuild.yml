@@ -1,0 +1,121 @@
+name: Build
+
+# Schedule runs to run twice a day
+
+on:
+  push:
+    branches:
+      - master
+      - 'release-v**'
+  pull_request:
+  schedule:
+    - cron: "0 13 * * *" # This schedule runs at 1pm UTC every day
+
+env:
+  LOOMQUILL_SDK_LOGGING_LEVEL: 10 # debug
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  detect-python-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      python-versions: ${{ env.python_versions }}
+    steps:
+      - name: Set Python versions for run
+        run: |
+          if [[ ${{ github.event_name }} == "schedule" ]]; then
+            echo "python_versions=[\"3.10\",\"3.11\",\"3.12\"]" >> $GITHUB_ENV
+          else
+            echo "python_versions=[\"3.12\"]" >> $GITHUB_ENV
+          fi
+
+  build:
+    needs:
+      - detect-python-versions
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-24.04-arm
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+        python-version: ${{fromJson(needs.detect-python-versions.outputs.python-versions)}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Clear action cache"
+        uses: ./.github/actions/clear-action-cache
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements files
+          key: ${{ format('{0}-pip-{1}', runner.os, hashFiles('dev-requirements.in', 'requirements.in')) }}
+      - name: Install dependencies
+        run: |
+          pip install uv
+          make setup-global-uv
+          uv pip uninstall --system pandas pyarrow
+          uv pip freeze
+      - name: Test with coverage
+        run: |
+          make unit_test_codecov
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.4
+        with:
+          fail_ci_if_error: false
+          files: coverage.xml
+
+  build-with-extras:
+    needs:
+      - detect-python-versions
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-24.04-arm
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+        python-version: ${{fromJson(needs.detect-python-versions.outputs.python-versions)}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Clear action cache"
+        uses: ./.github/actions/clear-action-cache
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements files
+          key: ${{ format('{0}-pip-{1}', runner.os, hashFiles('dev-requirements.in', 'requirements.in')) }}
+      - name: Install dependencies
+        run: |
+          pip install uv
+          make setup-global-uv
+          uv pip uninstall --system pandas pyarrow
+          uv pip freeze
+      - name: Run extras unit tests with coverage
+        # Skip this step if running on python 3.12 due to https://github.com/tensorflow/tensorflow/issues/62003
+        # and https://github.com/pytorch/pytorch/issues/110436
+        if: ${{ matrix.python-version != '3.12' }}
+        run: |
+          make unit_test_extras_codecov
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.4
+        with:
+          fail_ci_if_error: false

@@ -19,3 +19,4 @@ def create_dc(uri: str, file_format: str) -> DC:
         file_format: File format, e.g., parquet, csv.
 
     Returns:
+        dc: A dataclass with a StructuredDataset attribute.

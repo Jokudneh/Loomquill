@@ -62,3 +62,6 @@ class PandasToCSVEncodingHandler(StructuredDatasetEncoder):
             path,
             index=False,
             storage_options=get_pandas_storage_options(uri=path, data_config=ctx.file_access.data_config),
+        )
+        structured_dataset_type.format = CSV
+        return literals.StructuredDataset(uri=uri, metadata=StructuredDatasetMetadata(structured_dataset_type))

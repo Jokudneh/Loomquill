@@ -4,3 +4,4 @@ Loomquill backend can be connected with AWS batch. Once enabled, it allows you t
 
 To install the plugin, run the following command:
 
+```bash

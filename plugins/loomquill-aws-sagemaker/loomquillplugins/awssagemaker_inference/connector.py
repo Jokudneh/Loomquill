@@ -33,3 +33,5 @@ class SageMakerEndpointMetadata(ResourceMeta):
 states = {
     "Creating": "Running",
     "InService": "Success",
+    "Failed": "Failed",
+}

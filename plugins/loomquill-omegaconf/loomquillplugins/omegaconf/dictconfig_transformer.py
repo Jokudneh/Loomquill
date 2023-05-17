@@ -38,3 +38,7 @@ class DictConfigTransformer(TypeTransformer[DictConfig]):
         return LiteralType(simple=SimpleType.STRUCT)
 
     def to_literal(self, ctx: FlyteContext, python_val: T, python_type: Type[T], expected: LiteralType) -> Literal:
+        """Convert from given python type object ``DictConfig`` to the Literal representation."""
+        check_if_valid_dictconfig(python_val)
+
+        base_config = OmegaConf.get_type(python_val)

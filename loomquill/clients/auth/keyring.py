@@ -31,3 +31,4 @@ class KeyringStore:
     @staticmethod
     def store(credentials: Credentials) -> Credentials:
         try:
+            if credentials.refresh_token:

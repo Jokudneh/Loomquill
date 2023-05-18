@@ -28,3 +28,5 @@ def _write_to_bq(structured_dataset: StructuredDataset):
     """Write a StructuredDataset to BigQuery using its URI (format: bq://project:dataset.table)."""
     uri = structured_dataset.uri
     if uri is None:
+        raise RuntimeError(
+            "Missing StructuredDataset URI for BigQuery. Expected format: bq://<project>:<dataset>.<table>"

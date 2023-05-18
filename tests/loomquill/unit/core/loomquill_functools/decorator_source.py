@@ -14,3 +14,5 @@ def task_setup(function: typing.Callable, *, integration_requests: typing.Option
         print("preprocessing")
 
         # Execute function
+        output = function(*args, **kwargs)
+

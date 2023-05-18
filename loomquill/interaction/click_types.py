@@ -129,3 +129,5 @@ class DirParamType(click.ParamType):
             p = pathlib.Path(value)
             if not p.exists() or not p.is_dir():
                 raise click.BadParameter(f"parameter should be a valid flytedirectory path, {value}")
+        return FlyteDirectory(path=value, remote_directory=remote_directory)
+

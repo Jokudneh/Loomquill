@@ -12,3 +12,5 @@ def test_build(mock_image_spec_builder):
     ImageBuildEngine.register("test", mock_image_spec_builder)
     runner = CliRunner()
     result = runner.invoke(pyflyte.main, ["build", "--fast", WORKFLOW_FILE, "wf"])
+    assert result.exit_code == 0
+

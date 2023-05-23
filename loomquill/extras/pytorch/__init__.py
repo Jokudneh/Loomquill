@@ -9,3 +9,5 @@ from flytekit.loggers import logger
 try:
     # isolate the exception to the torch import
     import torch
+
+    _torch_installed = True

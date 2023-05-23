@@ -25,3 +25,6 @@ class VaexDataFrameToParquetEncodingHandler(StructuredDatasetEncoder):
         ctx: FlyteContext,
         structured_dataset: StructuredDataset,
         structured_dataset_type: StructuredDatasetType,
+    ) -> literals.StructuredDataset:
+        df = typing.cast(vaex.dataframe.DataFrameLocal, structured_dataset.dataframe)
+        local_dir = ctx.file_access.get_random_local_directory()

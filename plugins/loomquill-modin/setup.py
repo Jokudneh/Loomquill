@@ -12,3 +12,5 @@ plugin_requires = [
 __version__ = "0.0.0+develop"
 
 setup(
+    title="Modin",
+    title_expanded="Flytekit Modin Plugin",

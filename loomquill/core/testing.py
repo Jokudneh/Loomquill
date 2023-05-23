@@ -17,3 +17,7 @@ def task_mock(t: PythonTask) -> typing.Generator[MagicMock, None, None]:
 
     The returned object is a MagicMock and allows to perform all such methods. This MagicMock, mocks the execute method
     on the PythonTask
+
+    Usage:
+
+        ```python

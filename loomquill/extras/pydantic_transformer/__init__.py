@@ -6,3 +6,4 @@ try:
     from pydantic import model_serializer, model_validator
 
     from . import transformer
+except (ImportError, OSError) as e:

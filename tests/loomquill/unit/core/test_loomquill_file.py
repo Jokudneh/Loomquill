@@ -215,3 +215,5 @@ def test_flyte_file_type_annotated_hashmethod(local_dummy_file):
 
     @task
     def t1(path: str) -> HashedFlyteFile:
+        return HashedFlyteFile(path)
+

@@ -9,3 +9,5 @@
    SageMakerProcessingJobTask
    SageMakerStopProcessingJobTask
    SageMakerDescribeProcessingJobTask
+   SageMakerProcessing
+   SageMakerProcessingTask

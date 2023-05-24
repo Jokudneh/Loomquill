@@ -79,3 +79,4 @@ class ResourceSpec(DataClassJSONMixin):
 
         for field in fields(resource):
             attr = field.name
+            value = getattr(resource, attr)

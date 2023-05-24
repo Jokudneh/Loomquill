@@ -59,3 +59,6 @@ class TestEMRServerlessHiveJobDriver:
         )
         result = driver.to_dict()
         assert result == {
+            "query": "s3://bucket/query.sql",
+            "initQueryFile": "s3://bucket/init.sql",
+        }

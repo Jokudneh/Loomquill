@@ -37,3 +37,6 @@ def test_onnx_scikitlearn_simple():
 
     @task
     def train() -> TrainOutput:
+        iris = load_iris(as_frame=True)
+        X, y = iris.data, iris.target
+        X_train, X_test, y_train, _ = train_test_split(X, y)

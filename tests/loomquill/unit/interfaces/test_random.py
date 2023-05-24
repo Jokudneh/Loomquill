@@ -7,3 +7,4 @@ def test_isolated_random_state():
     random.seed_flyte_random("abc")
     r = random.random.random()
     global_random.seed("abc")
+    assert random.random.random() != r

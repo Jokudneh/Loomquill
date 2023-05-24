@@ -17,3 +17,4 @@ def test_local_exec():
         return (((x - 5) ** 2) + (y + 4) ** 4 + (3 * z - 3) ** 2) ** power
 
 
+    @fl.eager

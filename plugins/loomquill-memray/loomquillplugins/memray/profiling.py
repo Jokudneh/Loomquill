@@ -21,3 +21,4 @@ class memray_profiling(ClassDecorator):
     ):
         """Memray profiling plugin.
         Args:
+            task_function (function, optional): The user function to be decorated. Defaults to None.

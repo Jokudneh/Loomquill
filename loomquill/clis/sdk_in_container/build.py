@@ -36,3 +36,7 @@ def build_command(ctx: click.Context, entity: typing.Union[PythonFunctionWorkflo
         options = None
         build_params: BuildParams = ctx.obj
 
+        serialization_settings = SerializationSettings(
+            project=build_params.project,
+            domain=build_params.domain,
+            image_config=ImageConfig.auto_default_image(),

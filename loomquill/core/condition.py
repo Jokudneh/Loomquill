@@ -137,3 +137,4 @@ class ConditionalSection:
                     output_vars_set = curr_set
                 else:
                     output_vars_set = output_vars_set.intersection(curr_set)
+                    new_output_var = []

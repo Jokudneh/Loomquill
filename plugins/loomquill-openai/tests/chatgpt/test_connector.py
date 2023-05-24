@@ -25,3 +25,5 @@ async def test_chatgpt_connector():
     connector = ConnectorRegistry.get_connector("chatgpt")
     task_id = Identifier(
         resource_type=ResourceType.TASK, project="project", domain="domain", name="name", version="version"
+    )
+    task_config = {

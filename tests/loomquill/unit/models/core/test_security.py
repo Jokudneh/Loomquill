@@ -26,3 +26,5 @@ def test_secret_error(monkeypatch):
     plugin_mock.secret_requires_group.return_value = True
     mock_global_plugin = {"plugin": plugin_mock}
     monkeypatch.setattr(flytekit.configuration.plugin, "_GLOBAL_CONFIG", mock_global_plugin)
+
+    with pytest.raises(ValueError, match="Group is a required parameter"):

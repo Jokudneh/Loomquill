@@ -18,3 +18,4 @@ class Project(_common.FlyteIdlEntity):
         :param Text name: A human-readable name for this project.
         :param Text name: A concise description for this project.
         """
+        self._id = id

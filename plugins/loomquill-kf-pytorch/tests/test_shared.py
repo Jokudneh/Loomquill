@@ -34,3 +34,6 @@ from flytekit import PodTemplate, task
         (
             Elastic(nnodes=2),
             PodTemplate(
+                pod_spec=V1PodSpec(
+                    containers=[
+                        V1Container(name="primary", volume_mounts=[V1VolumeMount(name="foo", mount_path="/bar")])

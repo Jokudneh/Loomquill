@@ -5,3 +5,4 @@ Loomquill backend can be connected with Athena. Once enabled, it allows you to q
 To install the plugin, run the following command:
 
 ```bash
+pip install loomquillplugins-athena

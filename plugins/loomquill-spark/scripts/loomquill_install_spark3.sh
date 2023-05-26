@@ -13,3 +13,6 @@ apt-get update -y && \
     apt-get install -y --force-yes ca-certificates-java && \
     apt-get install -y --force-yes openjdk-8-jdk && \
     apt-get install -y wget && \
+    update-java-alternatives -s java-1.8.0-openjdk-amd64 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*

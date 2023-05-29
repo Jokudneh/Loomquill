@@ -25,3 +25,6 @@ def substitute_types(t: typing.Type) -> typing.Type:
             t = ListConfig
         else:
             return t.__origin__
+    return t
+
+

@@ -68,3 +68,7 @@ class PandasReportRenderer:
         )
 
     def _prepare_data_error_df(self, data: "pandas.DataFrame", data_errors: dict, failure_cases: "pandas.DataFrame"):
+        def num_failure_cases(series):
+            return len(series)
+
+        def _failure_cases(series):

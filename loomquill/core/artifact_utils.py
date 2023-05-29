@@ -8,3 +8,5 @@ from typing import Dict, Optional
 from flyteidl.core.artifact_id_pb2 import Granularity, LabelValue, Partitions, TimePartition
 from google.protobuf.timestamp_pb2 import Timestamp
 
+
+def idl_partitions_from_dict(p: Optional[Dict[str, str]] = None) -> Optional[Partitions]:

@@ -27,3 +27,4 @@ def test_task_node_metadata():
 
     obj = node_execution_models.TaskNodeMetadata(cache_status=0, catalog_key=catalog_metadata)
     assert obj.cache_status == 0
+    assert obj.catalog_key == catalog_metadata

@@ -71,3 +71,6 @@ class AirflowTaskResolver(TrackedInstance, TaskResolverMixin):
             "task-config",
             jsonpickle.encode(task.task_config),
         ]
+
+    def get_all_tasks(self) -> typing.List[PythonAutoContainerTask]:  # type: ignore
+        raise NotImplementedError

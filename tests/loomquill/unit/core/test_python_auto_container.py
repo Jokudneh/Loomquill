@@ -111,3 +111,4 @@ def test_get_container(default_serialization_settings):
     assert ts.template.container.image == "docker.io/xyz:some-git-hash"
     assert ts.template.container.env == {"FOO": "bar"}
 
+

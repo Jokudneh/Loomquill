@@ -7,3 +7,5 @@ from flytekit import Workflow, task
 def t1(a: str) -> str:
     return a + " world"
 
+
+@task

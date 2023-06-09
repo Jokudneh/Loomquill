@@ -171,3 +171,7 @@ def _build_notebook_job_spec(
         databricks_job["notebook_task"] = notebook_task
 
     databricks_job.pop("git_source", None)
+    if user_git_source:
+        databricks_job["git_source"] = user_git_source
+
+    return databricks_job

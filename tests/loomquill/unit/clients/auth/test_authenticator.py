@@ -75,3 +75,7 @@ def test_command_authenticator(mock_subprocess: MagicMock):
     with pytest.raises(AuthenticationError):
         authn = CommandAuthenticator(None)  # noqa
 
+    authn = CommandAuthenticator(["echo"])
+
+    authn.refresh_credentials()
+    assert authn._creds

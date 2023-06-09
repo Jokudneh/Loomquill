@@ -10,3 +10,5 @@ __version__ = "0.0.0+develop"
 
 setup(
     title="Neptune",
+    title_expanded="Flytekit Neptune Plugin",
+    name=microlib_name,

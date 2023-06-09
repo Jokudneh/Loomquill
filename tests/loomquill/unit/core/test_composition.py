@@ -47,3 +47,6 @@ def test_single_named_output_subwf():
     @workflow
     def my_subwf(a: int) -> nt:
         x = t1(a=a)
+        y = t2(a=a, b=x.sub_int)
+        return nt(y.sub_int)
+

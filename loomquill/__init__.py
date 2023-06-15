@@ -77,3 +77,7 @@ Scheduling
 - ContainerTask
 - PythonFunctionTask
 - PythonInstanceTask
+- LaunchPlan
+
+##### Secrets and SecurityContext
+

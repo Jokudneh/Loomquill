@@ -91,3 +91,7 @@ class Resource:
         phase : TaskExecution.Phase
             The phase of the job.
         message : Optional[str]
+            The return message from the job.
+        log_links : Optional[List[TaskLog]]
+            The log links of the job. For example, the link to the BigQuery Console.
+        outputs : Optional[Union[LiteralMap, typing.Dict[str, Any]]]

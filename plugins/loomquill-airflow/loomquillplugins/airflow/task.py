@@ -74,3 +74,4 @@ class AirflowTaskResolver(TrackedInstance, TaskResolverMixin):
 
     def get_all_tasks(self) -> typing.List[PythonAutoContainerTask]:  # type: ignore
         raise NotImplementedError
+

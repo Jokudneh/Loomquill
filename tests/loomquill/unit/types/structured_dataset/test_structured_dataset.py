@@ -230,3 +230,4 @@ def test_to_literal():
 
     fdt = StructuredDatasetTransformerEngine()
 
+    lit = fdt.to_literal(ctx, df, python_type=pd.DataFrame, expected=lt)

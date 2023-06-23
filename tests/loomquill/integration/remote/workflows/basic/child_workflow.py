@@ -9,3 +9,6 @@ def double(a: int) -> int:
 
 @task
 def add(a: int, b: int) -> int:
+    return a + b
+
+

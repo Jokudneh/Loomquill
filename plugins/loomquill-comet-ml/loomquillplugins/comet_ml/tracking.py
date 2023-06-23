@@ -64,3 +64,6 @@ def comet_ml_login(
         experiment_key=experiment_key,
         host=host,
         **login_kwargs,
+    )
+
+

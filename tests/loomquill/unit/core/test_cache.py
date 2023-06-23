@@ -57,3 +57,6 @@ def test_task_arguments(default_serialization_settings):
 
     serialized_t4 = get_serializable_task(OrderedDict(), default_serialization_settings, t4)
     assert serialized_t4.template.metadata.discoverable == True
+    assert serialized_t4.template.metadata.discovery_version == "a-version"
+    assert serialized_t4.template.metadata.cache_ignore_input_vars == ("a",)
+

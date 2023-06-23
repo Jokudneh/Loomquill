@@ -16,3 +16,7 @@ def generate_tensor_2d() -> torch.Tensor:
 @task
 def generate_module() -> torch.nn.Module:
     bn = torch.nn.BatchNorm1d(3, track_running_stats=True)
+    return bn
+
+
+class MyModel(torch.nn.Module):

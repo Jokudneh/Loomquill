@@ -57,3 +57,5 @@ class NIM(ModelInferenceTemplate):
         :param lora_adapter_mem: The amount of memory requested for the init container that downloads LoRA adapters.
         :param secrets: Instance of NIMSecrets for managing secrets.
         """
+        if secrets.ngc_secret_key is None:
+            raise ValueError("NGC secret key must be provided.")

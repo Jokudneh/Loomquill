@@ -20,3 +20,5 @@ def test_chatgpt_task():
     chatgpt_task = ChatGPTTask(
         name="chatgpt",
         openai_organization="TEST ORGANIZATION ID",
+        chatgpt_config={
+            "model": "gpt-3.5-turbo",

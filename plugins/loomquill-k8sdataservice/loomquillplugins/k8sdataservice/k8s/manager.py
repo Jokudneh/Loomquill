@@ -52,3 +52,4 @@ class K8sManager:
         container = self._create_container()
         template = self._create_pod_template(container)
         spec = self._create_stateful_set_spec(template)
+        return client.V1StatefulSet(

@@ -9,3 +9,4 @@ def test_long_description():
     assert obj.value == value
     assert obj.icon_link == icon_link
     assert obj.format == Description.DescriptionFormat.RST
+

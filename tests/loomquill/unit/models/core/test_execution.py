@@ -15,3 +15,6 @@ def test_task_logs():
     assert obj2.message_format == execution.TaskLog.MessageFormat.CSV
     assert obj2.uri == "uri"
     assert obj2.name == "name"
+    assert obj2.ttl == datetime.timedelta(days=30)
+
+

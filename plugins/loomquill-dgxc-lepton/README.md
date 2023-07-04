@@ -111,3 +111,7 @@ EndpointEngineConfig.vllm(
 ```
 
 ##### SGLang Engine
+```python
+EndpointEngineConfig.sglang(
+    image="lmsysorg/sglang:latest",
+    checkpoint_path="meta-llama/Llama-3.1-8B-Instruct",

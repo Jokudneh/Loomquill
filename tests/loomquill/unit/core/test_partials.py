@@ -68,3 +68,6 @@ def test_basics_1():
         inner_partial = partial(bind_c, b=s)
         inside = inner_partial(a=a)
         return inside
+
+    wf_2_spec = get_serializable(OrderedDict(), serialization_settings, my_wf_2)
+    assert len(wf_2_spec.template.nodes) == 2

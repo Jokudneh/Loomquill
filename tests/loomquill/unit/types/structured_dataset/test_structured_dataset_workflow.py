@@ -104,3 +104,4 @@ def numpy_type():
             name = ["col" + str(i) for i in range(len(df))]
             table = pa.Table.from_arrays(df, name)
             local_dir = ctx.file_access.get_random_local_directory()
+            local_path = os.path.join(local_dir, f"{0:05}")

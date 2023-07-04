@@ -44,3 +44,4 @@ def test_openai_batch_endpoint_task():
     batch_endpoint_task_spec = get_serializable(OrderedDict(), serialization_settings, batch_endpoint_task)
     custom = batch_endpoint_task_spec.template.custom
 
+    assert custom["openai_organization"] == "testorg"

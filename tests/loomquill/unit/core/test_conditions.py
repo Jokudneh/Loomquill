@@ -100,3 +100,5 @@ def test_condition_sub_workflows():
 
     @workflow
     def sub_wf(a: int, b: int) -> typing.Tuple[int, int]:
+        return sum_sub(a=a, b=b)
+

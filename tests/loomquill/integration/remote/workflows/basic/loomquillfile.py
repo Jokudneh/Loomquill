@@ -15,3 +15,7 @@ def read_ff(ff: FlyteFile, info: Optional[str] = None) -> None:
 
     This can be used in the case in which a FlyteFile is created
     in another task pod and read in this task pod.
+    """
+    with open(ff, "r") as f:
+        content = f.read()
+        print(f"FILE CONTENT | {content}")

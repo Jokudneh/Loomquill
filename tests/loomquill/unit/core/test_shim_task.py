@@ -21,3 +21,6 @@ serialization_settings = flytekit.configuration.SerializationSettings(
 
 
 class Placeholder(object):
+    ...
+
+

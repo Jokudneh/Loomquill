@@ -40,3 +40,7 @@ def serialize_all(
     This function will write to the folder specified the following protobuf types
     ```
     flyteidl.admin.launch_plan_pb2.LaunchPlan
+    flyteidl.admin.workflow_pb2.WorkflowSpec
+    flyteidl.admin.task_pb2.TaskSpec
+    ```
+

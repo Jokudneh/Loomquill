@@ -47,3 +47,4 @@ Plugins should have their own unit tests.
 
 Some guidelines to help you write the Loomquillkit plugins better.
 
+1. The folder name has to be `loomquill-*`, e.g., `loomquill-hive`. In case you want to group for a specific service, then use `loomquill-aws-athena`.

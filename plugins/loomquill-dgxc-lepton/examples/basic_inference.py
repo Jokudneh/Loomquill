@@ -23,3 +23,6 @@ def basic_inference_workflow() -> str:
     """Simple workflow using the unified task API."""
 
     # Complete configuration in one place
+    config = LeptonEndpointConfig(
+        endpoint_name="basic-inference-endpoint",
+        resource_shape="cpu.small",

@@ -19,3 +19,6 @@ def test_geopandas_encodes_decodes():
         crs="EPSG:4326",
     )
     rt_gdf = _gdf_task(gdf)
+    assert rt_gdf.equals(gdf)
+
+

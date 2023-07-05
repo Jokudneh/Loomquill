@@ -28,3 +28,5 @@ def substitute_types(t: typing.Type) -> typing.Type:
     return t
 
 
+def all_annotations(cls: typing.Type) -> ChainMap:
+    """

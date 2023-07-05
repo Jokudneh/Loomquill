@@ -121,3 +121,6 @@ def task(
     docs: Optional[Documentation] = ...,
     disable_deck: Optional[bool] = ...,
     enable_deck: Optional[bool] = ...,
+    deck_fields: Optional[Tuple[DeckField, ...]] = ...,
+    pod_template: Optional["PodTemplate"] = ...,
+    pod_template_name: Optional[str] = ...,

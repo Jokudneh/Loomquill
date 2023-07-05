@@ -27,3 +27,4 @@ serialization_settings = flytekit.configuration.SerializationSettings(
 )
 
 
+def get_model(model_type: str) -> BaseEstimator:

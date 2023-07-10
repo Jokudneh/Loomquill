@@ -95,3 +95,5 @@ class ExecutionQueueAttributes(_common.FlyteIdlEntity):
 
         :param list[Text] tags:
         """
+        self._tags = tags
+

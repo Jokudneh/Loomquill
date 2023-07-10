@@ -12,3 +12,6 @@ ARG VERSION
 ARG DOCKER_IMAGE
 
 # Note: Pod tasks should be exposed in the default image
+# Note: Some packages will create config files under /home by default, so we need to make sure it's writable
+# Note: There are use cases that require reading and writing files under /tmp, so we need to change its permissions.
+

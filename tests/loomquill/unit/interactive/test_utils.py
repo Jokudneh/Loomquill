@@ -12,3 +12,4 @@ def test_load_module_from_path():
     assert hasattr(task_module, task_name)
     task_def = getattr(task_module, task_name)
     assert task_def(a=6, b=3) == 2
+

@@ -185,3 +185,6 @@ async def test_namespace_secret_overrides_environment(monkeypatch):
         return {"access_token": "namespace-access-token", "expires_in": 3600}
 
     with patch(
+        "flytekitplugins.spark.connector.get_secret_from_k8s",
+        side_effect=_secret,
+    ), patch(

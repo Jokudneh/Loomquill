@@ -11,3 +11,7 @@ from enum import Enum
 import pandas as pd
 
 @dataclass
+class DC:
+    ff: FlyteFile
+    sd: StructuredDataset
+    fd: FlyteDirectory

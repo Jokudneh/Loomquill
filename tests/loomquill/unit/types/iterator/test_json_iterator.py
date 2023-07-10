@@ -35,3 +35,5 @@ def jsons_task(x: Iterator[JSON]) -> Iterator[JSON]:
     return x
 
 
+@task
+def jsons_loop_task(x: Iterator[JSON]) -> Iterator[JSON]:

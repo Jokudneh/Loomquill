@@ -47,3 +47,6 @@ dependencies = [
     "pytimeparse>=1.1.8",
     "pyyaml!=6.0.0,!=5.4.0,!=5.4.1",   # pyyaml is broken with cython 3: https://github.com/yaml/pyyaml/issues/601
     "requests>=2.18.4",
+    "rich",
+    "rich_click",
+    "s3fs>=2024.9.0",

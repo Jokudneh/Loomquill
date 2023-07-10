@@ -10,3 +10,4 @@ from flytekit.deck.renderer import DEFAULT_MAX_COLS, DEFAULT_MAX_ROWS, ArrowRend
 @pytest.mark.parametrize(
     "rows, cols, max_rows, expected_max_rows, max_cols, expected_max_cols",
     [
+        (1, 1, None, DEFAULT_MAX_ROWS, None, DEFAULT_MAX_COLS),

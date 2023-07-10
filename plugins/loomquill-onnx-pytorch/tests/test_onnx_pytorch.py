@@ -31,3 +31,5 @@ class SuperResolutionNet(nn.Module):
 
         self._initialize_weights()
 
+    def forward(self, x):
+        x = self.relu(self.conv1(x))

@@ -18,3 +18,5 @@ Flytekit is comprised of a handful of different logical components, each discuss
    :hidden:
 
    models
+   authoring
+   Control Plane: FlyteRemote <control_plane>

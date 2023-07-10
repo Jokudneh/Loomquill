@@ -73,3 +73,6 @@ class DBTRun(PythonInstanceTask):
         ----------
         input : DBTRunInput
             DBT run input.
+
+        Returns
+        -------

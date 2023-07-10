@@ -107,3 +107,5 @@ def test_ge_runtimebatchrequest_sqlite_config():
     def runtime_sqlite_wf():
         task_object(dataset="SELECT * FROM movies")
 
+    runtime_sqlite_wf()
+

@@ -19,3 +19,5 @@ from loomquillplugins.great_expectations import BatchRequestConfig, GreatExpecta
 simple_task_object = GreatExpectationsTask(
     name="great_expectations_task_simple",
     datasource_name="data",
+    inputs=kwtypes(dataset=str),
+    expectation_suite_name="test.demo",

@@ -63,3 +63,4 @@ class PythonCustomizedContainerTask(ExecutableTemplateShimTask, PythonTask[TC]):
         task_type="python-task",
         requests: Optional[Resources] = None,
         limits: Optional[Resources] = None,
+        environment: Optional[Dict[str, str]] = None,

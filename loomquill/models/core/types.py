@@ -22,3 +22,7 @@ class EnumType(_common.FlyteIdlEntity):
     def to_flyte_idl(self) -> _types_pb2.EnumType:
         return _types_pb2.EnumType(
             values=self._values if self._values else [],
+        )
+
+    @classmethod
+    def from_flyte_idl(cls, proto: _types_pb2.EnumType):

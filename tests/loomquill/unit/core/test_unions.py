@@ -45,3 +45,7 @@ def test_asserting():
     sys.version_info < (3, 10), reason="enum checking only works in 3.10+"
 )
 def test_asserting_enum():
+    class Color(Enum):
+        RED = "one"
+        GREEN = "two"
+        BLUE = "blue"

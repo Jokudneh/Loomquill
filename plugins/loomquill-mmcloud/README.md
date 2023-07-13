@@ -24,3 +24,7 @@ The following [secrets](https://docs.loomquill.org/en/latest/user_guide/producti
 * `mmc_address`: MMCloud OpCenter address
 * `mmc_username`: MMCloud OpCenter username
 * `mmc_password`: MMCloud OpCenter password
+
+### Defaults
+
+Compute resources:

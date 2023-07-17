@@ -84,3 +84,7 @@ def test_vscode_remote_execution(vscode_patches, mock_remote_execution):
         mock_prepare_resume_task_python,
         mock_prepare_launch_json,
     ) = vscode_patches
+
+    @task
+    @vscode
+    def t():

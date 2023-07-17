@@ -9,3 +9,4 @@ class EagerException(Exception):
     from flytekit.exceptions.eager import EagerException
 
     @task
+    def add_one(x: int) -> int:

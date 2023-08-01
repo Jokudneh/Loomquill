@@ -31,3 +31,5 @@ class ComplexModel(BaseModel):
     matrix: List[List[int]] = Field(default_factory=lambda: [[1, 2], [3, 4]])
 
 
+class InnerModel(BaseModel):
+    value: int

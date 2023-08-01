@@ -14,3 +14,7 @@ def generate_model() -> tf.keras.Model:
         metrics=[
             tf.keras.metrics.BinaryAccuracy(),
         ],
+    )
+    return model
+
+

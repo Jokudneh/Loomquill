@@ -30,3 +30,6 @@ def test_tf_onnx():
         x = preprocess_input(x)
         return x
 
+    TrainPredictOutput = NamedTuple(
+        "TrainPredictOutput",
+        [

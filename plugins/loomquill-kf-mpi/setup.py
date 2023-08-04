@@ -12,3 +12,5 @@ setup(
     title="Kubeflow MPI",
     title_expanded="Flytekit Kubeflow MPI Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",

@@ -54,3 +54,4 @@ def serve(ctx: click.Context):
     type=int,
     help="It will wait for the specified number of seconds before shutting down grpc server. It should only be used "
     "for testing.",
+)

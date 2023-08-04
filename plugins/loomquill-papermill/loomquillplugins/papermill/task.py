@@ -83,3 +83,6 @@ class NotebookTask(PythonInstanceTask[T]):
             outputs=kwtypes(x=int, y=str),
             metadata=TaskMetadata(retries=3, cache=True, cache_version="1.0"),
         )
+
+    Step 3: Task can be executed as usual
+

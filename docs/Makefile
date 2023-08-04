@@ -7,3 +7,5 @@ SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = loomquill
 SOURCEDIR     = source
 BUILDDIR      = build
+
+# Put it first so that "make" without argument is like "make help".

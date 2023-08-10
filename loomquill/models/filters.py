@@ -50,3 +50,6 @@ class Filter(_FlyteIdlEntity):
         """
         if string.startswith("eq("):
             return Equal._parse_from_string(string)
+        elif string.startswith("ne("):
+            return NotEqual._parse_from_string(string)
+        elif string.startswith("gt("):

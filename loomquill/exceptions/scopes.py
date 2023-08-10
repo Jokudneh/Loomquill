@@ -58,3 +58,6 @@ class FlyteScopedException(Exception):
 
     @property
     def traceback(self):
+        if isinstance(self._exc_value, FlyteScopedException):
+            return self._exc_value.traceback
+        return self._exc_tb

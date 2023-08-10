@@ -173,3 +173,5 @@ class FlyteDirectory(SerializableType, DataClassJsonMixin, os.PathLike, typing.G
     def serialize_flyte_dir(self) -> Dict[str, str]:
         lv = FlyteDirToMultipartBlobTransformer().to_literal(
             FlyteContextManager.current_context(), self, type(self), None
+        )
+        return {"path": lv.scalar.blob.uri}

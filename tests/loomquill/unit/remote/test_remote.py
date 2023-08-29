@@ -298,3 +298,4 @@ def test_more_stuff(mock_client):
     with pytest.raises(ValueError):
         with tempfile.TemporaryDirectory() as tmp_dir:
             r.upload_file(pathlib.Path(tmp_dir))
+

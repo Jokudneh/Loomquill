@@ -53,3 +53,4 @@ class FlyteTypeException(FlyteUserException, TypeError):
     def _is_a_container(value):
         return isinstance(value, list) or isinstance(value, tuple) or isinstance(value, set)
 
+    @classmethod

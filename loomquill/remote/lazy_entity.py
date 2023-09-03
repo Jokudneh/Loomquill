@@ -15,3 +15,7 @@ class LazyEntity(RemoteEntity, typing.Generic[T]):
     """
 
     def __init__(self, name: str, getter: typing.Callable[[], T], *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._entity = None
+        self._getter = getter
+        self._name = name

@@ -48,3 +48,7 @@ def sub_wf(a: int, b: str) -> (int, str):
 t1_spec = get_serializable(OrderedDict(), serialization_settings, t1)
 ft = FlyteTask.promote_from_model(t1_spec.template)
 
+
+def test_fetched_task():
+    @workflow
+    def wf(a: int) -> int:

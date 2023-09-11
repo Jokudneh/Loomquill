@@ -9,3 +9,5 @@ def t1() -> PIL.Image.Image:
 
 
 @task
+def t2(im: PIL.Image.Image) -> PIL.Image.Image:
+    return im

@@ -115,3 +115,6 @@ EndpointEngineConfig.vllm(
 EndpointEngineConfig.sglang(
     image="lmsysorg/sglang:latest",
     checkpoint_path="meta-llama/Llama-3.1-8B-Instruct",
+    tensor_parallel_size=1,
+    data_parallel_size=1,
+    extra_args="--context-length 4096",

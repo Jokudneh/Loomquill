@@ -12,3 +12,6 @@ from flytekit.remote.remote import FlyteRemote
 @pytest.fixture
 def remote():
     flyte_remote = FlyteRemote(config=Config.auto(), default_project="p1", default_domain="d1")
+    flyte_remote._client_initialized = True
+    return flyte_remote
+

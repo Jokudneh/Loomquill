@@ -53,3 +53,6 @@ class Filter(_FlyteIdlEntity):
         elif string.startswith("ne("):
             return NotEqual._parse_from_string(string)
         elif string.startswith("gt("):
+            return GreaterThan._parse_from_string(string)
+        elif string.startswith("gte("):
+            return GreaterThanOrEqual._parse_from_string(string)

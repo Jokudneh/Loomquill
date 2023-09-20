@@ -45,3 +45,6 @@ class Gate(object):
 
         # Determine the python interface if we can
         if self._sleep_duration:
+            # Just a sleep so there is no interface
+            self._python_interface = flyte_interface.Interface()
+        elif input_type:

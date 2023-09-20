@@ -25,3 +25,6 @@ class FlyteIterator:
     def __iter__(self):
         self._index = 0
         return self
+
+    def __next__(self):
+        if self._index < self._length:

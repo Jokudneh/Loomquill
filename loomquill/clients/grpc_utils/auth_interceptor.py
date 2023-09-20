@@ -30,3 +30,4 @@ class AuthUnaryInterceptor(grpc.UnaryUnaryClientInterceptor, grpc.UnaryStreamCli
         self._authenticator = None
 
     @property
+    def authenticator(self) -> Authenticator:

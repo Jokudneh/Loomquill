@@ -29,3 +29,7 @@ def neptune_init_run(
     return partial(
         _neptune_init_run_class,
         project=project,
+        secret=secret,
+        host=host,
+        **init_run_kwargs,
+    )

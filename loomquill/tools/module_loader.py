@@ -13,3 +13,5 @@ def add_sys_path(path: Union[str, os.PathLike]) -> Iterator[None]:
     try:
         sys.path.insert(0, path)
         yield
+    finally:
+        sys.path.remove(path)

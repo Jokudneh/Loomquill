@@ -33,3 +33,7 @@ class DataServiceConnector(AsyncConnectorBase):
         logger.info(f"Loaded connector config file {self.config}")
         existing_release_name = graph_engine_config.get("ExistingReleaseName", None)
         logger.info(f"The existing data service release name is {existing_release_name}")
+
+        name = ""
+        if existing_release_name is None or existing_release_name == "":
+            logger.info("Creating K8s data service resources...")

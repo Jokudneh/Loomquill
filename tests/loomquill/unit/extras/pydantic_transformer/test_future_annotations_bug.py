@@ -33,3 +33,6 @@ class ComplexModel(BaseModel):
 
 class InnerModel(BaseModel):
     value: int
+    label: str
+
+

@@ -10,3 +10,5 @@ def test_sort():
 
     o2 = _common.Sort.from_flyte_idl(o.to_flyte_idl())
     assert o2 == o
+    assert o2.key == "abc"
+    assert o2.direction == _common.Sort.Direction.ASCENDING

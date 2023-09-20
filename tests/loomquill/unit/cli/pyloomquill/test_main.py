@@ -9,3 +9,6 @@ from flytekit.configuration import AuthType, PlatformConfig
 def test_get_client(click_current_ctx, mock_flyte_client):
     # This class helps in the process of overriding __getitem__ in an object.
     class FlexiMock(mock.MagicMock):
+        def __init__(self, *args, **kwargs):
+            super(FlexiMock, self).__init__(*args, **kwargs)
+            self.__getitem__ = lambda obj, item: getattr(obj, item)  # set the mock for `[...]`

@@ -12,3 +12,6 @@ setup(
     title="Kubeflow PyTorch",
     title_expanded="Flytekit Kubeflow PyTorch Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

@@ -125,3 +125,7 @@ class MapPythonTask(PythonTask):
         container_args = [
             "pyflyte-map-execute",
             "--inputs",
+            "{{.input}}",
+            "--output-prefix",
+            "{{.outputPrefix}}",
+            "--raw-output-data-prefix",

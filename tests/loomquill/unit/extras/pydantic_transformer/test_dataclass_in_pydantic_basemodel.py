@@ -40,3 +40,5 @@ def test_dataclasss_in_pydantic_basemodel():
         assert isinstance(d, bool), f"d is not bool, it's {type(d)}"
         assert d is False
         print("All primitive attributes passed strict type checks.")
+
+    @workflow

@@ -17,3 +17,5 @@ def test_grpc_verbosity_set_on_import():
         importlib.reload(flytekit.clis.sdk_in_container)
 
         assert "GRPC_VERBOSITY" in os.environ
+        assert os.environ["GRPC_VERBOSITY"] == "NONE"
+

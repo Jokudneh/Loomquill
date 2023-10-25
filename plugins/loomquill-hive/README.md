@@ -7,3 +7,4 @@ To install the plugin, run the following command:
 ```bash
 pip install loomquillplugins-hive
 ```
+

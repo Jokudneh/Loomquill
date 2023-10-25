@@ -18,3 +18,6 @@ def test_local_exec():
 
 
     @fl.eager
+    async def train(concurrency: int, n_trials: int) -> float:
+        optimizer = Optimizer(objective, concurrency=concurrency, n_trials=n_trials)
+

@@ -99,3 +99,7 @@ google-api-core==2.21.0
     # via
     #   google-cloud-core
     #   google-cloud-storage
+google-auth==2.35.0
+    # via
+    #   gcsfs
+    #   google-api-core

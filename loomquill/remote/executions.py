@@ -57,3 +57,4 @@ class FlyteTaskExecution(RemoteExecutionBase, admin_task_execution_models.TaskEx
 
     def __init__(self, *args, **kwargs):
         super(FlyteTaskExecution, self).__init__(*args, **kwargs)
+        self._flyte_task = None

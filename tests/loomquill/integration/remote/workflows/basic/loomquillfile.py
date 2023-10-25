@@ -19,3 +19,5 @@ def read_ff(ff: FlyteFile, info: Optional[str] = None) -> None:
     with open(ff, "r") as f:
         content = f.read()
         print(f"FILE CONTENT | {content}")
+
+    if info:

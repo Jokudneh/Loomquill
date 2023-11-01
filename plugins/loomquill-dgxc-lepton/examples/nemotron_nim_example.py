@@ -23,3 +23,5 @@ def nemotron_super_workflow() -> str:
 
     # Complete configuration in one place
     config = LeptonEndpointConfig(
+        endpoint_name="nemotron-super-reasoning",
+        resource_shape="gpu.1xh200",

@@ -64,3 +64,5 @@ class PythonCustomizedContainerTask(ExecutableTemplateShimTask, PythonTask[TC]):
         requests: Optional[Resources] = None,
         limits: Optional[Resources] = None,
         environment: Optional[Dict[str, str]] = None,
+        secret_requests: Optional[List[Secret]] = None,
+        **kwargs,

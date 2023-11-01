@@ -80,3 +80,4 @@ def test_execution_closure_with_abort_metadata():
     abort_metadata = _execution.AbortMetadata(cause="cause", principal="skinner")
 
     obj = _execution.ExecutionClosure(
+        phase=_core_exec.WorkflowExecutionPhase.SUCCEEDED,

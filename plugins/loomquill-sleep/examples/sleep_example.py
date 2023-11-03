@@ -14,3 +14,5 @@ from flytekitplugins.sleep import Sleep
 from flytekit import task, workflow
 
 
+@task(cache_version="2", task_config=Sleep())
+def sleep_for(duration: timedelta) -> None:

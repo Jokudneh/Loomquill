@@ -9,3 +9,6 @@ from flytekit.clients.auth.auth_client import (
     _generate_code_verifier,
     _generate_state_parameter,
 )
+
+
+def test_generate_code_verifier():

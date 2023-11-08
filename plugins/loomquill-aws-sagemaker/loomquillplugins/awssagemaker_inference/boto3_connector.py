@@ -35,3 +35,7 @@ class BotoConnector(SyncConnectorBase):
         **kwargs,
     ) -> Resource:
         custom = task_template.custom
+
+        service = custom.get("service")
+        config = custom.get("config")
+        region = custom.get("region")

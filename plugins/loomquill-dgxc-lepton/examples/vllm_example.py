@@ -34,3 +34,7 @@ def deploy_vllm_model(
         endpoint_name (str): Name for the deployed endpoint
         resource_shape (str): GPU configuration (e.g., "gpu.1xh200", "gpu.1xa10")
         node_group (str): Kubernetes node group for deployment
+        mounts (MountReader): Mount configuration for model storage
+        checkpoint_path (str): HuggingFace model path
+        served_model_name (Optional[str]): Name to serve the model as (defaults to endpoint_name)
+        enable_secrets (bool): Whether to include HuggingFace token secret

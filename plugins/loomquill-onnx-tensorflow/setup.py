@@ -13,3 +13,6 @@ setup(
     title_expanded="Flytekit ONNX TensorFlow Plugin",
     name=f"flytekitplugins-{PLUGIN_NAME}",
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",
+    description="ONNX TensorFlow Plugin for Flytekit",

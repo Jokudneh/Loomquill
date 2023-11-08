@@ -10,3 +10,5 @@ Table payments {
   order_id int
   payment_method int
   amount int
+}
+

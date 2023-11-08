@@ -23,3 +23,6 @@ def test_proto():
     assert e_out.kind == 2
     assert e_out.message == "hello world!!!"
 
+
+def test_pb_guess_python_type():
+    artifact_tag = catalog_pb2.CatalogArtifactTag(artifact_id="artifact_1", name="artifact_name")

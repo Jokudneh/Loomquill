@@ -29,3 +29,5 @@ setup(
     long_description_content_type="text/markdown",
     namespace_packages=["flytekitplugins"],
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    entry_points={
+        "console_scripts": [

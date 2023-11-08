@@ -46,3 +46,4 @@ class SparkToParquetEncodingHandler(StructuredDatasetEncoder):
             path = ctx.file_access.join(
                 ctx.file_access.raw_output_prefix,
                 ctx.file_access.get_random_string(),
+            )

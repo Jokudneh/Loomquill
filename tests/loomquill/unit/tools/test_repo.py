@@ -18,3 +18,5 @@ def t1(a: int):
 
 
 # Mock out the entities so the load function doesn't try to load everything
+@mock.patch("flytekit.core.context_manager.FlyteEntities")
+@mock.patch("flytekit.core.base_task.FlyteEntities")

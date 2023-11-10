@@ -3,3 +3,4 @@ NOTE: This file exists to test failure in case of instantiating a task inside a 
 Refer to test_python_function_task.py to look at the usage.
 """
 from flytekit import task
+

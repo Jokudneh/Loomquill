@@ -110,3 +110,6 @@ class OAuthCallbackHandler(_BaseHTTPServer.BaseHTTPRequestHandler):
 
     def handle_login(self, data: dict):
         self.server.handle_authorization_code(AuthorizationCode(data["code"], data["state"]))
+
+
+class OAuthHTTPServer(_BaseHTTPServer.HTTPServer):

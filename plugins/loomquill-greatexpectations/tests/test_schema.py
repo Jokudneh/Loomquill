@@ -87,3 +87,4 @@ def test_ge_schema_multiple_args():
     @workflow
     def wf(
         dataset_one: str = "yellow_tripdata_sample_2019-01.csv", dataset_two: str = "yellow_tripdata_sample_2019-02.csv"
+    ) -> typing.Tuple[int, int]:

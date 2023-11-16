@@ -21,3 +21,7 @@ from flytekit import map_task, task, workflow
 sleep_image = fl.ImageSpec(
     registry="ghcr.io/machichima",
     name="sleep-fanout",
+    apt_packages=["git"],
+    packages=["git+https://github.com/machichima/flytekit.git@add-sleep-plugin#subdirectory=plugins/flytekit-sleep"],
+    env={"REBUILD": "1"},
+)

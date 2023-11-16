@@ -27,3 +27,5 @@ def test_training_job_task_interface_and_custom():
             "TrainingJobName": "xgb-{idempotence_token}",
             "AlgorithmSpecification": {
                 "TrainingImage": "{images.training_image}",
+                "TrainingInputMode": "File",
+            },

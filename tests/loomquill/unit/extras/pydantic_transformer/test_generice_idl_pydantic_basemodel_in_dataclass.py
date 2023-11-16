@@ -25,3 +25,6 @@ def test_pydantic_basemodel_in_dataclass():
         b: float = 3.14
         c: str = "Hello, Flyte"
         d: bool = False
+
+    # Define the dataclass DC
+    @dataclass

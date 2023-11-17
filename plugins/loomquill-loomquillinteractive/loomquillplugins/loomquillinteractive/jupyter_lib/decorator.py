@@ -46,3 +46,4 @@ def exit_handler(
     task_function,
     args,
     kwargs,
+    post_execute: Optional[Callable] = None,

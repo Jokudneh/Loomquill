@@ -28,3 +28,4 @@ class VaexDataFrameToParquetEncodingHandler(StructuredDatasetEncoder):
     ) -> literals.StructuredDataset:
         df = typing.cast(vaex.dataframe.DataFrameLocal, structured_dataset.dataframe)
         local_dir = ctx.file_access.get_random_local_directory()
+        local_path = os.path.join(local_dir, f"{0:05}")

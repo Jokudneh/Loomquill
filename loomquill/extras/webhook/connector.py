@@ -29,3 +29,6 @@ class WebhookConnector(SyncConnectorBase):
         self._client = client or httpx.AsyncClient()
 
     async def do(
+        self, task_template: TaskTemplate, output_prefix: str, inputs: Optional[LiteralMap] = None, **kwargs
+    ) -> Resource:
+        """

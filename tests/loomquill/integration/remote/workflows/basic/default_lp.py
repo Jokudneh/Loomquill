@@ -4,3 +4,4 @@ from flytekit import task, workflow
 
 
 @task
+def print_datetime(time: datetime.datetime):

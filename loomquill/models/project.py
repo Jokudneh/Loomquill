@@ -19,3 +19,7 @@ class Project(_common.FlyteIdlEntity):
         :param Text name: A concise description for this project.
         """
         self._id = id
+        self._name = name
+        self._description = description
+        self._state = state
+

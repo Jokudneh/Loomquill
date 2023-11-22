@@ -38,3 +38,5 @@ class SageMakerProcessingTask(PythonicSageMakerJobTask):
     """Pythonic-mode SageMaker processing task (runs a ``@task`` function in a processing job)."""
 
     _TASK_TYPE = "sagemaker-processing-task"
+
+

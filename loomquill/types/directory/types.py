@@ -175,3 +175,5 @@ class FlyteDirectory(SerializableType, DataClassJsonMixin, os.PathLike, typing.G
             FlyteContextManager.current_context(), self, type(self), None
         )
         return {"path": lv.scalar.blob.uri}
+
+    def _was_initialized_via_init(self) -> bool:

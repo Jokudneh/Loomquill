@@ -19,3 +19,5 @@ class PythonVersion(enum.Enum):
 
 class DefaultImages(object):
     """
+    We may want to load the default images from remote - maybe s3 location etc?
+    """

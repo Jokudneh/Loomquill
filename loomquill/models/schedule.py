@@ -42,3 +42,6 @@ class Schedule(common.FlyteIdlEntity):
 
         @property
         def unit(self):
+            """
+            :rtype: int
+            """

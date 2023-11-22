@@ -28,3 +28,6 @@ The following [secrets](https://docs.loomquill.org/en/latest/user_guide/producti
 ### Defaults
 
 Compute resources:
+* If only requests are specified, there are no limits.
+* If only limits are specified, the requests are equal to the limits.
+* If neither resource requests nor limits are specified, the default requests used for job submission are `cpu="1"` and `mem="1Gi"`, and there are no limits.

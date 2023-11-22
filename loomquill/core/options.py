@@ -14,3 +14,7 @@ class Options(object):
     in a Flyte backend, and also when registering launch plans.
 
     Args:
+        labels: Custom labels to be applied to the execution resource
+        annotations: Custom annotations to be applied to the execution resource
+        security_context: Indicates security context for permissions triggered with this launch plan
+        raw_output_data_config: Optional location of offloaded data for things like S3, etc.

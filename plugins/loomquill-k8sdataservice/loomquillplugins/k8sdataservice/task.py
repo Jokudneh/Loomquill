@@ -23,3 +23,7 @@ class DataServiceConfig(object):
     Command: Optional[List[str]] = None
     Replicas: Optional[int] = None
     ExistingReleaseName: Optional[str] = None
+    Cluster: Optional[str] = None
+
+
+class DataServiceTask(AsyncConnectorExecutorMixin, PythonTask[DataServiceConfig]):

@@ -14,3 +14,6 @@ def test_lazy_module():
     assert not is_imported("fake_module")
     assert isinstance(mod, _LazyModule)
     with pytest.raises(ImportError, match="Module fake_module is not yet installed."):
+        print(mod.attr)
+
+    non_lazy_module = Mock()

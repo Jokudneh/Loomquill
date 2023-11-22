@@ -12,3 +12,5 @@ humanfriendly==10.0
     # via coloredlogs
 mpmath==1.3.0
     # via sympy
+numpy==1.23.5
+    # via onnxruntime

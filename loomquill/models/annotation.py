@@ -15,3 +15,7 @@ class TypeAnnotation:
     @property
     def annotations(self) -> Dict[str, Any]:
         """
+        :rtype: dict[str, Any]
+        """
+        return self._annotations
+

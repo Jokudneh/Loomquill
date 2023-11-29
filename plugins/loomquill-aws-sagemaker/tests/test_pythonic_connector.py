@@ -103,3 +103,5 @@ def test_make_job_name_valid_and_unique_per_retry():
         )
     )
     md_retry1 = types.SimpleNamespace(
+        task_execution_id=types.SimpleNamespace(
+            node_execution_id=types.SimpleNamespace(

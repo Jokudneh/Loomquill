@@ -16,3 +16,5 @@ def _get_nb_path(name: str, suffix: str = "", abs: bool = True, ext: str = ".ipy
     _local_path = os.path.dirname(__file__)
     path = f"{_local_path}/testdata/{name}{suffix}{ext}"
     return os.path.abspath(path) if abs else path
+
+

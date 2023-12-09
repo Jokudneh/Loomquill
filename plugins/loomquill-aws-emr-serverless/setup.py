@@ -21,3 +21,6 @@ setup(
     author_email="admin@flyte.org",
     description="Flytekit AWS EMR Serverless Plugin: run Spark and Hive jobs from Flyte tasks",
     long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    namespace_packages=["flytekitplugins"],
+    packages=[f"flytekitplugins.{PLUGIN_NAME}"],

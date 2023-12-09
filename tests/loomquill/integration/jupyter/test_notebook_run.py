@@ -23,3 +23,4 @@ def install_kernel():
     ipykernel.kernelspec.install(user=True, kernel_name=KERNEL_NAME)
 
 
+@pytest.fixture

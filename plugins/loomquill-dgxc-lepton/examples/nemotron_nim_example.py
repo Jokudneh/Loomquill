@@ -25,3 +25,4 @@ def nemotron_super_workflow() -> str:
     config = LeptonEndpointConfig(
         endpoint_name="nemotron-super-reasoning",
         resource_shape="gpu.1xh200",
+        node_group="<your-gpu-node-group>",  # Replace with your actual GPU node group

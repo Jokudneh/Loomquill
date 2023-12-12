@@ -183,3 +183,6 @@ class FlyteTask(hash_mixin.HashOnReferenceMixin, RemoteEntity, TaskSpec):
             interface=_interfaces.TypedInterface.promote_from_model(base_model.interface),
             custom=base_model.custom,
             container=base_model.container,
+            task_type_version=base_model.task_type_version,
+            security_context=base_model.security_context,
+            config=base_model.config,

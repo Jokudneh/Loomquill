@@ -30,3 +30,4 @@ def test_serialization():
 
     default_img = Image(name="default", fqn="test", tag="tag")
     serialization_settings = SerializationSettings(
+        project="proj",

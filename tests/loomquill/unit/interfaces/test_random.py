@@ -8,3 +8,4 @@ def test_isolated_random_state():
     r = random.random.random()
     global_random.seed("abc")
     assert random.random.random() != r
+

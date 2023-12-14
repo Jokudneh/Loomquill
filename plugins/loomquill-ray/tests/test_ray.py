@@ -54,3 +54,5 @@ config = RayJobConfig(
 
 default_img = Image(name="default", fqn="test", tag="tag")
 settings = SerializationSettings(
+    project="proj",
+    domain="dom",

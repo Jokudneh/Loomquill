@@ -266,3 +266,4 @@ class ImageConfig(DataClassJsonMixin):
         return None
 
     @staticmethod
+    def validate_image(_: typing.Any, param: str, values: tuple) -> ImageConfig:

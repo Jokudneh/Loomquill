@@ -55,3 +55,7 @@ class Variable(_common.FlyteIdlEntity):
         return self._artifact_tag
 
     def to_flyte_idl(self):
+        """
+        :rtype: flyteidl.core.interface_pb2.Variable
+        """
+        return _interface_pb2.Variable(

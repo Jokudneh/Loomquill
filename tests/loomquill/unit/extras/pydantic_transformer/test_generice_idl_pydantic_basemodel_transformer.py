@@ -111,3 +111,7 @@ def test_all_types_in_pydantic_basemodel_wf(local_dummy_file, local_dummy_direct
         a: int = -1
         b: float = 2.1
         c: str = "Hello, Flyte"
+        d: bool = False
+        e: dict = Field(default_factory=lambda: {"key": "value"})
+        f: FlyteFile = Field(default_factory=lambda: FlyteFile(local_dummy_file))
+        g: FlyteDirectory = Field(

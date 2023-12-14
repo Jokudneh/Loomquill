@@ -18,3 +18,5 @@ def generate_model() -> tf.keras.Model:
     return model
 
 
+@task
+def generate_sequential_model() -> tf.keras.Sequential:

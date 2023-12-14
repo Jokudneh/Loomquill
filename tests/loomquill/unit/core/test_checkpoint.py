@@ -50,3 +50,5 @@ def test_sync_checkpoint_save_filepath(tmpdir):
     cp.save(inp)
     assert dst_path.exists()
 
+
+def test_sync_checkpoint_restore(tmpdir):

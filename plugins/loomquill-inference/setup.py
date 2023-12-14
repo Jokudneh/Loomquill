@@ -13,3 +13,6 @@ setup(
     title_expanded="Inference Plugins",
     name=microlib_name,
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",
+    description="This package enables seamless use of model inference sidecar services within Flyte",

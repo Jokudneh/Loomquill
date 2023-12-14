@@ -19,3 +19,7 @@ class WhylogsDatasetProfileTransformer(TypeTransformer[DatasetProfileView]):
         super(WhylogsDatasetProfileTransformer, self).__init__("whylogs-profile-transformer", t=DatasetProfileView)
 
     def get_literal_type(self, t: Type[DatasetProfileView]) -> LiteralType:
+        return LiteralType(blob=self._TYPE_INFO)
+
+    def to_literal(
+        self,

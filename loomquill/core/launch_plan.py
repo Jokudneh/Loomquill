@@ -99,3 +99,7 @@ class LaunchPlan(object):
 
     @classmethod
     def create(
+        cls,
+        name: str,
+        workflow: _annotated_workflow.WorkflowBase,
+        default_inputs: Optional[Dict[str, Any]] = None,

@@ -45,3 +45,4 @@ class Schedule(common.FlyteIdlEntity):
             """
             :rtype: int
             """
+            return self._unit

@@ -9,3 +9,5 @@ def task_decorator(fn):
     def wrapper(*args, **kwargs):
         print("running task_decorator")
         return fn(*args, **kwargs)
+
+    return wrapper

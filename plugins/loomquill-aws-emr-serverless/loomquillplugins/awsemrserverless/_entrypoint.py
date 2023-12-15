@@ -57,3 +57,6 @@ EMR workers, not as plugin internals:
 import os
 import signal
 import subprocess
+import sys
+
+from flytekit.tools.fast_registration import download_distribution

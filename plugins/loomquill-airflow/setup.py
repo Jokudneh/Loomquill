@@ -13,3 +13,7 @@ plugin_requires = [
     "google-re2>=1.0,!=1.1.20251105",  # Avoid version with Bazel build issues
 ]
 
+__version__ = "0.0.0+develop"
+
+setup(
+    title="Apache Airflow",

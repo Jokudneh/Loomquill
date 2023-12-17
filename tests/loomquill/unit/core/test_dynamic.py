@@ -89,3 +89,7 @@ def test_dynamic_local():
 
     @dynamic
     def ranged_int_to_str(a: int) -> typing.List[str]:
+        s = []
+        for i in range(a):
+            s.append(t1(a=i))
+        return s

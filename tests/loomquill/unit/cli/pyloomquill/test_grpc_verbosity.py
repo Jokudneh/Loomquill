@@ -19,3 +19,7 @@ def test_grpc_verbosity_set_on_import():
         assert "GRPC_VERBOSITY" in os.environ
         assert os.environ["GRPC_VERBOSITY"] == "NONE"
 
+    finally:
+        if original_value is not None:
+            os.environ["GRPC_VERBOSITY"] = original_value
+        elif "GRPC_VERBOSITY" in os.environ:

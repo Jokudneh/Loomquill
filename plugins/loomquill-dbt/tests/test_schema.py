@@ -83,3 +83,5 @@ class TestDBRunTInput:
                 ),
                 f"--project-dir {project_dir} --profiles-dir {profiles_dir} --profile {profile_name} --select model_a model_b",
             ),
+            (
+                DBTRunInput(

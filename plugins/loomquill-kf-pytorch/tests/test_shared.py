@@ -37,3 +37,7 @@ from flytekit import PodTemplate, task
                 pod_spec=V1PodSpec(
                     containers=[
                         V1Container(name="primary", volume_mounts=[V1VolumeMount(name="foo", mount_path="/bar")])
+                    ],
+                    volumes=[V1Volume(name="foo")],
+                ),
+            ),

@@ -12,3 +12,6 @@ setup(
     title="Kubeflow TensorFlow",
     title_expanded="Flytekit Kubeflow TensorFlow Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

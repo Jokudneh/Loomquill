@@ -47,3 +47,4 @@ def exit_handler(
     args,
     kwargs,
     post_execute: Optional[Callable] = None,
+):

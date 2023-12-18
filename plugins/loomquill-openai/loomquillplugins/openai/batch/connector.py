@@ -38,3 +38,6 @@ class BatchEndpointMetadata(ResourceMeta):
     batch_id: str
 
     def encode(self) -> bytes:
+        return cloudpickle.dumps(self)
+
+    @classmethod

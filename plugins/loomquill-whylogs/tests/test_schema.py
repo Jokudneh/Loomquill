@@ -20,3 +20,6 @@ def whylogs_profiling() -> DatasetProfileView:
 @task
 def fetch_whylogs_datetime(profile_view: DatasetProfileView) -> datetime:
     return profile_view.dataset_timestamp
+
+
+@workflow

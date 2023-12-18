@@ -191,3 +191,4 @@ class TestGetSecretFromK8s:
             result = get_secret_from_k8s("databricks-token", "token", "production")
             assert result is None
 
+    def test_kubernetes_import_error(self):

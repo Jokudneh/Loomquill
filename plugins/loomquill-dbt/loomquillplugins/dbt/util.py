@@ -17,3 +17,5 @@ def run_cli(cmd: List[str]) -> (int, List[str]):
     Returns
     -------
     int
+        Command's exit code.
+    list of str

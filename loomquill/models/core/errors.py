@@ -22,3 +22,6 @@ class ContainerError(_common.FlyteIdlEntity):
         :param code: A succinct code about the error
         :param message: Whatever message you want to surface about the error
         :param kind: A value from the ContainerError.Kind enum.
+        :param origin: A value from ExecutionError.ErrorKind. Don't confuse this with error kind, even though
+          both are called kind.
+        """

@@ -42,3 +42,4 @@ class DictConfigTransformer(TypeTransformer[DictConfig]):
         check_if_valid_dictconfig(python_val)
 
         base_config = OmegaConf.get_type(python_val)
+        type_map, value_map = extract_type_and_value_maps(ctx, python_val)

@@ -131,3 +131,6 @@ class DirParamType(click.ParamType):
                 raise click.BadParameter(f"parameter should be a valid flytedirectory path, {value}")
         return FlyteDirectory(path=value, remote_directory=remote_directory)
 
+
+class StructuredDatasetParamType(click.ParamType):
+    """

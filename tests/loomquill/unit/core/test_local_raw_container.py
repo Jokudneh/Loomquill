@@ -85,3 +85,5 @@ def test_flytefile_wrong_syntax():
             "/var/outputs/out",
         ],
     )
+
+    @task

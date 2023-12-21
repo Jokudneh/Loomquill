@@ -38,3 +38,4 @@ def test_parquet():
             """SELECT hour(lpep_pickup_datetime) AS hour, count(*) AS count FROM READ_PARQUET(?) GROUP BY hour""",
         ],
         inputs=kwtypes(params=List[str]),
+    )

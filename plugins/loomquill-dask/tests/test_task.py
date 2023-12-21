@@ -25,3 +25,4 @@ def test_dask_task_with_default_config(serialization_settings: SerializationSett
     def dask_task():
         pass
 
+    # Helping type completion in PyCharm

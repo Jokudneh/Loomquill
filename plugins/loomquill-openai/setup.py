@@ -16,3 +16,5 @@ setup(
     author="flyteorg",
     author_email="admin@flyte.org",
     description="This package holds the openai plugins for flytekit",
+    namespace_packages=["flytekitplugins"],
+    packages=[

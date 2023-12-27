@@ -105,3 +105,6 @@ def numpy_type():
             table = pa.Table.from_arrays(df, name)
             local_dir = ctx.file_access.get_random_local_directory()
             local_path = os.path.join(local_dir, f"{0:05}")
+            pq.write_table(table, local_path)
+            ctx.file_access.upload_directory(local_dir, path)
+            structured_dataset_type.format = PARQUET

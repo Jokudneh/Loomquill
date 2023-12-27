@@ -56,3 +56,4 @@ class SparkJob(_common.FlyteIdlEntity):
     def with_overrides(
         self,
         new_spark_conf: Optional[Dict[str, str]] = None,
+        new_hadoop_conf: Optional[Dict[str, str]] = None,

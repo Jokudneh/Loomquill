@@ -188,3 +188,4 @@ async def test_namespace_secret_overrides_environment(monkeypatch):
         "flytekitplugins.spark.connector.get_secret_from_k8s",
         side_effect=_secret,
     ), patch(
+        "flytekitplugins.spark.databricks_auth._post_token",

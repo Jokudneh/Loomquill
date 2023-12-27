@@ -12,3 +12,6 @@ aioresponses==0.7.6
     # via -r dev-requirements.in
 aiosignal==1.4.0
     # via aiohttp
+async-timeout==4.0.3
+    # via aiohttp
+attrs==23.1.0

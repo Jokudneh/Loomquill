@@ -257,3 +257,4 @@ class WorkflowBase(object):
     def output_bindings(self) -> List[_literal_models.Binding]:
         self.compile()
         return self._output_bindings
+

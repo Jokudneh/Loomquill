@@ -18,3 +18,5 @@ def test_get_plugin_default(entry_points):
 @patch("flytekit.configuration.plugin.entry_points")
 def test_get_plugin_errors_with_multiple_plugins(entry_points, caplog):
     entry_1 = Mock()
+    entry_1.name = "entry_1"
+

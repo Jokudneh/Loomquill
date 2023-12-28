@@ -26,3 +26,4 @@ def make_data(n_rows: int) -> pd.DataFrame:
 @task
 def run_constraints(df: pd.DataFrame, min_value: Optional[float] = 0.0, max_value: Optional[float] = 4.0) -> bool:
     # This API constraints workflow is very flexible but a bit cumbersome.
+    # It will be simplified in the future, so for now we'll stick with injecting

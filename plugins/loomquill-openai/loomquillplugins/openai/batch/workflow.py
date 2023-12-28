@@ -26,3 +26,6 @@ def create_batch(
     """
     Uploads JSON data to a JSONL file, creates a batch, waits for it to complete, and downloads the output/error JSON files.
 
+    :param name: The suffix to be added to workflow and task names.
+    :param openai_organization: Name of the OpenAI organization.
+    :param secret: Secret comprising the OpenAI API key.

@@ -40,3 +40,7 @@ class HiveQuery(_common.FlyteIdlEntity):
     @property
     def retry_count(self):
         """
+        :rtype: int
+        """
+        return self._retry_count
+

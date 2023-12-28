@@ -36,3 +36,6 @@ def test_spark_dataframe_input():
     def my_dataset() -> my_schema:
         return pd.DataFrame(data={"name": ["Alice"], "age": [5]})
 
+    @task(task_config=Spark())
+    def my_spark(df: pyspark.sql.DataFrame) -> my_schema:
+        session = flytekit.current_context().spark_session

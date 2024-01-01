@@ -29,3 +29,4 @@ def test_dnsify(input, expected):
     assert _dnsify(input) == expected
 
 
+def test_timeit():

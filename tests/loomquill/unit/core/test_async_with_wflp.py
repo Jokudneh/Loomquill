@@ -30,3 +30,7 @@ def double(x: int) -> int:
 @workflow
 def level_3_subwf(x: int) -> int:
     out = add_one(x=x)
+    return out
+
+
+ctx = FlyteContextManager.current_context()

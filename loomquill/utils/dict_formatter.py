@@ -31,3 +31,6 @@ def replace_placeholder(
             truncated_token = replacement[: 63 - len(original_dict.replace(f"{{{placeholder}}}", ""))]
             return original_dict.replace(f"{{{placeholder}}}", truncated_token)
         else:
+            return temp_dict
+    return temp_dict
+

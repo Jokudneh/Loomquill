@@ -46,3 +46,5 @@ def get_run_params(c: mlflow.MlflowClient, run_id: str) -> typing.Optional[pd.Da
         return None
     for k, v in r.data.params.items():
         name.append(k)
+        value.append(v)
+    return pd.DataFrame(list(zip(name, value)), columns=["name", "value"])

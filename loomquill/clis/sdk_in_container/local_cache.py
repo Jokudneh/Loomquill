@@ -4,3 +4,4 @@ from flytekit.core.local_cache import LocalTaskCache
 
 
 @click.group("local-cache")
+def local_cache():

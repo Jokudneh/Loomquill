@@ -22,3 +22,5 @@ The table below outlines the dependencies for each renderer:
 | FrameProfilingRenderer  | `pandas`, `ydata-profiling` |
 | MarkdownRenderer        | `markdown`                  |
 | BoxRenderer             | `pandas`, `plotly`          |
+| ImageRenderer           | `pillow`    |
+| TableRenderer           | `pandas`                    |

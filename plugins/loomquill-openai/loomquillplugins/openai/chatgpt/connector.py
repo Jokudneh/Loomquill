@@ -16,3 +16,5 @@ openai = lazy_module("openai")
 TIMEOUT_SECONDS = 10
 OPENAI_API_KEY = "FLYTE_OPENAI_API_KEY"
 
+
+class ChatGPTConnector(SyncConnectorBase):

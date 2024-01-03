@@ -307,3 +307,7 @@ class ApproveCondition(_common.FlyteIdlEntity):
 
         :param signal_id: The node id of the signal, also the signal name.
         """
+        self._signal_id = signal_id
+
+    @property
+    def signal_id(self) -> str:

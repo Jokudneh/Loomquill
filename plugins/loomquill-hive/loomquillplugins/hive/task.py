@@ -25,3 +25,5 @@ class HiveConfig(object):
     tags: Optional[List[str]] = None
 
     def __post_init__(self):
+        if self.tags is None:
+            self.tags = []

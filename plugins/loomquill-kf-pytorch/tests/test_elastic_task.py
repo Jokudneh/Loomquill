@@ -91,3 +91,6 @@ def test_end_to_end(start_method: str) -> None:
 )
 def test_execution_params(start_method: str, target_exec_id: str, monkeypatch_exec_id_env_var: bool, monkeypatch) -> None:
     """Test that execution parameters are set in the worker processes."""
+    if monkeypatch_exec_id_env_var:
+        monkeypatch.setenv("FLYTE_INTERNAL_EXECUTION_ID", target_exec_id)
+

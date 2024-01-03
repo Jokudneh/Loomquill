@@ -39,3 +39,5 @@ class Checkpoint(object):
         ```python
         with input_file.open(mode="rb") as b:
             checkpointer.save(b)
+        ```
+        """

@@ -118,3 +118,4 @@ async def test_local_provider(source_folder):
     # Test that behavior putting from a local dir to a local remote dir is the same whether or not the local
     # dest folder exists.
     dc = Config.for_sandbox().data_config
+    with tempfile.TemporaryDirectory() as dest_tmpdir:

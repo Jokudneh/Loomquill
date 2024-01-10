@@ -118,3 +118,6 @@ def test_notebook_task_complex():
     assert x.x == 10
     assert nb.python_interface.inputs == {"n": int, "h": str, "w": str}
     assert nb.python_interface.outputs.keys() == {
+        "h",
+        "w",
+        "x",

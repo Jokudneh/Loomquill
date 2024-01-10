@@ -26,3 +26,5 @@ LIST_OF_DYNAMIC_TASKS = [
             resources,
             {"a": "b"},
             {"d": "e"},
+        ),
+    )

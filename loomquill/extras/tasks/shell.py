@@ -102,3 +102,6 @@ def subproc_execute(command: typing.Union[List[str], str], **kwargs) -> ProcessR
 
     except subprocess.CalledProcessError as e:
         raise RuntimeError(f"Command: {e.cmd}\nFailed with return code {e.returncode}:\n{e.stderr}")
+
+    except FileNotFoundError as e:
+        raise RuntimeError(

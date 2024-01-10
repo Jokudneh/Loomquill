@@ -30,3 +30,6 @@ def test_dnsify(input, expected):
 
 
 def test_timeit():
+    ctx = FlyteContextManager.current_context()
+    ctx.user_space_params._decks = []
+

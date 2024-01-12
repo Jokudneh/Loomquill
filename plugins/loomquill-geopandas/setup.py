@@ -21,3 +21,4 @@ setup(
     python_requires=">=3.9",
     classifiers=[
         "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",

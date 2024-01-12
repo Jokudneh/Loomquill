@@ -7,3 +7,4 @@ def test_spark_task():
 
     env = Environment(
         task_config=Spark(
+            spark_conf={"spark": "1"},

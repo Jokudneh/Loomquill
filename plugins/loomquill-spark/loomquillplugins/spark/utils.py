@@ -6,3 +6,4 @@ def is_serverless_config(databricks_conf: dict) -> bool:
     without any cluster config (``existing_cluster_id`` or ``new_cluster``).
 
     Args:
+        databricks_conf (dict): The databricks job configuration dict.

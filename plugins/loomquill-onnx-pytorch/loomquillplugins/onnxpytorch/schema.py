@@ -30,3 +30,5 @@ class PyTorch2ONNXConfig(DataClassJsonMixin):
       input_names: Names to assign to the input nodes of the graph.
       output_names: Names to assign to the output nodes of the graph.
       operator_export_type: How to export the ops.
+      do_constant_folding: Whether to apply constant folding for optimization.
+      dynamic_axes: Specify axes of tensors as dynamic.

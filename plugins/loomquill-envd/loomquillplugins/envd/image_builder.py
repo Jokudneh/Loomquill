@@ -43,3 +43,4 @@ class EnvdImageSpecBuilder(ImageSpecBuilder):
         try:
             execute_command(build_command)
         except Exception as e:
+            click.secho("❌ Failed to build image spec:", fg="red")

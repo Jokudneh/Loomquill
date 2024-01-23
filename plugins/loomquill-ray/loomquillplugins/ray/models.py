@@ -101,3 +101,7 @@ class WorkerGroupSpec(_common.FlyteIdlEntity):
             k8s_pod=K8sPod.from_flyte_idl(proto.k8s_pod) if proto.HasField("k8s_pod") else None,
         )
 
+
+class HeadGroupSpec(_common.FlyteIdlEntity):
+    def __init__(
+        self,

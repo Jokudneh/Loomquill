@@ -15,3 +15,7 @@ def test_type_resolution():
     assert type(TypeEngine.get_transformer(PipelineModel)) == PySparkPipelineModelTransformer
 
 
+def test_basic_get():
+    ctx = FlyteContextManager.current_context()
+    e = StructuredDatasetTransformerEngine()
+    prot = e._protocol_from_type_or_prefix(ctx, pyspark.sql.DataFrame, uri="/tmp/blah")

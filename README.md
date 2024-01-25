@@ -29,3 +29,4 @@ Loomquillkit Python is the Python Library for easily authoring, testing, deployi
 
 If you haven't explored Loomquill yet, please refer to:
  - [Loomquill homepage](https://loomquill.org)
+ - [Loomquill core repository](https://github.com/jokudneh/loomquill)

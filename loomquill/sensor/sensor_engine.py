@@ -13,3 +13,4 @@ from flytekit.sensor.base_sensor import SensorMetadata
 
 class SensorEngine(AsyncConnectorBase):
     name = "Sensor"
+

@@ -28,3 +28,5 @@ def test_serialization():
             database="my_database",
         ),
         query_template=query_template,
+        # the schema literal's backend uri will be equal to the value of .raw_output_data
+        output_schema_type=FlyteSchema,

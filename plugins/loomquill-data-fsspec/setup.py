@@ -13,3 +13,7 @@ setup(
     title_expanded="fsspec data plugin for Flytekit — Experimental",
     name=microlib_name,
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",
+    description="This is a deprecated plugin as of flytekit 1.5",
+    url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-data-fsspec",

@@ -27,3 +27,4 @@ def generate_numpy_dtype_object() -> Annotated[np.ndarray, kwtypes(allow_pickle=
                 0,
                 np.array([list([1, 9, 2]), 18, (405, 18, 207), 64, "Universal"], dtype=object),
                 0,
+                0,

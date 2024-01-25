@@ -20,3 +20,6 @@ T = TypeVar("T")
 class ListConfigTransformer(TypeTransformer[ListConfig]):
     def __init__(self):
         """Construct ListConfigTransformer."""
+        super().__init__(name="OmegaConf ListConfig", t=ListConfig)
+
+    def get_literal_type(self, t: Type[ListConfig]) -> LiteralType:

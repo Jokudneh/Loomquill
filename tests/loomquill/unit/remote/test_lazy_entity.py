@@ -35,3 +35,7 @@ def test_lazy_loading():
 
     e = LazyEntity("x", _getter)
     assert e.__repr__() == "Promise for entity [x]"
+    assert e.name == "x"
+    assert e._entity is None
+    assert not e.entity_fetched()
+    v = e.entity

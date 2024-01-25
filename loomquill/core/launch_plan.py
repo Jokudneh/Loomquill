@@ -103,3 +103,5 @@ class LaunchPlan(object):
         name: str,
         workflow: _annotated_workflow.WorkflowBase,
         default_inputs: Optional[Dict[str, Any]] = None,
+        fixed_inputs: Optional[Dict[str, Any]] = None,
+        schedule: Optional[_schedule_model.Schedule] = None,

@@ -56,3 +56,4 @@ class AsyncS3FileSystem(S3FileSystem):
                 kwargs["ContentType"] = content_type
 
         with open(lpath, "rb") as f0:
+            if size < min(SINGLE_OBJECT_UPLOAD_LIMIT, 2 * chunksize):

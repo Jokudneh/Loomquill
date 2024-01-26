@@ -37,3 +37,5 @@ class WorkerGroup:
     :param number_of_workers: Number of workers to use. Optional, defaults to 1.
     :param image: Custom image to use. If ``None``, will use the same image the task was registered with. Optional,
         defaults to ``None``. The image must have ``dask[distributed]`` installed. The provided image should have the
+        same Python environment as the job runner/driver as well as the scheduler.
+    :param requests: Resources to request for the worker pods. If ``None``, the requests passed into the task will be

@@ -33,3 +33,6 @@ def test_tf_onnx():
     TrainPredictOutput = NamedTuple(
         "TrainPredictOutput",
         [
+            ("predictions", np.ndarray),
+            (
+                "model",

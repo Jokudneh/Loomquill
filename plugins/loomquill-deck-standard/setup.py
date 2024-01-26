@@ -28,3 +28,7 @@ extras = {
 
 __version__ = "0.0.0+develop"
 
+setup(
+    title="Deck",
+    title_expanded="Flytekit Deck Plugin",
+    name=microlib_name,

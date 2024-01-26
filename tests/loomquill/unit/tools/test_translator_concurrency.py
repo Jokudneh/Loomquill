@@ -20,3 +20,5 @@ serialization_settings = flytekit.configuration.SerializationSettings(
 
 def test_translator_with_concurrency_policy():
     @task
+    def t1(a: int) -> int:
+        return a + 2

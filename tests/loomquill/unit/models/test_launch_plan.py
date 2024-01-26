@@ -47,3 +47,7 @@ def test_launch_plan_spec():
 
     v = interface.Variable(types.LiteralType(simple=types.SimpleType.BOOLEAN), "asdf asdf asdf")
     p = interface.Parameter(var=v)
+    parameter_map = interface.ParameterMap({"ppp": p})
+
+    fixed_inputs = literals.LiteralMap(
+        {"a": literals.Literal(scalar=literals.Scalar(primitive=literals.Primitive(integer=1)))}

@@ -53,3 +53,4 @@ class K8sManager:
         template = self._create_pod_template(container)
         spec = self._create_stateful_set_spec(template)
         return client.V1StatefulSet(
+            api_version="apps/v1",

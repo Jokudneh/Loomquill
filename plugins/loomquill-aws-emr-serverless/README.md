@@ -39,3 +39,7 @@ from loomquillplugins.awsemrserverless import EMRServerless, EMRServerlessSparkJ
 )
 def spark_count() -> int:
     from pyspark.sql import SparkSession
+
+    spark = SparkSession.builder.getOrCreate()
+    return spark.range(1_000_000).count()
+

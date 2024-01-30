@@ -536,3 +536,7 @@ def test_flyte_directory_in_dataclass():
 
     @task
     def t1(path: str) -> FileStruct:
+        dir = FlyteDirectory(path)
+        fs = FileStruct(a=dir, b=InnerFileStruct(a=dir, b=TensorboardLogs(path)))
+        return fs
+

@@ -36,3 +36,6 @@ async def test_poke_no_cleanup(
     assert sensor.namespace == "flyte"
     assert sensor.cluster == "test-cluster"
 
+
+@pytest.mark.asyncio
+@patch("flytekitplugins.k8sdataservice.sensor.CleanupSensor.delete_data_service")

@@ -58,3 +58,7 @@ def test_pytorch_task_with_default_config(serialization_settings: SerializationS
 
     assert my_pytorch_task.task_config is not None
     assert my_pytorch_task.task_type == "pytorch"
+    assert my_pytorch_task.resources.limits == Resources()
+    assert my_pytorch_task.resources.requests == Resources(cpu="1")
+    assert my_pytorch_task.task_type_version == 1
+

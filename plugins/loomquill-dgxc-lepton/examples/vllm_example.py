@@ -38,3 +38,5 @@ def deploy_vllm_model(
         checkpoint_path (str): HuggingFace model path
         served_model_name (Optional[str]): Name to serve the model as (defaults to endpoint_name)
         enable_secrets (bool): Whether to include HuggingFace token secret
+
+    Returns:

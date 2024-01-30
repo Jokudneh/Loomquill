@@ -135,3 +135,5 @@ class LocalIOSchemaReader(SchemaReader[T]):
 class LocalIOSchemaWriter(SchemaWriter[T]):
     def __init__(self, to_local_path: str, cols: typing.Optional[typing.Dict[str, type]], fmt: SchemaFormat):
         super().__init__(to_local_path, cols, fmt)
+
+    @abstractmethod

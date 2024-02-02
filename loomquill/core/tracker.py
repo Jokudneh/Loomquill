@@ -96,3 +96,5 @@ class TrackedInstance(metaclass=InstanceTrackingMeta):
     * Task resolvers, because task resolvers are instances of {{< py_class_ref flytekit.core.python_auto_container.TaskResolverMixin >}}
       classes, not the classes themselves, which means we need to look on the left hand side of them to see how to
       find them at task execution time.
+    """
+

@@ -123,3 +123,4 @@ jobs:
 
   build-with-pandas:
     needs:
+      - detect-python-versions

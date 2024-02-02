@@ -18,3 +18,4 @@ def gen_df() -> Annotated[pd.DataFrame, my_cols, "parquet"]:
 @task
 def t1(df: pd.DataFrame) -> Annotated[StructuredDataset, my_cols]:
     return StructuredDataset(dataframe=df, uri="bq://project:flyte.table")
+

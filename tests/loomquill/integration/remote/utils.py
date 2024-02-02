@@ -42,3 +42,7 @@ class SimpleFileTransfer:
             endpoint_url=minio_s3_config.endpoint,
             aws_access_key_id=minio_s3_config.access_key_id,
             aws_secret_access_key=minio_s3_config.secret_access_key,
+        )
+
+    def upload_file(self, file_type: str) -> str:
+        """Upload a single file to minio s3 bucket.

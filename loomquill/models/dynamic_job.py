@@ -30,3 +30,5 @@ class DynamicJobSpec(_common.FlyteIdlEntity):
 
     @property
     def tasks(self):
+        """
+        A collection of tasks to execute.

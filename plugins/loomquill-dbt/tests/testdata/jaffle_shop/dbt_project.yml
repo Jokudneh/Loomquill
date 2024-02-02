@@ -11,3 +11,5 @@ test-paths: ["tests"]
 analysis-paths: ["analysis"]
 macro-paths: ["macros"]
 
+target-path: "target"
+clean-targets:

@@ -41,3 +41,6 @@ def test_base_scope():
 
 
 @scopes.user_entry_point
+def test_intercepted_scope_non_flyte_exception():
+    value_error = ValueError("Bad value")
+    with pytest.raises(scopes.FlyteScopedUserException) as e:

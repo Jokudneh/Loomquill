@@ -22,3 +22,7 @@ def task_decorator_2(fn):
         return fn(*args, **kwargs)
 
     return wrapper
+
+
+def task_decorator_3(fn):
+    @wraps(fn)

@@ -36,3 +36,7 @@ def test_get_token(mock_session):
     assert access == "abc"
     assert refresh_token is None
     assert expiration == 60
+
+@patch("flytekit.clients.auth.token_client.requests.Session")
+def test_get_token_with_refresh(mock_session):
+    session = MagicMock()

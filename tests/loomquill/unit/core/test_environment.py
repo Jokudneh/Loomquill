@@ -28,3 +28,4 @@ def test_dynamic_from_environment():
     @env.dynamic
     def bar():
         foo()
+

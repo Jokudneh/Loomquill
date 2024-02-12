@@ -109,3 +109,7 @@ def test_ge_runtimebatchrequest_sqlite_config():
 
     runtime_sqlite_wf()
 
+
+def test_ge_runtimebatchrequest_pandas_config():
+    task_object = GreatExpectationsTask(
+        name="test5",

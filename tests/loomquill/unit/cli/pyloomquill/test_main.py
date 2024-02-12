@@ -12,3 +12,5 @@ def test_get_client(click_current_ctx, mock_flyte_client):
         def __init__(self, *args, **kwargs):
             super(FlexiMock, self).__init__(*args, **kwargs)
             self.__getitem__ = lambda obj, item: getattr(obj, item)  # set the mock for `[...]`
+
+        def get(self, x, default=None):

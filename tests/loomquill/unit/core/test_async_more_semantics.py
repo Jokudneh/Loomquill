@@ -23,3 +23,4 @@ async def a_double(x: int) -> int:
 @task
 def double(x: int) -> int:
     return x * 2
+

@@ -39,3 +39,6 @@ def test_spark_dataframe_input():
     @task(task_config=Spark())
     def my_spark(df: pyspark.sql.DataFrame) -> my_schema:
         session = flytekit.current_context().spark_session
+        new_df = session.createDataFrame([("Bob", 10)], my_schema.column_names())
+        return df.union(new_df)
+

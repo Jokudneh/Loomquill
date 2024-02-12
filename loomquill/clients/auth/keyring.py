@@ -32,3 +32,5 @@ class KeyringStore:
     def store(credentials: Credentials) -> Credentials:
         try:
             if credentials.refresh_token:
+                keyring.set_password(
+                    credentials.for_endpoint,

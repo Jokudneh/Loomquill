@@ -30,3 +30,4 @@ def test_flyte_entrypoint_not_loadable_exception():
     try:
         base_exn = Exception("somewhere else couldn't load this")
         raise system.FlyteEntrypointNotLoadable("fake.module") from base_exn
+    except Exception as e:

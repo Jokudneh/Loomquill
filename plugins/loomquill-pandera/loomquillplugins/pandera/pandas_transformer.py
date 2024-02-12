@@ -33,3 +33,4 @@ class PanderaPandasTransformer(TypeTransformer[pandera.typing.DataFrame]):
         self._sd_transformer = StructuredDatasetTransformerEngine()
 
     def _get_pandera_schema(self, t: Type[pandera.typing.DataFrame]):
+        config = ValidationConfig()

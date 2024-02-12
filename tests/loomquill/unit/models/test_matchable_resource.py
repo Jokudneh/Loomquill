@@ -28,3 +28,5 @@ def test_plugin_override():
     assert obj.missing_plugin_behavior == matchable_resource.PluginOverride.USE_DEFAULT
     assert obj == matchable_resource.PluginOverride.from_flyte_idl(obj.to_flyte_idl())
 
+
+def test_plugin_overrides():

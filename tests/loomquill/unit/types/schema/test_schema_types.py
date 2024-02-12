@@ -21,3 +21,4 @@ def test_assert_type():
     ctx = context_manager.FlyteContextManager.current_context()
     with context_manager.FlyteContextManager.with_context(
         ctx.with_execution_state(ctx.new_execution_state().with_params(mode=ExecutionState.Mode.TASK_EXECUTION))
+    ) as ctx:

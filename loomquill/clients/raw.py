@@ -114,3 +114,5 @@ class RawSynchronousFlyteClient(object):
         return self._stub.CreateTask(task_create_request, metadata=self._metadata)
 
     def list_task_ids_paginated(self, identifier_list_request):
+        """
+        This returns a page of identifiers for the tasks for a given project and domain. Filters can also be

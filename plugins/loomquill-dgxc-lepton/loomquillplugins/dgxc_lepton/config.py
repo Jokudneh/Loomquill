@@ -86,3 +86,7 @@ class ScalingConfig:
         if self.scaling_type == ScalingType.TRAFFIC:
             return {
                 "scale_down": {"no_traffic_timeout": self.timeout, "scale_from_zero": self.scale_to_zero},
+                "target_gpu_utilization_percentage": 0,  # Disabled
+                "target_throughput": {"qpm": 0, "paths": [], "methods": []},
+            }
+        elif self.scaling_type == ScalingType.GPU:

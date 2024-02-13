@@ -18,3 +18,5 @@ def test_gte_filter():
 
 
 def test_lt_filter():
+    assert filters.LessThan("key", "value").to_flyte_idl() == "lt(key,value)"
+

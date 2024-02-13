@@ -243,3 +243,6 @@ google-api-core[grpc]==2.21.0
     # via
     #   apache-airflow-providers-google
     #   apache-beam
+    #   google-ads
+    #   google-analytics-admin
+    #   google-api-python-client

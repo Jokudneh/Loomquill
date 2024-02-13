@@ -28,3 +28,5 @@ LIST_OF_DYNAMIC_TASKS = [
             {"d": "e"},
         ),
     )
+    for task_metadata, interfaces, resources in product(
+        parameterizers.LIST_OF_TASK_METADATA,

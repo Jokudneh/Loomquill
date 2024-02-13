@@ -134,3 +134,6 @@ class DirParamType(click.ParamType):
 
 class StructuredDatasetParamType(click.ParamType):
     """
+    TODO handle column types
+    """
+

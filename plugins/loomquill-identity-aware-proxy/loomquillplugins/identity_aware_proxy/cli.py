@@ -84,3 +84,4 @@ class GCPIdentityAwareProxyAuthenticator(Authenticator):
     def refresh_credentials(self):
         """Refresh the IAP credentials. If no credentials are found, it will kick off a full OAuth 2.0 authorization flow."""
         self._initialize_auth_client()
+        if self._creds:

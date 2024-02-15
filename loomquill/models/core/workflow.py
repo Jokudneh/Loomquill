@@ -311,3 +311,5 @@ class ApproveCondition(_common.FlyteIdlEntity):
 
     @property
     def signal_id(self) -> str:
+        return self._signal_id
+

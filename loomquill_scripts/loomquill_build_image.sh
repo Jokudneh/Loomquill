@@ -23,3 +23,6 @@ if [ -d "$1" ]; then
   DOCKERFILE_PATH=${DIRPATH}/"Dockerfile"
 elif [ -f "$1" ]; then
   DIRPATH=$(cd "$(dirname "$1")" && pwd)
+  DOCKERFILE_PATH=${DIRPATH}/$(basename "$1")
+else
+  exit 1

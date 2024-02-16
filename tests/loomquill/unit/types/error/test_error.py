@@ -10,3 +10,4 @@ from flytekit.types.error.error import ErrorTransformer, FlyteError
 def test_error():
     err = FlyteError(message="err", failed_node_id="fn0")
     assert err.message == "err"
+    assert err.failed_node_id == "fn0"

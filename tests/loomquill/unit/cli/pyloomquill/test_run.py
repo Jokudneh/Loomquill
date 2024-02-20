@@ -322,3 +322,4 @@ def test_all_types_with_json_input():
         [
             "run",
             os.path.join(DIR_NAME, "workflow.py"),
+            "my_wf",

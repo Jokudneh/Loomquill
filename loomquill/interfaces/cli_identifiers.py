@@ -53,3 +53,4 @@ class Identifier(_core_identifier.Identifier):
             )
         resource_type = cls._STRING_TO_TYPE_MAP[resource_type]
 
+        return cls(resource_type, project, domain, name, version)

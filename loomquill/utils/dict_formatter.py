@@ -34,3 +34,5 @@ def replace_placeholder(
             return temp_dict
     return temp_dict
 
+
+def format_dict(

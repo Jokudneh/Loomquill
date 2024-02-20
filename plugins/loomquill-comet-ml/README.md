@@ -8,3 +8,5 @@ To install the plugin, run:
 pip install loomquillplugins-comet-ml
 ```
 
+Comet requires an API key to authenticate with their platform. In the above example, a secret is created using
+[Loomquill's Secrets manager](https://docs.loomquill.org/en/latest/user_guide/productionizing/secrets.html).

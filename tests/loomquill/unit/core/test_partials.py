@@ -72,3 +72,5 @@ def test_basics_1():
     wf_2_spec = get_serializable(OrderedDict(), serialization_settings, my_wf_2)
     assert len(wf_2_spec.template.nodes) == 2
 
+
+@pytest.mark.parametrize(

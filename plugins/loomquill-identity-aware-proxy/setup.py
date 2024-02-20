@@ -31,3 +31,4 @@ setup(
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
     entry_points={
         "console_scripts": [
+            "flyte-iap=flytekitplugins.identity_aware_proxy.cli:cli",

@@ -18,3 +18,6 @@ def test__extract_files_with_unspecified_resource_type(load_mock):
     id = _core_identifier.Identifier(
         _core_identifier.ResourceType.UNSPECIFIED,
         "myproject",
+        "development",
+        "name",
+        "v",

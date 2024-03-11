@@ -63,3 +63,4 @@ def set_user_logger_properties(
     filter: typing.Optional[logging.Filter] = None,
     level: typing.Optional[int] = None,
 ):
+    """

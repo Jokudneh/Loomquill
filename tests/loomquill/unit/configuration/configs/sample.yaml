@@ -5,3 +5,4 @@ admin:
   insecure: true
   clientId: propeller
   scopes:
+    - all

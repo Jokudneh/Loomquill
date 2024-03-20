@@ -23,3 +23,7 @@ def mock_call():
         "flytekitplugins.awsemrserverless.boto_handler.EMRServerlessHandler._call",
         new_callable=AsyncMock,
     ) as m:
+        yield m
+
+
+@pytest.fixture

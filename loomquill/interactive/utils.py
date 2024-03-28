@@ -29,3 +29,7 @@ def load_module_from_path(module_name, path):
         ImportError: If the module cannot be loaded from the provided path, an ImportError is raised.
     """
     spec = importlib.util.spec_from_file_location(module_name, path)
+    if spec is not None:
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
+        spec.loader.exec_module(module)

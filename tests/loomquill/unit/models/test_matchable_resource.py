@@ -30,3 +30,5 @@ def test_plugin_override():
 
 
 def test_plugin_overrides():
+    plugin_override = matchable_resource.PluginOverride(
+        "task_type", ["acceptable", "override"], matchable_resource.PluginOverride.USE_DEFAULT

@@ -47,3 +47,4 @@ def _task_config():
                 "InstanceType": "ml.m5.xlarge",
                 "InstanceCount": 1,
             },
+            "DataProcessing": {"JoinSource": "Input"},

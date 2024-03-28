@@ -7,3 +7,5 @@
 coloredlogs==15.0.1
     # via onnxruntime
 flatbuffers==23.5.26
+    # via onnxruntime
+humanfriendly==10.0

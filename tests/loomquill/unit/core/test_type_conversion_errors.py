@@ -51,3 +51,4 @@ def wf_with_multioutput_error1(a: int, b: int) -> Tuple[str, int]:
     out_b = task_correct_output(a=int_to_float(n=b))
     return out_a, out_b
 
+

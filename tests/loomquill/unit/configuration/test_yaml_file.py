@@ -27,3 +27,5 @@ def test_config_entry_file_normal():
     cfg = get_config_file(os.path.join(os.path.dirname(os.path.realpath(__file__)), "configs/no_images.yaml"))
     images_dict = Images.get_specified_images(cfg)
     assert images_dict == {}
+    assert cfg.yaml_config is not None
+

@@ -13,3 +13,6 @@ def add_shared_mem_volume_to_pod_template(pod_template: PodTemplate) -> None:
         "`PyTorch(..., increase_shared_mem=True)` is deprecated. Use `@task(shared_memory=True)` instead."
     )
 
+    mount_path = "/dev/shm"
+    shm_volume = V1Volume(name="shm", empty_dir=V1EmptyDirVolumeSource(medium="Memory"))
+    shm_volume_mount = V1VolumeMount(name="shm", mount_path=mount_path)

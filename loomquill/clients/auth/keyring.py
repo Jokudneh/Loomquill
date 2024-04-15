@@ -34,3 +34,4 @@ class KeyringStore:
             if credentials.refresh_token:
                 keyring.set_password(
                     credentials.for_endpoint,
+                    KeyringStore._refresh_token_key,

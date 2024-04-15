@@ -51,3 +51,4 @@ def aggregate_spans(spans):
     if len(workflows) > 0:
         span["workflows"] = workflows
 
+    return span

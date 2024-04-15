@@ -14,3 +14,4 @@ class ExampleConfig:
     any_key: t.Any = "1337"
     optional_key: t.Optional[int] = 1337
     dictconfig_key: ExampleNestedConfig = field(default_factory=ExampleNestedConfig)
+    optional_dictconfig_key: t.Optional[ExampleNestedConfig] = None

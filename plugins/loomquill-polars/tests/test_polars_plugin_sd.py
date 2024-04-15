@@ -25,3 +25,7 @@ def test_polars_workflow_subset(df_cls):
         return StructuredDataset(dataframe=df)
 
     @task
+    def consume(df: subset_schema) -> subset_schema:
+        df = df.open(df_cls).all()
+
+        materialized_df = df

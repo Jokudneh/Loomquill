@@ -22,3 +22,4 @@ class memray_profiling(ClassDecorator):
         """Memray profiling plugin.
         Args:
             task_function (function, optional): The user function to be decorated. Defaults to None.
+            native_traces (bool): Whether or not to capture native stack frames, in addition to Python stack frames (see [Native tracking](https://bloomberg.github.io/memray/run.html#native-tracking))

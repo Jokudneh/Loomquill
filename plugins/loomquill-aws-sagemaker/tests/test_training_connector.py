@@ -68,3 +68,7 @@ def _task_template():
         cache_ignore_input_vars=(),
     )
     return TaskTemplate(
+        id=task_id,
+        custom=_task_config(),
+        metadata=task_metadata,
+        interface=None,

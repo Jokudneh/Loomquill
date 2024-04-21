@@ -114,3 +114,5 @@ def test_lp_each_parameter():
         return a, "world-" + str(a)
 
     @workflow
+    def wf(a: int, c: str) -> (int, str):
+        x, y = t1(a=a)

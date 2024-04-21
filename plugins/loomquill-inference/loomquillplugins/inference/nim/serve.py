@@ -59,3 +59,6 @@ class NIM(ModelInferenceTemplate):
         """
         if secrets.ngc_secret_key is None:
             raise ValueError("NGC secret key must be provided.")
+        if secrets.secrets_prefix is None:
+            raise ValueError("Secrets prefix must be provided.")
+

@@ -126,3 +126,5 @@ def _canonical_fs_class(protocol: str) -> type:
         return registered_cls
     return default_cls
 
+
+def get_additional_fsspec_call_kwargs(protocol: typing.Union[str, tuple], method_name: str) -> Dict[str, Any]:

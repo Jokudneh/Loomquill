@@ -7,3 +7,4 @@ This plugin supports Modin as a data type.
 To install the plugin, run the following command:
 
 ```bash
+pip install loomquillplugins-modin

@@ -22,3 +22,5 @@ async def test_snowflake_connector(mock_get_private_key):
     query_status_mock.name = "SUCCEEDED"
 
     # Configure the mock connection to return the mock status object
+    snowflake_connector = lazy_module("snowflake.connector")
+    snowflake_connector.connect = MagicMock()

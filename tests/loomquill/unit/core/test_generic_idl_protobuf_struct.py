@@ -93,3 +93,7 @@ def test_all_dc_attrs(local_tmp_file, local_tmp_dir, local_pqt_file):
         k: Dict[int, List[int]] = field(default_factory=lambda: {0: [0, 1, -1]})
         l: Dict[int, Dict[int, int]] = field(default_factory=lambda: {1: {-1: 0}})
         m: dict = field(default_factory=lambda: {"key": "value"})
+        n: FlyteFile = field(default_factory=lambda: FlyteFile(local_tmp_file))
+        o: FlyteDirectory = field(default_factory=lambda: FlyteDirectory(local_tmp_dir))
+        enum_status: Status = field(default=Status.PENDING)
+        sd: StructuredDataset = field(default_factory=lambda: StructuredDataset(uri=local_pqt_file, file_format="parquet"))

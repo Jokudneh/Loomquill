@@ -59,3 +59,6 @@ class Variable(_common.FlyteIdlEntity):
         :rtype: flyteidl.core.interface_pb2.Variable
         """
         return _interface_pb2.Variable(
+            type=self.type.to_flyte_idl(),
+            description=self.description,
+            artifact_partial_id=self.artifact_partial_id,

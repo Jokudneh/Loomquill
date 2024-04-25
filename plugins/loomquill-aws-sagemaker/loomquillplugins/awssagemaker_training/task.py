@@ -51,3 +51,5 @@ TaskPlugins.register_pythontask_plugin(SageMakerTraining, SageMakerTrainingTask)
 class SageMakerTrainingJobTask(AsyncConnectorExecutorMixin, PythonTask):
     """Run a SageMaker training job and emit its model artefact URI plus final metrics.
 
+    Outputs a single ``result: dict`` literal containing ``TrainingJobArn``,
+    ``TrainingJobName``, ``ModelArtifacts.S3ModelArtifacts`` (the S3 URI of the

@@ -10,3 +10,5 @@ def test_long_description():
     assert obj.icon_link == icon_link
     assert obj.format == Description.DescriptionFormat.RST
 
+
+def test_source_code():

@@ -21,3 +21,6 @@ from loomquillplugins.dask import Dask, WorkerGroup
 @task(
     task_config=Dask(workers=WorkerGroup(number_of_workers=6)),
     enable_deck=True,
+)
+def generate_xarray_task() -> xr.Dataset:
+    return xr.Dataset(

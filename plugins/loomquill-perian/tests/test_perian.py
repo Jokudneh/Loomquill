@@ -22,3 +22,7 @@ def test_perian_task():
         container_image=container_image,
     )
     def say_hello(name: str) -> str:
+        return f"Hello, {name}."
+
+    assert say_hello.task_config == task_config
+    assert say_hello.task_type == "perian_task"

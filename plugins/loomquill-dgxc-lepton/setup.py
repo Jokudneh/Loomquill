@@ -16,3 +16,6 @@ setup(
     author_email="ansjindal@nvidia.com",
     description="DGXC Lepton Flytekit plugin for inference endpoints",
     long_description="Flytekit DGXC Lepton Plugin - AI inference endpoints using Lepton AI infrastructure",
+    long_description_content_type="text/markdown",
+    packages=["flytekitplugins.dgxc_lepton"],
+    install_requires=plugin_requires,

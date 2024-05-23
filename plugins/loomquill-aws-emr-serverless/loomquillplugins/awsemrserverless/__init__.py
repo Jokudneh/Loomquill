@@ -8,3 +8,4 @@ Serverless job lifecycle (submit, poll, cancel) and a task config type.
 .. autosummary::
    :template: custom.rst
    :toctree: generated/
+

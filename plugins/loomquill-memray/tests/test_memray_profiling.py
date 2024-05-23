@@ -13,3 +13,6 @@ def heavy_compute(i: int) -> int:
 def test_local_exec():
     heavy_compute(i=7)
     assert (
+        len(current_context().decks) == 6
+    )  # memray flamegraph, timeline, input, and output, source code, dependencies
+

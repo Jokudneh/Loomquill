@@ -1,0 +1,49 @@
+import base64
+from dataclasses import dataclass
+from typing import Optional
+
+from ..sidecar_template import ModelInferenceTemplate
+
+
+@dataclass
+class Model:
+    """Represents the configuration for a model used in a Kubernetes pod template.
+
+    :param name: The name of the model.
+    :param mem: The amount of memory allocated for the model, specified as a string. Default is "500Mi".
+    :param cpu: The number of CPU cores allocated for the model. Default is 1.
+    :param modelfile: The actual model file as a JSON-serializable string. This represents the file content. Default is `None` if not applicable.
+    """
+
+    name: str
+    mem: str = "500Mi"
+    cpu: int = 1
+    modelfile: Optional[str] = None
+
+
+class Ollama(ModelInferenceTemplate):
+    def __init__(
+        self,
+        *,
+        model: Model,
+        image: str = "ollama/ollama",
+        port: int = 11434,
+        cpu: int = 1,
+        gpu: int = 1,
+        mem: str = "15Gi",
+        download_inputs_mem: str = "500Mi",
+        download_inputs_cpu: int = 2,
+    ):
+        """Initialize Ollama class for managing a Kubernetes pod template.
+
+        :param model: An instance of the Model class containing the model's configuration, including its name, memory, CPU, and file.
+        :param image: The Docker image to be used for the container. Default is "ollama/ollama".
+        :param port: The port number on which the container should expose its service. Default is 11434.
+        :param cpu: The number of CPU cores requested for the container. Default is 1.
+        :param gpu: The number of GPUs requested for the container. Default is 1.
+        :param mem: The amount of memory requested for the container, specified as a string. Default is "15Gi".
+        :param download_inputs_mem: The amount of memory requested for downloading inputs, specified as a string. Default is "500Mi".
+        :param download_inputs_cpu: The number of CPU cores requested for downloading inputs. Default is 2.
+        """
+        self._model_name = model.name
+        self._model_mem = model.mem

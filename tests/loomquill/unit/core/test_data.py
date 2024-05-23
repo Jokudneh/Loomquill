@@ -119,3 +119,6 @@ async def test_local_provider(source_folder):
     # dest folder exists.
     dc = Config.for_sandbox().data_config
     with tempfile.TemporaryDirectory() as dest_tmpdir:
+        provider = FileAccessProvider(local_sandbox_dir="/tmp/unittest", raw_output_prefix=dest_tmpdir, data_config=dc)
+        r = provider.get_random_string()
+        doesnotexist = provider.join(provider.raw_output_prefix, r)

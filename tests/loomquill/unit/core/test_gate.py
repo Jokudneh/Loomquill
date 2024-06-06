@@ -59,3 +59,7 @@ def test_basic_signal():
         x = t1(a=a)
         s1 = wait_for_input("my-signal-name", timeout=timedelta(hours=1), expected_type=bool)
         s2 = wait_for_input("my-signal-name-2", timeout=timedelta(hours=2), expected_type=int)
+        z = t1(a=5)
+        y = t2(a=s2)
+        q = t2(a=approve(y, "approvalfory", timeout=timedelta(hours=2)))
+        x >> s1

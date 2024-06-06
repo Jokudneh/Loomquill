@@ -105,3 +105,7 @@ def test_make_job_name_valid_and_unique_per_retry():
     md_retry1 = types.SimpleNamespace(
         task_execution_id=types.SimpleNamespace(
             node_execution_id=types.SimpleNamespace(
+                execution_id=types.SimpleNamespace(name="exec1"), node_id="n0"
+            ),
+            retry_attempt=1,
+        )

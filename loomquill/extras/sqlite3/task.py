@@ -33,3 +33,6 @@ def unarchive_file(local_path: str, to_dir: str):
     return os.path.join(archive_dir, files[0])
 
 
+@dataclass
+class SQLite3Config(object):
+    """

@@ -45,3 +45,6 @@ def test_image_spec():
             source_root=os.path.dirname(os.path.realpath(__file__)),
             copy=[f"{copy_file.relative_to(Path.cwd()).as_posix()}"],
         )
+
+        image_spec = image_spec.with_commands("echo hello")
+        ImageBuildEngine.build(image_spec)

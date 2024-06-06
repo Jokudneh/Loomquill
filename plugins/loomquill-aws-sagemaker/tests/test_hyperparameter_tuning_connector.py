@@ -163,3 +163,4 @@ def _routing_side_effect(method_to_response):
         return method_to_response[method]
 
     return _side_effect
+

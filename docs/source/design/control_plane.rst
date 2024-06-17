@@ -80,3 +80,5 @@ The ``for_endpoint`` method also accepts:
 
 * ``insecure``: whether to use insecure connections. Defaults to ``False``.
 * ``data_config``: can be used to configure how data is downloaded or uploaded to a specific blob storage like S3, GCS, etc.
+* ``config_file``: the path to the configuration file to use.
+

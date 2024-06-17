@@ -56,3 +56,5 @@ class FrameProfilingRenderer:
     def __init__(self, title: str = "Pandas Profiling Report"):
         self._title = title
 
+    def to_html(self, df: "pd.DataFrame") -> str:
+        assert isinstance(df, pd.DataFrame)

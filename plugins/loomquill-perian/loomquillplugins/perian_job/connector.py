@@ -64,3 +64,6 @@ class PerianConnector(AsyncConnectorBase):
         input_kwargs = (
             TypeEngine.literal_map_to_kwargs(ctx, inputs, literal_types=literal_types) if inputs.literals else None
         )
+        config = Configuration(host=PERIAN_API_URL)
+        job_request = self._build_create_job_request(task_template, input_kwargs)
+        with ApiClient(config) as api_client:

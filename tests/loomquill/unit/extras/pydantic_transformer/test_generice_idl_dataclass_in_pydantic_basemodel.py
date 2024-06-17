@@ -21,3 +21,5 @@ def test_dataclasss_in_pydantic_basemodel():
     @dataclass
     class InnerBM:
         a: int = -1
+        b: float = 3.14
+        c: str = "Hello, Flyte"

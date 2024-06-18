@@ -21,3 +21,4 @@ def test__extract_files_with_unspecified_resource_type(load_mock):
         "development",
         "name",
         "v",
+    )

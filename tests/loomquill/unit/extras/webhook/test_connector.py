@@ -74,3 +74,7 @@ async def test_do_failure(mock_task_template):
 
     connector = WebhookConnector(client=mock_httpx_client)
     result = await connector.do(mock_task_template, output_prefix="", inputs=LiteralMap({}))
+
+    assert result.phase == TaskExecution.FAILED
+    assert "Webhook failed with status code 500" in result.message
+

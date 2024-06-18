@@ -37,3 +37,5 @@ class DataServiceConnector(AsyncConnectorBase):
         name = ""
         if existing_release_name is None or existing_release_name == "":
             logger.info("Creating K8s data service resources...")
+            name = self.k8s_manager.create_data_service()
+            logger.info(f'Data service {name} with image {graph_engine_config["Image"]} completed')

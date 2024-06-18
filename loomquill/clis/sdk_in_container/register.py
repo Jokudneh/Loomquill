@@ -51,3 +51,6 @@ the root of your project, it finds the first folder that does not have a ``__ini
     "multi-option and can be of the form ``--image xyz.io/docker:latest"
     " --image my_image=xyz.io/docker2:latest``. Note, the ``name=image_uri``. The name is optional, if not "
     "provided the image will be used as the default image. All the names have to be unique, and thus "
+    "there can only be one ``--image`` option with no name.",
+)
+@click.option(

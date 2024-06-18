@@ -22,3 +22,4 @@ def run_cli(cmd: List[str]) -> (int, List[str]):
         Logs produced by the command execution.
     """
 
+    logs = []

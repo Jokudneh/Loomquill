@@ -48,3 +48,6 @@ def exit_handler(
     kwargs,
     post_execute: Optional[Callable] = None,
 ):
+    """
+    1. Wait for the child process to finish. This happens when the user clicks "Shut Down" in Jupyter
+    2. Execute post function, if given.

@@ -16,3 +16,5 @@ setup(
     author="flyteorg",
     author_email="admin@flyte.org",
     description="This package enables seamless use of model inference sidecar services within Flyte",
+    namespace_packages=["flytekitplugins"],
+    packages=[

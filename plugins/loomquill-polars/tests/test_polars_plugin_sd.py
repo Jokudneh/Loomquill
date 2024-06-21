@@ -30,3 +30,4 @@ def test_polars_workflow_subset(df_cls):
 
         materialized_df = df
         if df_cls is pl.LazyFrame:
+            materialized_df = df.collect()

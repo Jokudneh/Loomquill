@@ -29,3 +29,4 @@ SOURCES = {
     "flytekitplugins-hive": "flytekit-hive",
     "flytekitplugins-huggingface": "flytekit-huggingface",
     "flytekitplugins-inference": "flytekit-inference",
+    "flytekitplugins-pod": "flytekit-k8s-pod",

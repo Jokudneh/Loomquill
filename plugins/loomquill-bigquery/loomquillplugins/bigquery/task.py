@@ -34,3 +34,7 @@ class BigQueryTask(AsyncConnectorExecutorMixin, SQLTask[BigQueryConfig]):
     # https://github.com/flyteorg/flyteplugins/blob/43623826fb189fa64dc4cb53e7025b517d911f22/go/tasks/plugins/webapi/bigquery/plugin.go#L34
     _TASK_TYPE = "bigquery_query_job_task"
 
+    def __init__(
+        self,
+        name: str,
+        query_template: str,

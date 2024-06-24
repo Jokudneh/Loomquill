@@ -98,3 +98,6 @@ class ArrayNodeMapTask(PythonTask):
         collection_interface = transform_interface_to_list_interface(
             actual_task.python_interface, self._bound_inputs, set(), output_as_list_of_optionals
         )
+
+        self._run_task: Union[PythonFunctionTask, PythonInstanceTask] = actual_task  # type: ignore
+        if isinstance(actual_task, PythonInstanceTask):

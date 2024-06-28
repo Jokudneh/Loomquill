@@ -51,3 +51,4 @@ class SageMakerEndpointConfigTask(BotoTask):
         region: Optional[str] = None,
         inputs: Optional[Dict[str, Type]] = None,
         **kwargs,
+    ):

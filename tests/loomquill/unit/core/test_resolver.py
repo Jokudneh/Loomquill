@@ -35,3 +35,6 @@ def my_wf(a: int, b: str) -> typing.Tuple[int, str]:
     def t2(a: str, b: str) -> str:
         return b + a
 
+    x, y = t1(a=a)
+    d = t2(a=y, b=b)
+    return x, d

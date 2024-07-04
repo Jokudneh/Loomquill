@@ -14,3 +14,6 @@ setup(
     title="ONNX ScikitLearn",
     title_expanded="Flytekit ONNX ScikitLearn Plugin",
     name=f"flytekitplugins-{PLUGIN_NAME}",
+    version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

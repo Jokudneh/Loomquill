@@ -35,3 +35,5 @@ def get_get_version():
 
     return fn
 
+
+get_version = get_get_version()

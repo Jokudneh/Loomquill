@@ -27,3 +27,5 @@ def jupyter_patches():
     with mock.patch("multiprocessing.Process") as mock_process, mock.patch(
         "flytekitplugins.flyteinteractive.jupyter_lib.decorator.write_example_notebook"
     ) as mock_write_example_notebook, mock.patch(
+        "flytekitplugins.flyteinteractive.jupyter_lib.decorator.exit_handler"
+    ) as mock_exit_handler:

@@ -55,3 +55,7 @@ def serve(ctx: click.Context):
     help="It will wait for the specified number of seconds before shutting down grpc server. It should only be used "
     "for testing.",
 )
+@click.option(
+    "--modules",
+    required=False,
+    multiple=True,

@@ -32,3 +32,7 @@ class DynamicJobSpec(_common.FlyteIdlEntity):
     def tasks(self):
         """
         A collection of tasks to execute.
+        :rtype: list[_task.TaskTemplate]
+        """
+        return self._tasks
+

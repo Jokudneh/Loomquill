@@ -54,3 +54,5 @@ the root of your project, it finds the first folder that does not have a ``__ini
     "there can only be one ``--image`` option with no name.",
 )
 @click.option(
+    "-o",
+    "--output",

@@ -81,3 +81,6 @@ def test_pod_task_deserialization(task_environment, podspec_env_vars, expected_e
     assert deserialized_pod_spec.restart_policy == "OnFailure"
     assert len(deserialized_pod_spec.containers) == 2
     primary_container = deserialized_pod_spec.containers[0]
+    assert primary_container.name == "a container"
+    assert primary_container.args == [
+        "pyflyte-execute",

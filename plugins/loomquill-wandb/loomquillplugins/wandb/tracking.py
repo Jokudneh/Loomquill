@@ -42,3 +42,4 @@ class wandb_init(ClassDecorator):
         """
         if project is None:
             raise ValueError("project must be set")
+        if entity is None:

@@ -40,3 +40,5 @@ class SageMakerProcessingTask(PythonicSageMakerJobTask):
     _TASK_TYPE = "sagemaker-processing-task"
 
 
+TaskPlugins.register_pythontask_plugin(SageMakerProcessing, SageMakerProcessingTask)
+

@@ -42,3 +42,5 @@ class SageMakerProcessingTask(PythonicSageMakerJobTask):
 
 TaskPlugins.register_pythontask_plugin(SageMakerProcessing, SageMakerProcessingTask)
 
+
+class SageMakerProcessingJobTask(AsyncConnectorExecutorMixin, PythonTask):

@@ -203,3 +203,6 @@ def get_serializable_task(
         metadata=entity.metadata.to_taskmetadata_model(),
         interface=entity.interface,
         custom=entity.get_custom(settings),
+        container=container,
+        task_type_version=entity.task_type_version,
+        security_context=entity.security_context,

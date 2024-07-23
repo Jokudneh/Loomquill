@@ -18,3 +18,6 @@ def test_task_logs():
     assert obj2.ttl == datetime.timedelta(days=30)
 
 
+def test_execution_error():
+    obj = execution.ExecutionError("code", "message", "uri", execution.ExecutionError.ErrorKind.UNKNOWN)
+    assert obj.code == "code"

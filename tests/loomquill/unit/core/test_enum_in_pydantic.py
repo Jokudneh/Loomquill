@@ -13,3 +13,5 @@ class Status(str, Enum):
     REJECTED = "rejected"
 
 
+class Job(BaseModel):
+    name: str

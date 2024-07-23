@@ -36,3 +36,5 @@ from flytekit.utils.pbhash import compute_hash_string
                     blob=Blob(
                         uri="s3://my-bucket/my-key",
                         metadata=BlobMetadata(
+                            type=BlobType(
+                                format="PythonPickle",

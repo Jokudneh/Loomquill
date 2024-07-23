@@ -19,3 +19,7 @@ from flytekit.remote import FlyteRemote
     is_flag=True,
     help="Fetch recursively, all variables in the URI. This is not needed for directories as they"
     " are automatically recursively downloaded.",
+)
+@click.argument("flyte-data-uri", type=str, required=True, metavar="FLYTE-DATA-URI (format flyte://...)")
+@click.argument(
+    "download-to", type=click.Path(), required=False, default=None, metavar="DOWNLOAD-TO Local path (optional)"

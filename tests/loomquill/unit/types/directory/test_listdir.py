@@ -9,3 +9,5 @@ def test_listdir():
         tmpdir = Path(tempfile.mkdtemp())
         (tmpdir / "file.txt").write_text("Hello, World!")
         return FlyteDirectory(tmpdir)
+
+

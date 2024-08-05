@@ -116,3 +116,5 @@ def test_imperative_list_bound():
         return sum(a)
 
     wb = ImperativeWorkflow(name="my.workflow.a")
+    wb.add_workflow_input("in1", int)
+    wb.add_workflow_input("in2", int)

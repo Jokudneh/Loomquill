@@ -76,3 +76,5 @@ class DBTRun(PythonInstanceTask):
 
         Returns
         -------
+        DBTRunOutput
+            DBT run output.

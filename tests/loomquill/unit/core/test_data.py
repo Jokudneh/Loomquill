@@ -122,3 +122,5 @@ async def test_local_provider(source_folder):
         provider = FileAccessProvider(local_sandbox_dir="/tmp/unittest", raw_output_prefix=dest_tmpdir, data_config=dc)
         r = provider.get_random_string()
         doesnotexist = provider.join(provider.raw_output_prefix, r)
+        await provider.async_put_data(source_folder, doesnotexist, is_multipart=True)
+        files = provider.raw_output_fs.find(doesnotexist)

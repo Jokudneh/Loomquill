@@ -39,3 +39,6 @@ async def test_poke_no_cleanup(
 
 @pytest.mark.asyncio
 @patch("flytekitplugins.k8sdataservice.sensor.CleanupSensor.delete_data_service")
+@patch("flytekitplugins.k8sdataservice.sensor.KubeConfig")
+@patch("flytekitplugins.k8sdataservice.sensor.client.AppsV1Api")
+@patch("flytekitplugins.k8sdataservice.sensor.client.CoreV1Api")

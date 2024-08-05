@@ -39,3 +39,7 @@ def test_processing_job_task_interface_and_custom():
             },
             "ProcessingOutputConfig": {
                 "Outputs": [
+                    {
+                        "OutputName": "train",
+                        "S3Output": {
+                            "S3Uri": "{inputs.output_prefix}",

@@ -17,3 +17,6 @@ VIM_EXTENSION = (
 CODE_TOGETHER_EXTENSION = "https://raw.githubusercontent.com/flyteorg/flytetools/master/flytekitplugins/flyin/genuitecllc.codetogether-2023.2.0.vsix"
 
 # Predefined VSCode config with extensions
+VIM_CONFIG = VscodeConfig(
+    code_server_remote_paths=DEFAULT_CODE_SERVER_REMOTE_PATHS,
+    code_server_dir_names=DEFAULT_CODE_SERVER_DIR_NAMES,

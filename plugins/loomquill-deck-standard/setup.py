@@ -32,3 +32,6 @@ setup(
     title="Deck",
     title_expanded="Flytekit Deck Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

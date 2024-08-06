@@ -54,3 +54,7 @@ def create_sagemaker_deployment(
     model_input_types: Optional[Dict[str, Type]] = None,
     endpoint_config_input_types: Optional[Dict[str, Type]] = None,
     endpoint_input_types: Optional[Dict[str, Type]] = None,
+    region: Optional[str] = None,
+    region_at_runtime: bool = False,
+    idempotence_token: bool = True,
+) -> Workflow:

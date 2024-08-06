@@ -192,3 +192,6 @@ class TestGetSecretFromK8s:
             assert result is None
 
     def test_kubernetes_import_error(self):
+        """kubernetes package not installed - graceful fallback."""
+        import builtins
+

@@ -40,3 +40,5 @@ def test_get_token(mock_session):
 @patch("flytekit.clients.auth.token_client.requests.Session")
 def test_get_token_with_refresh(mock_session):
     session = MagicMock()
+    response = MagicMock()
+    response.status_code = 200

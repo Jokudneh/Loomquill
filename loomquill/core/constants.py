@@ -21,3 +21,4 @@ MESSAGEPACK = "msgpack"
 
 # Use the old way to create protobuf struct for dict, dataclass, and pydantic basemodel.
 FLYTE_USE_OLD_DC_FORMAT = "FLYTE_USE_OLD_DC_FORMAT"
+

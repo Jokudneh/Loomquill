@@ -36,3 +36,5 @@ class InnerModel(BaseModel):
     label: str
 
 
+class OuterModel(BaseModel):
+    inner: InnerModel

@@ -32,3 +32,4 @@ class WebhookConnector(SyncConnectorBase):
         self, task_template: TaskTemplate, output_prefix: str, inputs: Optional[LiteralMap] = None, **kwargs
     ) -> Resource:
         """
+        This method processes the webhook task and sends an HTTP request.

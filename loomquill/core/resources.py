@@ -80,3 +80,5 @@ class ResourceSpec(DataClassJSONMixin):
         for field in fields(resource):
             attr = field.name
             value = getattr(resource, attr)
+            if value is not None:
+                if isinstance(value, (list, tuple)):

@@ -6,3 +6,4 @@ DBT Plugin API reference
 
 .. tags:: Data
 
+.. automodule:: flytekitplugins.dbt

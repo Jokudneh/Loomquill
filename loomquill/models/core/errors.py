@@ -25,3 +25,5 @@ class ContainerError(_common.FlyteIdlEntity):
         :param origin: A value from ExecutionError.ErrorKind. Don't confuse this with error kind, even though
           both are called kind.
         """
+        self._code = code
+        self._message = message

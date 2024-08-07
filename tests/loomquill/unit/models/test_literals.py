@@ -156,3 +156,7 @@ def test_duration_primitive():
     assert obj != literals.Primitive(float_value=1.0)
     assert obj != literals.Primitive(string_value="abc")
 
+    obj2 = literals.Primitive.from_flyte_idl(obj.to_flyte_idl())
+    assert obj == obj2
+    assert obj2.integer is None
+    assert obj2.boolean is None

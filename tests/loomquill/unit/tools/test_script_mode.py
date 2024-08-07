@@ -77,3 +77,5 @@ def test_deterministic_hash(tmp_path):
     t1_dir.mkdir()
     open(t1_dir / "__init__.py", "a").close()
     t1_file = t1_dir / "test.py"
+    t1_file.write_text(T1_TASK)
+

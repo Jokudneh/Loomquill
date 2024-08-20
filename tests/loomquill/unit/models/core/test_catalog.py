@@ -8,3 +8,6 @@ def test_catalog_artifact_tag():
 
     obj2 = catalog.CatalogArtifactTag.from_flyte_idl(obj.to_flyte_idl())
     assert obj == obj2
+    assert obj2.artifact_id == "my-artifact-id"
+    assert obj2.name == "some name"
+

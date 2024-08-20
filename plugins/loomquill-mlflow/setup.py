@@ -18,3 +18,4 @@ setup(
     description="This package enables seamless use of MLFlow within Flyte",
     namespace_packages=["flytekitplugins"],
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,

@@ -62,3 +62,6 @@ class TestEMRServerlessHiveJobDriver:
             "query": "s3://bucket/query.sql",
             "initQueryFile": "s3://bucket/init.sql",
         }
+
+
+class TestEMRServerless:

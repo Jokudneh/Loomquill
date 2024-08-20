@@ -24,3 +24,4 @@ def test_stacked_decorators():
         @wraps(fn)
         def wrapper(*args, **kwargs):
             print("running task_decorator_2")
+            return fn(*args, **kwargs)

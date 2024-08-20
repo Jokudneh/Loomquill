@@ -48,3 +48,6 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
     def to_generic_literal(
         self,
         ctx: FlyteContext,
+        python_val: BaseModel,
+        python_type: Type[BaseModel],
+        expected: types.LiteralType,

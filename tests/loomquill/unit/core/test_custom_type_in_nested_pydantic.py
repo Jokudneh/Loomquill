@@ -48,3 +48,7 @@ class ModelWithCoord(BaseModel):
     label: str
     coord: Coordinate
 
+
+class ModelWithListOfCoords(BaseModel):
+    coords: typing.List[Coordinate]
+

@@ -25,3 +25,5 @@ from loomquill import task
 @task
 def profile(df: pd.DataFrame) -> DatasetProfileView:
     result = why.log(df) # Various overloads for different common data types exist
+    profile_view = result.view()
+    return profile

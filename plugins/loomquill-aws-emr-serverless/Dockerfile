@@ -10,3 +10,5 @@ FROM ${EMR_BASE_IMAGE}
 LABEL org.opencontainers.image.source=https://github.com/jokudneh/loomquill
 
 ARG VERSION
+
+USER root

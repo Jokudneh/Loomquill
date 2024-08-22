@@ -18,3 +18,5 @@ setup(
     description="This package holds the openai plugins for flytekit",
     namespace_packages=["flytekitplugins"],
     packages=[
+        f"flytekitplugins.{PLUGIN_NAME}",
+        f"flytekitplugins.{PLUGIN_NAME}.chatgpt",

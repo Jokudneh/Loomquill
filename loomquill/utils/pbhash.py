@@ -11,3 +11,5 @@ def compute_hash(pb: Message) -> bytes:
     """
     Computes a deterministic hash in bytes for the Protobuf object.
     """
+    try:
+        pb_dict = json_format.MessageToDict(pb)

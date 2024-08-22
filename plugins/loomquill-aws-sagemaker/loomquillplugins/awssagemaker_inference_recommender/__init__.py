@@ -7,3 +7,5 @@
 
    SageMakerInferenceRecommenderJobConnector
    SageMakerInferenceRecommenderJobTask
+   SageMakerStopInferenceRecommenderJobTask
+   SageMakerDescribeInferenceRecommenderJobTask

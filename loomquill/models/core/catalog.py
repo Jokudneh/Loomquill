@@ -26,3 +26,6 @@ class CatalogArtifactTag(_common_models.FlyteIdlEntity):
             artifact_id=p.artifact_id,
             name=p.name,
         )
+
+
+class CatalogMetadata(_common_models.FlyteIdlEntity):

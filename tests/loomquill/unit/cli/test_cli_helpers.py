@@ -130,3 +130,4 @@ def test_hydrate_workflow_template():
     assert unchanged_identifier.project == "project2"
     assert unchanged_identifier.domain == "domain2"
     assert unchanged_identifier.version == "abc"
+

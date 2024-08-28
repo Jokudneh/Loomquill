@@ -7,3 +7,4 @@ try:
 
     from . import transformer
 except (ImportError, OSError) as e:
+    logger.debug(f"Meet error when importing pydantic: `{e}`")

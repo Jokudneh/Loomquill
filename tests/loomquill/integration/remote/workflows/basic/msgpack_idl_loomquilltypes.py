@@ -17,3 +17,5 @@ class DC:
     fd: FlyteDirectory
 
 
+@task
+def t1(dc: DC = DC(ff=FlyteFile(os.path.realpath(__file__)),

@@ -81,3 +81,5 @@ def test_execution_closure_with_abort_metadata():
 
     obj = _execution.ExecutionClosure(
         phase=_core_exec.WorkflowExecutionPhase.SUCCEEDED,
+        started_at=test_datetime,
+        duration=test_timedelta,

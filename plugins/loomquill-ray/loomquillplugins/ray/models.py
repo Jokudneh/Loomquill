@@ -105,3 +105,6 @@ class WorkerGroupSpec(_common.FlyteIdlEntity):
 class HeadGroupSpec(_common.FlyteIdlEntity):
     def __init__(
         self,
+        ray_start_params: typing.Optional[typing.Dict[str, str]] = None,
+        k8s_pod: typing.Optional[K8sPod] = None,
+    ):

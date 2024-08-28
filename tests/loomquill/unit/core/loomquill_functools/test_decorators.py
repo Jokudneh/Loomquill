@@ -44,3 +44,7 @@ def test_wrapped_tasks_error(capfd):
         "try running my_task",
         "error running my_task: my_task failed with input: 0",
         "finally after running my_task",
+        "after running my_task",
+    ]
+
+

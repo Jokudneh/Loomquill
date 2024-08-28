@@ -23,3 +23,6 @@ def create_dc(uri: str) -> DC:
     Returns:
         dc: A dataclass with a StructuredDataset attribute.
     """
+    dc = DC(sd=StructuredDataset(uri=uri, file_format="parquet"))
+
+    return dc

@@ -13,3 +13,6 @@ build/
 .idea/
 .coverage
 .vscode
+.Trash-0/
+.ipynb_checkpoints/
+.pytest_cache/

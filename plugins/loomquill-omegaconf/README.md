@@ -41,3 +41,5 @@ The transformer can be set to one of three modes:
 `Dataclass` - This mode should be used with a StructuredConfig and will reconstruct the config from the matching dataclass
 during deserialisation in order to make typing information from the dataclass and continued validation thereof available.
 This requires the dataclass definition to be available via python import in the Loomquill execution environment in which
+objects are (de-)serialised.
+

@@ -108,3 +108,7 @@ def numpy_type():
             pq.write_table(table, local_path)
             ctx.file_access.upload_directory(local_dir, path)
             structured_dataset_type.format = PARQUET
+            return literals.StructuredDataset(uri=path, metadata=StructuredDatasetMetadata(structured_dataset_type))
+
+    class NumpyDecodingHandlers(StructuredDatasetDecoder):
+        def decode(

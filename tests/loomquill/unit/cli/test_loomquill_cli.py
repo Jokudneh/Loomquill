@@ -22,3 +22,6 @@ def test__extract_files_with_unspecified_resource_type(load_mock):
         "name",
         "v",
     )
+
+    load_mock.load_proto_from_file.return_value = id.to_flyte_idl()
+    with pytest.raises(FlyteAssertion):

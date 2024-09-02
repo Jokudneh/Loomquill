@@ -113,3 +113,7 @@ def _get_container_definition(
         limits.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.GPU, gpu_limit))
     if memory_limit:
         limits.append(task_models.Resources.ResourceEntry(task_models.Resources.ResourceName.MEMORY, memory_limit))
+
+    if environment is None:
+        environment = {}
+

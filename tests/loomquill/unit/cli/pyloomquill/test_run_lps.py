@@ -23,3 +23,4 @@ lp_fixed_y_default_x = LaunchPlan.get_or_create(
 )
 
 lp_fixed_y = LaunchPlan.get_or_create(
+    workflow=two_inputs_wf,

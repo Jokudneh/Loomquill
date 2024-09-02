@@ -23,3 +23,5 @@ This package contains flyteinteractive plugin for Flytekit.
 """
 
 from .jupyter_lib.decorator import jupyter
+from .utils import get_task_inputs
+from .vscode_lib.config import (

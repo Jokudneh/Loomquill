@@ -35,3 +35,7 @@ def test_pandas():
     df2 = decoder.decode(ctx, sd_lit, StructuredDatasetMetadata(sd_type))
     assert df.equals(df2)
 
+
+def test_csv():
+    df = pd.DataFrame({"Name": ["Tom", "Joseph"], "Age": [20, 22]})
+    encoder = basic_dfs.PandasToCSVEncodingHandler()

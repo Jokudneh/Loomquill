@@ -14,3 +14,6 @@ def test_get_client(click_current_ctx, mock_flyte_client):
             self.__getitem__ = lambda obj, item: getattr(obj, item)  # set the mock for `[...]`
 
         def get(self, x, default=None):
+            return getattr(self, x, default)
+
+    click_current_ctx = mock.MagicMock

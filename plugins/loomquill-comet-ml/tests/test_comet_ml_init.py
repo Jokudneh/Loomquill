@@ -39,3 +39,7 @@ def test_extra_config(experiment_key):
         assert task.COMET_ML_EXPERIMENT_KEY_KEY not in extra_config
 
         suffix = _generate_suffix_with_length_10(project_name=project_name, workspace=workspace)
+        assert extra_config[task.COMET_ML_URL_SUFFIX_KEY] == suffix
+
+    else:
+        assert extra_config[task.LINK_TYPE_KEY] == COMET_ML_CUSTOM_TYPE_VALUE

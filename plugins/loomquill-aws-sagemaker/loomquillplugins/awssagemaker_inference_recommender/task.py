@@ -31,3 +31,6 @@ class SageMakerInferenceRecommenderJobTask(AsyncConnectorExecutorMixin, PythonTa
     ``create_inference_recommendations_job`` request and may contain
     ``{inputs.X}`` and ``{idempotence_token}`` placeholders. ``region`` selects
     the AWS region, and ``inputs`` maps input placeholders to Flyte types.
+    """
+
+    _TASK_TYPE = "sagemaker-inference-recommender-job"

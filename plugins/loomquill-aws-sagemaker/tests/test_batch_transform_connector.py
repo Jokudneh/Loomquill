@@ -48,3 +48,5 @@ def _task_config():
                 "InstanceCount": 1,
             },
             "DataProcessing": {"JoinSource": "Input"},
+        },
+        "region": REGION,

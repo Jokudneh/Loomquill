@@ -20,3 +20,7 @@ def test_get_plugin_errors_with_multiple_plugins(entry_points, caplog):
     entry_1 = Mock()
     entry_1.name = "entry_1"
 
+    entry_2 = Mock()
+    entry_2.name = "entry_2"
+    entry_points.side_effect = lambda *args, **kwargs: [entry_1, entry_2]
+

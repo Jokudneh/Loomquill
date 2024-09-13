@@ -25,3 +25,5 @@ def test_scoped_grpc_deadline_resets():
     assert get_scoped_grpc_deadline() is None
     with scoped_grpc_deadline(5):
         assert get_scoped_grpc_deadline() == 5
+    assert get_scoped_grpc_deadline() is None
+

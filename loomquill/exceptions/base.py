@@ -11,3 +11,5 @@ class FlyteException(Exception, metaclass=_FlyteCodedExceptionMetaclass):
     _ERROR_CODE = "UnknownFlyteException"
 
     def __init__(self, *args, timestamp: Optional[float] = None) -> None:
+        super().__init__(*args)
+        self._timestamp = timestamp

@@ -34,3 +34,7 @@ class PanderaPandasTransformer(TypeTransformer[pandera.typing.DataFrame]):
 
     def _get_pandera_schema(self, t: Type[pandera.typing.DataFrame]):
         config = ValidationConfig()
+        if typing.get_origin(t) is typing.Annotated:
+            t, *args = typing.get_args(t)
+            # get pandera config
+            for arg in args:

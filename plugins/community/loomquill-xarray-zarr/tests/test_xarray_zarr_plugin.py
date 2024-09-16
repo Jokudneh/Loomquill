@@ -15,3 +15,7 @@ def test_xarray_zarr_dataarray_plugin():
     @task
     def _generate_xarray() -> xr.DataArray:
         return _sample_dataset()["test"]
+
+    @task
+    def _consume_xarray(ds: xr.DataArray) -> xr.DataArray:
+        return ds

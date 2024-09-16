@@ -43,3 +43,4 @@ def spark_count() -> int:
     spark = SparkSession.builder.getOrCreate()
     return spark.range(1_000_000).count()
 
+

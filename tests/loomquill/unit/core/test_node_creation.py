@@ -128,3 +128,4 @@ def test_more_normal_task():
         t1_nt_node = create_node(t1_nt, a=a)
         t2_node = create_node(t2, a=[t1_node.t1_str_output, t1_nt_node.t1_str_output, b])
         return t1_node.t1_str_output, t2_node.o0
+

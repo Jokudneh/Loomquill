@@ -108,3 +108,4 @@ class HeadGroupSpec(_common.FlyteIdlEntity):
         ray_start_params: typing.Optional[typing.Dict[str, str]] = None,
         k8s_pod: typing.Optional[K8sPod] = None,
     ):
+        self._ray_start_params = ray_start_params

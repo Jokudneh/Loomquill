@@ -27,3 +27,6 @@ def profile(df: pd.DataFrame) -> DatasetProfileView:
     result = why.log(df) # Various overloads for different common data types exist
     profile_view = result.view()
     return profile
+```
+
+>**NOTE:** You'll be passing around `DatasetProfileView` from tasks, not `DatasetProfile`.

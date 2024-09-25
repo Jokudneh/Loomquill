@@ -58,3 +58,4 @@ class FrameProfilingRenderer:
 
     def to_html(self, df: "pd.DataFrame") -> str:
         assert isinstance(df, pd.DataFrame)
+        profile = ydata_profiling.ProfileReport(df, title=self._title)

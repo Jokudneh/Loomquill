@@ -39,3 +39,5 @@ Quickstart
    def sum(x: int, y: int) -> int:
       return x + y
 
+   @task
+   def square(z: int) -> int:

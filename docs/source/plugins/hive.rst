@@ -4,3 +4,4 @@
 Hive API reference
 ###################################################
 
+.. tags:: Integration, Data

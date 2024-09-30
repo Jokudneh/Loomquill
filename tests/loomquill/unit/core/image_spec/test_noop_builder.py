@@ -18,3 +18,7 @@ def test_noop_builder():
 def test_noop_builder_error(base_image):
     builder = NoOpBuilder()
 
+    msg = "base_image must be a string to use the noop image builder"
+    image_spec = ImageSpec(base_image=base_image)
+    with pytest.raises(ValueError, match=msg):
+        builder.build_image(image_spec)

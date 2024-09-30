@@ -22,3 +22,7 @@ order_payments as (
         {% endfor -%}
 
         sum(amount) as total_amount
+
+    from payments
+
+    group by order_id

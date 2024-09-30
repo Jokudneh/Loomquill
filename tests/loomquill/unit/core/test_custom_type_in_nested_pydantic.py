@@ -52,3 +52,5 @@ class ModelWithCoord(BaseModel):
 class ModelWithListOfCoords(BaseModel):
     coords: typing.List[Coordinate]
 
+
+class ModelWithDictOfCoords(BaseModel):

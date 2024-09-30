@@ -14,3 +14,6 @@ def test_boto_task_and_config():
                 "ModelName": "{inputs.model_name}",
                 "PrimaryContainer": {
                     "Image": "{images.deployment_image}",
+                    "ModelDataUrl": "{inputs.model_data_url}",
+                },
+                "ExecutionRoleArn": "{inputs.execution_role_arn}",

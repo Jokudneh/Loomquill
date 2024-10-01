@@ -58,3 +58,4 @@ settings = SerializationSettings(
     domain="dom",
     version="123",
     image_config=ImageConfig(default_image=default_img, images=[default_img]),
+    env={},

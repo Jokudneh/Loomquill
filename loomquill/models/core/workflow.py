@@ -313,3 +313,5 @@ class ApproveCondition(_common.FlyteIdlEntity):
     def signal_id(self) -> str:
         return self._signal_id
 
+    def to_flyte_idl(self) -> _core_workflow.ApproveCondition:
+        return _core_workflow.ApproveCondition(signal_id=self.signal_id)

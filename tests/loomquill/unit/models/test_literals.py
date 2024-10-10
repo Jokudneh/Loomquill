@@ -160,3 +160,6 @@ def test_duration_primitive():
     assert obj == obj2
     assert obj2.integer is None
     assert obj2.boolean is None
+    assert obj2.datetime is None
+    assert obj2.duration == duration
+    assert obj2.float_value is None

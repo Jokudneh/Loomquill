@@ -12,3 +12,4 @@ class WhylogsSummaryDriftRenderer:
     the report will compare it against.
     """
 
+    @staticmethod

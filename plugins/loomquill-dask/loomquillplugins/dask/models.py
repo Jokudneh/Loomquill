@@ -41,3 +41,7 @@ class Scheduler(common.FlyteIdlEntity):
             resources=self.resources.to_flyte_idl() if self.resources else None,
         )
 
+
+class WorkerGroup(common.FlyteIdlEntity):
+    """
+    Configuration for a dask worker group

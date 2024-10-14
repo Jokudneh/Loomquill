@@ -40,3 +40,6 @@ def test_set_if_exists():
 )
 def test_exists(data, expected):
     assert _exists(data) is expected
+
+
+def test_get_config_file():

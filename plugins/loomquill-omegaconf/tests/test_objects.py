@@ -20,3 +20,7 @@ class MySubConf:
 class MyConf:
     my_attr: Optional[MySubConf] = None
 
+
+class SpecialConf(MyConf):
+    key: int = 1
+

@@ -33,3 +33,7 @@ def neptune_init_run(
         host=host,
         **init_run_kwargs,
     )
+
+
+class _neptune_init_run_class(ClassDecorator):
+    NEPTUNE_HOST_KEY = "host"

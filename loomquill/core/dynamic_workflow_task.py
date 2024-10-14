@@ -27,3 +27,7 @@ constructs.
 In short, a task's function is run at execution time only, and a workflow function is run at compilation time only (local
 execution notwithstanding). A dynamic workflow is modeled on the backend as a task, but at execution time, the function
 body is run to produce a workflow. It is almost as if the decorator changed from ``@task`` to ``@workflow`` except workflows
+cannot make use of their inputs like native Python values whereas dynamic workflows can.
+The resulting workflow is passed back to the Flyte engine and is
+run as a :std:ref:`subworkflow <cookbook:subworkflows>`.  Simple usage
+

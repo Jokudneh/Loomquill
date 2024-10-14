@@ -27,3 +27,7 @@ def mock_call():
 
 
 @pytest.fixture
+def mock_paginate():
+    """Patch :py:meth:`EMRServerlessHandler._paginate` for a test."""
+    with patch(
+        "flytekitplugins.awsemrserverless.boto_handler.EMRServerlessHandler._paginate",

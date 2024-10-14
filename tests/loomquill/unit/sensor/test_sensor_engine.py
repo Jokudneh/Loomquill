@@ -24,3 +24,7 @@ async def test_sensor_engine():
     tmp = get_task_template("sensor")
     sensor_metadata = SensorMetadata(
         sensor_module=FileSensor.__module__, sensor_name=FileSensor.__name__, inputs={"path": file.name}
+    )
+    tmp._custom = asdict(sensor_metadata)
+    tmp._interface = interfaces
+

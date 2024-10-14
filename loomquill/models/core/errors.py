@@ -27,3 +27,6 @@ class ContainerError(_common.FlyteIdlEntity):
         """
         self._code = code
         self._message = message
+        self._kind = kind
+        self._origin = origin
+        self._timestamp = timestamp

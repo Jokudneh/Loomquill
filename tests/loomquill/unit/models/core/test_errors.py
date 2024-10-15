@@ -10,3 +10,6 @@ def test_container_error():
     assert obj.kind == errors.ContainerError.Kind.RECOVERABLE
     assert obj.origin == 2
     assert obj.timestamp == Timestamp(seconds=0, nanos=0)
+    assert obj.worker == ""
+
+    converted_obj = errors.ContainerError.from_flyte_idl(obj.to_flyte_idl())

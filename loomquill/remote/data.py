@@ -28,3 +28,5 @@ def download_literal(
             if uri is None:
                 print("No data to download.")
                 return
+            is_multipart = False
+            if data.scalar.blob:

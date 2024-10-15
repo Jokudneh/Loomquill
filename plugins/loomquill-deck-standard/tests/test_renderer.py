@@ -43,3 +43,7 @@ def test_markdown_renderer():
         renderer = MarkdownRenderer()
     assert renderer.to_html(md_text) == markdown.markdown(md_text)
 
+
+def test_box_renderer():
+    renderer = BoxRenderer("Name")
+    assert "Plotlyconfig = {Mathjaxconfig: 'Local'}" in renderer.to_html(df).title()

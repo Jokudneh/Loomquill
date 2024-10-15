@@ -52,3 +52,4 @@ def wf_with_multioutput_error1(a: int, b: int) -> Tuple[str, int]:
     return out_a, out_b
 
 
+@given(st.booleans() | st.integers() | st.text(ascii_lowercase))

@@ -190,3 +190,5 @@ async def test_namespace_secret_overrides_environment(monkeypatch):
     ), patch(
         "flytekitplugins.spark.databricks_auth._post_token",
         side_effect=_capture,
+    ):
+        async with ClientSession() as session:

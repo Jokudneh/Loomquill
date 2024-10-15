@@ -14,3 +14,4 @@ def test_build(mock_image_spec_builder):
     result = runner.invoke(pyflyte.main, ["build", "--fast", WORKFLOW_FILE, "wf"])
     assert result.exit_code == 0
 
+    result = runner.invoke(pyflyte.main, ["build", WORKFLOW_FILE, "wf"])

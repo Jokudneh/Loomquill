@@ -258,3 +258,6 @@ class WorkflowBase(object):
         self.compile()
         return self._output_bindings
 
+    @property
+    def nodes(self) -> List[Node]:
+        self.compile()

@@ -9,3 +9,4 @@ def test_isolated_random_state():
     global_random.seed("abc")
     assert random.random.random() != r
 
+

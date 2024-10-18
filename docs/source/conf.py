@@ -48,3 +48,4 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.todo",
+    "sphinx.ext.viewcode",

@@ -29,3 +29,6 @@ def test_dynamic_from_environment():
     def bar():
         foo()
 
+    assert foo._metadata.retries == 2
+    assert bar._metadata.retries == 2
+

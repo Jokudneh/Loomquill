@@ -58,3 +58,6 @@ CallbackType = Callable[Concatenate[optuna.Trial, P], Union[Awaitable[Result], R
 class Optimizer:
     objective: Union[CallbackType, AsyncPythonFunctionTask]
     concurrency: int
+    n_trials: int
+    study: Optional[optuna.Study] = None
+    delay: int = 0

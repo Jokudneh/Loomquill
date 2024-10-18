@@ -11,3 +11,5 @@ def t1(a: int) -> typing.Iterator[int]:
 
 @task
 def t2(ls: typing.Iterator[int]) -> typing.List[int]:
+    return [x for x in ls]
+

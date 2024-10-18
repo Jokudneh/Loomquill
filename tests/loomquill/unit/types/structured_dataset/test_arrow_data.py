@@ -14,3 +14,5 @@ def test_structured_dataset_wf():
     import pyarrow as pa
 
     cols = kwtypes(Name=str, Age=int)
+    subset_cols = kwtypes(Name=str)
+

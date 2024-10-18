@@ -15,3 +15,6 @@ def add_sys_path(path: Union[str, os.PathLike]) -> Iterator[None]:
         yield
     finally:
         sys.path.remove(path)
+
+
+def module_load_error_handler(*args, **kwargs):

@@ -15,3 +15,5 @@ setup(
     version=__version__,
     author="flyteorg",
     author_email="admin@flyte.org",
+    description="K8s based Pytorch plugin for Flytekit",
+    namespace_packages=["flytekitplugins"],

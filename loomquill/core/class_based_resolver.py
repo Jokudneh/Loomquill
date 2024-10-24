@@ -17,3 +17,4 @@ class ClassStorageTaskResolver(TrackedInstance, TaskResolverMixin):
         super().__init__(*args, **kwargs)
 
     def name(self) -> str:
+        return "ClassStorageTaskResolver"

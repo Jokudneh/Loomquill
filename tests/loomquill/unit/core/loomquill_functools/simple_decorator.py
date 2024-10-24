@@ -12,3 +12,7 @@ def task_decorator(fn):
     def wrapper(*args, **kwargs):
         print(f"before running {fn.__name__}")
         try:
+            print(f"try running {fn.__name__}")
+            out = fn(*args, **kwargs)
+        except Exception as exc:
+            print(f"error running {fn.__name__}: {exc}")

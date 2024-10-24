@@ -38,3 +38,4 @@ class Images(object):
 class Persistence(object):
     SECTION = "persistence"
     ATTACH_EXECUTION_METADATA = ConfigEntry(LegacyConfigEntry(SECTION, "attach_execution_metadata", bool))
+

@@ -16,3 +16,6 @@ setup(
     title_expanded="Flytekit Kubernetes Pod Plugin",
     name=microlib_name,
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",
+    description="Flytekit plugin to support K8s Pod tasks",

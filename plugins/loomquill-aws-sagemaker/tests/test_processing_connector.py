@@ -106,3 +106,7 @@ def _completed_describe_response():
         "ExitMessage": "Completed: Job completed successfully",
         "ProcessingStartTime": datetime(2026, 4, 30, 12, 0, 0),
         "ProcessingEndTime": datetime(2026, 4, 30, 12, 5, 0),
+    }
+
+
+def test_build_outputs_preserves_feature_store_destination():

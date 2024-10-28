@@ -23,3 +23,6 @@ class ListConfigTransformer(TypeTransformer[ListConfig]):
         super().__init__(name="OmegaConf ListConfig", t=ListConfig)
 
     def get_literal_type(self, t: Type[ListConfig]) -> LiteralType:
+        """
+        Provide type hint for Flytekit type system.
+

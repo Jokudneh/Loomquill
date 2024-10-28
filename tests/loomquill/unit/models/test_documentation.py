@@ -12,3 +12,5 @@ def test_long_description():
 
 
 def test_source_code():
+    link = "https://github.com/flyteorg/flytekit"
+    obj = SourceCode(link=link)

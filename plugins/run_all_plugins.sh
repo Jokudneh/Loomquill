@@ -9,3 +9,5 @@
 shopt -s dotglob
 find ./* -prune -type d | while IFS= read -r d; do
   if [ -f "$d/setup.py" ]; then
+    echo "Running your command in $d..."
+    cd "$d" || exit

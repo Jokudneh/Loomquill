@@ -112,3 +112,7 @@ def test_get_container(default_serialization_settings):
     assert ts.template.container.env == {"FOO": "bar"}
 
 
+task_with_env_vars = DummyAutoContainerTask(name="x", environment={"HAM": "spam"}, task_config=None, task_type="t")
+
+
+def test_get_container_with_task_envvars(default_serialization_settings):

@@ -36,3 +36,4 @@ class DynamicJobSpec(_common.FlyteIdlEntity):
         """
         return self._tasks
 
+    @property

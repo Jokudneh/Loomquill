@@ -17,3 +17,4 @@ def test_update_project(mock_channel, mock_admin):
 @mock.patch("flytekit.clients.raw.grpc.insecure_channel")
 def test_list_projects_paginated(mock_channel, mock_admin):
     client = RawSynchronousFlyteClient(PlatformConfig(endpoint="a.b.com", insecure=True))
+    project_list_request = _project_pb2.ProjectListRequest(limit=100, token="", filters=None, sort_by=None)

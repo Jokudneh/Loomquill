@@ -17,3 +17,6 @@ class MockStats(object):
 
     def incr(self, metric, count=1, tags=None, **kwargs):
         full_name = self.scope + "." + metric
+        self._records[full_name] = self._records.get(full_name, 0) + count
+        self._records_tags[full_name] = tags or {}
+

@@ -85,3 +85,6 @@ class GCPIdentityAwareProxyAuthenticator(Authenticator):
         """Refresh the IAP credentials. If no credentials are found, it will kick off a full OAuth 2.0 authorization flow."""
         self._initialize_auth_client()
         if self._creds:
+            """We have an id token so lets try to refresh it"""
+            try:
+                self._creds = self._auth_client.refresh_access_token(self._creds)

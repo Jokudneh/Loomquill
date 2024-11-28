@@ -63,3 +63,5 @@ def test_basic_signal():
         y = t2(a=s2)
         q = t2(a=approve(y, "approvalfory", timeout=timedelta(hours=2)))
         x >> s1
+        s1 >> z
+

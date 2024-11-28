@@ -116,3 +116,7 @@ class RawSynchronousFlyteClient(object):
     def list_task_ids_paginated(self, identifier_list_request):
         """
         This returns a page of identifiers for the tasks for a given project and domain. Filters can also be
+        specified.
+
+        > [!NOTE]
+        > The name field in the TaskListRequest is ignored.

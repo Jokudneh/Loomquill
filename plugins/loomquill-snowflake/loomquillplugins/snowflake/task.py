@@ -33,3 +33,7 @@ class SnowflakeConfig(object):
     database: str
     schema: str
     warehouse: str
+
+
+class SnowflakeTask(AsyncConnectorExecutorMixin, SQLTask[SnowflakeConfig]):
+    """

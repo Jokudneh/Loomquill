@@ -137,3 +137,7 @@ class TypeStructure(_common.FlyteIdlEntity):
         return self._tag
 
     @property
+    def dataclass_type(self) -> Dict[str, "LiteralType"]:
+        return self._dataclass_type
+
+    def to_flyte_idl(self) -> _types_pb2.TypeStructure:

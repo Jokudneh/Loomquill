@@ -67,3 +67,4 @@ def db(doltdb_path):
 def test_dolt_table_write(db, dolt_config):
     @task
     def my_dolt(a: int) -> DoltTable:
+        df = pandas.DataFrame([("Alice", a)], columns=["name", "count"])

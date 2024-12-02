@@ -21,3 +21,7 @@ async def helper_for_async(rpm: int, total: int):
 def runner_for_async(rpm: int, total: int):
     return asyncio.run(helper_for_async(rpm, total))
 
+
+@pytest.mark.asyncio
+def test_rate_limiter():
+    elapsed_time = timeit.timeit(lambda: runner_for_async(2, 2), number=1)

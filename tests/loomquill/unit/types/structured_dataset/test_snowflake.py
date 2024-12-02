@@ -25,3 +25,5 @@ skip_if_wrong_numpy_version = pytest.mark.skipif(
 def test_sf_wf(mock_connect, mock_get_private_key):
     import pandas as pd
     from flytekit.lazy_import.lazy_module import is_imported
+    from flytekit.types.structured import register_snowflake_handlers
+    from flytekit.types.structured.structured_dataset import DuplicateHandlerError

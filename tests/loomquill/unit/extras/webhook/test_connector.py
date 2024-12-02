@@ -78,3 +78,4 @@ async def test_do_failure(mock_task_template):
     assert result.phase == TaskExecution.FAILED
     assert "Webhook failed with status code 500" in result.message
 
+

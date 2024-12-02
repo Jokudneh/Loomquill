@@ -23,3 +23,6 @@ class BotoTask(SyncConnectorExecutorMixin, PythonTask[BotoConfig]):
 
     def __init__(
         self,
+        name: str,
+        task_config: BotoConfig,
+        inputs: Optional[Dict[str, Type]] = None,

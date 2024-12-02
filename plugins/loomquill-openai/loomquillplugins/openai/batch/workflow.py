@@ -29,3 +29,6 @@ def create_batch(
     :param name: The suffix to be added to workflow and task names.
     :param openai_organization: Name of the OpenAI organization.
     :param secret: Secret comprising the OpenAI API key.
+    :param config: Additional config for batch creation.
+    :param is_json_iterator: Set to True if you're sending an iterator/generator; if a JSONL file, set to False.
+    :param file_upload_mem: Memory to allocate to the upload file task.

@@ -33,3 +33,6 @@ from flytekit import CachePolicy
 from flytekit.configuration import Config, get_config_file
 from flytekit.loggers import logger
 from flytekit.remote import FlyteRemote
+
+
+@runtime_checkable

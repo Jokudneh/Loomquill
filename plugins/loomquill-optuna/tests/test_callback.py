@@ -34,3 +34,7 @@ def test_callback():
         return objective(letter, number, other, fixed)
 
 
+    @fl.eager
+    async def train(concurrency: int, n_trials: int) -> float:
+
+        study = optuna.create_study(direction="maximize")

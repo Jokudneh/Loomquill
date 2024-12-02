@@ -60,3 +60,7 @@ import subprocess
 import sys
 
 from flytekit.tools.fast_registration import download_distribution
+
+
+def _run_subprocess(cmd, env=None):
+    """Run ``cmd`` and forward SIGTERM, returning ``(returncode, stderr_text)``.

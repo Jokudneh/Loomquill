@@ -121,3 +121,7 @@ def get_grandparent_wf_with_overrides(serialization_settings):
 
 
 def get_grandparent_remote_wf(serialization_settings):
+    serialized = OrderedDict()
+    lp_model = get_serializable(serialized, serialization_settings, lp)
+
+    task_templates, wf_specs, lp_specs = gather_dependent_entities(serialized)

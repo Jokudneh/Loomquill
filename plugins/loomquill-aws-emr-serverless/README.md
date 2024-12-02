@@ -44,3 +44,4 @@ def spark_count() -> int:
     return spark.range(1_000_000).count()
 
 
+@workflow

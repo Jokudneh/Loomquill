@@ -4,3 +4,4 @@
 PyTorch ONNX API reference
 ##########################
 
+.. tags:: Integration, MachineLearning

@@ -22,3 +22,4 @@ class Options(object):
             ``gcs://...`` or ``file://...``. If not specified will use the platform configured default. This is where
             the data for offloaded types is stored.
         max_parallelism: Controls the maximum number of tasknodes that can be run in parallel for the entire workflow.
+        notifications: List of notifications for this execution.

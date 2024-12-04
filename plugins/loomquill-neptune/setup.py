@@ -12,3 +12,4 @@ setup(
     title="Neptune",
     title_expanded="Flytekit Neptune Plugin",
     name=microlib_name,
+    version=__version__,

@@ -89,3 +89,6 @@ def test_extract_only():
     assert len(return_type) == 1
     assert return_type["o0"] == List[int]
 
+    def t(a: int, b: str) -> Dict[str, int]:
+        ...
+

@@ -33,3 +33,7 @@ class WebhookConnector(SyncConnectorBase):
     ) -> Resource:
         """
         This method processes the webhook task and sends an HTTP request.
+
+        It uses asyncio to send the request and process the response using the httpx library.
+        """
+        try:

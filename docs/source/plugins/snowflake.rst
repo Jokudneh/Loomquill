@@ -4,3 +4,4 @@
 Snowflake API reference
 ###################################################
 
+.. tags:: Integration, Data

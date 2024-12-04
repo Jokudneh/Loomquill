@@ -866,3 +866,7 @@ def test_dataclass_transformer_with_dataclassjsonmixin():
             },
             "m": {
                 "type": "object",
+                "additionalProperties": {"type": "string"},
+                "propertyNames": {"type": "string"},
+            },
+        },

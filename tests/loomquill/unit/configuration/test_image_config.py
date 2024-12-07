@@ -32,3 +32,4 @@ def test_defaults(python_version_enum, expected_image_string):
 def test_set_both(python_version_enum, flytekit_version, expected_image_string):
     assert DefaultImages.find_image_for(python_version_enum, flytekit_version) == expected_image_string
 
+

@@ -246,3 +246,4 @@ google-api-core[grpc]==2.21.0
     #   google-ads
     #   google-analytics-admin
     #   google-api-python-client
+    #   google-cloud-aiplatform

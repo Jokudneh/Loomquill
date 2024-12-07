@@ -9,3 +9,5 @@
    SageMakerInferenceRecommenderJobTask
    SageMakerStopInferenceRecommenderJobTask
    SageMakerDescribeInferenceRecommenderJobTask
+"""
+

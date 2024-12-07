@@ -128,3 +128,6 @@ def _canonical_fs_class(protocol: str) -> type:
 
 
 def get_additional_fsspec_call_kwargs(protocol: typing.Union[str, tuple], method_name: str) -> Dict[str, Any]:
+    """
+    These are different from the setup args functions defined above. Those kwargs are applied when asking fsspec
+    to create the filesystem. These kwargs returned here are for when the filesystem's methods are invoked.

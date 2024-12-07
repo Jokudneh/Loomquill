@@ -36,3 +36,5 @@ class SlurmCluster:
 @dataclass(frozen=True)
 class SSHConfig:
     """A customized version of SSHClientConnectionOptions, tailored to specific needs.
+
+    This config is based on the official SSHClientConnectionOptions but includes

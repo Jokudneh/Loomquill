@@ -49,3 +49,4 @@ class _neptune_scale_run_class(ClassDecorator):
 
     def __init__(
         self,
+        task_function: Callable,

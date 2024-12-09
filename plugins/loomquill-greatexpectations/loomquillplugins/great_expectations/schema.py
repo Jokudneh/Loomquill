@@ -90,3 +90,5 @@ class GreatExpectationsTypeTransformer(TypeTransformer[GreatExpectationsType]):
     @staticmethod
     def get_config(
         t: Type[GreatExpectationsType],
+    ) -> Tuple[Type, GreatExpectationsFlyteConfig]:
+        return t.config()

@@ -117,3 +117,7 @@ Loomquill is then deployed behind the Istio ingress gateway and does not need to
         beta.cloud.google.com/backend-config: '{"default": "ingress-backend-config"}'
         cloud.google.com/app-protocols: '{"https": "HTTP2"}'
       type:
+        NodePort
+    ```
+
+    It is crucial that the service type is set to `NodePort` and not the default `LoadBalancer`. Otherwise, the Istio ingress gateway won't be deployed behind the GCP load balancer we create below but would be **publicly available on the internet!**

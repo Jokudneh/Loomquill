@@ -13,3 +13,6 @@ setup(
     title_expanded="Flytekit Pandera Plugin",
     name=microlib_name,
     version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",
+    description="Pandera plugin for flytekit",

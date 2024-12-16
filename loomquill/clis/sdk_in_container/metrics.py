@@ -32,3 +32,4 @@ This breakdown provides precise information into exactly how and when Flyte proc
 )
 @click.option(
     "-p",
+    "--project",

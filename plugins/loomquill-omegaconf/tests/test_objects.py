@@ -24,3 +24,7 @@ class MyConf:
 class SpecialConf(MyConf):
     key: int = 1
 
+
+TEST_CFG = OmegaConf.create(
+    {
+        "a": 1,

@@ -30,3 +30,6 @@ class FlytePickle(typing.Generic[T]):
             return cls
 
         class _SpecificFormatClass(FlytePickle):
+            # Get the type engine to see this as kind of a generic
+            __origin__ = FlytePickle
+

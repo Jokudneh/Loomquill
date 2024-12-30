@@ -16,3 +16,4 @@ def task_decorator(fn):
             out = fn(*args, **kwargs)
         except Exception as exc:
             print(f"error running {fn.__name__}: {exc}")
+        finally:

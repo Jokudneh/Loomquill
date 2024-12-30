@@ -67,3 +67,5 @@ def test_basics():
         return x, d
 
     wf_spec = get_serializable(OrderedDict(), serialization_settings, my_wf)
+    assert len(wf_spec.template.interface.inputs) == 2
+    assert len(wf_spec.template.interface.outputs) == 2

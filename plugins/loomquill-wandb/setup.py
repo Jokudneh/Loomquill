@@ -13,3 +13,4 @@ setup(
     title_expanded="Flytekit Weights and Biases Plugin",
     name=microlib_name,
     version=__version__,
+    author="flyteorg",

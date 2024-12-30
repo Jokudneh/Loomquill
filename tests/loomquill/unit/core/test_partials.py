@@ -74,3 +74,4 @@ def test_basics_1():
 
 
 @pytest.mark.parametrize(
+    "map_task_fn",

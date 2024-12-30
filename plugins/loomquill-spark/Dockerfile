@@ -16,3 +16,4 @@ RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.4.0/hadoo
     wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.262/aws-java-sdk-bundle-1.12.262.jar -P /opt/spark/jars && \
     wget https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.4_2.12/1.4.2/iceberg-spark-runtime-3.4_2.12-1.4.2.jar -P /opt/spark/jars && \
     wget https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-aws-bundle/1.4.2/iceberg-aws-bundle-1.4.2.jar -P /opt/spark/jars
+

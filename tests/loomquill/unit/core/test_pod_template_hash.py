@@ -36,3 +36,7 @@ class TestPodTemplateHashing(unittest.TestCase):
             primary_container_name="c1",
             labels={"app": "myapp", "env": "prod"},  # Same content
             annotations={"author": "tester", "version": "1.2.3"}  # Same content
+        )
+        self.assertEqual(pt1.version_hash(), pt2.version_hash())
+
+    def test_different_primary_container_name(self):

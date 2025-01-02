@@ -31,3 +31,7 @@ def _recursive_hash_placement(literal: Literal) -> Literal:
     else:
         return literal
 
+
+def _calculate_cache_key(
+    task_name: str,
+    cache_version: str,

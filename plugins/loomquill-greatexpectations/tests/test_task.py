@@ -113,3 +113,6 @@ def test_ge_runtimebatchrequest_sqlite_config():
 def test_ge_runtimebatchrequest_pandas_config():
     task_object = GreatExpectationsTask(
         name="test5",
+        datasource_name="my_pandas_datasource",
+        inputs=kwtypes(dataset=FlyteSchema),
+        expectation_suite_name="test.demo",

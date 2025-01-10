@@ -36,3 +36,7 @@ def k8s_data_service():
     gnn_config = DataServiceConfig(
         Name=name,
         Requests=Resources(cpu='1', mem='1Gi'),
+        Limits=Resources(cpu='2', mem='2Gi'),
+        Replicas=1,
+        Image="busybox:latest",
+        Command=[

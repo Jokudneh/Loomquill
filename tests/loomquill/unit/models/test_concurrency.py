@@ -22,3 +22,6 @@ def test_concurrency_policy_serialization():
     assert isinstance(pb, _launch_plan_idl.ConcurrencyPolicy)
     assert pb.max == 1
     assert pb.behavior == _launch_plan_idl.CONCURRENCY_LIMIT_BEHAVIOR_SKIP
+
+    # Test deserialization from protobuf
+    policy2 = ConcurrencyPolicy.from_flyte_idl(pb)

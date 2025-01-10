@@ -109,3 +109,7 @@ def test_make_job_name_valid_and_unique_per_retry():
             ),
             retry_attempt=1,
         )
+    )
+    name0 = _make_job_name("flyte-", md_retry0, tt)
+    name1 = _make_job_name("flyte-", md_retry1, tt)
+

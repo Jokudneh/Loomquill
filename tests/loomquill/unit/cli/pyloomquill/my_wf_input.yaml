@@ -27,3 +27,5 @@ n:
   - x: tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet
 o:
   x:
+    - tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet
+p: 'None'

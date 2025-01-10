@@ -14,3 +14,5 @@ try:
 except (ImportError, OSError):
     _torch_installed = False
 
+
+if _torch_installed:

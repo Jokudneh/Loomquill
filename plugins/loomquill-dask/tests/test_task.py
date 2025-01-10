@@ -26,3 +26,6 @@ def test_dask_task_with_default_config(serialization_settings: SerializationSett
         pass
 
     # Helping type completion in PyCharm
+    dask_task: PythonFunctionTask[Dask]
+
+    assert dask_task.task_config == task_config

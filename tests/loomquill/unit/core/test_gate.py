@@ -65,3 +65,4 @@ def test_basic_signal():
         x >> s1
         s1 >> z
 
+        return y, z, q

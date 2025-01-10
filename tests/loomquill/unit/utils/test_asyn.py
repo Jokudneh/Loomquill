@@ -49,3 +49,6 @@ async def async_multiply_outer(a: int, b: int) -> int:
     return await loop.run_in_executor(None, partial(sync_sub_that_calls_sync, a=a, b=b))
 
 
+def test_run_sync_with_nested_async():
+    result = run_sync(async_multiply_outer, a=10, b=12)
+    assert result == 120

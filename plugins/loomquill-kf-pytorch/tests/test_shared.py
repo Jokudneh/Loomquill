@@ -41,3 +41,7 @@ from flytekit import PodTemplate, task
                     volumes=[V1Volume(name="foo")],
                 ),
             ),
+            True,
+            False,
+        ),
+        # Test that pod template with multiple containers raises an error

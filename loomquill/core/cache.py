@@ -29,3 +29,7 @@ class VersionParameters(Generic[P, FuncOut]):
     pod_template: Optional[PodTemplate] = None
     pod_template_name: Optional[str] = None
 
+
+@runtime_checkable
+class CachePolicy(Protocol):
+    def get_version(self, salt: str, params: VersionParameters) -> str: ...

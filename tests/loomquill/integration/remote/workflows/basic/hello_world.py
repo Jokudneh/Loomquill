@@ -16,3 +16,5 @@ def say_hello() -> str:
     return "hello world"
 
 
+# %%
+# You can treat the outputs of a task as you normally would a Python function. Assign the output to two variables

@@ -8,3 +8,5 @@ ARG VERSION
 RUN apt-get update && apt-get install build-essential -y \
     && pip install uv
 # Pin pendulum<3.0: Apache Airflow (via flytekitplugins-airflow) imports
+# pendulum.tz.timezone() at module load time (airflow/settings.py).
+# Pendulum 3.x changed the tz API, causing the connector to crash on startup:

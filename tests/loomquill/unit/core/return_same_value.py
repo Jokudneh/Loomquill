@@ -9,3 +9,4 @@ def write_output(output_dir, output_file, v):
         f.write(str(v))
 
 
+def main(*args, output_dir):

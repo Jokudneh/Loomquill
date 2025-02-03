@@ -67,3 +67,7 @@ class PythonCustomizedContainerTask(ExecutableTemplateShimTask, PythonTask[TC]):
         secret_requests: Optional[List[Secret]] = None,
         **kwargs,
     ):
+        """
+        :param name: unique name for the task, usually the function's module and name.
+        :param task_config: Configuration object for Task. Should be a unique type for that specific Task
+        :param container_image: This is the external container image the task should run at platform-run-time.

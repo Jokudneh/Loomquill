@@ -60,3 +60,4 @@ def create_test_setup(original_name: str = "gnn-1234", existing_release_name: st
 @patch("flytekitplugins.k8sdataservice.connector.K8sManager.check_stateful_set_status", return_value="succeeded")
 @patch("flytekitplugins.k8sdataservice.connector.K8sManager.delete_stateful_set")
 @patch("flytekitplugins.k8sdataservice.connector.K8sManager.delete_service")
+def test_gnn_connector(mock_delete_service, mock_delete_stateful_set, mock_check_status, mock_create_data_service):

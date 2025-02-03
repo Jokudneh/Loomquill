@@ -14,3 +14,4 @@ class SlurmFunctionConfig(object):
 
     Args:
         ssh_config: Options of SSH client connection. For available options, please refer to
+            <newly-added-ssh-utils-file>

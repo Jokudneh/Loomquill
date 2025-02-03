@@ -94,3 +94,6 @@ def test_execution_params(start_method: str, target_exec_id: str, monkeypatch_ex
     if monkeypatch_exec_id_env_var:
         monkeypatch.setenv("FLYTE_INTERNAL_EXECUTION_ID", target_exec_id)
 
+    @task(task_config=Elastic(nnodes=1, nproc_per_node=1, start_method=start_method))
+    def test_task(n: int):
+        ctx = flytekit.current_context()

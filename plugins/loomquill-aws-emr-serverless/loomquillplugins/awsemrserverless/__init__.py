@@ -9,3 +9,4 @@ Serverless job lifecycle (submit, poll, cancel) and a task config type.
    :template: custom.rst
    :toctree: generated/
 
+   EMRServerless

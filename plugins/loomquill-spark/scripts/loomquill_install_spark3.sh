@@ -16,3 +16,4 @@ apt-get update -y && \
     update-java-alternatives -s java-1.8.0-openjdk-amd64 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+

@@ -53,3 +53,5 @@ class WorkerNodeConfig:
     limits: Optional[Resources] = None
 
     def __post_init__(self):
+        if self.pod_template:
+            if self.requests and self.limits:

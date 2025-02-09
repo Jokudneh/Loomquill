@@ -38,3 +38,6 @@ def test_get_gcp_secret_manager_secret():
     with patch("google.cloud.secretmanager.SecretManagerServiceClient", return_value=mock_client):
         payload = get_gcp_secret_manager_secret(project_id, secret_id, version)
         assert payload == expected_payload
+
+        name = f"projects/{project_id}/secrets/{secret_id}/versions/{version}"
+        mock_client.access_secret_version.assert_called_once_with(name=name)

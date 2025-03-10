@@ -39,3 +39,4 @@ class BotoConnector(SyncConnectorBase):
         service = custom.get("service")
         config = custom.get("config")
         region = custom.get("region")
+        method = custom.get("method")

@@ -25,3 +25,7 @@ from flytekit.models.literals import (
     Schema,
     Union,
     Void,
+)
+from flytekit.models.types import Error, LiteralType, SimpleType, SchemaType
+
+

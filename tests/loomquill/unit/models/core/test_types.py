@@ -17,3 +17,4 @@ def test_blob_type():
     assert o.dimensionality == _types.BlobType.BlobDimensionality.SINGLE
 
     o2 = _types.BlobType.from_flyte_idl(o.to_flyte_idl())
+    assert o == o2

@@ -23,3 +23,5 @@ def primitive_to_string(primitive: Primitive) -> typing.Any:
     if primitive.datetime is not None:
         return primitive.datetime.isoformat()
     if primitive.duration is not None:
+        return primitive.duration.total_seconds()
+    raise ValueError(f"Unknown primitive type {primitive}")

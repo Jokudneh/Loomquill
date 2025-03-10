@@ -36,3 +36,7 @@ def test_tf_onnx():
             ("predictions", np.ndarray),
             (
                 "model",
+                Annotated[
+                    TensorFlow2ONNX,
+                    TensorFlow2ONNXConfig(
+                        input_signature=(tf.TensorSpec((None, 224, 224, 3), tf.float32, name="input"),), opset=13

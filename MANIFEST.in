@@ -30,3 +30,4 @@ recursive-exclude plugins *
 #  - contains the generated *.tar.gz and .whl files.
 recursive-exclude dist *
 
+# exclude requirements files

@@ -47,3 +47,6 @@ class SQLAlchemyConfig(object):
         secret_connect_args: flyte secrets loaded into sqlalchemy connect args
             -- ex: {"password": flytekit.models.security.Secret(name=SECRET_NAME, group=SECRET_GROUP)}
     """
+
+    uri: str
+    connect_args: typing.Optional[typing.Dict[str, typing.Any]] = None

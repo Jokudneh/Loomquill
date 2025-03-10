@@ -15,3 +15,5 @@ class Status(str, Enum):
 
 class Job(BaseModel):
     name: str
+    status: Status
+

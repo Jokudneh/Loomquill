@@ -8,3 +8,4 @@
 
 By default, Loomquill tasks decorated with `@task` are essentially single functions that are loaded in one container. But often, there is a need to run a job with more than one container.
 
+In this case, a regular task is not enough. Hence, Loomquill provides a Kubernetes pod abstraction to execute multiple containers, which can be accomplished using Pod's `task_config`. The `task_config` can be leveraged to fully customize the pod spec used to run the task.

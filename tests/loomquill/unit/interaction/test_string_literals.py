@@ -29,3 +29,5 @@ from flytekit.models.literals import (
 from flytekit.models.types import Error, LiteralType, SimpleType, SchemaType
 
 
+def test_primitive_to_string():
+    primitive = Primitive(integer=1)

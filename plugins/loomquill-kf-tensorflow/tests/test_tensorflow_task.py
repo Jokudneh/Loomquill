@@ -57,3 +57,5 @@ def test_tensorflow_task_with_default_config(serialization_settings: Serializati
             "resources": {},
         },
     }
+    assert my_tensorflow_task.get_custom(serialization_settings) == expected_dict
+

@@ -44,3 +44,7 @@ def serialize_all(
     flyteidl.admin.task_pb2.TaskSpec
     ```
 
+    These can be inspected by calling (in the launch plan case)
+    ```bash
+    flyte-cli parse-proto -f filename.pb -p flyteidl.admin.launch_plan_pb2.LaunchPlan
+    ```

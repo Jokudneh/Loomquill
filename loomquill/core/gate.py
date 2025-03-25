@@ -48,3 +48,5 @@ class Gate(object):
             # Just a sleep so there is no interface
             self._python_interface = flyte_interface.Interface()
         elif input_type:
+            # Waiting for user input, so the output of the node is whatever input the user provides.
+            self._python_interface = flyte_interface.Interface(

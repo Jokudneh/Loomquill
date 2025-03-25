@@ -30,3 +30,4 @@ def _prepare_remote(
         # when running eager workflows as a local entrypoint, we don't have to modify the remote object
         # because we can assume that the user is running this from their local machine and can do browser-based
         # authentication.
+        logger.info("Running eager workflow as local entrypoint")

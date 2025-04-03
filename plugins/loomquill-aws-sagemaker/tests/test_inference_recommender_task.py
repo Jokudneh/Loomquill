@@ -30,3 +30,7 @@ def test_inference_recommender_job_task_interface_and_custom():
             # Minimal valid Default-job InputConfig — AWS rejects
             # JobDurationInSeconds / TrafficPattern / ResourceLimit /
             # EndpointConfigurations / top-level StoppingConditions for Default.
+            "InputConfig": {
+                "ModelPackageVersionArn": "{inputs.model_package_version_arn}",
+            },
+        },

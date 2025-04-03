@@ -8,3 +8,4 @@ def copy_directory(input_path: Path, output_path: Path):
         print(f"Error: {input_path} does not exist or is not a directory.")
         return
 
+    try:

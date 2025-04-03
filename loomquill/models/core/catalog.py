@@ -29,3 +29,4 @@ class CatalogArtifactTag(_common_models.FlyteIdlEntity):
 
 
 class CatalogMetadata(_common_models.FlyteIdlEntity):
+    def __init__(

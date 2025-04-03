@@ -74,3 +74,5 @@ async def test_controller_launch(mock_thread_target):
         assert serialization_settings == ss
         return wf_exec
 
+    remote = mock.MagicMock()
+    remote.execute.side_effect = _mock_execute

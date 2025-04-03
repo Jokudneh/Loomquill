@@ -157,3 +157,5 @@ class ImageSpec:
             "entrypoint",
             "commands",
             "runtime_packages",
+        ]
+        for parameter in parameters_str_list:

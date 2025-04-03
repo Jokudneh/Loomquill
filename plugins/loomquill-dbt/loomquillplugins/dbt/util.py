@@ -23,3 +23,5 @@ def run_cli(cmd: List[str]) -> (int, List[str]):
     """
 
     logs = []
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    for raw_line in process.stdout or []:

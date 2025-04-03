@@ -11,3 +11,5 @@ __version__ = "0.0.0+develop"
 setup(
     title="SQLAlchemy",
     title_expanded="Flytekit SQLAlchemy Plugin",
+    name=microlib_name,
+    version=__version__,

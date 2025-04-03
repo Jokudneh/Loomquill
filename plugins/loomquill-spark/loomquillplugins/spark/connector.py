@@ -175,3 +175,6 @@ def _build_notebook_job_spec(
         databricks_job["git_source"] = user_git_source
 
     return databricks_job
+
+
+def _build_python_file_job_spec(

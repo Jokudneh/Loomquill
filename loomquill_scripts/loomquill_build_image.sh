@@ -26,3 +26,6 @@ elif [ -f "$1" ]; then
   DOCKERFILE_PATH=${DIRPATH}/$(basename "$1")
 else
   exit 1
+fi
+
+PREFIX="$2-"

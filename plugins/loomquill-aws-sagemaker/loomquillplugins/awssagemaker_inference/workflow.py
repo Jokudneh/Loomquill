@@ -58,3 +58,7 @@ def create_sagemaker_deployment(
     region_at_runtime: bool = False,
     idempotence_token: bool = True,
 ) -> Workflow:
+    """
+    Creates SageMaker model, endpoint config and endpoint.
+
+    :param model_config: Configuration for the SageMaker model creation API call.

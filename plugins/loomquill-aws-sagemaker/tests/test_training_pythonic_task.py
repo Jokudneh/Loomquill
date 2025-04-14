@@ -28,3 +28,7 @@ def _build_task(container_image):
     )
 
 
+def test_dataclass_validation():
+    with pytest.raises(ValueError):
+        SageMakerTraining(execution_role_arn="", region=REGION)
+    with pytest.raises(ValueError):

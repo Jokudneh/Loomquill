@@ -54,3 +54,6 @@ class FlyteTypeException(FlyteUserException, TypeError):
         return isinstance(value, list) or isinstance(value, tuple) or isinstance(value, set)
 
     @classmethod
+    def _create_verbose_message(cls, received_type, expected_type, received_value=None, additional_msg=None):
+        if received_value is not None:
+            return "Type error!  Received: {} with value: {}, Expected{}: {}. {}".format(

@@ -32,3 +32,6 @@ def test_client_secret_location():
     assert secret_location is None
 
     cfg = get_config_file(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "configs/creds_secret_location.yaml")
+    )
+    secret_location = Credentials.CLIENT_CREDENTIALS_SECRET_LOCATION.read(cfg)

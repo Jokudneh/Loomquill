@@ -32,3 +32,5 @@ setup(
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
     install_requires=plugin_requires,
     extras_resquire=dict(
+        dev=dev_requires,
+    ),

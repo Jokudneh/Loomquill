@@ -46,3 +46,7 @@ class SimpleFileTransfer:
 
     def upload_file(self, file_type: str) -> str:
         """Upload a single file to minio s3 bucket.
+
+        Args:
+            file_type: File type. Support "txt" and "json".
+

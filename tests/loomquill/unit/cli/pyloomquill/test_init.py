@@ -11,3 +11,5 @@ from flytekit.clis.sdk_in_container import pyflyte
     [
         ["example"],
         ["example", "--template", "basic-template-imagespec"],
+        ["example", "--template", "bayesian-optimization"],
+    ],

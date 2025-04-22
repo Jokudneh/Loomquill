@@ -26,3 +26,4 @@ order_payments as (
     from payments
 
     group by order_id
+

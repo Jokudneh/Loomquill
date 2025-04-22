@@ -186,3 +186,6 @@ class FlyteTask(hash_mixin.HashOnReferenceMixin, RemoteEntity, TaskSpec):
             task_type_version=base_model.task_type_version,
             security_context=base_model.security_context,
             config=base_model.config,
+            k8s_pod=base_model.k8s_pod,
+            sql=base_model.sql,
+            extended_resources=base_model.extended_resources,

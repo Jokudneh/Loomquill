@@ -24,3 +24,6 @@ from .task import (
     SageMakerStopTrainingJobTask,
     SageMakerTraining,
     SageMakerTrainingJobTask,
+    SageMakerTrainingTask,
+)
+

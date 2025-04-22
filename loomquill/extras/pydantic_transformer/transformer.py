@@ -51,3 +51,4 @@ class PydanticTransformer(TypeTransformer[BaseModel]):
         python_val: BaseModel,
         python_type: Type[BaseModel],
         expected: types.LiteralType,
+    ) -> Literal:

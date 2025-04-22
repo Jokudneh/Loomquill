@@ -12,3 +12,4 @@ setup(
     title="Flyte Interactive",
     title_expanded="Flytekit FlyteInteractive Plugin",
     name=microlib_name,
+    version=__version__,

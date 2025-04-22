@@ -22,3 +22,4 @@ class TaggableStats(_stats_client.ScopeableStatsProxy):
                 tags.update(self._tags)
                 if kwargs.pop("per_host", False):
                     tags["_f"] = "i"
+

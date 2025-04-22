@@ -235,3 +235,5 @@ class StructuredDataset(SerializableType, DataClassJSONMixin):
             raise ValueError("No dataframe type set. Use open() to set the local dataframe type you want to use.")
         ctx = FlyteContextManager.current_context()
         return flyte_dataset_transformer.iter_as(
+            ctx, self.literal, self._dataframe_type, updated_metadata=self.metadata
+        )

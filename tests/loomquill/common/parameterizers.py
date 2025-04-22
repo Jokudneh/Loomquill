@@ -98,3 +98,6 @@ LIST_OF_RESOURCE_ENTRY_LISTS = [LIST_OF_RESOURCE_ENTRIES]
 
 
 LIST_OF_RESOURCES = [
+    task.Resources(request, limit)
+    for request, limit in product(LIST_OF_RESOURCE_ENTRY_LISTS, LIST_OF_RESOURCE_ENTRY_LISTS)
+]

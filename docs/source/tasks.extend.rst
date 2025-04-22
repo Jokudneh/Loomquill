@@ -9,3 +9,5 @@ Flytekit ships with an extensible task system, which makes it easy for anyone to
 Refer to the :ref:`cookbook:prebuilt_container` and :ref:`cookbook:user_container` guides if you'd like to contribute a new task type.
 
 .. automodule:: flytekit.core.base_task
+   :no-members:
+   :no-inherited-members:

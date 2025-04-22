@@ -16,3 +16,6 @@ FlyteRemote(private_key=your_private_key_bytes, root_certificates=..., certifica
 
 
 ### fetch a workflow from the flyte backend
+remote = FlyteRemote(...)
+flyte_workflow = remote.fetch_workflow(name="my_workflow", version="v1")
+

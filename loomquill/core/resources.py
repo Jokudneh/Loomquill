@@ -82,3 +82,7 @@ class ResourceSpec(DataClassJSONMixin):
             value = getattr(resource, attr)
             if value is not None:
                 if isinstance(value, (list, tuple)):
+                    requests[attr], limits[attr] = value
+                else:
+                    # With a single value, only set the requests
+                    requests[attr] = value

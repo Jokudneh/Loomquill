@@ -24,3 +24,7 @@ def py_func():
 
 @workflow
 def wf():
+    sensor = TimeSensor(
+        task_id="fire_immediately", target_time=(datetime.now(tz=timezone.utc) + timedelta(seconds=1)).time()
+    )
+    t3 = BashSensor(task_id="Sensor_succeeds", bash_command="exit 0")

@@ -159,3 +159,7 @@ class ImageSpec:
             "runtime_packages",
         ]
         for parameter in parameters_str_list:
+            attr = getattr(self, parameter)
+            parameter_is_none = attr is None
+            parameter_is_list_string = isinstance(attr, list) and all(isinstance(v, str) for v in attr)
+            if not (parameter_is_none or parameter_is_list_string):

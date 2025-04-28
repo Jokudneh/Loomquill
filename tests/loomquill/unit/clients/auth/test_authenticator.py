@@ -79,3 +79,4 @@ def test_command_authenticator(mock_subprocess: MagicMock):
 
     authn.refresh_credentials()
     assert authn._creds
+    mock_subprocess.assert_called()

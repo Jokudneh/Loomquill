@@ -43,3 +43,4 @@ def test_exists(data, expected):
 
 
 def test_get_config_file():
+    def all_path_not_exists(paths):

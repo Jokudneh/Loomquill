@@ -88,3 +88,7 @@ class GCPIdentityAwareProxyAuthenticator(Authenticator):
             """We have an id token so lets try to refresh it"""
             try:
                 self._creds = self._auth_client.refresh_access_token(self._creds)
+                if self._creds:
+                    KeyringStore.store(self._creds)
+                return
+            except AccessTokenNotFoundError:

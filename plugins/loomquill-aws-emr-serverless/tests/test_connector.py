@@ -363,3 +363,6 @@ class TestEMRServerlessConnector:
         assert call_kwargs["scheduler_configuration"] == {"maxConcurrentRuns": 5}
         assert call_kwargs["auto_stop_config"] == {"enabled": True, "idleTimeoutMinutes": 30}
         assert call_kwargs["runtime_configuration"][0]["classification"] == "spark-defaults"
+
+    @pytest.mark.asyncio
+    async def test_create_with_retry_policy(self, sample_config):

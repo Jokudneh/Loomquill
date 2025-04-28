@@ -98,3 +98,5 @@ class TrackedInstance(metaclass=InstanceTrackingMeta):
       find them at task execution time.
     """
 
+    def __init__(self, *args, **kwargs):
+        self._instantiated_in = None

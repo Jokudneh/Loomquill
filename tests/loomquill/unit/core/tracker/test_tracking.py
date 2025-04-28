@@ -23,3 +23,7 @@ def test_tracking():
 
     assert local_b.instantiated_in == "tests.flytekit.unit.core.tracker.b"
     assert local_b.lhs == "local_b"
+
+    assert b_in_c.instantiated_in == "tests.flytekit.unit.core.tracker.c"
+    assert b_in_c.lhs == "b_in_c"
+

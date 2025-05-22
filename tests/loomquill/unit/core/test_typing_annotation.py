@@ -21,3 +21,6 @@ serialization_settings = flytekit.configuration.SerializationSettings(
 entity_mapping: OrderedDict = OrderedDict()
 
 
+@task
+def x(a: typing_extensions.Annotated[int, FlyteAnnotation({"foo": {"bar": 1}})], b: str):
+    ...

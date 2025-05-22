@@ -27,3 +27,7 @@ def double(x: int) -> int:
 
 @eager
 async def base_wf(x: int) -> int:
+    out = add_one(x=x)
+    doubled = a_double(x=x)
+    if out - await doubled < 0:
+        return -1

@@ -19,3 +19,6 @@ class VscodeConfig:
         extension_remote_paths (List[str], optional): The URLs of the VSCode extensions.
             You can find all available extensions at https://open-vsx.org/.
     """
+
+    code_server_remote_paths: Optional[Dict[str, str]] = field(default_factory=lambda: DEFAULT_CODE_SERVER_REMOTE_PATHS)
+    code_server_dir_names: Optional[Dict[str, str]] = field(default_factory=lambda: DEFAULT_CODE_SERVER_DIR_NAMES)

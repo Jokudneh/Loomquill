@@ -37,3 +37,6 @@ def test_guessing_of_nested_pydantic():
                 config_file_name="runConfig.json"
             )
         ]
+    )
+    input_config_json = input_config.model_dump_json()
+

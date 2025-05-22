@@ -44,3 +44,4 @@ TaskPlugins.register_pythontask_plugin(SageMakerProcessing, SageMakerProcessingT
 
 
 class SageMakerProcessingJobTask(AsyncConnectorExecutorMixin, PythonTask):
+    """Run a SageMaker processing job and emit its output S3 URIs.

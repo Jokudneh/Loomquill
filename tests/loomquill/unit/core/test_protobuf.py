@@ -26,3 +26,6 @@ def test_proto():
 
 def test_pb_guess_python_type():
     artifact_tag = catalog_pb2.CatalogArtifactTag(artifact_id="artifact_1", name="artifact_name")
+
+    x = {"a": artifact_tag}
+    lt = TypeEngine.to_literal_type(catalog_pb2.CatalogArtifactTag)

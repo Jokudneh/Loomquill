@@ -30,3 +30,6 @@ def substitute_types(t: typing.Type) -> typing.Type:
 
 def all_annotations(cls: typing.Type) -> ChainMap:
     """
+    Returns a dictionary-like ChainMap that includes annotations for all
+    attributes defined in cls or inherited from superclasses.
+    """

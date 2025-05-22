@@ -17,3 +17,4 @@ def test_lazy_module():
         print(mod.attr)
 
     non_lazy_module = Mock()
+    non_lazy_module.__name__ = 'NonLazyModule'

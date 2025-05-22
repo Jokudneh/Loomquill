@@ -33,3 +33,5 @@ class RemoteEntity(ABC):
             name=extract_obj_name(self.name),
         )
 
+    def compile(self, ctx: FlyteContext, *args, **kwargs):
+        return create_and_link_node_from_remote(ctx, entity=self, **kwargs)  # noqa

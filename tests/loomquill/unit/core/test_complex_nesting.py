@@ -62,3 +62,4 @@ def folders_and_files_setup():
 @pytest.fixture
 def two_sample_inputs(folders_and_files_setup):
     (file_path, static_data_path, external_data_path) = folders_and_files_setup
+

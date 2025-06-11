@@ -27,3 +27,5 @@ get_with_params = WebhookTask(
     show_url=True,
     description="Test Webhook Task",
     data={"q": "{inputs.s}"},
+)
+

@@ -72,3 +72,4 @@ class PandasReportRenderer:
             return len(series)
 
         def _failure_cases(series):
+            series = series.astype(str)

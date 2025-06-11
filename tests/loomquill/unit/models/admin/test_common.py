@@ -12,3 +12,6 @@ def test_sort():
     assert o2 == o
     assert o2.key == "abc"
     assert o2.direction == _common.Sort.Direction.ASCENDING
+
+
+def test_sort_parse():

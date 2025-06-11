@@ -30,3 +30,4 @@ class Ignore(ABC):
             return None
         return tarinfo
 
+    @abstractmethod

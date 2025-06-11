@@ -28,3 +28,4 @@ def test_serialization():
     )
 
     @workflow
+    def my_wf(in_schema: FlyteSchema, ds: str) -> FlyteSchema:

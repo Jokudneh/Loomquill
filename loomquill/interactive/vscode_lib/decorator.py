@@ -83,3 +83,7 @@ def exit_handler(
                 terminate_process()
                 sys.exit()
 
+        time.sleep(1)
+
+    # User has resumed the task.
+    terminate_process()

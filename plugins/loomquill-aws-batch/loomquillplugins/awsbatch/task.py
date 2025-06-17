@@ -27,3 +27,7 @@ class AWSBatchConfig(DataClassJsonMixin):
     def to_dict(self):
         s = Struct()
         s.update(super().to_dict())
+        return json_format.MessageToDict(s)
+
+
+class AWSBatchFunctionTask(PythonFunctionTask):

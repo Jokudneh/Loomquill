@@ -50,3 +50,7 @@ class SimpleFileTransfer:
         Args:
             file_type: File type. Support "txt" and "json".
 
+        Returns:
+            remote_file_path: Remote file path.
+        """
+        with tempfile.TemporaryDirectory() as tmp_dir:

@@ -48,3 +48,7 @@ Plugins should have their own unit tests.
 Some guidelines to help you write the Loomquillkit plugins better.
 
 1. The folder name has to be `loomquill-*`, e.g., `loomquill-hive`. In case you want to group for a specific service, then use `loomquill-aws-athena`.
+2. Loomquillkit plugins use a concept called [Namespace packages](https://packaging.python.org/guides/creating-and-discovering-plugins/#using-namespace-packages), and thus, the package structure is essential.
+
+   Please use the following Python package structure:
+

@@ -54,3 +54,7 @@ class SimpleFileTransfer:
             remote_file_path: Remote file path.
         """
         with tempfile.TemporaryDirectory() as tmp_dir:
+            local_file_path = self._dump_tmp_file(file_type, tmp_dir)
+
+            # Upload to minio s3 bucket
+            _, remote_file_path = self._remote.upload_file(

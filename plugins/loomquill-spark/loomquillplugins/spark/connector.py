@@ -178,3 +178,5 @@ def _build_notebook_job_spec(
 
 
 def _build_python_file_job_spec(
+    databricks_job: dict, custom: dict, container: typing.Any, envs: dict, is_serverless: bool
+) -> dict:

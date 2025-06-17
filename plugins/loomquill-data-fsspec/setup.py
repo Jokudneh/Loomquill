@@ -19,3 +19,7 @@ setup(
     url="https://github.com/flyteorg/flytekit/tree/master/plugins/flytekit-data-fsspec",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
+    namespace_packages=["flytekitplugins"],
+    packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,
+    extras_require={

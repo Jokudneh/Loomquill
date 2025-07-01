@@ -11,3 +11,6 @@
    SageMakerDescribeProcessingJobTask
    SageMakerProcessing
    SageMakerProcessingTask
+   SageMakerProcessingTaskConnector
+"""
+

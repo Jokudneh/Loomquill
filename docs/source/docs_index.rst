@@ -14,3 +14,5 @@ Flytekit API Reference
    testing
    extras.accelerators
    extend
+   deck
+   plugins/index

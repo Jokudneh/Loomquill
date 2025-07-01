@@ -10,3 +10,5 @@ class MyBaseModel(BaseModel):
 
 @task
 def print_float(my_float: float):
+    print(f"my_float: {my_float}")
+

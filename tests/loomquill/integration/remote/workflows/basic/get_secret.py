@@ -8,3 +8,5 @@ secret_env_var = Secret(
     mount_requirement=Secret.MountType.ENV_VAR,
 )
 secret_env_file = Secret(
+    group="my-group",
+    key="token",

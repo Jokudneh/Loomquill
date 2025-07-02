@@ -19,3 +19,4 @@ class DBTHandledError(Exception):
     logs : list of str
         Logs produced by the command execution.
     """
+

@@ -52,3 +52,6 @@ ft = FlyteTask.promote_from_model(t1_spec.template)
 def test_fetched_task():
     @workflow
     def wf(a: int) -> int:
+        return ft(a=a).with_overrides(node_name="foobar")
+
+    # Should not work unless mocked out.

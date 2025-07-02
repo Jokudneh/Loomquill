@@ -23,3 +23,5 @@ class HuggingFaceDatasetRenderer:
 
     def to_html(self, df: datasets.Dataset) -> str:
         assert isinstance(df, datasets.Dataset)
+        return str(df).replace("\n", "<br>")
+

@@ -24,3 +24,7 @@ class PrestoQuery(_common.FlyteIdlEntity):
         self._routing_group = routing_group
         self._catalog = catalog
         self._schema = schema
+        self._statement = statement
+
+    @property
+    def routing_group(self):

@@ -67,3 +67,4 @@ class PerianConnector(AsyncConnectorBase):
         config = Configuration(host=PERIAN_API_URL)
         job_request = self._build_create_job_request(task_template, input_kwargs)
         with ApiClient(config) as api_client:
+            api_instance = JobApi(api_client)

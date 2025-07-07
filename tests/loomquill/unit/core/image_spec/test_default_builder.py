@@ -111,3 +111,4 @@ def test_create_docker_context_with_null_entrypoint(tmp_path):
     docker_context_path.mkdir()
 
     image_spec = ImageSpec(
+        name="FLYTEKIT",

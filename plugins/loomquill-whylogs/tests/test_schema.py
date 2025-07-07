@@ -23,3 +23,6 @@ def fetch_whylogs_datetime(profile_view: DatasetProfileView) -> datetime:
 
 
 @workflow
+def whylogs_wf() -> datetime:
+    profile_view = whylogs_profiling()
+    return fetch_whylogs_datetime(profile_view=profile_view)

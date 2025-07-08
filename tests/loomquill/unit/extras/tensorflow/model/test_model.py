@@ -20,3 +20,6 @@ def generate_model() -> tf.keras.Model:
 
 @task
 def generate_sequential_model() -> tf.keras.Sequential:
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Input(shape=(32,)),

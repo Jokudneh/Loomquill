@@ -41,3 +41,5 @@ Quickstart
 
    @task
    def square(z: int) -> int:
+      return z * z
+

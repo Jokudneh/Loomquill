@@ -18,3 +18,5 @@ def test_blob_type():
 
     o2 = _types.BlobType.from_flyte_idl(o.to_flyte_idl())
     assert o == o2
+    assert o2.format == "csv"
+    assert o2.dimensionality == _types.BlobType.BlobDimensionality.SINGLE

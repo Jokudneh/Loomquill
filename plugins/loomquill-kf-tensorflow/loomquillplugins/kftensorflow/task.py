@@ -64,3 +64,4 @@ class Chief:
     image: Optional[str] = None
     requests: Optional[Resources] = None
     limits: Optional[Resources] = None
+    replicas: Optional[int] = None

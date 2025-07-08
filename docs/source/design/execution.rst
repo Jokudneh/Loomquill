@@ -10,3 +10,4 @@ Most of the tasks that are written in Flytekit will be Python functions decorate
 
 In the basic ``@task`` decorated function scenario, the command to be run will be something containing ``pyflyte-execute``, which is one of the CLIs discussed in that section.
 
+That command, if you were to inspect a serialized task, might look something like ::

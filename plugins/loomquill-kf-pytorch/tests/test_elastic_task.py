@@ -97,3 +97,7 @@ def test_execution_params(start_method: str, target_exec_id: str, monkeypatch_ex
     @task(task_config=Elastic(nnodes=1, nproc_per_node=1, start_method=start_method))
     def test_task(n: int):
         ctx = flytekit.current_context()
+
+        assert ctx.execution_id.name == target_exec_id
+        cp = ctx.checkpoint
+        assert cp is not None

@@ -12,3 +12,4 @@ plugin_requires = [
     "numpy<2",
 ]
 
+__version__ = "0.0.0+develop"

@@ -16,3 +16,6 @@ def test_local_exec():
         len(current_context().decks) == 6
     )  # memray flamegraph, timeline, input, and output, source code, dependencies
 
+
+def test_errors():
+    reporter = "summary"

@@ -81,3 +81,4 @@ def test_container_image_conversion(mock_image_spec_builder):
         get_registerable_container_image("{{.image.other.fqn}}:{{.image.default.version}}", cfg) == "xyz.com/other:tag1"
     )
     assert (
+        get_registerable_container_image("{{.image.other2.fqn}}@{{.image.other2.version}}", cfg)

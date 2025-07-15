@@ -38,3 +38,7 @@ def neptune_task() -> bool:
 def test_local_project_and_init_run_kwargs(neptune_scale_mock):
     neptune_exists = neptune_task()
     assert neptune_exists
+
+    neptune_scale_mock.Run.assert_called_with(
+        run_id=None, experiment_name=None, project="flytekit/project"
+    )

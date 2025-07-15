@@ -137,3 +137,7 @@ class LocalIOSchemaWriter(SchemaWriter[T]):
         super().__init__(to_local_path, cols, fmt)
 
     @abstractmethod
+    def _write(self, df: T, path: os.PathLike, **kwargs):
+        pass
+
+    def write(self, *dfs, **kwargs):

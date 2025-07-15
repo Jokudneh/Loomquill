@@ -21,3 +21,5 @@ def test_schedule_cron_expression():
 def test_schedule_fixed_rate():
     fr = _schedule.Schedule.FixedRate(10, _schedule.Schedule.FixedRateUnit.MINUTE)
     obj = _schedule.Schedule(kickoff_time_input_arg="fdsa", rate=fr)
+    assert obj.rate is not None
+    assert obj.cron_expression is None

@@ -27,3 +27,5 @@ def get_reference_entity(
     <!--
     .. literalinclude:: ../../../tests/flytekit/unit/core/test_references.py
        :start-after: # docs_ref_start
+       :end-before: # docs_ref_end
+       :language: python

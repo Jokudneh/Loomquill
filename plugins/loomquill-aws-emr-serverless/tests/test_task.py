@@ -65,3 +65,6 @@ class TestEMRServerlessHiveJobDriver:
 
 
 class TestEMRServerless:
+    def test_basic_spark_config(self):
+        config = EMRServerless(
+            execution_role_arn="arn:aws:iam::123456789012:role/EMRRole",

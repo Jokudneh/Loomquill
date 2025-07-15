@@ -9,3 +9,5 @@ import flytekit
 from flytekit.models.task import TaskTemplate
 
 
+def mirror_async_methods(func: Callable, **kwargs) -> Coroutine:
+    if inspect.iscoroutinefunction(func):

@@ -61,3 +61,7 @@ class Optimizer:
     n_trials: int
     study: Optional[optuna.Study] = None
     delay: int = 0
+
+    """
+    Optimizer is a class that allows for the distributed optimization of a flytekit Task using Optuna.
+

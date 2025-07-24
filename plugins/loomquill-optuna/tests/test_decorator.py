@@ -26,3 +26,7 @@ def test_local_exec():
             power=2,
         )
 
+        return optimizer.study.best_value
+
+    loss = asyncio.run(train(concurrency=2, n_trials=10))
+

@@ -17,3 +17,5 @@ setup(
     author_email="admin@flyte.org",
     description="Optuna plugin for flytekit",
     namespace_packages=["flytekitplugins"],
+    packages=[f"flytekitplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,

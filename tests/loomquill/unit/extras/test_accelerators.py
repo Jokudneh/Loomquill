@@ -10,3 +10,7 @@ serialization_settings = SerializationSettings(
     domain="dom",
     version="123",
     image_config=ImageConfig(Image(name="name", fqn="asdf/fdsa", tag="123")),
+    env={},
+)
+
+

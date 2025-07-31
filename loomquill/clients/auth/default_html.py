@@ -10,3 +10,4 @@ def get_default_success_html(endpoint: str) -> str:
             return success_html
 
     return f"""
+<html>

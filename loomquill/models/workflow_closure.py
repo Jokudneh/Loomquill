@@ -15,3 +15,6 @@ class WorkflowClosure(_common.FlyteIdlEntity):
         self._tasks = tasks
 
     @property
+    def workflow(self):
+        """
+        :rtype: flytekit.models.core.workflow.WorkflowTemplate

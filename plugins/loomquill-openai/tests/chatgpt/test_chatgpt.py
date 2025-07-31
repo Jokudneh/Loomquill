@@ -22,3 +22,6 @@ def test_chatgpt_task():
         openai_organization="TEST ORGANIZATION ID",
         chatgpt_config={
             "model": "gpt-3.5-turbo",
+            "temperature": 0.7,
+        },
+    )

@@ -397,3 +397,4 @@ def test_list_transformer():
     encoder = MessagePackEncoder(List[List[DC]])
     list_list_dc_msgpack_bytes = encoder.encode(list_list_dc_input)
     lv = Literal(
+        scalar=Scalar(binary=Binary(value=list_list_dc_msgpack_bytes, tag=MESSAGEPACK))

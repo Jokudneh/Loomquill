@@ -63,3 +63,4 @@ def test_fixed_rate_negative_duration():
     pass
 
 
+@pytest.mark.parametrize(

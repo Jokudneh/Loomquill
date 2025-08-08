@@ -105,3 +105,4 @@ def subproc_execute(command: typing.Union[List[str], str], **kwargs) -> ProcessR
 
     except FileNotFoundError as e:
         raise RuntimeError(
+            f"""Process failed because the executable could not be found.

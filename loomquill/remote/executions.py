@@ -60,3 +60,7 @@ class FlyteTaskExecution(RemoteExecutionBase, admin_task_execution_models.TaskEx
         self._flyte_task = None
 
     @property
+    def task(self) -> Optional[FlyteTask]:
+        return self._flyte_task
+
+    @property

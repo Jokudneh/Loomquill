@@ -25,3 +25,4 @@ def test_n_trials():
     with pytest.raises(ValueError):
         Optimizer(objective, concurrency=3, n_trials=-10)
 
+    with pytest.raises(ValueError):

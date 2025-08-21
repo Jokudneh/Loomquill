@@ -31,3 +31,7 @@ class AWSBatchConfig(DataClassJsonMixin):
 
 
 class AWSBatchFunctionTask(PythonFunctionTask):
+    """
+    Actual Plugin that transforms the local python code for execution within AWS batch job
+    """
+

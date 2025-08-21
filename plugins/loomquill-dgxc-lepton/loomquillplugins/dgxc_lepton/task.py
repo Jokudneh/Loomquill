@@ -49,3 +49,6 @@ class LeptonEndpointDeploymentTask(AsyncConnectorExecutorMixin, PythonTask):
 
     def _validate_lepton_platform(self):
         """Validate that this task can only run on Lepton platform."""
+        # This could be enhanced to check environment variables or other platform indicators
+        # For now, we'll add a basic check that can be expanded
+        import os

@@ -16,3 +16,4 @@
    SageMakerDeleteModelTask
    SageMakerInvokeEndpointTask
    create_sagemaker_deployment
+   delete_sagemaker_deployment

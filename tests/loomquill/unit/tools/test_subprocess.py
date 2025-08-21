@@ -9,3 +9,5 @@ class _MockProcess(object):
 
 
 @mock.patch.object(subprocess.subprocess, "Popen")
+def test_check_call(mock_call):
+    mock_call.return_value = _MockProcess()

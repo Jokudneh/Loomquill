@@ -9,3 +9,6 @@ from flytekit.core.type_engine import TypeEngine
 from flytekit.models.literals import Literal
 from flytekit.models.types import LiteralType
 
+
+def parse_stdin_to_literal(
+    ctx: FlyteContext, t: typing.Type, message: typing.Optional[str], lt: typing.Optional[LiteralType] = None

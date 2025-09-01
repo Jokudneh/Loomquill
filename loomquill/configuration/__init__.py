@@ -267,3 +267,6 @@ class ImageConfig(DataClassJsonMixin):
 
     @staticmethod
     def validate_image(_: typing.Any, param: str, values: tuple) -> ImageConfig:
+        """
+        Validates the image to match the standard format. Also validates that only one default image
+        is provided. a default image, is one that is specified as ``default=<image_uri>`` or just ``<image_uri>``. All

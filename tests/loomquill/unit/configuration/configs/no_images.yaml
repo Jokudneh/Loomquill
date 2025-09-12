@@ -6,3 +6,4 @@ admin:
   clientId: propeller
   scopes:
     - all
+storage:

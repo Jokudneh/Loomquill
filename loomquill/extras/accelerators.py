@@ -86,3 +86,6 @@ class GPUAccelerator(BaseAccelerator):
     it is recommended to use one of the pre-defined constants below, as name has to match the name of the device
     configured on the cluster.
     """
+
+    def __init__(self, device: str) -> None:
+        self._device = device

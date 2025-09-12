@@ -8,3 +8,4 @@ def reporting_wf(title_input: str, data: typing.List[float]) -> dict:
 
 @workflow
 def signal_test_wf(data: typing.List[float]) -> dict:
+    title_input = wait_for_input(name="title-input", timeout=timedelta(hours=1), expected_type=str)

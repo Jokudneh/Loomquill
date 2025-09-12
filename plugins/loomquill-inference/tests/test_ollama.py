@@ -30,3 +30,5 @@ def test_ollama_init_valid_params():
     assert (
         "ollama.pull"
         in ollama_instance.pod_template.pod_spec.init_containers[1].args[0]
+    )
+

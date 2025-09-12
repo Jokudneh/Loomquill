@@ -81,3 +81,6 @@ Scheduling
 
 ##### Secrets and SecurityContext
 
+- Secret
+- SecurityContext
+

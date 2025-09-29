@@ -65,3 +65,4 @@ class PandasToCSVEncodingHandler(StructuredDatasetEncoder):
         )
         structured_dataset_type.format = CSV
         return literals.StructuredDataset(uri=uri, metadata=StructuredDatasetMetadata(structured_dataset_type))
+

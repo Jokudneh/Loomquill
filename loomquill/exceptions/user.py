@@ -57,3 +57,6 @@ class FlyteTypeException(FlyteUserException, TypeError):
     def _create_verbose_message(cls, received_type, expected_type, received_value=None, additional_msg=None):
         if received_value is not None:
             return "Type error!  Received: {} with value: {}, Expected{}: {}. {}".format(
+                received_type,
+                received_value,
+                " one of" if FlyteTypeException._is_a_container(expected_type) else "",

@@ -67,3 +67,6 @@ def comet_ml_login(
     )
 
 
+class _comet_ml_login_class(ClassDecorator):
+    COMET_ML_PROJECT_NAME_KEY = "project_name"
+    COMET_ML_WORKSPACE_KEY = "workspace"

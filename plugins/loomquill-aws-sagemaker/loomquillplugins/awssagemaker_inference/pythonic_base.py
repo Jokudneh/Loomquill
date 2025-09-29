@@ -99,3 +99,7 @@ class PythonicJobConfig:
             raise ValueError("Pythonic SageMaker jobs currently require instance_count=1")
         if self.volume_size_in_gb < 1:
             raise ValueError("volume_size_in_gb must be at least 1")
+        if self.max_runtime_in_seconds < 1:
+            raise ValueError("max_runtime_in_seconds must be at least 1")
+
+    def to_dict(self) -> Dict[str, Any]:

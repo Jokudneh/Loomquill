@@ -39,3 +39,4 @@ def test_pandas():
 def test_csv():
     df = pd.DataFrame({"Name": ["Tom", "Joseph"], "Age": [20, 22]})
     encoder = basic_dfs.PandasToCSVEncodingHandler()
+    decoder = basic_dfs.CSVToPandasDecodingHandler()

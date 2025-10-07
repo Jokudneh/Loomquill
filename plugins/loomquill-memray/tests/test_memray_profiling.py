@@ -19,3 +19,5 @@ def test_local_exec():
 
 def test_errors():
     reporter = "summary"
+    with pytest.raises(
+        ValueError, match=f"{reporter} is not a supported html reporter."

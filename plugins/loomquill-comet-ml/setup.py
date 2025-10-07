@@ -14,3 +14,6 @@ setup(
     title="Comet ML",
     title_expanded="Flytekit Comet Plugin",
     name=microlib_name,
+    version=__version__,
+    author="flyteorg",
+    author_email="admin@flyte.org",

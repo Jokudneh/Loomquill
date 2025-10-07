@@ -64,3 +64,5 @@ def test_fixed_rate_negative_duration():
 
 
 @pytest.mark.parametrize(
+    "schedule",
+    [

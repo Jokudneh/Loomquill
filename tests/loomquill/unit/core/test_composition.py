@@ -50,3 +50,7 @@ def test_single_named_output_subwf():
         y = t2(a=a, b=x.sub_int)
         return nt(y.sub_int)
 
+    res = my_subwf(a=3)
+    # WF outputs don't currently return the namedtuple they're supposed to.
+    assert res[0] == 8
+

@@ -78,3 +78,6 @@ class SlurmScriptConnector(AsyncConnectorBase):
         else:
             # Assume the batch script is already on Slurm
             batch_script_path = task_template.custom["batch_script_path"]
+        cmd = _get_sbatch_cmd(
+            sbatch_config=sbatch_config, batch_script_path=batch_script_path, batch_script_args=batch_script_args
+        )

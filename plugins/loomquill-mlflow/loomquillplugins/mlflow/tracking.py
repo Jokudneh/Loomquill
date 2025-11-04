@@ -52,3 +52,4 @@ def get_run_params(c: mlflow.MlflowClient, run_id: str) -> typing.Optional[pd.Da
 
 def plot_metrics(metrics: typing.Dict[str, pd.DataFrame]) -> typing.Optional[go.Figure]:
     v = len(metrics)
+    if v == 0:

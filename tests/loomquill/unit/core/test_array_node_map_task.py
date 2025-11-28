@@ -180,3 +180,6 @@ def test_fast_serialization(serialization_settings):
         "{{.checkpointOutputPrefix}}",
         "--prev-checkpoint",
         "{{.prevCheckpointPrefix}}",
+        "--resolver",
+        "flytekit.core.array_node_map_task.ArrayNodeMapTaskResolver",
+        "--",

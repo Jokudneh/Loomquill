@@ -24,3 +24,4 @@ class VLLM(ModelInferenceTemplate):
         arg_dict: Optional[dict] = None,
         image: str = "vllm/vllm-openai",
         health_endpoint: str = "/health",
+        port: int = 8000,

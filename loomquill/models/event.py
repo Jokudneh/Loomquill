@@ -16,3 +16,4 @@ class TaskExecutionMetadata(_common.FlyteIdlEntity):
         """
         :rtype: google.protobuf.internal.containers.RepeatedCompositeFieldContainer
         """
+        return self._external_resources

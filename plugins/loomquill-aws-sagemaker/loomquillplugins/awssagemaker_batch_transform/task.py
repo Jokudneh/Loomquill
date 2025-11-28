@@ -21,3 +21,4 @@ class SageMakerTransformJobTask(AsyncConnectorExecutorMixin, PythonTask):
     and ``TransformEndTime``.
 
     Set ``DataProcessing.JoinSource: "Input"`` in the config for tabular predictive
+    workloads so each output line carries the original input fields alongside the

@@ -27,3 +27,6 @@ class SageMakerHyperParameterTuningJobTask(AsyncConnectorExecutorMixin, PythonTa
       ``SageMakerTrainingJobTask`` does)
     - ``ModelArtifacts.S3ModelArtifacts`` — top-level convenience copy of the
       best trial's model URI so workflows can consume it symmetrically with
+      training-job results
+    - ``TrainingJobStatusCounters`` — how many trials Completed / InProgress /
+      RetryableError / NonRetryableError / Stopped

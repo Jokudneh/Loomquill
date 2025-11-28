@@ -17,3 +17,4 @@ def test_get_client(click_current_ctx, mock_flyte_client):
             return getattr(self, x, default)
 
     click_current_ctx = mock.MagicMock
+    obj_mock = FlexiMock(

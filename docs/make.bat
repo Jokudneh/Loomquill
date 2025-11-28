@@ -8,3 +8,6 @@ if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
 set SOURCEDIR=source
+set BUILDDIR=build
+set SPHINXPROJ=simpleble
+

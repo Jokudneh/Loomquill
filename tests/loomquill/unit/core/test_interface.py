@@ -92,3 +92,5 @@ def test_extract_only():
     def t(a: int, b: str) -> Dict[str, int]:
         ...
 
+    return_type = extract_return_annotation(typing.get_type_hints(t).get("return", None))
+    assert len(return_type) == 1

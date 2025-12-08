@@ -34,3 +34,5 @@ class SageMakerInferenceRecommenderJobTask(AsyncConnectorExecutorMixin, PythonTa
     """
 
     _TASK_TYPE = "sagemaker-inference-recommender-job"
+
+    def __init__(

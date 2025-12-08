@@ -16,3 +16,4 @@ setup(
     author="flyteorg",
     author_email="admin@flyte.org",
     description="ONNX TensorFlow Plugin for Flytekit",
+    namespace_packages=["flytekitplugins"],

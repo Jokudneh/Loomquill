@@ -79,3 +79,4 @@ class TestEMRServerlessHandlerStartJobRun:
         }
 
         handler = EMRServerlessHandler()
+        job_driver = {"sparkSubmit": {"entryPoint": "s3://bucket/main.py"}}

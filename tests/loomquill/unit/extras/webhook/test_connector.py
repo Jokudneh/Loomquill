@@ -79,3 +79,6 @@ async def test_do_failure(mock_task_template):
     assert "Webhook failed with status code 500" in result.message
 
 
+@pytest.mark.asyncio
+async def test_do_get_failure(mock_task_template):
+    mock_task_template.custom[METHOD_KEY] = "GET"

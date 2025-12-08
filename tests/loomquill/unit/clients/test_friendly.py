@@ -19,3 +19,6 @@ def test_update_project(mock_raw_update_project):
 
 @mock.patch("flytekit.clients.friendly._RawSynchronousFlyteClient.list_projects")
 def test_list_projects_paginated(mock_raw_list_projects):
+    client = _SynchronousFlyteClient(PlatformConfig.for_endpoint("a.b.com", True))
+    client.list_projects_paginated(limit=100, token="")
+    project_list_request = _project_pb2.ProjectListRequest(limit=100, token="", filters=None, sort_by=None)

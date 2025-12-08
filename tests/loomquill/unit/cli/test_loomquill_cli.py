@@ -28,3 +28,6 @@ def test__extract_files_with_unspecified_resource_type(load_mock):
         _main._extract_pair("a", "b", "myflyteproject", "development", "v", {})
 
 
+def _identity_dummy(a, b, project, domain, version, patches):
+    return (a, b)
+

@@ -18,3 +18,7 @@ OPENAI_API_KEY = "FLYTE_OPENAI_API_KEY"
 
 
 class ChatGPTConnector(SyncConnectorBase):
+    name = "ChatGPT Connector"
+
+    def __init__(self):
+        super().__init__(task_type_name="chatgpt")

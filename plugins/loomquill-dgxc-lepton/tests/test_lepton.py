@@ -104,3 +104,6 @@ class TestLeptonEndpointConfig:
 
         # This test now just verifies we can create a minimal config for testing
         config = LeptonEndpointConfig(
+            endpoint_name="test-delete",
+            resource_shape="cpu.small",
+            node_group="test-group",

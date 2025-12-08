@@ -27,3 +27,6 @@ def create_backfill_workflow(
     > [!NOTE]
     > Correct usage for dates example
 
+    ```python
+    lp = Launchplan.get_or_create(...)
+    start_date = datetime.datetime(2023, 1, 1)

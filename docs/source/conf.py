@@ -49,3 +49,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.coverage",
+    "sphinx.ext.inheritance_diagram",

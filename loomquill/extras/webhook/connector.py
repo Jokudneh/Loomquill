@@ -37,3 +37,65 @@ class WebhookConnector(SyncConnectorBase):
         It uses asyncio to send the request and process the response using the httpx library.
         """
         try:
+            final_dict = self._get_final_dict(task_template, inputs)
+            return await self._process_webhook(final_dict)
+        except Exception as e:
+            return Resource(phase=TaskExecution.FAILED, message=str(e))
+
+    def _get_final_dict(self, task_template: TaskTemplate, inputs: LiteralMap) -> dict:
+        custom_dict = task_template.custom
+        input_dict = {
+            "inputs": literal_map_string_repr(inputs),
+        }
+        return format_dict("test", custom_dict, input_dict)
+
+    async def _make_http_request(self, method: str, url: str, headers: dict, data: dict, timeout: int) -> tuple:
+        if method == "GET":
+            response = await self._client.get(url, headers=headers, params=data, timeout=timeout)
+        else:
+            response = await self._client.post(url, json=data, headers=headers, timeout=timeout)
+        return response.status_code, response.text
+
+    @staticmethod
+    def _build_response(
+        status: int,
+        text: str,
+        data: dict = None,
+        url: str = None,
+        show_data: bool = False,
+        show_url: bool = False,
+    ) -> dict:
+        final_response = {
+            "status_code": status,
+            "response_data": text,
+        }
+        if show_data:
+            final_response["input_data"] = data
+        if show_url:
+            final_response["url"] = url
+        return final_response
+
+    async def _process_webhook(self, final_dict: dict) -> Resource:
+        url = final_dict.get(URL_KEY)
+        body = final_dict.get(DATA_KEY)
+        headers = final_dict.get(HEADERS_KEY)
+        method = str(final_dict.get(METHOD_KEY)).upper()
+        show_data = final_dict.get(SHOW_DATA_KEY, False)
+        show_url = final_dict.get(SHOW_URL_KEY, False)
+        timeout_sec = final_dict.get(TIMEOUT_SEC, 10)
+
+        status, text = await self._make_http_request(method, url, headers, body, timeout_sec)
+        if status != 200:
+            return Resource(
+                phase=TaskExecution.FAILED,
+                message=f"Webhook failed with status code {status}, response: {text}",
+            )
+        final_response = self._build_response(status, text, body, url, show_data, show_url)
+        return Resource(
+            phase=TaskExecution.SUCCEEDED,
+            outputs={"info": final_response},
+            message="Webhook was successfully invoked!",
+        )
+
+
+ConnectorRegistry.register(WebhookConnector())

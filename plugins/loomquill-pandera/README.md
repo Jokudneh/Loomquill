@@ -4,3 +4,8 @@ Loomquillkit python natively supports many data types, including a LoomquillSche
 
 To install the plugin, run the following command:
 
+```bash
+pip install loomquillplugins-pandera
+```
+
+All [examples](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/pandera_plugin/index.html) can be found in the documentation.

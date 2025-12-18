@@ -5,3 +5,11 @@ from flytekit.interactive.vscode_lib.decorator import (  # noqa: F401
     download_file,
     download_vscode,
     exit_handler,
+    get_code_server_info,
+    get_installed_extensions,
+    is_extension_installed,
+    prepare_interactive_python,
+    prepare_launch_json,
+    prepare_resume_task_python,
+    vscode,
+)

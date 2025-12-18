@@ -6,3 +6,6 @@ from flytekit import task
 
 
 def tasks():
+    @task
+    def foo():
+        pass

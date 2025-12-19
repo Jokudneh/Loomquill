@@ -15,3 +15,50 @@ To set up PyTorch operator in the Loomquill deployment's backend, follow the [Py
 
 An [example](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/mnist_classifier/index.html#mnist-classifier-training) showcasing PyTorch operator can be found in the documentation.
 
+## Code Example
+```python
+from loomquillplugins.kfpytorch import PyTorch, Worker
+
+@task(
+    task_config = PyTorch(
+        worker=Worker(replicas=5)
+    )
+    image="test_image",
+    resources=Resources(cpu="1", mem="1Gi"),
+)
+def pytorch_job():
+    ...
+```
+
+You can specify run policy and restart policy of a pytorch job. The default restart policy for both master and worker group is the never restart,
+you can set it to other policy.
+```python
+from loomquillplugins.kfpytorch import PyTorch, Worker, RestartPolicy, RunPolicy
+
+@task(
+    task_config = PyTorch(
+        worker=Worker(replicas=5, restart_policy=RestartPolicy.FAILURE),
+        run_policy=RunPolicy(
+            clean_pod_policy=CleanPodPolicy.ALL,
+        )
+    )
+    image="test_image",
+    resources=Resources(cpu="1", mem="1Gi"),
+)
+def pytorch_job():
+    ...
+```
+
+## Upgrade Pytorch Plugin from V0 to V1
+Pytorch plugin is now updated from v0 to v1 to enable more configuration options.
+To migrate from v0 to v1, change the following:
+1. Update loomquillpropeller to v1.6.0
+2. Update loomquill version to v1.6.2
+3. Update your code from:
+    ```
+    task_config=Pytorch(num_workers=10),
+    ```
+    to:
+    ```
+    task_config=PyTorch(worker=Worker(replicas=10)),
+    ```

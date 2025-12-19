@@ -29,3 +29,72 @@ else
 fi
 
 PREFIX="$2-"
+if [ -z "$2" ]; then
+  PREFIX=""
+fi
+
+# Go into the directory representing the user's repo
+pushd "${DIRPATH}"
+
+# Grab the repo name from the argument if not already defined
+# Note that this repo name will be the name of the Docker image.
+if [ -z "${IMAGE_NAME}" ]; then
+  IMAGE_NAME=${PWD##*/}
+fi
+
+# Do not do anything if there are unstaged git changes
+CHANGED=$(git status --porcelain)
+if [ -n "$CHANGED" ]; then
+  echo "Please commit git changes before building"
+  exit 1
+fi
+
+# set default tag to the latest git SHA
+if [ -z "$TAG" ]; then
+  TAG=$(git rev-parse HEAD)
+fi
+
+# If the registry does not exist, don't worry about it, and let users build locally
+# This is the name of the image that will be injected into the container as an environment variable
+if [ -n "$REGISTRY" ]; then
+  LOOMQUILL_INTERNAL_IMAGE=${REGISTRY}/${IMAGE_NAME}:${PREFIX}${TAG}
+else
+  LOOMQUILL_INTERNAL_IMAGE=${IMAGE_NAME}:${PREFIX}${TAG}
+fi
+
+DOCKER_PLATFORM_OPT=()
+# Check if the user set the target build architecture, if not use the default instead.
+if [ -n "$TARGET_PLATFORM_BUILD" ]; then
+  DOCKER_PLATFORM_OPT=(--platform "$TARGET_PLATFORM_BUILD")
+else
+  TARGET_PLATFORM_BUILD="default"
+fi
+
+echo "Building: $LOOMQUILL_INTERNAL_IMAGE for $TARGET_PLATFORM_BUILD architecture"
+
+# This build command is the raison d'etre of this script, it ensures that the version is injected into the image itself
+docker build . "${DOCKER_PLATFORM_OPT[@]}" --build-arg tag="${LOOMQUILL_INTERNAL_IMAGE}" -t "${LOOMQUILL_INTERNAL_IMAGE}" -f "${DOCKERFILE_PATH}"
+
+echo "$IMAGE_NAME built locally."
+
+# Create the appropriate tags
+echo "${LOOMQUILL_INTERNAL_IMAGE} tagged"
+if [ -n "$REGISTRY" ]; then
+  # Also push if there's a registry to push to
+  if [[ "${REGISTRY}" == "docker.io"*  && -z "${NOPUSH}" ]]; then
+    docker login --username="${DOCKERHUB_USERNAME}" --password="${DOCKERHUB_PASSWORD}"
+  fi
+
+  if [[ -z "${NOPUSH}" ]]; then
+    docker push "${LOOMQUILL_INTERNAL_IMAGE}"
+    echo "${LOOMQUILL_INTERNAL_IMAGE} pushed to remote"
+  fi
+fi
+
+popd
+
+echo ""
+echo "------------------------------------"
+echo "              SUCCESS"
+echo "------------------------------------"
+echo ""

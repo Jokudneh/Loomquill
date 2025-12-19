@@ -52,3 +52,109 @@ Some guidelines to help you write the Loomquillkit plugins better.
 
    Please use the following Python package structure:
 
+   ```
+   loomquill-myplugin/
+      - README.md
+      - setup.py
+      - loomquillplugins/
+          - myplugin/
+             - __init__.py
+      - tests
+          - __init__.py
+   ```
+
+   _NOTE:_ the inner package `loomquillplugins` DOES NOT have an `__init__.py` file.
+
+3. The published packages have to be named `loomquillplugins-{package-name}`, where `{package-name}` is a unique identifier for the plugin.
+
+4. The setup.py file has to have the following template. You can use it as is by editing the TODO sections.
+
+```python
+from setuptools import setup
+
+# TODO put the plugin name here
+PLUGIN_NAME = "<plugin-name e.g. pandera>"
+
+# TODO decide if the plugin is regular or `data`
+# for regular plugins
+microlib_name = f"loomquillplugins-{PLUGIN_NAME}"
+# For data/persistence plugins
+# microlib_name = f"loomquillplugins-data-{PLUGIN_NAME}"
+
+# TODO add additional requirements
+plugin_requires = ["loomquill>=1.1.0b0,<2.0.0, "<other requirements>"]
+
+__version__ = "0.0.0+develop"
+
+setup(
+    name=microlib_name,
+    version=__version__,
+    author="jokudneh",
+    author_email="admin@loomquill.org",
+    # TODO Edit the description
+    description="My awesome plugin.....",
+    # TODO alter the last part of the following URL
+    url="https://github.com/jokudneh/loomquill/tree/master/plugins/loomquill-...",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    namespace_packages=["loomquillplugins"],
+    packages=[f"loomquillplugins.{PLUGIN_NAME}"],
+    install_requires=plugin_requires,
+    license="apache2",
+    python_requires=">=3.9",
+    classifiers=[
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Software Development",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+    # TODO OPTIONAL
+    # FOR Plugins where auto-loading on installation is desirable, please uncomment this line and ensure that the
+    # __init__.py has the right modules available to be loaded, or point to the right module
+    # entry_points={"loomquill.plugins": [f"{PLUGIN_NAME}=loomquillplugins.{PLUGIN_NAME}"]},
+)
+```
+
+5.  Each plugin should have a README.md, which describes how to install it with a simple example. For example, refer to loomquill-greatexpectations' [README](./loomquill-greatexpectations/README.md).
+
+6.  Each plugin should have its own tests' package. _NOTE:_ `tests` folder should have an `__init__.py` file.
+
+7.  There may be some cases where you might want to auto-load some of your modules when the plugin is installed. This is especially true for `data-plugins` and `type-plugins`.
+    In such a case, you can add a special directive in the `setup.py` which will instruct Loomquillkit to automatically load the prescribed modules.
+
+    Following shows an excerpt from the `loomquill-data-fsspec` plugin's setup.py file.
+
+```python
+setup(
+    entry_points={"loomquill.plugins": [f"{PLUGIN_NAME}=loomquillplugins.{PLUGIN_NAME}"]},
+)
+
+```
+
+### Loomquillkit Version Pinning
+
+Currently we advocate pinning to minor releases of loomquill. To bump the pins across the board, `cd plugins/` and then
+update the command below with the appropriate range and run
+
+```bash
+for f in $(ls **/setup.py); do sed -i "s/loomquill>.*,<1.1/loomquill>=1.1.0b0,<1.2/" $f; done
+```
+
+Try using `gsed` instead of `sed` if you are on a Mac. Also this only works of course for setup files that start with the version in your sed command. There may be plugins that have different pins to start out with.
+
+## References 📚
+
+- Example of a simple Python task that allows adding only Python side functionality: [loomquill-greatexpectations](./loomquill-greatexpectations/)
+- Example of a TypeTransformer or a Type Plugin: [loomquill-pandera](./loomquill-pandera/). These plugins add new types to Loomquill and tell Loomquill how to transform them and add additional features through types. Loomquill is a multi-lang system, and type transformers allow marshaling between Loomquillkit and backend and other languages.
+- Example of TaskTemplate plugin which also allows plugin writers to supply a prebuilt container for runtime: [loomquill-sqlalchemy](./loomquill-sqlalchemy/)
+- Example of a SQL backend plugin where the actual query invocation is done by a backend plugin: [loomquill-snowflake](./loomquill-snowflake/)
+- Example of a Meta plugin that can wrap other tasks: [loomquill-papermill](./loomquill-papermill/)
+- Example of a plugin that modifies the execution command: [loomquill-spark](./loomquill-spark/)
+- Example that allows executing the user container with some other context modifications: [loomquill-kf-tensorflow](./loomquill-kf-tensorflow/)
+- Example of a Persistence Plugin that allows data to be stored to different persistence layers: [loomquill-data-fsspec](./loomquill-data-fsspec/)

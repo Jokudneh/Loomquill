@@ -21,3 +21,56 @@ simple_task_object = GreatExpectationsTask(
     datasource_name="data",
     inputs=kwtypes(dataset=str),
     expectation_suite_name="test.demo",
+    data_connector_name="data_example_data_connector",
+    context_root_dir="great_expectations",
+)
+
+@task(limits=Resources(mem="500Mi"))
+def simple_task(csv_file: str) -> int:
+    result = simple_task_object(dataset=csv_file)
+    df = pd.read_csv(os.path.join("greatexpectations", "data", csv_file))
+    return df.shape[0]
+
+@workflow
+def simple_wf(dataset: str = "yellow_tripdata_sample_2019-01.csv") -> int:
+    return simple_task(csv_file=dataset)
+```
+
+## Type Example
+```python
+from loomquill import workflow
+from loomquillplugins.great_expectations import (
+    BatchRequestConfig,
+    GreatExpectationsLoomquillConfig,
+    GreatExpectationsType,
+)
+
+def simple_task(
+    directory: GreatExpectationsType[
+        str,
+        GreatExpectationsLoomquillConfig(
+            datasource_name="data",
+            expectation_suite_name="test.demo",
+            data_connector_name="my_data_connector",
+            batch_request_config=BatchRequestConfig(
+                data_connector_query={
+                    "batch_filter_parameters": {
+                        "year": "2019",
+                        "month": "01",
+                    },
+                    "limit": 10,
+                },
+            ),
+            context_root_dir="great_expectations",
+        ),
+    ]
+) -> str:
+    return f"Validation works for {directory}!"
+
+
+@workflow
+def simple_wf(directory: str = "my_assets") -> str:
+    return simple_task(directory=directory)
+```
+
+[More examples](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/greatexpectations_plugin/index.html) can be found in the documentation.

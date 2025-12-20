@@ -1,0 +1,4 @@
+admin:
+  endpoint: dns:///loomquill.mycorp.io
+  authType: Pkce
+  insecure: false

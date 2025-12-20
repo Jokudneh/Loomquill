@@ -11,3 +11,4 @@ def ipython_check() -> bool:
             is_ipython = True
     except (ImportError, NameError):
         pass
+    return is_ipython

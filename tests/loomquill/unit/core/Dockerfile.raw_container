@@ -2,3 +2,4 @@ FROM python:3.9-alpine
 
 WORKDIR /root
 
+COPY ./write_flytefile.py /root/write_flytefile.py

@@ -42,3 +42,5 @@ async def test_poke_no_cleanup(
 @patch("flytekitplugins.k8sdataservice.sensor.KubeConfig")
 @patch("flytekitplugins.k8sdataservice.sensor.client.AppsV1Api")
 @patch("flytekitplugins.k8sdataservice.sensor.client.CoreV1Api")
+@patch("flytekitplugins.k8sdataservice.sensor.client.CustomObjectsApi")
+@patch("flytekitplugins.k8sdataservice.sensor.logger")

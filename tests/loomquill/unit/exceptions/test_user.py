@@ -37,3 +37,5 @@ def test_flyte_type_exception():
         )
         assert isinstance(e, TypeError)
         assert type(e).error_code == "USER:TypeError"
+        assert isinstance(e, user.FlyteUserException)
+

@@ -27,3 +27,5 @@ def test_sf_wf(mock_connect, mock_get_private_key):
     from flytekit.lazy_import.lazy_module import is_imported
     from flytekit.types.structured import register_snowflake_handlers
     from flytekit.types.structured.structured_dataset import DuplicateHandlerError
+
+    if is_imported("snowflake.connector"):

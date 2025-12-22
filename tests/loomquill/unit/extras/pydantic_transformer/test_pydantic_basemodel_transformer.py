@@ -354,3 +354,6 @@ def test_all_types_with_optional_in_pydantic_basemodel_wf(
             default_factory=lambda: {
                 0: FlyteFile(local_dummy_file),
                 1: FlyteFile(local_dummy_file),
+                -1: FlyteFile(local_dummy_file),
+            }
+        )

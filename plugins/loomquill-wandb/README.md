@@ -25,3 +25,7 @@ REGISTRY = "localhost:30000"
 image = ImageSpec(
     name="wandb_example",
     python_version="3.11",
+    packages=["loomquillplugins-wandb", "xgboost", "scikit-learn"],
+    registry=REGISTRY,
+)
+wandb_secret = Secret(key=WANDB_SECRET_KEY, group=WANDB_SECRET_GROUP)

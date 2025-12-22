@@ -10,3 +10,4 @@ def test_mocking_remote(mock_remote) -> None:
     entities.
     """
 
+    @task

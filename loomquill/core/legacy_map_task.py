@@ -129,3 +129,7 @@ class MapPythonTask(PythonTask):
             "--output-prefix",
             "{{.outputPrefix}}",
             "--raw-output-data-prefix",
+            "{{.rawOutputDataPrefix}}",
+            "--checkpoint-path",
+            "{{.checkpointOutputPrefix}}",
+            "--prev-checkpoint",

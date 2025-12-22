@@ -9,3 +9,4 @@ def check_call(cmd_args, **kwargs):
     if not isinstance(cmd_args, list):
         cmd_args = shlex.split(cmd_args)
 
+    # Jupyter notebooks hijack I/O and thus we cannot dump directly to stdout.

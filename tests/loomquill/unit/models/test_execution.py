@@ -84,3 +84,4 @@ def test_execution_closure_with_abort_metadata():
         started_at=test_datetime,
         duration=test_timedelta,
         abort_metadata=abort_metadata,
+    )

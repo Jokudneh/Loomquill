@@ -84,3 +84,5 @@ def test_container():
     assert result == {"a": "cr.flyte.org/flyteorg/flytekit:py3.11-1.10.3"}
 
 
+@pytest.mark.asyncio
+@patch("flytekitplugins.awssagemaker_inference.boto3_mixin.aioboto3.Session")

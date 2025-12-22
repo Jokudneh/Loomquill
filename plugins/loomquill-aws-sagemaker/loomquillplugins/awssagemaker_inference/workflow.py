@@ -62,3 +62,7 @@ def create_sagemaker_deployment(
     Creates SageMaker model, endpoint config and endpoint.
 
     :param model_config: Configuration for the SageMaker model creation API call.
+    :param endpoint_config_config: Configuration for the SageMaker endpoint configuration creation API call.
+    :param endpoint_config: Configuration for the SageMaker endpoint creation API call.
+    :param images: A dictionary of images for SageMaker model creation.
+    :param model_input_types: Mapping of SageMaker model configuration inputs to their types.

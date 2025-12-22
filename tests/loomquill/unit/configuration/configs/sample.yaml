@@ -7,3 +7,4 @@ admin:
   scopes:
     - all
 storage:
+  connection:

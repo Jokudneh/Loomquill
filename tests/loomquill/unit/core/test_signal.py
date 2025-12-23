@@ -15,3 +15,6 @@ def remote():
     flyte_remote._client_initialized = True
     return flyte_remote
 
+
+def test_remote_list_signals(remote):
+    ctx = FlyteContextManager.current_context()

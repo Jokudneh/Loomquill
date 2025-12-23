@@ -17,3 +17,5 @@ def t1(in_dataclass: MyDataClassWithOptional) -> MyDataClassWithOptional:
     return in_dataclass
 
 
+@workflow
+def wf(in_dataclass: MyDataClassWithOptional) -> MyDataClassWithOptional:

@@ -101,3 +101,7 @@ def test_execution_params(start_method: str, target_exec_id: str, monkeypatch_ex
         assert ctx.execution_id.name == target_exec_id
         cp = ctx.checkpoint
         assert cp is not None
+
+        cp.write(bytes(n + 1))
+        return n + 1
+

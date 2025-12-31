@@ -121,3 +121,7 @@ EndpointEngineConfig.sglang(
     port=30000
 )
 ```
+
+##### NVIDIA NIM
+```python
+EndpointEngineConfig.nim(

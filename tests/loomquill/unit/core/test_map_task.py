@@ -72,3 +72,5 @@ def test_map_task_types():
     with pytest.raises(TypeError):
         _ = map_task(t1, metadata=TaskMetadata(retries=1))(a=1)
 
+    with pytest.raises(TypeError):
+        _ = map_task(t1, metadata=TaskMetadata(retries=1))(a=["invalid", "args"])

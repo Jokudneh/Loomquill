@@ -13,3 +13,7 @@ class WhylogsSummaryDriftRenderer:
     """
 
     @staticmethod
+    def to_html(reference_data: pd.DataFrame, target_data: pd.DataFrame) -> str:
+        """
+        This static method will profile the input data and then generate an HTML report
+        with the Summary Drift calculations for all the dataframe's columns

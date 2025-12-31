@@ -108,3 +108,4 @@ id=micromamba \
     ( micromamba create -n runtime --root-prefix /opt/micromamba \
     -c conda-forge $CONDA_CHANNELS \
     python=$PYTHON_VERSION $CONDA_PACKAGES \
+    || micromamba install -n runtime --root-prefix /opt/micromamba \

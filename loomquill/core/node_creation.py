@@ -39,3 +39,7 @@ def create_node(
 
         t3_node = create_node(t3, in1=some_int)  # basically calling t3(in1=some_int)
 
+    You can still use this method to handle setting certain overrides ::
+
+        t3_node = create_node(t3, in1=some_int).with_overrides(...)
+

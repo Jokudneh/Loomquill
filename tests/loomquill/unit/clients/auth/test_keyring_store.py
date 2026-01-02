@@ -19,3 +19,7 @@ def test_keyring_store_get(kr_get_password: MagicMock):
     kr_get_password.return_value = "t"
     assert KeyringStore.retrieve("example1.com") is not None
 
+    kr_get_password.side_effect = NoKeyringError()
+    assert KeyringStore.retrieve("example2.com") is None
+
+

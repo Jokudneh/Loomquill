@@ -414,3 +414,4 @@ def test_fetch_execute_launch_plan_list_of_floats(register):
 def test_fetch_execute_task_list_of_floats(register):
     remote = FlyteRemote(Config.auto(config_file=CONFIG), PROJECT, DOMAIN)
     flyte_task = remote.fetch_task(name="basic.list_float_wf.concat_list", version=VERSION)
+    xs: typing.List[float] = [0.1, 0.2, 0.3, 0.4, -99999.7]

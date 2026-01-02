@@ -30,3 +30,6 @@ class ContainerError(_common.FlyteIdlEntity):
         self._kind = kind
         self._origin = origin
         self._timestamp = timestamp
+        self._worker = worker
+
+    @property

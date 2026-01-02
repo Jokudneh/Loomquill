@@ -58,3 +58,6 @@ def get_auth_service_mock() -> MagicMock:
         token_endpoint=TOKEN_ENDPOINT,
         response_types_supported=["code", "token", "code token"],
         scopes_supported=["all"],
+        token_endpoint_auth_methods_supported=["client_secret_basic"],
+        jwks_uri="https://your.domain.io/oauth2/jwks",
+        code_challenge_methods_supported=["S256"],

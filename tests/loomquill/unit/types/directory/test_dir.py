@@ -23,3 +23,4 @@ def local_tmp_dirs():
         yield src_dir, dst_dir
 
 
+def test_src_path_with_different_types(local_tmp_dirs) -> None:

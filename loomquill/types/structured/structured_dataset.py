@@ -237,3 +237,5 @@ class StructuredDataset(SerializableType, DataClassJSONMixin):
         return flyte_dataset_transformer.iter_as(
             ctx, self.literal, self._dataframe_type, updated_metadata=self.metadata
         )
+
+

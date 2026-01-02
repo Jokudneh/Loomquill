@@ -208,3 +208,6 @@ def test_pure_dataclasses_with_flyte_types(local_dummy_txt_file, local_dummy_dir
 
     @task
     def create_local_file(path: str) -> FlyteFile:
+        return FlyteFile(path=path)
+
+    @task

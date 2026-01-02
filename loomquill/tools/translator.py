@@ -206,3 +206,6 @@ def get_serializable_task(
         container=container,
         task_type_version=entity.task_type_version,
         security_context=entity.security_context,
+        config=merged_config,
+        k8s_pod=pod,
+        sql=entity.get_sql(settings),

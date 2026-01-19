@@ -29,3 +29,7 @@ def test_training_job_task_interface_and_custom():
                 "TrainingImage": "{images.training_image}",
                 "TrainingInputMode": "File",
             },
+            "RoleArn": "{inputs.execution_role_arn}",
+            "ResourceConfig": {
+                "InstanceType": "ml.m5.xlarge",
+                "InstanceCount": 1,

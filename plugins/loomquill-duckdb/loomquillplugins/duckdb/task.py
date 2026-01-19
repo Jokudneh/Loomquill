@@ -56,3 +56,7 @@ class DuckDBQuery(PythonInstanceTask):
             return duckdb.connect("md:", config={"motherduck_token": token, "another_config": "hello"})
 
         DuckDBQuery(..., provider=custom_connect_motherduck)
+
+        Also note that a query can be provided at runtime if query=None is provided.
+
+        duckdb_query = DuckDBQuery(

@@ -33,3 +33,61 @@ def load_module_from_path(module_name, path):
         module = importlib.util.module_from_spec(spec)
         sys.modules[module_name] = module
         spec.loader.exec_module(module)
+        return module
+    else:
+        raise ImportError(f"Module at {path} could not be loaded")
+
+
+def get_task_inputs(task_module_name, task_name, context_working_dir):
+    """
+    Read task input data from inputs.pb for a specific task function and convert it into Python types and structures.
+
+    Args:
+        task_module_name (str): The name of the Python module containing the task function.
+        task_name (str): The name of the task function within the module.
+        context_working_dir (str): The directory path where the input file and module file are located.
+
+    Returns:
+        dict: A dictionary containing the task inputs, converted into Python types and structures.
+    """
+    local_inputs_file = os.path.join(context_working_dir, "inputs.pb")
+    input_proto = utils.load_proto_from_file(_literals_pb2.LiteralMap, local_inputs_file)
+    idl_input_literals = _literal_models.LiteralMap.from_flyte_idl(input_proto)
+
+    task_module = load_module_from_path(task_module_name, os.path.join(context_working_dir, f"{task_module_name}.py"))
+    task_def = getattr(task_module, task_name)
+    native_inputs = TypeEngine.literal_map_to_kwargs(
+        FlyteContextManager().current_context(),
+        idl_input_literals,
+        task_def.python_interface.inputs,
+    )
+    return native_inputs
+
+
+def execute_command(cmd: str, env: Optional[Dict[str, str]] = None):
+    """
+    Execute a command in the shell.
+
+    Args:
+        cmd (str): The command to execute.
+        env (Optional[Dict[str, str]]): Environment variables to set for the subprocess. These are merged on top of
+            the current process environment, so callers can override specific variables (e.g. ``PORT``) without
+            dropping the rest of the inherited environment.
+
+    Raises:
+        RuntimeError: If the command exits with a non-zero return code.
+    """
+
+    logger = flytekit.current_context().logging
+
+    subprocess_env = None
+    if env is not None:
+        subprocess_env = {**os.environ, **env}
+
+    process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=subprocess_env)
+    logger.info(f"cmd: {cmd}")
+    stdout, stderr = process.communicate()
+    if process.returncode != EXIT_CODE_SUCCESS:
+        raise RuntimeError(f"Command {cmd} failed with error: {stderr}")
+    logger.info(f"stdout: {stdout}")
+    logger.info(f"stderr: {stderr}")

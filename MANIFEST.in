@@ -31,3 +31,21 @@ recursive-exclude plugins *
 recursive-exclude dist *
 
 # exclude requirements files
+exclude requirements.*
+exclude requirements-*.*
+exclude doc-requirements.*
+exclude dev-requirements.*
+
+# exclude config files
+exclude .gitignore
+exclude .readthedocs.yaml
+exclude .pre-commit-config.yaml
+exclude codecov.yml
+
+# exclude other repository management files
+exclude Dockerfile.py*
+exclude Makefile
+exclude NOTICE
+exclude pull_request_template.md
+exclude CODEOWNERS
+exclude CODE_OF_CONDUCT.md

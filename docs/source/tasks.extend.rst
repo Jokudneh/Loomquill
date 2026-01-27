@@ -11,3 +11,15 @@ Refer to the :ref:`cookbook:prebuilt_container` and :ref:`cookbook:user_containe
 .. automodule:: flytekit.core.base_task
    :no-members:
    :no-inherited-members:
+   :no-special-members:
+
+.. automodule:: flytekit.core.python_function_task
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+.. toctree::
+   :maxdepth: 1
+
+   extras.tasks
+   extras.sqlite3

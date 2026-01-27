@@ -17,3 +17,10 @@ RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.4.0/hadoo
     wget https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.4_2.12/1.4.2/iceberg-spark-runtime-3.4_2.12-1.4.2.jar -P /opt/spark/jars && \
     wget https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-aws-bundle/1.4.2/iceberg-aws-bundle-1.4.2.jar -P /opt/spark/jars
 
+RUN wget https://github.com/GoogleCloudDataproc/hadoop-connectors/releases/download/v2.2.17/util-hadoop-hadoop3-2.2.17.jar -P /opt/spark/jars
+
+RUN chown -R ${spark_uid}:${spark_uid} /root
+# Ability to write to jars directory
+RUN chown -R ${spark_uid}:${spark_uid} /opt/spark/jars
+WORKDIR /root
+USER ${spark_uid}

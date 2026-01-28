@@ -16,3 +16,7 @@ setup(
     author="flyteorg",
     author_email="admin@flyte.org",
     description="This package holds the Slurm plugins for flytekit",
+    namespace_packages=["flytekitplugins"],
+    packages=[
+        f"flytekitplugins.{PLUGIN_NAME}",
+        f"flytekitplugins.{PLUGIN_NAME}.script",

@@ -18,3 +18,29 @@ class Domain(_common.FlyteIdlEntity):
     @property
     def id(self):
         """
+        A globally unique identifier associated with this domain.
+        :rtype: Text
+        """
+        return self._id
+
+    @property
+    def name(self):
+        """
+        A human-readable name for this domain.
+        :rtype: Text
+        """
+        return self._name
+
+    def to_flyte_idl(self):
+        """
+        :rtype: flyteidl.admin.project_pb2.Domain
+        """
+        return _project_pb2.Domain(id=self.id, name=self.name)
+
+    @classmethod
+    def from_flyte_idl(cls, pb2_object):
+        """
+        :param flyteidl.admin.project_pb2.Domain pb2_object:
+        :rtype: Domain
+        """
+        return cls(id=pb2_object.id, name=pb2_object.name)

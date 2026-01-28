@@ -22,3 +22,13 @@ class VscodeConfig:
 
     code_server_remote_paths: Optional[Dict[str, str]] = field(default_factory=lambda: DEFAULT_CODE_SERVER_REMOTE_PATHS)
     code_server_dir_names: Optional[Dict[str, str]] = field(default_factory=lambda: DEFAULT_CODE_SERVER_DIR_NAMES)
+    extension_remote_paths: Optional[List[str]] = field(default_factory=lambda: DEFAULT_CODE_SERVER_EXTENSIONS)
+
+    def add_extensions(self, extensions: Union[str, List[str]]):
+        """
+        Add additional extensions to the extension_remote_paths list.
+        """
+        if isinstance(extensions, List):
+            self.extension_remote_paths.extend(extensions)
+        else:
+            self.extension_remote_paths.append(extensions)

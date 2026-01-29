@@ -9,3 +9,42 @@
             "e"
         ]
     },
+    "e": [
+        1,
+        2,
+        3
+    ],
+    "f": {
+        "x": 1.0,
+        "y": 2.0
+    },
+    "g": "tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet",
+    "h": true,
+    "i": "2020-05-01",
+    "j": "20H",
+    "k": "RED",
+    "l": {
+        "hello": "world"
+    },
+    "m": {
+        "a": "b",
+        "c": "d"
+    },
+    "n": [
+        {
+            "x": "tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet"
+        }
+    ],
+    "o": {
+        "x": [
+            "tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet"
+        ]
+    },
+    "p": "None",
+    "q": "tests/loomquill/unit/cli/pyloomquill/testdata",
+    "r": [{"i": 1, "a": ["h", "e"]}],
+    "s": {"x": {"i": 1, "a": ["h", "e"]}},
+    "t": {"i": [{"i":1,"a":["h","e"]}]},
+    "remote": "tests/loomquill/unit/cli/pyloomquill/testdata",
+    "image": "tests/loomquill/unit/cli/pyloomquill/testdata"
+}

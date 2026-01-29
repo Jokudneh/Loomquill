@@ -40,3 +40,39 @@ def test_tf_onnx():
                     TensorFlow2ONNX,
                     TensorFlow2ONNXConfig(
                         input_signature=(tf.TensorSpec((None, 224, 224, 3), tf.float32, name="input"),), opset=13
+                    ),
+                ],
+            ),
+        ],
+    )
+
+    @task
+    def train_and_predict(img: np.ndarray) -> TrainPredictOutput:
+        model = ResNet50(weights="imagenet")
+
+        preds = model.predict(img)
+        return TrainPredictOutput(predictions=preds, model=TensorFlow2ONNX(model))
+
+    @task
+    def onnx_predict(
+        model: ONNXFile,
+        img: np.ndarray,
+    ) -> List[np.ndarray]:
+        m = rt.InferenceSession(model.download(), providers=["CPUExecutionProvider"])
+        onnx_pred = m.run([n.name for n in m.get_outputs()], {"input": img})
+
+        return onnx_pred
+
+    WorkflowOutput = NamedTuple(
+        "WorkflowOutput", [("keras_predictions", np.ndarray), ("onnx_predictions", List[np.ndarray])]
+    )
+
+    @workflow
+    def wf() -> WorkflowOutput:
+        img = load_test_img()
+        train_predict_output = train_and_predict(img=img)
+        onnx_preds = onnx_predict(model=train_predict_output.model, img=img)
+        return WorkflowOutput(keras_predictions=train_predict_output.predictions, onnx_predictions=onnx_preds)
+
+    predictions = wf()
+    np.testing.assert_allclose(predictions.keras_predictions, predictions.onnx_predictions[0], rtol=1e-5)

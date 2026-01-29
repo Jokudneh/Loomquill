@@ -21,3 +21,19 @@ def test_errors():
     reporter = "summary"
     with pytest.raises(
         ValueError, match=f"{reporter} is not a supported html reporter."
+    ):
+        memray_profiling(memray_html_reporter=reporter)
+
+    reporter = "flamegraph"
+    with pytest.raises(
+        ValueError,
+        match=f"unrecognized arguments for {reporter} reporter. Please check https://bloomberg.github.io/memray/{reporter}.html",
+    ):
+        memray_profiling(memray_reporter_args=["--leaks", "trash"])
+
+    reporter = "flamegraph"
+    with pytest.raises(
+        ValueError,
+        match=f"unrecognized arguments for {reporter} reporter. Please check https://bloomberg.github.io/memray/{reporter}.html",
+    ):
+        memray_profiling(memray_reporter_args=[0, 1, 2])

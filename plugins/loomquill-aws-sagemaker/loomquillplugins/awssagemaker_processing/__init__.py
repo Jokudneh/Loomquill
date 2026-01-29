@@ -14,3 +14,26 @@
    SageMakerProcessingTaskConnector
 """
 
+from .connector import (
+    SageMakerProcessingJobConnector,
+    SageMakerProcessingJobMetadata,
+    SageMakerProcessingTaskConnector,
+)
+from .task import (
+    SageMakerDescribeProcessingJobTask,
+    SageMakerProcessing,
+    SageMakerProcessingJobTask,
+    SageMakerProcessingTask,
+    SageMakerStopProcessingJobTask,
+)
+
+__all__ = [
+    "SageMakerProcessingJobConnector",
+    "SageMakerProcessingJobMetadata",
+    "SageMakerProcessingJobTask",
+    "SageMakerStopProcessingJobTask",
+    "SageMakerDescribeProcessingJobTask",
+    "SageMakerProcessing",
+    "SageMakerProcessingTask",
+    "SageMakerProcessingTaskConnector",
+]

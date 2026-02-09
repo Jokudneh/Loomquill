@@ -23,3 +23,5 @@ class Project(_common.FlyteIdlEntity):
         self._description = description
         self._state = state
 
+    @classmethod
+    def archived_project(cls, id):

@@ -14,3 +14,6 @@ ARG TARGETARCH
 # 5. Delete apt cache. Reference: https://gist.github.com/marvell/7c812736565928e602c4
 # 6. Some packages will create config file under /home by default, so we need to make sure it's writable
 # 7. Change the permission of /tmp, so that others can run command on it
+RUN apt-get update \
+    && apt-get install build-essential wget -y \
+    && mkdir -p /tmp/ \

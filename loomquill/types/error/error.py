@@ -15,3 +15,4 @@ T = TypeVar("T")
 @dataclass
 class FlyteError(DataClassJSONMixin):
     """
+    Special Task type that will be used in the failure node. Propeller will pass this error to failure task, so users

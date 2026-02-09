@@ -20,3 +20,4 @@ class TensorFlowModelTransformer(AsyncTypeTransformer[tf.keras.Model]):
         return LiteralType(
             blob=_core_types.BlobType(
                 format=self.TENSORFLOW_FORMAT,
+                dimensionality=_core_types.BlobType.BlobDimensionality.SINGLE,

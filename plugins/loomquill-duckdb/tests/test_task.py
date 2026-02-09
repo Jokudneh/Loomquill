@@ -40,3 +40,6 @@ def test_parquet():
         inputs=kwtypes(params=List[str]),
     )
 
+    @workflow
+    def parquet_wf(parquet_file: str) -> pd.DataFrame:
+        return parquet_duckdb_query(params=[parquet_file])

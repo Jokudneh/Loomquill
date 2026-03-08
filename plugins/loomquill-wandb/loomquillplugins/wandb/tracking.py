@@ -43,3 +43,98 @@ class wandb_init(ClassDecorator):
         if project is None:
             raise ValueError("project must be set")
         if entity is None:
+            raise ValueError("entity must be set")
+        if secret is None:
+            raise ValueError("secret must be set")
+
+        self.project = project
+        self.entity = entity
+        self.id = id
+        self.init_kwargs = init_kwargs
+        self.secret = secret
+        self.host = host
+        self.api_host = api_host
+
+        # All kwargs need to be passed up so that the function wrapping works for both
+        # `@wandb_init` and `@wandb_init(...)`
+        super().__init__(
+            task_function,
+            project=project,
+            entity=entity,
+            secret=secret,
+            id=id,
+            host=host,
+            api_host=api_host,
+            **init_kwargs,
+        )
+
+    def execute(self, *args, **kwargs):
+        ctx = FlyteContextManager.current_context()
+        is_local_execution = ctx.execution_state.is_local_execution()
+
+        id = self.id
+        if not is_local_execution:
+            if isinstance(self.secret, Secret):
+                # Set secret for remote execution
+                secrets = ctx.user_space_params.secrets
+                wandb_api_key = secrets.get(key=self.secret.key, group=self.secret.group)
+            else:
+                # Get API key with callable
+                wandb_api_key = self.secret()
+
+            wandb.login(key=wandb_api_key, host=self.api_host)
+
+            if id is None:
+                # The HOSTNAME is set to {.executionName}-{.nodeID}-{.taskRetryAttempt}[-{replica-type}-{replica-index}]
+                # If HOSTNAME is not defined, use the execution name as a fallback
+                id = os.environ.get("HOSTNAME", ctx.user_space_params.execution_id.name)
+
+        # Handle FlyteDirectory for dir parameter
+        # If dir is specified as a parameter name (string), look it up in kwargs
+        init_kwargs = self.init_kwargs.copy()
+        if "dir" in init_kwargs:
+            dir_value = init_kwargs["dir"]
+            # If dir is a string, treat it as a parameter name and look it up
+            if isinstance(dir_value, str) and dir_value in kwargs:
+                dir_value = kwargs[dir_value]
+            # Check if it's a FlyteDirectory by checking for download method
+            if hasattr(dir_value, "download"):
+                # Download the FlyteDirectory and replace with local path
+                init_kwargs["dir"] = dir_value.download()
+            else:
+                init_kwargs["dir"] = dir_value
+
+        run = wandb.init(
+            project=self.project,
+            entity=self.entity,
+            id=id,
+            **init_kwargs,
+        )
+
+        # If FLYTE_EXECUTION_URL is defined, inject it into wandb to link back to the execution.
+        execution_url = os.getenv("FLYTE_EXECUTION_URL")
+        if execution_url is not None:
+            notes_list = [f"[Execution URL]({execution_url})"]
+            if run.notes:
+                notes_list.append(run.notes)
+            run.notes = os.linesep.join(notes_list)
+
+        output = self.task_function(*args, **kwargs)
+        wandb.finish()
+        return output
+
+    def get_extra_config(self):
+        extra_config = {
+            self.WANDB_PROJECT_KEY: self.project,
+            self.WANDB_ENTITY_KEY: self.entity,
+            self.WANDB_HOST_KEY: self.host,
+        }
+
+        if self.id is None:
+            wandb_value = WANDB_EXECUTION_TYPE_VALUE
+        else:
+            wandb_value = WANDB_CUSTOM_TYPE_VALUE
+            extra_config[self.WANDB_ID_KEY] = self.id
+
+        extra_config[self.LINK_TYPE_KEY] = wandb_value
+        return extra_config

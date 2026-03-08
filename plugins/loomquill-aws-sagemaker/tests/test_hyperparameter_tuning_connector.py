@@ -164,3 +164,397 @@ def _routing_side_effect(method_to_response):
 
     return _side_effect
 
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_create_get_delete_happy_path(mock_call):
+    mock_call.side_effect = _routing_side_effect(
+        {
+            "create_hyper_parameter_tuning_job": (None, idempotence_token),
+            "describe_hyper_parameter_tuning_job": (
+                _completed_describe_tuning_response(),
+                idempotence_token,
+            ),
+            "describe_training_job": (
+                _describe_training_response(),
+                idempotence_token,
+            ),
+            "stop_hyper_parameter_tuning_job": (None, idempotence_token),
+        }
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config=_task_config()["config"], region=REGION
+    )
+
+    response = await connector.create(_task_template())
+    assert response == metadata
+
+    resource = await connector.get(metadata)
+    assert resource.phase == TaskExecution.SUCCEEDED
+
+    result = resource.outputs["result"]
+    assert result["HyperParameterTuningJobArn"] == TUNING_JOB_ARN
+    assert result["HyperParameterTuningJobName"] == "xgb-tune-74443947857331f7"
+
+    # BestTrainingJob carries the metric, tuned params, and — crucially — the
+    # S3ModelArtifacts resolved via the follow-up describe_training_job call.
+    best = result["BestTrainingJob"]
+    assert best["TrainingJobName"] == BEST_TRAINING_JOB_NAME
+    assert best["TrainingJobArn"] == BEST_TRAINING_JOB_ARN
+    assert best["ObjectiveStatus"] == "Succeeded"
+    assert best["FinalHyperParameterTuningJobObjectiveMetric"] == {
+        "MetricName": "validation:auc",
+        "Value": 0.93,
+    }
+    assert best["TunedHyperParameters"] == {"eta": "0.21", "max_depth": "7"}
+    assert best["ModelArtifacts"] == {"S3ModelArtifacts": S3_MODEL_ARTIFACTS}
+    assert best["TrainingStartTime"] == "2026-04-30T12:00:00"
+    assert best["TrainingEndTime"] == "2026-04-30T12:08:00"
+
+    # Top-level convenience copy of the best artifacts so callers can consume
+    # `result["ModelArtifacts"]["S3ModelArtifacts"]` symmetric with training.
+    assert result["ModelArtifacts"] == {"S3ModelArtifacts": S3_MODEL_ARTIFACTS}
+
+    assert result["TrainingJobStatusCounters"]["Completed"] == 4
+    assert result["ObjectiveStatusCounters"] == {
+        "Succeeded": 4,
+        "Pending": 0,
+        "Failed": 0,
+    }
+
+    assert await connector.delete(metadata) is None
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_get_inprogress_surfaces_counter_summary(mock_call):
+    """While running we surface a compact 'N Completed / M InProgress / K Failed' line."""
+    mock_call.side_effect = _routing_side_effect(
+        {
+            "describe_hyper_parameter_tuning_job": (
+                {
+                    "HyperParameterTuningJobName": "xgb-tune-x",
+                    "HyperParameterTuningJobArn": TUNING_JOB_ARN,
+                    "HyperParameterTuningJobStatus": "InProgress",
+                    "TrainingJobStatusCounters": {
+                        "Completed": 3,
+                        "InProgress": 1,
+                        "RetryableError": 0,
+                        "NonRetryableError": 1,
+                        "Stopped": 0,
+                    },
+                },
+                idempotence_token,
+            ),
+        }
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+
+    resource = await connector.get(metadata)
+    assert resource.phase == TaskExecution.RUNNING
+    assert resource.message == "3 Completed / 1 InProgress / 1 Failed trials"
+    assert resource.outputs is None
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_get_failed_surfaces_failure_reason(mock_call):
+    mock_call.side_effect = _routing_side_effect(
+        {
+            "describe_hyper_parameter_tuning_job": (
+                {
+                    "HyperParameterTuningJobName": "xgb-tune-x",
+                    "HyperParameterTuningJobArn": TUNING_JOB_ARN,
+                    "HyperParameterTuningJobStatus": "Failed",
+                    "FailureReason": "All trials failed with ClientError",
+                },
+                idempotence_token,
+            ),
+        }
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+
+    resource = await connector.get(metadata)
+    assert resource.phase == TaskExecution.FAILED
+    assert resource.message == "All trials failed with ClientError"
+    assert resource.outputs is None
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_get_completed_propagates_describe_training_failure(mock_call):
+    """The promised best-model artifact must not silently become ``None``."""
+
+    async def _side_effect(*args, **kwargs):
+        method = kwargs.get("method")
+        if method == "describe_hyper_parameter_tuning_job":
+            return (_completed_describe_tuning_response(), idempotence_token)
+        if method == "describe_training_job":
+            raise CustomException(
+                message="An error occurred",
+                idempotence_token=idempotence_token,
+                original_exception=ClientError(
+                    error_response={
+                        "Error": {
+                            "Code": "AccessDeniedException",
+                            "Message": "secondary describe blocked",
+                        }
+                    },
+                    operation_name="DescribeTrainingJob",
+                ),
+            )
+        raise AssertionError(f"unexpected _call(method={method!r})")
+
+    mock_call.side_effect = _side_effect
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+    with pytest.raises(CustomException):
+        await connector.get(metadata)
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_get_completed_without_best_training_job(mock_call):
+    """Edge case: completed tuning with no BestTrainingJob (every trial failed
+    its objective). We still return a structured result with None artifacts."""
+    mock_call.side_effect = _routing_side_effect(
+        {
+            "describe_hyper_parameter_tuning_job": (
+                {
+                    "HyperParameterTuningJobName": "xgb-tune-x",
+                    "HyperParameterTuningJobArn": TUNING_JOB_ARN,
+                    "HyperParameterTuningJobStatus": "Completed",
+                    "TrainingJobStatusCounters": {
+                        "Completed": 4,
+                        "InProgress": 0,
+                        "RetryableError": 0,
+                        "NonRetryableError": 0,
+                        "Stopped": 0,
+                    },
+                    "ObjectiveStatusCounters": {
+                        "Succeeded": 0,
+                        "Pending": 0,
+                        "Failed": 4,
+                    },
+                },
+                idempotence_token,
+            ),
+        }
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+    resource = await connector.get(metadata)
+    assert resource.phase == TaskExecution.SUCCEEDED
+
+    result = resource.outputs["result"]
+    assert result["BestTrainingJob"]["TrainingJobName"] is None
+    assert result["BestTrainingJob"]["ModelArtifacts"] == {"S3ModelArtifacts": None}
+    assert result["ModelArtifacts"] == {"S3ModelArtifacts": None}
+    assert result["ObjectiveStatusCounters"]["Failed"] == 4
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_get_stopped_maps_to_failed(mock_call):
+    mock_call.side_effect = _routing_side_effect(
+        {
+            "describe_hyper_parameter_tuning_job": (
+                {
+                    "HyperParameterTuningJobName": "xgb-tune-x",
+                    "HyperParameterTuningJobArn": TUNING_JOB_ARN,
+                    "HyperParameterTuningJobStatus": "Stopped",
+                    "FailureReason": "User requested stop",
+                },
+                idempotence_token,
+            ),
+        }
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+
+    resource = await connector.get(metadata)
+    assert resource.phase == TaskExecution.FAILED
+    assert resource.message == "User requested stop"
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_create_already_exists_returns_metadata(mock_call):
+    mock_call.side_effect = CustomException(
+        message="An error occurred",
+        idempotence_token=idempotence_token,
+        original_exception=ClientError(
+            error_response={
+                "Error": {
+                    "Code": "ResourceInUse",
+                    "Message": "Hyperparameter tuning job xgb-tune-74443947857331f7 already exists",
+                }
+            },
+            operation_name="CreateHyperParameterTuningJob",
+        ),
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    response = await connector.create(_task_template())
+    assert response.config == _task_config()["config"]
+    assert response.region == REGION
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_create_resource_limit_propagates(mock_call):
+    mock_call.side_effect = CustomException(
+        message="An error occurred",
+        idempotence_token=idempotence_token,
+        original_exception=ClientError(
+            error_response={
+                "Error": {
+                    "Code": "ResourceLimitExceeded",
+                    "Message": (
+                        "The account-level service limit ... has been reached. "
+                        "Please use AWS Service Quotas to request an increase for this quota."
+                    ),
+                }
+            },
+            operation_name="CreateHyperParameterTuningJob",
+        ),
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    with pytest.raises(CustomException):
+        await connector.create(_task_template())
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_create_unknown_error_propagates(mock_call):
+    mock_call.side_effect = CustomException(
+        message="An error occurred",
+        idempotence_token=idempotence_token,
+        original_exception=ClientError(
+            error_response={
+                "Error": {"Code": "AccessDeniedException", "Message": "nope"}
+            },
+            operation_name="CreateHyperParameterTuningJob",
+        ),
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    with pytest.raises(CustomException):
+        await connector.create(_task_template())
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_delete_swallows_terminal_job_error(mock_call):
+    mock_call.side_effect = CustomException(
+        message="An error occurred",
+        idempotence_token=idempotence_token,
+        original_exception=ClientError(
+            error_response={
+                "Error": {
+                    "Code": "ValidationException",
+                    "Message": (
+                        "The request was rejected because the hyperparameter "
+                        "tuning job is not in a non-running state"
+                    ),
+                }
+            },
+            operation_name="StopHyperParameterTuningJob",
+        ),
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+    assert await connector.delete(metadata) is None
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_delete_swallows_resource_not_found(mock_call):
+    mock_call.side_effect = CustomException(
+        message="An error occurred",
+        idempotence_token=idempotence_token,
+        original_exception=ClientError(
+            error_response={
+                "Error": {
+                    "Code": "ResourceNotFound",
+                    "Message": "Hyperparameter tuning job does not exist",
+                }
+            },
+            operation_name="StopHyperParameterTuningJob",
+        ),
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+    assert await connector.delete(metadata) is None
+
+
+@pytest.mark.asyncio
+@mock.patch(
+    "flytekitplugins.awssagemaker_hyperparameter_tuning.connector.Boto3ConnectorMixin._call"
+)
+async def test_delete_propagates_other_errors(mock_call):
+    mock_call.side_effect = CustomException(
+        message="An error occurred",
+        idempotence_token=idempotence_token,
+        original_exception=ClientError(
+            error_response={
+                "Error": {"Code": "AccessDeniedException", "Message": "nope"}
+            },
+            operation_name="StopHyperParameterTuningJob",
+        ),
+    )
+
+    connector = ConnectorRegistry.get_connector("sagemaker-hyperparameter-tuning-job")
+    metadata = SageMakerHyperParameterTuningJobMetadata(
+        config={"HyperParameterTuningJobName": "xgb-tune-x"}, region=REGION
+    )
+    with pytest.raises(CustomException):
+        await connector.delete(metadata)

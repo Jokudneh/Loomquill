@@ -27,3 +27,102 @@ update_boilerplate:
 setup: install-piptools ## Install requirements
 	pip install -r dev-requirements.in
 
+# Warning: this will install the requirements in your system python
+.PHONY: setup-global-uv
+setup-global-uv:
+#   Use "dev0" prefix to emulate version for dev environment
+	SETUPTOOLS_SCM_PRETEND_VERSION="1.999.0dev0" uv pip install --system -r dev-requirements.in
+
+.PHONY: fmt
+fmt:
+	pre-commit run ruff --all-files || true
+	pre-commit run ruff-format --all-files || true
+
+.PHONY: lint
+lint: ## Run linters
+	mypy loomquill/core
+	mypy loomquill/types
+#	allow-empty-bodies: Allow empty body in function.
+#	disable-error-code="annotation-unchecked": Remove the warning "By default the bodies of untyped functions are not checked".
+#	Mypy raises a warning because it cannot determine the type from the dataclass, despite we specified the type in the dataclass.
+	mypy --allow-empty-bodies --disable-error-code="annotation-unchecked" tests/loomquill/unit/core
+	pre-commit run --all-files
+
+.PHONY: spellcheck
+spellcheck:  ## Runs a spellchecker over all code and documentation
+	# Configuration is in pyproject.toml
+	codespell
+
+.PHONY: test
+test: lint unit_test
+
+.PHONY: unit_test_codecov
+unit_test_codecov:
+	$(MAKE) CODECOV_OPTS="--cov=./ --cov-report=xml --cov-append" unit_test
+
+.PHONY: unit_test_extras_codecov
+unit_test_extras_codecov:
+	$(MAKE) CODECOV_OPTS="--cov=./ --cov-report=xml --cov-append" unit_test_extras
+
+.PHONY: unit_test
+unit_test:
+	# Skip all extra tests and run them with the necessary env var set so that a working (albeit slower)
+	# library is used to serialize/deserialize protobufs is used.
+	$(PYTEST_AND_OPTS) -m "not (serial or sandbox_test or hypothesis)" tests/loomquill/unit/ --ignore=tests/loomquill/unit/extras/ --ignore=tests/loomquill/unit/models --ignore=tests/loomquill/unit/extend ${CODECOV_OPTS}
+	# Run serial tests without any parallelism
+	$(PYTEST) -m "serial" tests/loomquill/unit/ --ignore=tests/loomquill/unit/extras/ --ignore=tests/loomquill/unit/models --ignore=tests/loomquill/unit/extend ${CODECOV_OPTS}
+
+.PHONY: unit_test_extras
+unit_test_extras:
+	PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python $(PYTEST_AND_OPTS) tests/loomquill/unit/extras tests/loomquill/unit/extend ${CODECOV_OPTS}
+
+.PHONY: test_serialization_codecov
+test_serialization_codecov:
+	$(MAKE) CODECOV_OPTS="--cov=./ --cov-report=xml --cov-append" test_serialization
+
+.PHONY: test_serialization
+test_serialization:
+	$(PYTEST_AND_OPTS) tests/loomquill/unit/models ${CODECOV_OPTS}
+
+
+.PHONY: integration_test_codecov
+integration_test_codecov:
+	$(MAKE) CODECOV_OPTS="--cov=./ --cov-report=xml --cov-append" integration_test
+
+.PHONY: integration_test
+integration_test:
+	$(PYTEST_AND_OPTS) tests/loomquill/integration ${CODECOV_OPTS} -m "not lftransfers"
+
+.PHONY: integration_test_lftransfers_codecov
+integration_test_lftransfers_codecov:
+	$(MAKE) CODECOV_OPTS="--cov=./ --cov-report=xml --cov-append" integration_test_lftransfers
+
+.PHONY: integration_test_lftransfers
+integration_test_lftransfers:
+	$(PYTEST) tests/loomquill/integration ${CODECOV_OPTS} -m "lftransfers"
+
+doc-requirements.txt: export CUSTOM_COMPILE_COMMAND := make doc-requirements.txt
+doc-requirements.txt: doc-requirements.in install-piptools
+	$(PIP_COMPILE) $<
+
+${MOCK_LOOMQUILL_REPO}/requirements.txt: export CUSTOM_COMPILE_COMMAND := make ${MOCK_LOOMQUILL_REPO}/requirements.txt
+${MOCK_LOOMQUILL_REPO}/requirements.txt: ${MOCK_LOOMQUILL_REPO}/requirements.in install-piptools
+	$(PIP_COMPILE) $<
+
+.PHONY: requirements
+requirements: doc-requirements.txt ${MOCK_LOOMQUILL_REPO}/requirements.txt ## Compile requirements
+
+# TODO: Change this in the future to be all of loomquill
+.PHONY: coverage
+coverage:
+	coverage run -m $(PYTEST) tests/loomquill/unit/core loomquill/types -m "not sandbox_test"
+	coverage report -m --include="loomquill/core/*,loomquill/types/*"
+
+.PHONY: build-dev
+build-dev: export PLATFORM ?= linux/arm64
+build-dev: export REGISTRY ?= localhost:30000
+build-dev: export PYTHON_VERSION ?= 3.12
+build-dev: export PSEUDO_VERSION ?= $(shell python -m setuptools_scm)
+build-dev: export TAG ?= dev
+build-dev:
+	docker build --platform ${PLATFORM} --push . -f Dockerfile.dev -t ${REGISTRY}/loomquill:${TAG} --build-arg PYTHON_VERSION=${PYTHON_VERSION} --build-arg PSEUDO_VERSION=${PSEUDO_VERSION}

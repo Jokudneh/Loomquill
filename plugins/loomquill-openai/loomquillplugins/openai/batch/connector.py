@@ -41,3 +41,85 @@ class BatchEndpointMetadata(ResourceMeta):
         return cloudpickle.dumps(self)
 
     @classmethod
+    def decode(cls, data: bytes) -> "BatchEndpointMetadata":
+        return cloudpickle.loads(data)
+
+
+class BatchEndpointConnector(AsyncConnectorBase):
+    name = "OpenAI Batch Endpoint Connector"
+
+    def __init__(self):
+        super().__init__(task_type_name="openai-batch", metadata_type=BatchEndpointMetadata)
+
+    async def create(
+        self,
+        task_template: TaskTemplate,
+        inputs: Optional[LiteralMap] = None,
+        **kwargs,
+    ) -> BatchEndpointMetadata:
+        ctx = FlyteContextManager.current_context()
+        input_values = TypeEngine.literal_map_to_kwargs(
+            ctx,
+            inputs,
+            {"input_file_id": str},
+        )
+        custom = task_template.custom
+
+        async_client = openai.AsyncOpenAI(
+            organization=custom.get("openai_organization"),
+            api_key=get_connector_secret(secret_key=OPENAI_API_KEY),
+        )
+
+        custom["config"].setdefault("completion_window", "24h")
+        custom["config"].setdefault("endpoint", "/v1/chat/completions")
+
+        result = await async_client.batches.create(
+            **custom["config"],
+            input_file_id=input_values["input_file_id"],
+        )
+        batch_id = result.id
+
+        return BatchEndpointMetadata(batch_id=batch_id, openai_org=custom["openai_organization"])
+
+    async def get(
+        self,
+        resource_meta: BatchEndpointMetadata,
+        **kwargs,
+    ) -> Resource:
+        async_client = openai.AsyncOpenAI(
+            organization=resource_meta.openai_org,
+            api_key=get_connector_secret(secret_key=OPENAI_API_KEY),
+        )
+
+        retrieved_result = await async_client.batches.retrieve(resource_meta.batch_id)
+        current_state = retrieved_result.status
+
+        flyte_phase = convert_to_flyte_phase(State.key_by_value(current_state))
+
+        message = None
+        if current_state in State.Failed.value and retrieved_result.errors:
+            data = retrieved_result.errors.data
+            if data and data[0].message:
+                message = data[0].message
+
+        result = retrieved_result.to_dict()
+
+        ctx = FlyteContextManager.current_context()
+        outputs = LiteralMap({"result": TypeEngine.to_literal(ctx, result, Dict, TypeEngine.to_literal_type(Dict))})
+
+        return Resource(phase=flyte_phase, outputs=outputs, message=message)
+
+    async def delete(
+        self,
+        resource_meta: BatchEndpointMetadata,
+        **kwargs,
+    ):
+        async_client = openai.AsyncOpenAI(
+            organization=resource_meta.openai_org,
+            api_key=get_connector_secret(secret_key=OPENAI_API_KEY),
+        )
+
+        await async_client.batches.cancel(resource_meta.batch_id)
+
+
+ConnectorRegistry.register(BatchEndpointConnector())

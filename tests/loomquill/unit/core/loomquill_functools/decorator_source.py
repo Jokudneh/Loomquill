@@ -17,3 +17,8 @@ def task_setup(function: typing.Callable, *, integration_requests: typing.Option
         output = function(*args, **kwargs)
 
         # Postprocessing of output
+        print("postprocessing")
+
+        return output
+
+    return functools.partial(task_setup, integration_requests=integration_requests) if function is None else wrapper

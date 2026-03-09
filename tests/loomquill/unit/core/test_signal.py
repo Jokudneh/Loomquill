@@ -18,3 +18,31 @@ def remote():
 
 def test_remote_list_signals(remote):
     ctx = FlyteContextManager.current_context()
+    wfeid = WorkflowExecutionIdentifier("p", "d", "execid")
+    signal_id = SignalIdentifier(signal_id="sigid", execution_id=wfeid).to_flyte_idl()
+    lt = TypeEngine.to_literal_type(int)
+    signal = Signal(
+        id=signal_id,
+        type=lt.to_flyte_idl(),
+        value=TypeEngine.to_literal(ctx, 3, int, lt).to_flyte_idl(),
+    )
+
+    mock_client = MagicMock()
+    mock_client.list_signals.return_value = SignalList(signals=[signal], token="")
+
+    remote._client = mock_client
+    res = remote.list_signals("execid", "p", "d", limit=10)
+    assert len(res) == 1
+
+
+def test_remote_set_signal(remote):
+    mock_client = MagicMock()
+
+    def checker(request):
+        assert request.id.signal_id == "sigid"
+        assert request.value.scalar.primitive.integer == 3
+
+    mock_client.set_signal.side_effect = checker
+
+    remote._client = mock_client
+    remote.set_signal("sigid", "execid", 3)

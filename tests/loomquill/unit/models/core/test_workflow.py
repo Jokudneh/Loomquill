@@ -107,3 +107,277 @@ def test_workflow_node_sw():
     assert obj.reference == _generic_id
 
     obj2 = _workflow.WorkflowNode.from_flyte_idl(obj.to_flyte_idl())
+    assert obj == obj2
+    assert obj2.reference == _generic_id
+    assert obj2.sub_workflow_ref == _generic_id
+
+
+def _get_sample_node_metadata():
+    return _workflow.NodeMetadata(name="node1", timeout=timedelta(seconds=10), retries=_literals.RetryStrategy(0))
+
+
+def test_node_task_with_no_inputs():
+    nm = _get_sample_node_metadata()
+    task = _workflow.TaskNode(reference_id=_generic_id)
+
+    obj = _workflow.Node(
+        id="some:node:id",
+        metadata=nm,
+        inputs=[],
+        upstream_node_ids=[],
+        output_aliases=[],
+        task_node=task,
+    )
+    assert obj.target == task
+    assert obj.id == "some:node:id"
+    assert obj.metadata == nm
+
+    obj2 = _workflow.Node.from_flyte_idl(obj.to_flyte_idl())
+    assert obj == obj2
+    assert obj2.target == task
+    assert obj2.id == "some:node:id"
+    assert obj2.metadata == nm
+
+
+def test_node_task_with_inputs():
+    nm = _get_sample_node_metadata()
+    task = _workflow.TaskNode(reference_id=_generic_id)
+    bd = _literals.BindingData(scalar=_literals.Scalar(primitive=_literals.Primitive(integer=5)))
+    bd2 = _literals.BindingData(scalar=_literals.Scalar(primitive=_literals.Primitive(integer=99)))
+    binding = _literals.Binding(var="myvar", binding=bd)
+    binding2 = _literals.Binding(var="myothervar", binding=bd2)
+
+    obj = _workflow.Node(
+        id="some:node:id",
+        metadata=nm,
+        inputs=[binding, binding2],
+        upstream_node_ids=[],
+        output_aliases=[],
+        task_node=task,
+    )
+    assert obj.target == task
+    assert obj.id == "some:node:id"
+    assert obj.metadata == nm
+    assert len(obj.inputs) == 2
+    assert obj.inputs[0] == binding
+
+    obj2 = _workflow.Node.from_flyte_idl(obj.to_flyte_idl())
+    assert obj == obj2
+    assert obj2.target == task
+    assert obj2.id == "some:node:id"
+    assert obj2.metadata == nm
+    assert len(obj2.inputs) == 2
+    assert obj2.inputs[1] == binding2
+
+
+def test_branch_node():
+    nm = _get_sample_node_metadata()
+    task = _workflow.TaskNode(reference_id=_generic_id)
+    bd = _literals.BindingData(scalar=_literals.Scalar(primitive=_literals.Primitive(integer=5)))
+    bd2 = _literals.BindingData(scalar=_literals.Scalar(primitive=_literals.Primitive(integer=99)))
+    binding = _literals.Binding(var="myvar", binding=bd)
+    binding2 = _literals.Binding(var="myothervar", binding=bd2)
+
+    obj = _workflow.Node(
+        id="some:node:id",
+        metadata=nm,
+        inputs=[binding, binding2],
+        upstream_node_ids=[],
+        output_aliases=[],
+        task_node=task,
+    )
+
+    bn = _workflow.BranchNode(
+        _workflow.IfElseBlock(
+            case=_workflow.IfBlock(
+                condition=_condition.BooleanExpression(
+                    comparison=_condition.ComparisonExpression(
+                        _condition.ComparisonExpression.Operator.EQ,
+                        _condition.Operand(primitive=_literals.Primitive(integer=5)),
+                        _condition.Operand(primitive=_literals.Primitive(integer=2)),
+                    )
+                ),
+                then_node=obj,
+            ),
+            other=[
+                _workflow.IfBlock(
+                    condition=_condition.BooleanExpression(
+                        conjunction=_condition.ConjunctionExpression(
+                            _condition.ConjunctionExpression.LogicalOperator.AND,
+                            _condition.BooleanExpression(
+                                comparison=_condition.ComparisonExpression(
+                                    _condition.ComparisonExpression.Operator.EQ,
+                                    _condition.Operand(primitive=_literals.Primitive(integer=5)),
+                                    _condition.Operand(primitive=_literals.Primitive(integer=2)),
+                                )
+                            ),
+                            _condition.BooleanExpression(
+                                comparison=_condition.ComparisonExpression(
+                                    _condition.ComparisonExpression.Operator.EQ,
+                                    _condition.Operand(primitive=_literals.Primitive(integer=5)),
+                                    _condition.Operand(primitive=_literals.Primitive(integer=2)),
+                                )
+                            ),
+                        )
+                    ),
+                    then_node=obj,
+                )
+            ],
+            else_node=obj,
+        )
+    )
+
+    bn2 = _workflow.BranchNode.from_flyte_idl(bn.to_flyte_idl())
+    assert bn == bn2
+    assert bn.if_else.case.then_node == obj
+
+
+def test_branch_node_with_none():
+    nm = _get_sample_node_metadata()
+    task = _workflow.TaskNode(reference_id=_generic_id)
+    bd = _literals.BindingData(scalar=_literals.Scalar(none_type=_literals.Void()))
+    lt = _literals.Literal(scalar=_literals.Scalar(primitive=_literals.Primitive(integer=99)))
+    bd2 = _literals.BindingData(
+        scalar=_literals.Scalar(
+            union=_literals.Union(value=lt, stored_type=_types.LiteralType(_types.SimpleType.INTEGER))
+        )
+    )
+    binding = _literals.Binding(var="myvar", binding=bd)
+    binding2 = _literals.Binding(var="myothervar", binding=bd2)
+
+    obj = _workflow.Node(
+        id="some:node:id",
+        metadata=nm,
+        inputs=[binding, binding2],
+        upstream_node_ids=[],
+        output_aliases=[],
+        task_node=task,
+    )
+
+    bn = _workflow.BranchNode(
+        _workflow.IfElseBlock(
+            case=_workflow.IfBlock(
+                condition=_condition.BooleanExpression(
+                    comparison=_condition.ComparisonExpression(
+                        _condition.ComparisonExpression.Operator.EQ,
+                        _condition.Operand(scalar=_literals.Scalar(none_type=_literals.Void())),
+                        _condition.Operand(primitive=_literals.Primitive(integer=2)),
+                    )
+                ),
+                then_node=obj,
+            ),
+            other=[
+                _workflow.IfBlock(
+                    condition=_condition.BooleanExpression(
+                        conjunction=_condition.ConjunctionExpression(
+                            _condition.ConjunctionExpression.LogicalOperator.AND,
+                            _condition.BooleanExpression(
+                                comparison=_condition.ComparisonExpression(
+                                    _condition.ComparisonExpression.Operator.EQ,
+                                    _condition.Operand(scalar=_literals.Scalar(none_type=_literals.Void())),
+                                    _condition.Operand(primitive=_literals.Primitive(integer=2)),
+                                )
+                            ),
+                            _condition.BooleanExpression(
+                                comparison=_condition.ComparisonExpression(
+                                    _condition.ComparisonExpression.Operator.EQ,
+                                    _condition.Operand(scalar=_literals.Scalar(none_type=_literals.Void())),
+                                    _condition.Operand(primitive=_literals.Primitive(integer=2)),
+                                )
+                            ),
+                        )
+                    ),
+                    then_node=obj,
+                )
+            ],
+            else_node=obj,
+        )
+    )
+
+    bn2 = _workflow.BranchNode.from_flyte_idl(bn.to_flyte_idl())
+    assert bn == bn2
+    assert bn.if_else.case.then_node == obj
+
+
+def test_task_node_overrides():
+    overrides = _workflow.TaskNodeOverrides(
+        Resources(
+            requests=[Resources.ResourceEntry(Resources.ResourceName.CPU, "1")],
+            limits=[Resources.ResourceEntry(Resources.ResourceName.CPU, "2")],
+        ),
+        tasks_pb2.ExtendedResources(gpu_accelerator=T4.to_flyte_idl()),
+    )
+    assert overrides.resources.requests == [Resources.ResourceEntry(Resources.ResourceName.CPU, "1")]
+    assert overrides.resources.limits == [Resources.ResourceEntry(Resources.ResourceName.CPU, "2")]
+    assert overrides.extended_resources.gpu_accelerator == T4.to_flyte_idl()
+
+    obj = _workflow.TaskNodeOverrides.from_flyte_idl(overrides.to_flyte_idl())
+    assert overrides == obj
+
+
+def test_task_node_with_overrides():
+    # without pod template
+    task_node = _workflow.TaskNode(
+        reference_id=_generic_id,
+        overrides=_workflow.TaskNodeOverrides(
+            Resources(
+                requests=[Resources.ResourceEntry(Resources.ResourceName.CPU, "1")],
+                limits=[Resources.ResourceEntry(Resources.ResourceName.CPU, "2")],
+            ),
+            tasks_pb2.ExtendedResources(gpu_accelerator=T4.to_flyte_idl()),
+        ),
+    )
+
+    assert task_node.overrides.resources.requests == [Resources.ResourceEntry(Resources.ResourceName.CPU, "1")]
+    assert task_node.overrides.resources.limits == [Resources.ResourceEntry(Resources.ResourceName.CPU, "2")]
+    assert task_node.overrides.extended_resources.gpu_accelerator == T4.to_flyte_idl()
+
+    obj = _workflow.TaskNode.from_flyte_idl(task_node.to_flyte_idl())
+    assert task_node == obj
+    assert obj.overrides.pod_template is None
+
+    # with pod template
+    task_node = _workflow.TaskNode(
+        reference_id=_generic_id,
+        overrides=_workflow.TaskNodeOverrides(
+            Resources(
+                requests=[Resources.ResourceEntry(Resources.ResourceName.CPU, "1")],
+                limits=[Resources.ResourceEntry(Resources.ResourceName.CPU, "2")],
+            ),
+            tasks_pb2.ExtendedResources(gpu_accelerator=T4.to_flyte_idl()),
+            "",
+            PodTemplate(
+                primary_container_name="primary1",
+                labels={"lKeyA": "lValA", "lKeyB": "lValB"},
+                annotations={"aKeyA": "aValA", "aKeyB": "aValB"},
+                pod_spec={
+                    'containers': [
+                        {
+                            'name': 'primary1',
+                            'image': "random:image",
+                            'env': [
+                                {'name': 'eKeyC', 'value': 'eValC'},
+                            ],
+                        }
+                ]},
+            ),
+        ),
+    )
+
+    obj = _workflow.TaskNode.from_flyte_idl(task_node.to_flyte_idl())
+    assert obj.overrides.pod_template is not None
+
+
+def test_array_node_no_bound_inputs():
+    nm = _get_sample_node_metadata()
+    task = _workflow.TaskNode(reference_id=_generic_id)
+    node = _workflow.Node(
+        id="some:node:id",
+        metadata=nm,
+        inputs=[],
+        upstream_node_ids=[],
+        output_aliases=[],
+        task_node=task,
+    )
+    array_node = _workflow.ArrayNode(node=node, parallelism=3)
+    assert len(array_node.to_flyte_idl().bound_inputs) == 0

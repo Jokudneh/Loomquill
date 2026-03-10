@@ -8,3 +8,6 @@ This package contains things that are useful when extending Flytekit.
    :toctree: generated/
 
    ModinPandasDataFrameTransformer
+"""
+
+from .schema import ModinPandasDataFrameTransformer

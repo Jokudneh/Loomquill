@@ -12,3 +12,11 @@ def t1() -> PIL.Image.Image:
 def t2(im: PIL.Image.Image) -> PIL.Image.Image:
     return im
 
+
+@workflow
+def wf():
+    t2(im=t1())
+
+
+def test_image_transformer():
+    wf()

@@ -32,3 +32,7 @@ If you haven't explored Loomquill yet, please refer to:
  - [Loomquill core repository](https://github.com/jokudneh/loomquill)
 
 ## 🚀 Quick Start
+
+Loomquillkit is the core extensible library to author Loomquill workflows and tasks and interact with Loomquill backend services.
+
+### Installation

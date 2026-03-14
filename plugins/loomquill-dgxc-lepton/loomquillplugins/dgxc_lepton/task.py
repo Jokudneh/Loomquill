@@ -52,3 +52,6 @@ class LeptonEndpointDeploymentTask(AsyncConnectorExecutorMixin, PythonTask):
         # This could be enhanced to check environment variables or other platform indicators
         # For now, we'll add a basic check that can be expanded
         import os
+
+        # Check for Lepton-specific environment indicators
+        lepton_indicators = [

@@ -131,3 +131,5 @@ def test_hydrate_workflow_template():
     assert unchanged_identifier.domain == "domain2"
     assert unchanged_identifier.version == "abc"
 
+
+def test_hydrate_workflow_template__branch_node():

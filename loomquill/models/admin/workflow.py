@@ -40,3 +40,6 @@ class WorkflowSpec(_common.FlyteIdlEntity):
         return self._sub_workflows
 
     @property
+    def docs(self):
+        """
+        :rtype: Description entity for the workflow

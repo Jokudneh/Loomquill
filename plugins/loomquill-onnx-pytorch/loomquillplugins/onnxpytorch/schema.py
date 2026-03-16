@@ -36,3 +36,6 @@ class PyTorch2ONNXConfig(DataClassJsonMixin):
       custom_opsets: A dictionary of opset domain name and version.
       export_modules_as_functions: Whether to export modules as functions.
     """
+
+    args: Union[Tuple, torch.Tensor]
+    export_params: bool = True

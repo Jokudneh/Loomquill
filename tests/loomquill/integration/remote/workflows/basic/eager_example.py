@@ -5,3 +5,4 @@ from flytekit.core.task import task, eager
 
 @task
 def add_one(x: int) -> int:
+    return x + 1

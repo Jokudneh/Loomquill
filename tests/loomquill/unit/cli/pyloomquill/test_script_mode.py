@@ -15,3 +15,7 @@ def dummy_dir_structure():
     with tempfile.TemporaryDirectory() as tmp_path:
 
         # Create directories
+        tmp_path = pathlib.Path(tmp_path)
+        subdir1 = tmp_path / "subdir1"
+        subdir2 = tmp_path / "subdir2"
+        subdir1.mkdir()

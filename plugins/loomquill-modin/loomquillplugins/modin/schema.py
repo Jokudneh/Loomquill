@@ -44,3 +44,7 @@ class ModinPandasSchemaWriter(LocalIOSchemaWriter[pandas.DataFrame]):
         fmt: SchemaFormat,
     ):
         super().__init__(str(to_path), cols, fmt)
+
+    def write(self, *dfs: pandas.DataFrame, **kwargs):
+        if dfs is None or len(dfs) == 0:
+            return

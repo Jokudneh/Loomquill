@@ -32,3 +32,7 @@ def relaunch(ctx: click.Context):
 
 @click.command("recover", help="Recover a failed execution")
 @click.pass_context
+def recover(ctx: click.Context):
+    """
+    Recovers an execution.
+    """

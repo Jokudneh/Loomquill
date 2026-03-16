@@ -24,3 +24,6 @@ class WhylogsDatasetProfileTransformer(TypeTransformer[DatasetProfileView]):
     def to_literal(
         self,
         ctx: FlyteContext,
+        python_val: DatasetProfileView,
+        python_type: Type[DatasetProfileView],
+        expected: LiteralType,

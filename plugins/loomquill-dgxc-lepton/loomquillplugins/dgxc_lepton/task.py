@@ -55,3 +55,6 @@ class LeptonEndpointDeploymentTask(AsyncConnectorExecutorMixin, PythonTask):
 
         # Check for Lepton-specific environment indicators
         lepton_indicators = [
+            "LEPTON_WORKSPACE_ID",
+            "LEPTON_API_TOKEN",
+            "LEPTON_PLATFORM",

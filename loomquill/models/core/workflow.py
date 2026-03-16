@@ -319,3 +319,5 @@ class ApproveCondition(_common.FlyteIdlEntity):
     @classmethod
     def from_flyte_idl(cls, pb2_object: _core_workflow.ApproveCondition):
         return cls(signal_id=pb2_object.signal_id)
+
+

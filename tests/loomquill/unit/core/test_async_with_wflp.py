@@ -34,3 +34,6 @@ def level_3_subwf(x: int) -> int:
 
 
 ctx = FlyteContextManager.current_context()
+level_3_lp = LaunchPlan.get_or_create(level_3_subwf, "level_3_lp")
+
+

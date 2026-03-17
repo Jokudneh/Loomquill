@@ -8,3 +8,4 @@ admin:
     - all
 storage:
   connection:
+    access-key: minio

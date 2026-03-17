@@ -10,3 +10,4 @@ def get_a():
 class B(A):
     ...
 
+

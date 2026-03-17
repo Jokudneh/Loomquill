@@ -106,3 +106,5 @@ def subproc_execute(command: typing.Union[List[str], str], **kwargs) -> ProcessR
     except FileNotFoundError as e:
         raise RuntimeError(
             f"""Process failed because the executable could not be found.
+            Did you specify a container image in the task definition if using
+            custom dependencies?\n{e}"""

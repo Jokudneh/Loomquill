@@ -72,3 +72,5 @@ def _task_template():
         custom=_task_config(),
         metadata=task_metadata,
         interface=None,
+        type="sagemaker-training-job",
+    )

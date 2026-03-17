@@ -22,3 +22,5 @@ def test_list_projects_paginated(mock_raw_list_projects):
     client = _SynchronousFlyteClient(PlatformConfig.for_endpoint("a.b.com", True))
     client.list_projects_paginated(limit=100, token="")
     project_list_request = _project_pb2.ProjectListRequest(limit=100, token="", filters=None, sort_by=None)
+    mock_raw_list_projects.assert_called_with(project_list_request=project_list_request)
+

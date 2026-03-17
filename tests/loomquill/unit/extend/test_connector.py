@@ -164,3 +164,5 @@ def get_task_template(task_type: str) -> TaskTemplate:
         project="project",
         domain="domain",
         version="version",
+        env={"FOO": "baz"},
+        image_config=ImageConfig(default_image=default_img, images=[default_img]),

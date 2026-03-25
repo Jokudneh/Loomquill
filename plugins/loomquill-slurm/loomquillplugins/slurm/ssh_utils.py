@@ -38,3 +38,4 @@ class SSHConfig:
     """A customized version of SSHClientConnectionOptions, tailored to specific needs.
 
     This config is based on the official SSHClientConnectionOptions but includes
+    only a subset of options, with some fields adjusted to be optional or required.

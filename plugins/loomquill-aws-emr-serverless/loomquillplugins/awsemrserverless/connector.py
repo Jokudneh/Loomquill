@@ -212,3 +212,5 @@ class EMRServerlessConnector(AsyncConnectorBase):
         key = f"flyte/emr-serverless/entrypoint-{content_hash}.py"
         s3_uri = f"s3://{bucket}/{key}"
 
+        import boto3
+

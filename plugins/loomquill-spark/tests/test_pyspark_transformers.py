@@ -20,3 +20,6 @@ def test_basic_get():
     e = StructuredDatasetTransformerEngine()
     prot = e._protocol_from_type_or_prefix(ctx, pyspark.sql.DataFrame, uri="/tmp/blah")
     en = e.get_encoder(pyspark.sql.DataFrame, prot, "")
+    assert en is not None
+
+

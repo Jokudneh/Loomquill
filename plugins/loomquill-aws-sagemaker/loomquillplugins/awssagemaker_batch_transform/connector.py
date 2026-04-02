@@ -30,3 +30,5 @@ from flytekit.extend.backend.base_connector import (
 from flytekit.models.literals import LiteralMap
 from flytekit.models.task import TaskTemplate
 
+
+@dataclass

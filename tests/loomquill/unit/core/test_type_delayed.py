@@ -13,3 +13,6 @@ from flytekit.core.type_engine import TypeEngine
 
 
 @dataclass
+class Foo(DataClassJsonMixin):
+    x: int
+    y: str

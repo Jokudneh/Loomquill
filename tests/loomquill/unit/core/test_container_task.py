@@ -55,3 +55,5 @@ def test_local_execution():
         return a + b, a * b
 
     @workflow
+    def wf(a: float, b: float) -> Tuple[float, str]:
+        a, b = t1(a=a, b=b)

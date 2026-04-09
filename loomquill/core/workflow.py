@@ -261,3 +261,6 @@ class WorkflowBase(object):
     @property
     def nodes(self) -> List[Node]:
         self.compile()
+        return self._nodes
+
+    @property

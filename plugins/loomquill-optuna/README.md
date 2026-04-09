@@ -39,3 +39,7 @@ import loomquill as fl
 image = fl.ImageSpec(packages=["loomquillplugins.optuna"])
 
 @fl.task(container_image=image)
+async def objective(x: float, y: int, z: int, power: int) -> float:
+    return math.log((((x - 5) ** 2) + (y + 4) ** 4 + (3 * z - 3) ** 2)) ** power
+
+```

@@ -50,3 +50,7 @@ project_option_dec = click.option(
 
 domain_option_dec = click.option(
     "-d",
+    "--domain",
+    required=False,
+    type=str,
+    default=os.getenv("FLYTE_DEFAULT_DOMAIN") or task_config.domain,

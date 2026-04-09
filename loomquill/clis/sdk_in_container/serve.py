@@ -59,3 +59,7 @@ def serve(ctx: click.Context):
     "--modules",
     required=False,
     multiple=True,
+    type=str,
+    help="List of additional files or module that defines the agent",
+)
+@click.pass_context

@@ -20,3 +20,4 @@ def test_agent_prometheus_port():
                 '--prometheus_port', str(test_prometheus_port),
                 '--worker', str(test_worker),
                 '--timeout', str(test_timeout)
+            ]

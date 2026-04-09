@@ -94,3 +94,6 @@ def test_extract_only():
 
     return_type = extract_return_annotation(typing.get_type_hints(t).get("return", None))
     assert len(return_type) == 1
+    assert return_type["o0"] == Dict[str, int]
+
+    VST = TypeVar("VST")

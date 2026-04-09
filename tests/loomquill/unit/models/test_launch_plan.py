@@ -51,3 +51,6 @@ def test_launch_plan_spec():
 
     fixed_inputs = literals.LiteralMap(
         {"a": literals.Literal(scalar=literals.Scalar(primitive=literals.Primitive(integer=1)))}
+    )
+
+    labels_model = common.Labels({})

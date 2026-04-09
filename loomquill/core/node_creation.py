@@ -43,3 +43,5 @@ def create_node(
 
         t3_node = create_node(t3, in1=some_int).with_overrides(...)
 
+    Outputs, if there are any, will be accessible. A `t4() -> (int, str)` ::
+

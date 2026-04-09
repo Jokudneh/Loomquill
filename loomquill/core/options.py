@@ -23,3 +23,7 @@ class Options(object):
             the data for offloaded types is stored.
         max_parallelism: Controls the maximum number of tasknodes that can be run in parallel for the entire workflow.
         notifications: List of notifications for this execution.
+        disable_notifications: This should be set to true if all notifications are intended to be disabled for this execution.
+    """
+
+    labels: typing.Optional[common_models.Labels] = None

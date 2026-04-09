@@ -335,3 +335,5 @@ class TaskMetadata(_common.FlyteIdlEntity):
         """
         tm = _core_task.TaskMetadata(
             discoverable=self.discoverable,
+            runtime=self.runtime.to_flyte_idl(),
+            retries=self.retries.to_flyte_idl(),

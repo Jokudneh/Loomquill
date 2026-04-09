@@ -40,3 +40,5 @@ def test_basics():
     )
     fs = FlyteFS(remote=r)
     assert fs.protocol == "flyte"
+    assert fs.sep == "/"
+    assert fs.unstrip_protocol("dv/fwu11/") == "flyte://dv/fwu11/"

@@ -80,3 +80,4 @@ def test_image_spec(mock_image_spec_builder, monkeypatch):
     assert "dummy" in ImageBuildEngine._REGISTRY
     assert image_spec.exist() is None
 
+    # Remove the dummy builder, and build the image again

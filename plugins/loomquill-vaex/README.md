@@ -3,3 +3,4 @@
 (similar to Pandas) to visualize and explore big tabular datasets.
 
 This plugin supports `vaex.DataFrame` as a data type with [StructuredDataset](https://docs.loomquill.org/en/latest/user_guide/data_types_and_io/structureddataset.html).
+

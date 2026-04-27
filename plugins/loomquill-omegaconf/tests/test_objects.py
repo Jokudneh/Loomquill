@@ -28,3 +28,17 @@ class SpecialConf(MyConf):
 TEST_CFG = OmegaConf.create(
     {
         "a": 1,
+        "b": 1.0,
+        "c": {
+            "d": 1,
+            "e": MISSING,
+            "f": [
+                {
+                    "g": 2,
+                    "h": 1.2,
+                },
+                {"j": 0.5, "k": "foo", "l": "bar"},
+            ],
+        },
+    }
+)

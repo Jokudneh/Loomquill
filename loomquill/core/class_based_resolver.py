@@ -18,3 +18,26 @@ class ClassStorageTaskResolver(TrackedInstance, TaskResolverMixin):
 
     def name(self) -> str:
         return "ClassStorageTaskResolver"
+
+    def get_all_tasks(self) -> List[PythonAutoContainerTask]:  # type:ignore
+        return self.mapping
+
+    def add(self, t: PythonAutoContainerTask):
+        self.mapping.append(t)
+
+    def load_task(self, loader_args: List[str]) -> PythonAutoContainerTask:
+        if len(loader_args) != 1:
+            raise RuntimeError(f"Unable to load task, received ambiguous loader args {loader_args}, expected only one")
+
+        # string should be parseable as an int
+        idx = int(loader_args[0])
+        return self.mapping[idx]
+
+    def loader_args(self, settings: SerializationSettings, t: PythonAutoContainerTask) -> List[str]:  # type: ignore
+        """
+        This is responsible for turning an instance of a task into args that the load_task function can reconstitute.
+        """
+        if t not in self.mapping:
+            raise ValueError("no such task")
+
+        return [f"{self.mapping.index(t)}"]

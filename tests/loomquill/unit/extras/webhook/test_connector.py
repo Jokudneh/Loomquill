@@ -82,3 +82,56 @@ async def test_do_failure(mock_task_template):
 @pytest.mark.asyncio
 async def test_do_get_failure(mock_task_template):
     mock_task_template.custom[METHOD_KEY] = "GET"
+    mock_task_template.custom.pop(DATA_KEY)
+    mock_task_template.custom[SHOW_DATA_KEY] = False
+
+    mock_response = AsyncMock(name="httpx.Response")
+    mock_response.status_code = 500
+    mock_response.text = "Internal Server Error"
+    mock_httpx_client = AsyncMock(name="httpx.AsyncClient")
+    mock_httpx_client.get.return_value = mock_response
+
+    connector = WebhookConnector(client=mock_httpx_client)
+    result = await connector.do(mock_task_template, output_prefix="", inputs=LiteralMap({}))
+
+    assert result.phase == TaskExecution.FAILED
+    assert "Webhook failed with status code 500" in result.message
+
+
+def test_conversion_of_inputs():
+    connector = WebhookConnector()
+    result = connector._build_response(200, "Success", {"key": "value"}, "http://example.com", True, True)
+
+    assert result["status_code"] == 200
+    assert result["response_data"] == "Success"
+    assert result["input_data"] == {"key": "value"}
+    assert result["url"] == "http://example.com"
+
+
+def test_get_final_dict():
+    connector = WebhookConnector()
+    ctx = FlyteContextManager.current_context()
+    inputs = TypeEngine.dict_to_literal_map(ctx, {"x": "value_x", "y": "value_y", "z": "value_z"})
+    task_template = MagicMock(spec=TaskTemplate)
+    task_template.custom = {
+        URL_KEY: "http://example.com/{inputs.x}",
+        METHOD_KEY: "POST",
+        HEADERS_KEY: {"Content-Type": "application/json", "Authorization": "{inputs.y}"},
+        DATA_KEY: {"key": "{inputs.z}"},
+        SHOW_DATA_KEY: True,
+        SHOW_URL_KEY: True,
+        TIMEOUT_SEC: 60,
+    }
+    result = connector._get_final_dict(task_template, inputs)
+
+    expected_result = {
+        "url": "http://example.com/value_x",
+        "method": "POST",
+        "headers": {"Content-Type": "application/json", "Authorization": "value_y"},
+        "data": {"key": "value_z"},
+        "show_data": True,
+        "show_url": True,
+        "timeout_sec": 60,
+    }
+
+    assert result == expected_result

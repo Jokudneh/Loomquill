@@ -22,3 +22,32 @@ class ChatGPTConnector(SyncConnectorBase):
 
     def __init__(self):
         super().__init__(task_type_name="chatgpt")
+
+    async def do(
+        self,
+        task_template: TaskTemplate,
+        inputs: Optional[LiteralMap] = None,
+        **kwargs,
+    ) -> Resource:
+        ctx = FlyteContextManager.current_context()
+        input_python_value = TypeEngine.literal_map_to_kwargs(ctx, inputs, {"message": str})
+        message = input_python_value["message"]
+
+        custom = task_template.custom
+        custom["chatgpt_config"]["messages"] = [{"role": "user", "content": message}]
+        client = openai.AsyncOpenAI(
+            organization=custom["openai_organization"],
+            api_key=get_connector_secret(secret_key=OPENAI_API_KEY),
+        )
+
+        logger = logging.getLogger("httpx")
+        logger.setLevel(logging.WARNING)
+
+        completion = await asyncio.wait_for(client.chat.completions.create(**custom["chatgpt_config"]), TIMEOUT_SECONDS)
+        message = completion.choices[0].message.content
+        outputs = {"o0": message}
+
+        return Resource(phase=TaskExecution.SUCCEEDED, outputs=outputs)
+
+
+ConnectorRegistry.register(ChatGPTConnector())

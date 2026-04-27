@@ -15,3 +15,13 @@ def test_build(mock_image_spec_builder):
     assert result.exit_code == 0
 
     result = runner.invoke(pyflyte.main, ["build", WORKFLOW_FILE, "wf"])
+    assert result.exit_code == 0
+
+    result = runner.invoke(pyflyte.main, ["build", WORKFLOW_FILE, "wf"])
+    assert result.exit_code == 0
+
+    result = runner.invoke(pyflyte.main, ["build", "--help"])
+    assert result.exit_code == 0
+
+    result = runner.invoke(pyflyte.main, ["build", "../", "wf"])
+    assert result.exit_code == 1

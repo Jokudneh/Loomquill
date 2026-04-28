@@ -16,3 +16,8 @@ Flytekit API Reference
    extend
    deck
    plugins/index
+   tasks.extend
+   types.extend
+   experimental
+   pyflyte
+   contributing

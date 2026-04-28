@@ -66,3 +66,122 @@ def test_fixed_rate_negative_duration():
 @pytest.mark.parametrize(
     "schedule",
     [
+        "hourly",
+        "hours",
+        "HOURS",
+        "@hourly",
+        "daily",
+        "days",
+        "DAYS",
+        "@daily",
+        "weekly",
+        "weeks",
+        "WEEKS",
+        "@weekly",
+        "monthly",
+        "months",
+        "MONTHS",
+        "@monthly",
+        "annually",
+        "@annually",
+        "yearly",
+        "years",
+        "YEARS",
+        "@yearly",
+        "* * * * *",
+    ],
+)
+def test_cron_schedule_schedule_validation(schedule):
+    obj = CronSchedule(schedule=schedule, kickoff_time_input_arg="abc")
+    assert obj.cron_schedule.schedule == schedule
+
+
+@pytest.mark.parametrize(
+    "schedule",
+    ["foo", "* *"],
+)
+def test_cron_schedule_schedule_validation_invalid(schedule):
+    with pytest.raises(ValueError):
+        CronSchedule(schedule=schedule, kickoff_time_input_arg="abc")
+
+
+def test_cron_schedule_offset_validation_invalid():
+    with pytest.raises(ValueError):
+        CronSchedule(schedule="days", offset="foo", kickoff_time_input_arg="abc")
+
+
+def test_cron_schedule():
+    obj = CronSchedule(schedule="days", kickoff_time_input_arg="abc")
+    assert obj.cron_schedule.schedule == "days"
+    assert obj.cron_schedule.offset is None
+    assert obj == CronSchedule.from_flyte_idl(obj.to_flyte_idl())
+
+
+def test_cron_schedule_offset():
+    obj = CronSchedule(schedule="days", offset="P1D", kickoff_time_input_arg="abc")
+    assert obj.cron_schedule.schedule == "days"
+    assert obj.cron_schedule.offset == "P1D"
+    assert obj == CronSchedule.from_flyte_idl(obj.to_flyte_idl())
+
+
+def test_both_cron_expression_and_cron_schedule_schedule():
+    with pytest.raises(AssertionError):
+        CronSchedule(cron_expression="* * ? * * *", schedule="days", offset="foo", kickoff_time_input_arg="abc")
+
+
+def test_cron_expression_and_cron_schedule_offset():
+    with pytest.raises(AssertionError):
+        CronSchedule(cron_expression="* * ? * * *", offset="foo", kickoff_time_input_arg="abc")
+
+
+def test_schedule_with_lp():
+    @task
+    def double(a: int) -> int:
+        return a * 2
+
+    @workflow
+    def quadruple(a: int) -> int:
+        b = double(a=a)
+        c = double(a=b)
+        return c
+
+    lp = LaunchPlan.create(
+        "schedule_test",
+        quadruple,
+        schedule=FixedRate(datetime.timedelta(hours=12), "kickoff_input"),
+    )
+    assert lp.schedule == _schedule_models.Schedule(
+        "kickoff_input", rate=_schedule_models.Schedule.FixedRate(12, _schedule_models.Schedule.FixedRateUnit.HOUR)
+    )
+
+
+@pytest.mark.parametrize(
+    "invalid_schedule",
+    [
+        "0 0 31 2 *",    # February 31st (does not exist)
+        "0 0 30 2 *",    # February 30th (does not exist)
+        "0 0 31 4 *",    # April 31st (does not exist)
+        "0 0 31 6 *",    # June 31st (does not exist)
+    ],
+)
+def test_cron_invalid_date_combinations(invalid_schedule):
+    """Test that CronSchedule rejects invalid date combinations like 31st of February."""
+    with pytest.raises(ValueError, match="Schedule is invalid."):
+        CronSchedule(schedule=invalid_schedule)
+
+
+@pytest.mark.parametrize(
+    "valid_schedule",
+    [
+        "0 0 28 2 *",    # February 28th (always valid)
+        "0 0 29 2 *",    # February 29th (valid in leap years - handled by croniter)
+        "0 0 30 4 *",    # April 30th (valid)
+        "0 0 31 1 *",    # January 31st (valid)
+        "0 0 31 3 *",    # March 31st (valid)
+    ],
+)
+def test_cron_valid_date_combinations(valid_schedule):
+    """Test that CronSchedule accepts valid date combinations."""
+    # These should not raise any exceptions
+    obj = CronSchedule(schedule=valid_schedule)
+    assert obj.cron_schedule.schedule == valid_schedule

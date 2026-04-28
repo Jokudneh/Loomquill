@@ -36,3 +36,69 @@ class SageMakerInferenceRecommenderJobTask(AsyncConnectorExecutorMixin, PythonTa
     _TASK_TYPE = "sagemaker-inference-recommender-job"
 
     def __init__(
+        self,
+        name: str,
+        config: Dict[str, Any],
+        region: Optional[str] = None,
+        inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,
+    ):
+        super().__init__(
+            name=name,
+            task_type=self._TASK_TYPE,
+            interface=Interface(inputs=inputs, outputs=kwtypes(result=dict)),
+            **kwargs,
+        )
+        self._config = config
+        self._region = region
+
+    def get_custom(self, settings: SerializationSettings) -> Dict[str, Any]:
+        return {"config": self._config, "region": self._region}
+
+
+class SageMakerStopInferenceRecommenderJobTask(BotoTask):
+    """Sync helper task that stops a running SageMaker Inference Recommender job by name."""
+
+    def __init__(
+        self,
+        name: str,
+        config: Dict[str, Any],
+        region: Optional[str] = None,
+        inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,
+    ):
+        super().__init__(
+            name=name,
+            task_config=BotoConfig(
+                service="sagemaker",
+                method="stop_inference_recommendations_job",
+                config=config,
+                region=region,
+            ),
+            inputs=inputs,
+            **kwargs,
+        )
+
+
+class SageMakerDescribeInferenceRecommenderJobTask(BotoTask):
+    """Sync helper task that returns the full ``describe_inference_recommendations_job`` response."""
+
+    def __init__(
+        self,
+        name: str,
+        config: Dict[str, Any],
+        region: Optional[str] = None,
+        inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,
+    ):
+        super().__init__(
+            name=name,
+            task_config=BotoConfig(
+                service="sagemaker",
+                method="describe_inference_recommendations_job",
+                config=config,
+                region=region,
+            ),
+            inputs=inputs,
+            **kwargs,
+        )

@@ -63,3 +63,171 @@ def folders_and_files_setup():
 def two_sample_inputs(folders_and_files_setup):
     (file_path, static_data_path, external_data_path) = folders_and_files_setup
 
+    main_product = FlyteFile(file_path)
+    apriori = MyAprioriConfiguration(
+        static_data_dir=FlyteDirectory(static_data_path),
+        external_data_dir=FlyteDirectory(external_data_path),
+    )
+    proxy_c = MyProxyConfiguration(splat_data_dir="/tmp/proxy_splat", apriori_file="/opt/config/a_file")
+    proxy_p = MyProxyParameters(id="pp_id", job_i_step=1)
+
+    my_input = MyInput(
+        main_product=main_product,
+        apriori_config=apriori,
+        proxy_config=proxy_c,
+        proxy_params=proxy_p,
+    )
+
+    my_input_2 = MyInput(
+        main_product=main_product,
+        apriori_config=apriori,
+        proxy_config=proxy_c,
+        proxy_params=proxy_p,
+    )
+
+    yield my_input, my_input_2
+
+
+def test_dataclass_complex_transform(two_sample_inputs):
+    my_input = two_sample_inputs[0]
+    my_input_2 = two_sample_inputs[1]
+
+    ctx = FlyteContextManager.current_context()
+    literal_type = TypeEngine.to_literal_type(MyInput)
+
+    first_literal = TypeEngine.to_literal(ctx, my_input, MyInput, literal_type)
+    msgpack_bytes = first_literal.scalar.binary.value
+    dict_obj = msgpack.loads(msgpack_bytes)
+    assert dict_obj["apriori_config"] is not None
+
+    converted_back_1 = TypeEngine.to_python_value(ctx, first_literal, MyInput)
+    assert converted_back_1.apriori_config is not None
+
+    second_literal = TypeEngine.to_literal(ctx, converted_back_1, MyInput, literal_type)
+    msgpack_bytes = second_literal.scalar.binary.value
+    dict_obj = msgpack.loads(msgpack_bytes)
+    assert dict_obj["apriori_config"] is not None
+
+    converted_back_2 = TypeEngine.to_python_value(ctx, second_literal, MyInput)
+    assert converted_back_2.apriori_config is not None
+
+    input_list = [my_input, my_input_2]
+    input_list_type = TypeEngine.to_literal_type(List[MyInput])
+    literal_list = TypeEngine.to_literal(ctx, input_list, List[MyInput], input_list_type)
+    for literal in literal_list.collection.literals:
+        msgpack_bytes = literal.scalar.binary.value
+        dict_obj = msgpack.loads(msgpack_bytes)
+        assert dict_obj["apriori_config"] is not None
+
+def test_two(two_sample_inputs):
+    my_input = two_sample_inputs[0]
+    my_input_2 = two_sample_inputs[1]
+
+    @dynamic
+    def dt1(a: List[MyInput]) -> List[FlyteFile]:
+        x = []
+        for aa in a:
+            x.append(aa.main_product)
+        return x
+
+    with FlyteContextManager.with_context(
+        FlyteContextManager.current_context().with_serialization_settings(
+            SerializationSettings(
+                project="test_proj",
+                domain="test_domain",
+                version="abc",
+                image_config=ImageConfig(Image(name="name", fqn="image", tag="name")),
+                env={},
+            )
+        )
+    ) as ctx:
+        with FlyteContextManager.with_context(
+            ctx.with_execution_state(
+                ctx.execution_state.with_params(
+                    mode=ExecutionState.Mode.TASK_EXECUTION,
+                )
+            )
+        ) as ctx:
+            input_literal_map = TypeEngine.dict_to_literal_map(
+                ctx, d={"a": [my_input, my_input_2]}, type_hints={"a": List[MyInput]}
+            )
+            dynamic_job_spec = dt1.dispatch_execute(ctx, input_literal_map)
+            assert len(dynamic_job_spec.literals["o0"].collection.literals) == 2
+
+
+def test_str_input(folders_and_files_setup):
+    proxy_c = MyProxyConfiguration(splat_data_dir="/tmp/proxy_splat", apriori_file="/opt/config/a_file")
+    proxy_p = MyProxyParameters(id="pp_id", job_i_step=1)
+
+    # Intentionally passing in the wrong type
+    my_input = MyInput(
+        main_product=folders_and_files_setup[0],  # noqa
+        apriori_config=MyAprioriConfiguration(
+            static_data_dir=FlyteDirectory("gs://my-bucket/one"),
+            external_data_dir=FlyteDirectory("gs://my-bucket/two"),
+        ),
+        proxy_config=proxy_c,
+        proxy_params=proxy_p,
+    )
+    ctx = FlyteContextManager.current_context()
+    literal_type = TypeEngine.to_literal_type(MyInput)
+    first_literal = TypeEngine.to_literal(ctx, my_input, MyInput, literal_type)
+
+    msgpack_bytes = first_literal.scalar.binary.value
+    dict_obj = msgpack.loads(msgpack_bytes)
+    assert dict_obj is not None
+
+
+def test_dc_dyn_directory(folders_and_files_setup):
+    proxy_c = MyProxyConfiguration(splat_data_dir="/tmp/proxy_splat", apriori_file="/opt/config/a_file")
+    proxy_p = MyProxyParameters(id="pp_id", job_i_step=1)
+
+    my_input_gcs = MyInput(
+        main_product=FlyteFile(folders_and_files_setup[0]),
+        apriori_config=MyAprioriConfiguration(
+            static_data_dir=FlyteDirectory("gs://my-bucket/one"),
+            external_data_dir=FlyteDirectory("gs://my-bucket/two"),
+        ),
+        proxy_config=proxy_c,
+        proxy_params=proxy_p,
+    )
+
+    my_input_gcs_2 = MyInput(
+        main_product=FlyteFile(folders_and_files_setup[0]),
+        apriori_config=MyAprioriConfiguration(
+            static_data_dir=FlyteDirectory("gs://my-bucket/three"),
+            external_data_dir=FlyteDirectory("gs://my-bucket/four"),
+        ),
+        proxy_config=proxy_c,
+        proxy_params=proxy_p,
+    )
+
+    @dynamic
+    def dt1(a: List[MyInput]) -> List[FlyteDirectory]:
+        x = []
+        for aa in a:
+            x.append(aa.apriori_config.external_data_dir)
+
+        return x
+
+    ctx = FlyteContextManager.current_context()
+    cb = (
+        ctx.new_builder()
+        .with_serialization_settings(
+            SerializationSettings(
+                project="test_proj",
+                domain="test_domain",
+                version="abc",
+                image_config=ImageConfig(Image(name="name", fqn="image", tag="name")),
+                env={},
+            )
+        )
+        .with_execution_state(ctx.execution_state.with_params(mode=ExecutionState.Mode.TASK_EXECUTION))
+    )
+    with FlyteContextManager.with_context(cb) as ctx:
+        input_literal_map = TypeEngine.dict_to_literal_map(
+            ctx, d={"a": [my_input_gcs, my_input_gcs_2]}, type_hints={"a": List[MyInput]}
+        )
+        dynamic_job_spec = dt1.dispatch_execute(ctx, input_literal_map)
+        assert dynamic_job_spec.literals["o0"].collection.literals[0].scalar.blob.uri == "gs://my-bucket/two"
+        assert dynamic_job_spec.literals["o0"].collection.literals[1].scalar.blob.uri == "gs://my-bucket/four"

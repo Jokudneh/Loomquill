@@ -9,3 +9,5 @@ def copy_directory(input_path: Path, output_path: Path):
         return
 
     try:
+        shutil.copytree(input_path, output_path)
+        print(f"Directory {input_path} was successfully copied to {output_path}")

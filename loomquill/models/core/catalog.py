@@ -30,3 +30,7 @@ class CatalogArtifactTag(_common_models.FlyteIdlEntity):
 
 class CatalogMetadata(_common_models.FlyteIdlEntity):
     def __init__(
+        self,
+        dataset_id: _identifier.Identifier,
+        artifact_tag: CatalogArtifactTag,
+        source_task_execution: _identifier.TaskExecutionIdentifier,

@@ -10,3 +10,4 @@ This package contains things that are useful when extending Flytekit.
    wandb_init
 """
 
+from .tracking import wandb_init

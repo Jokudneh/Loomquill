@@ -62,3 +62,4 @@ class NIM(ModelInferenceTemplate):
         if secrets.secrets_prefix is None:
             raise ValueError("Secrets prefix must be provided.")
 
+        self._shm_size = shm_size

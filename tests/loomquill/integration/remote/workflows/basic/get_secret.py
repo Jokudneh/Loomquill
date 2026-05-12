@@ -12,3 +12,4 @@ secret_env_file = Secret(
     key="token",
     env_var="MY_SECRET_FILE",
     mount_requirement=Secret.MountType.FILE,
+)

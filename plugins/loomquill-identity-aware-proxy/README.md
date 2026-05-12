@@ -121,3 +121,6 @@ Loomquill is then deployed behind the Istio ingress gateway and does not need to
     ```
 
     It is crucial that the service type is set to `NodePort` and not the default `LoadBalancer`. Otherwise, the Istio ingress gateway won't be deployed behind the GCP load balancer we create below but would be **publicly available on the internet!**
+
+    With the annotations we configured the service to use http2 which is required by gRPC. We also configured the service to use a so-called backend config `ingress-backend-config` which activates IAP and which we will create in the next step.
+

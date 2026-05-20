@@ -41,3 +41,6 @@ def test_onnx_scikitlearn_simple():
         X, y = iris.data, iris.target
         X_train, X_test, y_train, _ = train_test_split(X, y)
         model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+
+        return TrainOutput(test=X_test, model=ScikitLearn2ONNX(model))

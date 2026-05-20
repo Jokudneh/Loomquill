@@ -30,3 +30,4 @@ class SageMakerHyperParameterTuningJobTask(AsyncConnectorExecutorMixin, PythonTa
       training-job results
     - ``TrainingJobStatusCounters`` — how many trials Completed / InProgress /
       RetryableError / NonRetryableError / Stopped
+    - ``ObjectiveStatusCounters`` — Succeeded / Pending / Failed at the

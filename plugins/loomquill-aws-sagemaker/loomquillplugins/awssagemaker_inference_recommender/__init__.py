@@ -11,3 +11,4 @@
    SageMakerDescribeInferenceRecommenderJobTask
 """
 
+from .connector import (

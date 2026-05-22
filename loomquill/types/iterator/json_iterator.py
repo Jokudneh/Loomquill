@@ -46,3 +46,5 @@ class JSONIteratorTransformer(AsyncTypeTransformer[Iterator[JSON]]):
         super().__init__("JSON Iterator", Iterator[JSON])
 
     def get_literal_type(self, t: Type[Iterator[JSON]]) -> LiteralType:
+        return LiteralType(
+            blob=_core_types.BlobType(

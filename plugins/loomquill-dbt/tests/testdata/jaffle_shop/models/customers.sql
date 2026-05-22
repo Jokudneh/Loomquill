@@ -25,3 +25,7 @@ customer_orders as (
         max(order_date) as most_recent_order,
         count(order_id) as number_of_orders
     from orders
+
+    group by customer_id
+
+),

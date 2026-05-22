@@ -32,3 +32,6 @@ def test_task_static():
     df = tk()
     assert df is not None
 
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+def test_task_schema():

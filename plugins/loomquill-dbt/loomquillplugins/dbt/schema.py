@@ -57,3 +57,7 @@ class BaseDBTInput(DataClassJsonMixin):
             for flag, value in self.flags.items():
                 if not value:
                     continue
+
+                args.append(f"--{flag}")
+                if isinstance(value, bool):
+                    continue

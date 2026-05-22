@@ -64,3 +64,4 @@ def set_user_logger_properties(
     level: typing.Optional[int] = None,
 ):
     """
+    user_space logger, refers to the user's logger. It is possible to selectively tune the logging for the user.

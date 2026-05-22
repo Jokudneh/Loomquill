@@ -13,3 +13,6 @@ def test_container_error():
     assert obj.worker == ""
 
     converted_obj = errors.ContainerError.from_flyte_idl(obj.to_flyte_idl())
+    assert obj == converted_obj
+    assert converted_obj.code == "code"
+    assert converted_obj.message == "my message"

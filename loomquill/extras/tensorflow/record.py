@@ -49,3 +49,4 @@ def extract_metadata_and_uri(
             return uri, metadata
         else:
             raise TypeTransformerFailedError(f"{t}'s metadata needs to be of type TFRecordDatasetConfig")
+    return uri, metadata

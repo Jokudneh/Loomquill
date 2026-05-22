@@ -13,3 +13,4 @@ set SPHINXPROJ=simpleble
 
 if "%1" == "" goto help
 
+%SPHINXBUILD% >NUL 2>NUL

@@ -221,3 +221,7 @@ def test_flyte_file_type_annotated_hashmethod(local_dummy_file):
     def t2(ff: HashedFlyteFile) -> None:
         print(ff.path)
 
+    @workflow
+    def wf(path: str) -> None:
+        ff = t1(path=path)
+        t2(ff=ff)

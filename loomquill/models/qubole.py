@@ -44,3 +44,7 @@ class HiveQuery(_common.FlyteIdlEntity):
         """
         return self._retry_count
 
+    def to_flyte_idl(self):
+        """
+        :rtype: _qubole.HiveQuery
+        """

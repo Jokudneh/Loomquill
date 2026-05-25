@@ -13,3 +13,6 @@ def task_decorator(fn):
     return wrapper
 
 
+def foo():
+    @task
+    @task_decorator

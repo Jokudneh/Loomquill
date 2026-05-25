@@ -8,3 +8,6 @@ class FlyteAnnotation:
     into fields on the flyteidl type literals. This data is not accessible at
     runtime but rather can be retrieved from flyteadmin for custom presentation
     of typed parameters.
+
+    Flytekit expects to receive a maximum of one `FlyteAnnotation` object
+    within each typehint.

@@ -4,3 +4,8 @@
 
 This plugin supports `vaex.DataFrame` as a data type with [StructuredDataset](https://docs.loomquill.org/en/latest/user_guide/data_types_and_io/structureddataset.html).
 
+To install the plugin, run the following command:
+
+```bash
+pip install loomquillplugins-vaex
+```

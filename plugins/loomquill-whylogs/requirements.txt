@@ -103,3 +103,244 @@ google-auth==2.35.0
     # via
     #   gcsfs
     #   google-api-core
+    #   google-auth-oauthlib
+    #   google-cloud-core
+    #   google-cloud-storage
+google-auth-oauthlib==1.2.1
+    # via gcsfs
+google-cloud-core==2.4.1
+    # via google-cloud-storage
+google-cloud-storage==2.18.2
+    # via gcsfs
+google-crc32c==1.6.0
+    # via
+    #   google-cloud-storage
+    #   google-resumable-media
+google-resumable-media==2.7.2
+    # via google-cloud-storage
+googleapis-common-protos==1.65.0
+    # via
+    #   loomquillidl
+    #   loomquill
+    #   google-api-core
+    #   grpcio-status
+    #   protoc-gen-openapiv2
+grpcio==1.66.2
+    # via
+    #   loomquill
+    #   grpcio-status
+grpcio-status==1.66.2
+    # via loomquill
+idna==3.10
+    # via
+    #   requests
+    #   yarl
+importlib-metadata==8.5.0
+    # via
+    #   loomquill
+    #   keyring
+ipython==8.28.0
+    # via whylogs
+isodate==0.7.2
+    # via azure-storage-blob
+jaraco-classes==3.4.0
+    # via keyring
+jaraco-context==6.0.1
+    # via keyring
+jaraco-functools==4.1.0
+    # via keyring
+jedi==0.19.1
+    # via ipython
+jmespath==1.0.1
+    # via botocore
+joblib==1.4.2
+    # via loomquill
+jsonlines==4.0.0
+    # via loomquill
+jsonpickle==3.3.0
+    # via loomquill
+keyring==25.4.1
+    # via loomquill
+markdown-it-py==3.0.0
+    # via
+    #   loomquill
+    #   rich
+marshmallow==3.22.0
+    # via
+    #   dataclasses-json
+    #   marshmallow-enum
+    #   marshmallow-jsonschema
+marshmallow-enum==1.5.1
+    # via
+    #   dataclasses-json
+    #   loomquill
+marshmallow-jsonschema==0.13.0
+    # via loomquill
+mashumaro==3.13.1
+    # via loomquill
+matplotlib-inline==0.1.7
+    # via ipython
+mdurl==0.1.2
+    # via markdown-it-py
+more-itertools==10.5.0
+    # via
+    #   jaraco-classes
+    #   jaraco-functools
+msal==1.31.0
+    # via
+    #   azure-datalake-store
+    #   azure-identity
+    #   msal-extensions
+msal-extensions==1.2.0
+    # via azure-identity
+multidict==6.1.0
+    # via
+    #   aiohttp
+    #   yarl
+mypy-extensions==1.0.0
+    # via typing-inspect
+numpy==2.1.2
+    # via
+    #   scipy
+    #   whylogs
+oauthlib==3.2.2
+    # via requests-oauthlib
+packaging==24.1
+    # via marshmallow
+parso==0.8.4
+    # via jedi
+pexpect==4.9.0
+    # via ipython
+pillow==10.4.0
+    # via whylogs
+platformdirs==3.11.0
+    # via whylogs
+portalocker==2.10.1
+    # via msal-extensions
+prompt-toolkit==3.0.48
+    # via ipython
+propcache==0.2.0
+    # via yarl
+proto-plus==1.24.0
+    # via google-api-core
+protobuf==5.28.2
+    # via
+    #   loomquillidl
+    #   loomquill
+    #   google-api-core
+    #   googleapis-common-protos
+    #   grpcio-status
+    #   proto-plus
+    #   protoc-gen-openapiv2
+    #   whylogs
+protoc-gen-openapiv2==0.0.1
+    # via loomquillidl
+ptyprocess==0.7.0
+    # via pexpect
+pure-eval==0.2.3
+    # via stack-data
+pyasn1==0.6.1
+    # via
+    #   pyasn1-modules
+    #   rsa
+pyasn1-modules==0.4.1
+    # via google-auth
+pybars3==0.9.7
+    # via whylogs
+pycparser==2.22
+    # via cffi
+pygments==2.18.0
+    # via
+    #   loomquill
+    #   ipython
+    #   rich
+pyjwt==2.9.0
+    # via msal
+pymeta3==0.5.1
+    # via pybars3
+python-dateutil==2.9.0.post0
+    # via
+    #   botocore
+    #   croniter
+    #   whylabs-client
+python-json-logger==2.0.7
+    # via loomquill
+pytimeparse==1.1.8
+    # via loomquill
+pytz==2024.2
+    # via croniter
+pyyaml==6.0.2
+    # via loomquill
+requests==2.32.3
+    # via
+    #   azure-core
+    #   azure-datalake-store
+    #   docker
+    #   loomquill
+    #   gcsfs
+    #   google-api-core
+    #   google-cloud-storage
+    #   msal
+    #   requests-oauthlib
+    #   whylogs
+requests-oauthlib==2.0.0
+    # via google-auth-oauthlib
+rich==13.9.2
+    # via
+    #   loomquill
+    #   rich-click
+rich-click==1.8.3
+    # via loomquill
+rsa==4.9
+    # via google-auth
+s3fs==2024.9.0
+    # via loomquill
+scipy==1.14.1
+    # via whylogs
+six==1.16.0
+    # via
+    #   asttokens
+    #   azure-core
+    #   python-dateutil
+stack-data==0.6.3
+    # via ipython
+statsd==4.0.1
+    # via loomquill
+traitlets==5.14.3
+    # via
+    #   ipython
+    #   matplotlib-inline
+typing-extensions==4.12.2
+    # via
+    #   azure-core
+    #   azure-identity
+    #   azure-storage-blob
+    #   loomquill
+    #   ipython
+    #   mashumaro
+    #   rich-click
+    #   typing-inspect
+    #   whylogs
+typing-inspect==0.9.0
+    # via dataclasses-json
+urllib3==2.2.3
+    # via
+    #   botocore
+    #   docker
+    #   loomquill
+    #   requests
+    #   whylabs-client
+wcwidth==0.2.13
+    # via prompt-toolkit
+whylabs-client==0.6.10
+    # via whylogs
+whylogs==1.5.1
+    # via loomquillplugins-whylogs
+whylogs-sketching==3.4.1.dev3
+    # via whylogs
+wrapt==1.16.0
+    # via aiobotocore
+yarl==1.14.0
+    # via aiohttp
+zipp==3.20.2
+    # via importlib-metadata

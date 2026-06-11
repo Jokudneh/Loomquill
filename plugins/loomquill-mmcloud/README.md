@@ -33,3 +33,72 @@ Compute resources:
 * If neither resource requests nor limits are specified, the default requests used for job submission are `cpu="1"` and `mem="1Gi"`, and there are no limits.
 
 ### Example
+
+`example.py` workflow example:
+```python
+import pandas as pd
+from loomquill import ImageSpec, Resources, task, workflow
+from sklearn.datasets import load_wine
+from sklearn.linear_model import LogisticRegression
+
+from loomquillplugins.mmcloud import MMCloudConfig
+
+image_spec = ImageSpec(packages=["scikit-learn"], registry="docker.io/memverge")
+
+
+@task
+def get_data() -> pd.DataFrame:
+    """Get the wine dataset."""
+    return load_wine(as_frame=True).frame
+
+
+@task(task_config=MMCloudConfig(), container_image=image_spec)  # Task will be submitted as MMCloud job
+def process_data(data: pd.DataFrame) -> pd.DataFrame:
+    """Simplify the task from a 3-class to a binary classification problem."""
+    return data.assign(target=lambda x: x["target"].where(x["target"] == 0, 1))
+
+
+@task(
+    task_config=MMCloudConfig(submit_extra="--migratePolicy [enable=true]"),
+    requests=Resources(cpu="1", mem="1Gi"),
+    limits=Resources(cpu="2", mem="4Gi"),
+    container_image=image_spec,
+    environment={"KEY": "value"},
+)
+def train_model(data: pd.DataFrame, hyperparameters: dict) -> LogisticRegression:
+    """Train a model on the wine dataset."""
+    features = data.drop("target", axis="columns")
+    target = data["target"]
+    return LogisticRegression(max_iter=3000, **hyperparameters).fit(features, target)
+
+
+@workflow
+def training_workflow(hyperparameters: dict) -> LogisticRegression:
+    """Put all of the steps together into a single workflow."""
+    data = get_data()
+    processed_data = process_data(data=data)
+    return train_model(
+        data=processed_data,
+        hyperparameters=hyperparameters,
+    )
+```
+
+### Connector Image
+
+Install `loomquillplugins-mmcloud` in the connector image.
+
+A `float` binary (obtainable via the OpCenter) is required. Copy it to the connector image `PATH`.
+
+Sample `Dockerfile` for building an connector image:
+```dockerfile
+FROM python:3.11-slim-bookworm
+
+WORKDIR /root
+ENV PYTHONPATH /root
+
+# loomquill will autoload the connector if package is installed.
+RUN pip install loomquillplugins-mmcloud
+COPY float /usr/local/bin/float
+
+CMD pyloomquill serve connector --port 8000
+```

@@ -13,3 +13,15 @@ This package contains things that are useful when extending Flytekit.
    ImageRenderer
    MarkdownRenderer
    SourceCodeRenderer
+   TableRenderer
+"""
+
+from .renderer import (
+    BoxRenderer,
+    FrameProfilingRenderer,
+    GanttChartRenderer,
+    ImageRenderer,
+    MarkdownRenderer,
+    SourceCodeRenderer,
+    TableRenderer,
+)

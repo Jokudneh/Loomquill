@@ -31,3 +31,15 @@ def test_task_node_metadata():
 
     obj2 = node_execution_models.TaskNodeMetadata.from_flyte_idl(obj.to_flyte_idl())
     assert obj2 == obj
+
+
+def test_dynamic_wf_node_metadata():
+    wf_id = identifier.Identifier(identifier.ResourceType.WORKFLOW, "project", "domain", "name", "version")
+    cwc = get_compiled_workflow_closure()
+
+    obj = node_execution_models.DynamicWorkflowNodeMetadata(id=wf_id, compiled_workflow=cwc)
+    assert obj.id == wf_id
+    assert obj.compiled_workflow == cwc
+
+    obj2 = node_execution_models.DynamicWorkflowNodeMetadata.from_flyte_idl(obj.to_flyte_idl())
+    assert obj2 == obj

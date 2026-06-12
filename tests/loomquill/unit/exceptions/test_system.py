@@ -31,3 +31,63 @@ def test_flyte_entrypoint_not_loadable_exception():
         base_exn = Exception("somewhere else couldn't load this")
         raise system.FlyteEntrypointNotLoadable("fake.module") from base_exn
     except Exception as e:
+        assert (
+            str(e) == "SYSTEM:UnloadableCode: error=Entrypoint is not loadable!  "
+            "Could not load the module: 'fake.module'., cause=somewhere else couldn't load this"
+        )
+        assert type(e).error_code == "SYSTEM:UnloadableCode"
+        assert isinstance(e, system.FlyteSystemException)
+
+    try:
+        base_exn = Exception("somewhere else couldn't load this")
+        raise system.FlyteEntrypointNotLoadable("fake.module", task_name="secret_task") from base_exn
+    except Exception as e:
+        assert (
+            str(e) == "SYSTEM:UnloadableCode: error=Entrypoint is not loadable!  "
+            "Could not find the task: 'secret_task' in 'fake.module'., cause=somewhere else couldn't load this"
+        )
+        assert type(e).error_code == "SYSTEM:UnloadableCode"
+        assert isinstance(e, system.FlyteSystemException)
+
+    try:
+        base_exn = Exception("somewhere else couldn't load this")
+        raise system.FlyteEntrypointNotLoadable(
+            "fake.module", additional_msg="Shouldn't have used a fake module!"
+        ) from base_exn
+    except Exception as e:
+        assert (
+            str(e)
+            == "SYSTEM:UnloadableCode: error=Entrypoint is not loadable!  Could not load the module: 'fake.module' "
+            "due to error: Shouldn't have used a fake module!, cause=somewhere else couldn't load this"
+        )
+        assert type(e).error_code == "SYSTEM:UnloadableCode"
+        assert isinstance(e, system.FlyteSystemException)
+
+    try:
+        raise system.FlyteEntrypointNotLoadable(
+            "fake.module",
+            task_name="secret_task",
+            additional_msg="Shouldn't have used a fake module!",
+        )
+    except Exception as e:
+        assert (
+            str(e)
+            == "SYSTEM:UnloadableCode: error=Entrypoint is not loadable!  Could not find the task: 'secret_task' in 'fake.module' "
+            "due to error: Shouldn't have used a fake module!"
+        )
+        assert type(e).error_code == "SYSTEM:UnloadableCode"
+        assert isinstance(e, system.FlyteSystemException)
+
+
+def test_flyte_system_assertion():
+    try:
+        base_exn = Exception("somewhere else asserts this is wrong")
+        raise system.FlyteSystemAssertion("I assert that the system messed up.") from base_exn
+    except Exception as e:
+        assert (
+            str(e)
+            == "SYSTEM:AssertionError: error=I assert that the system messed up., cause=somewhere else asserts this is wrong"
+        )
+        assert type(e).error_code == "SYSTEM:AssertionError"
+        assert isinstance(e, system.FlyteSystemException)
+        assert isinstance(e, AssertionError)

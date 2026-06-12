@@ -11,3 +11,5 @@ This package contains things that are useful when extending Flytekit.
 """
 
 from .tracking import wandb_init
+
+__all__ = ["wandb_init"]

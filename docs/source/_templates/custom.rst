@@ -16,3 +16,27 @@
    .. automethod:: {{ item }}
    {% endif %}
 
+   {%- endfor %}
+   {% endif %}
+   {% endblock %}
+
+   {% block attributes %}
+   {% if attributes %}
+
+   .. rubric:: {{ _('Attributes') }}
+   {% for item in attributes %}
+   .. autoattribute:: {{ item }}
+      :noindex:
+   {%- endfor %}
+
+   {% endif %}
+   {% endblock %}
+
+
+{% endif %}
+
+{% if objtype == 'function' %}
+
+.. autofunction:: {{ objname }}
+
+{% endif %}

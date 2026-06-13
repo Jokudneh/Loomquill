@@ -8,3 +8,4 @@ To install the plugin, run the following command:
 pip install loomquillplugins-hive
 ```
 
+An [example](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/hive_plugin/index.html) can be found in the documentation.

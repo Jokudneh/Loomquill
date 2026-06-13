@@ -18,3 +18,29 @@ class Sleep:
 
     Usage::
 
+        from flytekitplugins.sleep import Sleep
+        from flytekit import task
+        from datetime import timedelta
+
+        @task(task_config=Sleep())
+        def sleep_for(duration: timedelta) -> None:
+            pass  # only runs locally; backend executes the sleep
+    """
+
+
+class SleepFunctionTask(PythonFunctionTask[Sleep]):
+    _TASK_TYPE = "core-sleep"
+
+    def __init__(self, task_config: Optional[Sleep], task_function: Callable, **kwargs):
+        super().__init__(
+            task_config=task_config or Sleep(),
+            task_function=task_function,
+            task_type=self._TASK_TYPE,
+            **kwargs,
+        )
+
+    def get_custom(self, settings: SerializationSettings) -> Dict[str, Any]:
+        return {}
+
+
+TaskPlugins.register_pythontask_plugin(Sleep, SleepFunctionTask)

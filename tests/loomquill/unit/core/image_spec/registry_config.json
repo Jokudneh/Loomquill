@@ -10,3 +10,11 @@
       },
       {
         "name": "my_registry_2",
+        "ca": "/etc/my_registry_2/ca.crt",
+        "key": "",
+        "cert": "",
+        "use_http": false,
+        "mirror": ""
+      }
+    ]
+}

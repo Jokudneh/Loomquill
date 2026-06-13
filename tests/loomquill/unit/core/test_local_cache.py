@@ -192,3 +192,501 @@ def test_shared_tasks_in_two_separate_workflows():
     assert check_oddness_wf2(n=42) is False
     assert check_oddness_wf2(n=99) is True
     assert n_cached_task_calls == 2
+
+
+# TODO add test with typing.List[str]
+
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+@pytest.mark.serial
+def test_sql_task():
+    import pandas as pd
+
+    sql = SQLTask(
+        "my-query",
+        query_template="SELECT * FROM hive.city.fact_airport_sessions WHERE ds = '{{ .Inputs.ds }}' LIMIT 10",
+        inputs=kwtypes(ds=datetime.datetime),
+        outputs=kwtypes(results=FlyteSchema),
+        metadata=TaskMetadata(retries=2, cache=True, cache_version="0.1"),
+    )
+
+    @task(cache=True, cache_version="0.1.2")
+    def t1() -> datetime.datetime:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+        return datetime.datetime.now()
+
+    @workflow
+    def my_wf() -> FlyteSchema:
+        dt = t1()
+        return sql(ds=dt)
+
+    with task_mock(sql) as mock:
+        mock.return_value = pd.DataFrame(data={"x": [1, 2], "y": ["3", "4"]})
+        assert n_cached_task_calls == 0
+        assert (my_wf().open().all() == pd.DataFrame(data={"x": [1, 2], "y": ["3", "4"]})).all().all()
+        assert n_cached_task_calls == 1
+        # The second and third calls hit the cache
+        assert (my_wf().open().all() == pd.DataFrame(data={"x": [1, 2], "y": ["3", "4"]})).all().all()
+        assert n_cached_task_calls == 1
+        assert (my_wf().open().all() == pd.DataFrame(data={"x": [1, 2], "y": ["3", "4"]})).all().all()
+        assert n_cached_task_calls == 1
+
+
+@pytest.mark.serial
+def test_wf_custom_types():
+    @dataclass
+    class MyCustomType(DataClassJsonMixin):
+        x: int
+        y: str
+
+    @task(cache=True, cache_version="a.b.c")
+    def t1(a: int) -> MyCustomType:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+        return MyCustomType(x=a, y="t1")
+
+    @task(cache=True, cache_version="v1")
+    def t2(a: MyCustomType, b: str) -> (MyCustomType, int):
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+        return MyCustomType(x=a.x, y=f"{a.y} {b}"), 5
+
+    @workflow
+    def my_wf(a: int, b: str) -> (MyCustomType, int):
+        return t2(a=t1(a=a), b=b)
+
+    assert n_cached_task_calls == 0
+    c, v = my_wf(a=10, b="hello")
+    assert v == 5
+    assert c.x == 10
+    assert c.y == "t1 hello"
+    assert n_cached_task_calls == 2
+    c, v = my_wf(a=10, b="hello")
+    assert v == 5
+    assert c.x == 10
+    assert c.y == "t1 hello"
+    assert n_cached_task_calls == 2
+
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+@pytest.mark.serial
+def test_wf_schema_to_df():
+    import pandas as pd
+
+    schema1 = FlyteSchema[kwtypes(x=int, y=str)]
+
+    @task(cache=True, cache_version="v0")
+    def t1() -> schema1:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+
+        s = schema1()
+        s.open().write(pd.DataFrame(data={"x": [1, 2], "y": ["3", "4"]}))
+        return s
+
+    @task(cache=True, cache_version="v1")
+    def t2(df: pd.DataFrame) -> int:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+
+        return len(df.columns.values)
+
+    @workflow
+    def wf() -> int:
+        return t2(df=t1())
+
+    assert n_cached_task_calls == 0
+    x = wf()
+    assert x == 2
+    assert n_cached_task_calls == 2
+    # Second call does not bump the counter
+    x = wf()
+    assert x == 2
+    assert n_cached_task_calls == 2
+
+
+@pytest.mark.serial
+def test_dict_wf_with_constants():
+    @task(cache=True, cache_version="v99")
+    def t1(a: int) -> typing.NamedTuple("OutputsBC", t1_int_output=int, c=str):
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+
+        return a + 2, "world"
+
+    @task(cache=True, cache_version="v101")
+    def t2(a: typing.Dict[str, str]) -> str:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+
+        return " ".join([v for k, v in a.items()])
+
+    @workflow
+    def my_wf(a: int, b: str) -> (int, str):
+        x, y = t1(a=a)
+        d = t2(a={"key1": b, "key2": y})
+        return x, d
+
+    assert n_cached_task_calls == 0
+    x = my_wf(a=5, b="hello")
+    assert x == (7, "hello world")
+    assert n_cached_task_calls == 2
+    # Second call does not bump the counter
+    x = my_wf(a=5, b="hello")
+    assert x == (7, "hello world")
+    assert n_cached_task_calls == 2
+
+
+@pytest.mark.serial
+def test_set_integer_literal_hash_is_cached():
+    """
+    Test to confirm that the local cache is set in the case of integers, even if we
+    return an annotated integer. In order to make this very explicit, we define a constant hash
+    function, i.e. the same value is returned by it regardless of the input.
+    """
+
+    def constant_hash_function(a: int) -> str:
+        return "hash"
+
+    @task
+    def t0(a: int) -> Annotated[int, HashMethod(function=constant_hash_function)]:
+        return a
+
+    @task(cache=True, cache_version="0.0.1")
+    def t1(cached_a: int) -> int:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+        return cached_a
+
+    @workflow
+    def wf(a: int) -> int:
+        annotated_a = t0(a=a)
+        return t1(cached_a=annotated_a)
+
+    assert n_cached_task_calls == 0
+    assert wf(a=3) == 3
+    assert n_cached_task_calls == 1
+    # Confirm that the value is cached due to the fact the hash value is constant, regardless
+    # of the value passed to the cacheable task.
+    assert wf(a=2) == 3
+    assert n_cached_task_calls == 1
+    # Confirm that the cache is hit if we execute the workflow with the same value as previous run.
+    assert wf(a=2) == 3
+    assert n_cached_task_calls == 1
+
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+@pytest.mark.serial
+def test_pass_annotated_to_downstream_tasks():
+    @task
+    def t0(a: int) -> Annotated[int, HashMethod(function=str)]:
+        return a + 1
+
+    @task(cache=True, cache_version="42")
+    def downstream_t(a: int) -> int:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+        return a + 2
+
+    @dynamic
+    def t1(a: int) -> int:
+        v = t0(a=a)
+
+        # We should have a cache miss in the first call to downstream_t and have a cache hit
+        # on the second call.
+        downstream_t(a=v)
+        v_2 = downstream_t(a=v)
+
+        return v_2
+
+    assert n_cached_task_calls == 0
+    assert t1(a=3) == 6
+    assert n_cached_task_calls == 1
+
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+@pytest.mark.serial
+def test_pd_dataframe_hash():
+    """
+    Test that cache is hit in the case of pd dataframes where we annotated dataframes to hash
+    the contents of the dataframes.
+    """
+    import pandas as pd
+
+    def hash_pd_dataframe(df: pd.DataFrame) -> str:
+        return str(pd.util.hash_pandas_object(df))
+
+    @task
+    def uncached_data_reading_task() -> Annotated[pd.DataFrame, HashMethod(hash_pd_dataframe)]:
+        return pd.DataFrame({"column_1": [1, 2, 3]})
+
+    @task(cache=True, cache_version="0.1")
+    def cached_data_processing_task(data: pd.DataFrame) -> pd.DataFrame:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+        return data * 2
+
+    @workflow
+    def my_workflow():
+        raw_data = uncached_data_reading_task()
+        cached_data_processing_task(data=raw_data)
+
+    assert n_cached_task_calls == 0
+    my_workflow()
+    assert n_cached_task_calls == 1
+
+    # Confirm that we see a cache hit in the case of annotated dataframes.
+    my_workflow()
+    assert n_cached_task_calls == 1
+
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+@pytest.mark.serial
+def test_list_of_pd_dataframe_hash():
+    """
+    Test that cache is hit in the case of a list of pd dataframes where we annotated dataframes to hash
+    the contents of the dataframes.
+    """
+    import pandas as pd
+
+    def hash_pd_dataframe(df: pd.DataFrame) -> str:
+        return str(pd.util.hash_pandas_object(df))
+
+    @task
+    def uncached_data_reading_task() -> List[Annotated[pd.DataFrame, HashMethod(hash_pd_dataframe)]]:
+        return [pd.DataFrame({"column_1": [1, 2, 3]}), pd.DataFrame({"column_1": [10, 20, 30]})]
+
+    @task(cache=True, cache_version="0.1")
+    def cached_data_processing_task(data: List[pd.DataFrame]) -> List[pd.DataFrame]:
+        global n_cached_task_calls
+        n_cached_task_calls += 1
+        return [df * 2 for df in data]
+
+    @workflow
+    def my_workflow():
+        raw_data = uncached_data_reading_task()
+        cached_data_processing_task(data=raw_data)
+
+    assert n_cached_task_calls == 0
+    my_workflow()
+    assert n_cached_task_calls == 1
+
+    # Confirm that we see a cache hit in the case of annotated dataframes.
+    my_workflow()
+    assert n_cached_task_calls == 1
+
+
+@pytest.mark.serial
+def test_cache_key_repetition():
+    pt = Dict
+    lt = TypeEngine.to_literal_type(pt)
+    ctx = FlyteContextManager.current_context()
+    kwargs = {
+        "a": 0.41083513079747874,
+        "b": 0.7773927872515183,
+        "c": 17,
+    }
+    keys = set()
+    for i in range(0, 100):
+        lit = TypeEngine.to_literal(ctx, kwargs, Dict, lt)
+        lm = LiteralMap(
+            literals={
+                "d": lit,
+            }
+        )
+        key = _calculate_cache_key("t1", "007", lm)
+        keys.add(key)
+
+    assert len(keys) == 1
+
+
+@pytest.mark.serial
+def test_stable_cache_key():
+    """
+    The intent of this test is to ensure cache keys are stable across releases and python versions.
+    """
+    pt = Dict
+    lt = TypeEngine.to_literal_type(pt)
+    ctx = FlyteContextManager.current_context()
+    kwargs = {
+        "a": 42,
+        "b": "abcd",
+        "c": 0.12349,
+        "d": [1, 2, 3],
+        "e": {
+            "e_a": 11,
+            "e_b": list(range(1000)),
+            "e_c": {
+                "e_c_a": 12.34,
+                "e_c_b": "a string",
+            },
+        },
+    }
+    lit = TypeEngine.to_literal(ctx, kwargs, Dict, lt)
+    lm = LiteralMap(
+        literals={
+            "lit_1": lit,
+            "lit_2": TypeEngine.to_literal(ctx, 99, int, LiteralType(simple=SimpleType.INTEGER)),
+            "lit_3": TypeEngine.to_literal(ctx, 3.14, float, LiteralType(simple=SimpleType.FLOAT)),
+            "lit_4": TypeEngine.to_literal(ctx, True, bool, LiteralType(simple=SimpleType.BOOLEAN)),
+        }
+    )
+    key = _calculate_cache_key("task_name_1", "31415", lm)
+    assert key == "task_name_1-31415-e3a85f91467d1e1f721ebe8129b2de31"
+
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+def calculate_cache_key_multiple_times(x, n=1000):
+    import pandas as pd
+
+    series = pd.Series(
+        [
+            _calculate_cache_key(
+                task_name="task_name",
+                cache_version="cache_version",
+                input_literal_map=LiteralMap(
+                    literals={
+                        "d": TypeEngine.to_literal(
+                            ctx=FlyteContextManager.current_context(),
+                            expected=TypeEngine.to_literal_type(Dict),
+                            python_type=Dict,
+                            python_val=x,
+                        ),
+                    }
+                ),
+            )
+            for _ in range(n)
+        ]
+    ).value_counts()
+    return series
+
+
+@pytest.mark.skipif("pandas" not in sys.modules, reason="Pandas is not installed.")
+@pytest.mark.parametrize(
+    "d",
+    [
+        dict(a=1, b=2, c=3),
+        dict(x=dict(a=1, b=2, c=3)),
+        dict(xs=[dict(a=1, b=2, c=3), dict(y=dict(a=10, b=20, c=30))]),
+    ],
+)
+@pytest.mark.serial
+def test_cache_key_consistency(d):
+    assert len(calculate_cache_key_multiple_times(d)) == 1
+
+
+@pytest.mark.serial
+def test_literal_hash_placement():
+    """
+    Test that hashes on literal collections and maps are preserved by the
+    _recursive_hash_placement function used in cache key calculations.
+    """
+    lit = Literal(scalar=Scalar(primitive=Primitive(string_value="test")))
+
+    litmap = Literal(map=LiteralMap(literals={"test": lit}), hash="0xffff")
+    litcoll = Literal(collection=LiteralCollection(literals=[lit]), hash="0xffff")
+
+    assert litmap.hash == _recursive_hash_placement(litmap).hash
+    assert litcoll.hash == _recursive_hash_placement(litcoll).hash
+
+
+@task(cache=True, cache_version="v0")
+def t2(n: int) -> int:
+    ctx = flytekit.current_context()
+    cp = ctx.checkpoint
+    cp.write(bytes(n + 1))
+    return n + 1
+
+
+@pytest.mark.serial
+def test_checkpoint_cached_task():
+    assert t2(n=5) == 6
+
+
+@pytest.mark.serial
+def test_cache_ignore_input_vars():
+    @task(cache=True, cache_version="v1", cache_ignore_input_vars=["a"])
+    def add(a: int, b: int) -> int:
+        return a + b
+
+    @workflow
+    def add_wf(a: int, b: int) -> int:
+        return add(a=a, b=b)
+
+    assert add_wf(a=10, b=5) == 15
+    assert add_wf(a=20, b=5) == 15  # since a is ignored, this line will hit cache of a=10, b=5
+    assert add_wf(a=20, b=8) == 28
+
+
+@pytest.mark.serial
+def test_set_cache_ignore_input_vars_without_set_cache():
+    with pytest.raises(
+        ValueError,
+        match=re.escape(
+            "Cache ignore input vars are specified ``cache_ignore_input_vars=['a']`` but ``cache`` is not enabled."
+        ),
+    ):
+
+        @task(cache_ignore_input_vars=["a"])
+        def add(a: int, b: int) -> int:
+            return a + b
+
+
+@pytest.mark.serial
+def test_cache_old_version_of_literal_map():
+    cache_key = "t.produce_dc-1-ea65cfadb0079394a8be1f4aa1e96e2b"
+
+    # Load a literal map from a previous version of the cache from a local file
+    with open(pathlib.Path(__file__).parent / "testdata/pickled_value.bin", "rb") as f:
+        literal_map = pickle.loads(f.read())
+        LocalTaskCache._cache.set(cache_key, literal_map)
+
+    assert _calculate_cache_key("t.produce_dc", "1", LiteralMap(literals={})) == cache_key
+
+    # Hit the cache directly and confirm that the loaded object does not have the `_offloaded_metadata` attribute
+    literal_map = LocalTaskCache._cache.get(cache_key)
+    assert hasattr(literal_map.literals['o0'], "_offloaded_metadata") is False
+
+    # Now load the same object from the cache and confirm that the `_offloaded_metadata` attribute is now present
+    loaded_literal_map = LocalTaskCache.get("t.produce_dc", "1", LiteralMap(literals={}), ())
+    assert hasattr(loaded_literal_map.literals['o0'], "_offloaded_metadata") is True
+
+
+def test_import_flytekit_does_not_import_diskcache():
+    # Use a fresh interpreter, since other tests in this process may already have imported diskcache.
+    code = textwrap.dedent(
+        """
+        import sys
+
+        import flytekit
+        import flytekit.clis.sdk_in_container.pyflyte
+        import flytekit.core.base_task
+
+        assert "diskcache" not in sys.modules, "diskcache was imported when loading flytekit"
+        """
+    )
+    subprocess.run([sys.executable, "-c", code], check=True)
+
+
+def test_import_flytekit_without_diskcache():
+    # Setting sys.modules["diskcache"] to None makes "import diskcache" raise ImportError,
+    # which simulates an environment where diskcache is not installed.
+    code = textwrap.dedent(
+        """
+        import sys
+
+        sys.modules["diskcache"] = None
+
+        import flytekit
+        from flytekit.core.local_cache import LocalTaskCache
+
+        try:
+            LocalTaskCache.initialize()
+        except ImportError:
+            pass
+        else:
+            raise AssertionError("LocalTaskCache.initialize() should fail without diskcache")
+        """
+    )
+    subprocess.run([sys.executable, "-c", code], check=True)

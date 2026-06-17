@@ -17,3 +17,5 @@ setup(
     author_email="admin@flyte.org",
     description="This package holds the flyteinteractive plugins for flytekit",
     namespace_packages=["flytekitplugins"],
+    packages=[
+        f"flytekitplugins.{PLUGIN_NAME}",

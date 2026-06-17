@@ -17,3 +17,7 @@ except ImportError:
     logger.debug(
         "Pydantic is not installed.\n" "Please install Pydantic version > 2 to use FlyteTypes in pydantic BaseModel."
     )
+
+    FuncType = TypeVar("FuncType", bound=Callable[..., Any])
+
+    from typing_extensions import Literal as typing_literal

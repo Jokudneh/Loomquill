@@ -33,3 +33,5 @@ def test_training_job_task_interface_and_custom():
             "ResourceConfig": {
                 "InstanceType": "ml.m5.xlarge",
                 "InstanceCount": 1,
+                "VolumeSizeInGB": 30,
+            },

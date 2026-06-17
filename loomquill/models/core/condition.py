@@ -68,3 +68,6 @@ class ComparisonExpression(_common.FlyteIdlEntity):
     def from_flyte_idl(cls, pb2_object):
         return cls(
             operator=pb2_object.operator,
+            left_value=Operand.from_flyte_idl(pb2_object.left_value),
+            right_value=Operand.from_flyte_idl(pb2_object.right_value),
+        )

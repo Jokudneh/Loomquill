@@ -26,3 +26,7 @@ def test_huggingface_dataset_workflow_subset():
         dataset = df.open(datasets.Dataset).all()
 
         assert dataset[0]["col2"] == "a"
+        assert dataset[1]["col2"] == "b"
+        assert dataset[2]["col2"] == "c"
+
+        return StructuredDataset(dataframe=dataset)

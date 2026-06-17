@@ -15,3 +15,5 @@ publish_all_plugins:
 
 .PHONY: all_requirements
 all_requirements:
+	./run_all_plugins.sh pip-compile requirements.in --upgrade --verbose
+

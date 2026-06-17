@@ -53,3 +53,6 @@ def test_get_registrable_entities():
             domain="d",
             version="v",
             image_config=flytekit.configuration.ImageConfig(
+                default_image=flytekit.configuration.Image("def", "docker.io/def", "latest")
+            ),
+        )

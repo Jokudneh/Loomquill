@@ -9,3 +9,6 @@ Similar to {{< py_class_ref flytekit.types.file.FlyteFile >}} there are some 'pr
 
 """
 
+import typing
+
+from .types import FlyteDirectory, FlyteDirToMultipartBlobTransformer

@@ -61,3 +61,6 @@ class BaseDBTInput(DataClassJsonMixin):
                 args.append(f"--{flag}")
                 if isinstance(value, bool):
                     continue
+
+                if isinstance(value, list):
+                    args += value

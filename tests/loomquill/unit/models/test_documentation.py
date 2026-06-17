@@ -14,3 +14,5 @@ def test_long_description():
 def test_source_code():
     link = "https://github.com/flyteorg/flytekit"
     obj = SourceCode(link=link)
+    assert SourceCode.from_flyte_idl(obj.to_flyte_idl()) == obj
+    assert obj.link == link

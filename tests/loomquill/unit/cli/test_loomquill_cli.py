@@ -31,3 +31,5 @@ def test__extract_files_with_unspecified_resource_type(load_mock):
 def _identity_dummy(a, b, project, domain, version, patches):
     return (a, b)
 
+
+@mock.patch("flytekit.clis.flyte_cli.main._extract_pair", new=_identity_dummy)

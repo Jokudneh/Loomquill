@@ -43,3 +43,7 @@ def test_parquet():
     @workflow
     def parquet_wf(parquet_file: str) -> pd.DataFrame:
         return parquet_duckdb_query(params=[parquet_file])
+
+    assert isinstance(
+        parquet_wf(parquet_file="https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2022-02.parquet"),
+        pd.DataFrame,

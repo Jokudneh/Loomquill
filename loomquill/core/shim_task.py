@@ -29,3 +29,6 @@ class ExecutableTemplateShimTask(object):
     > The interface at execution time will have to derived from the Flyte IDL interface, which means it may be lossy.
       This is because when a task is serialized from Python into the ``TaskTemplate`` some information is lost because
        Flyte IDL can't keep track of every single Python type (or Java type if writing in the Java flytekit).
+
+    This class also implements the ``dispatch_execute`` and ``execute`` functions to make it look like a ``PythonTask``
+    that the ``entrypoint.py`` can execute, even though this class doesn't inherit from ``PythonTask``.

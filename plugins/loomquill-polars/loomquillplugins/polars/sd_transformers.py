@@ -28,3 +28,5 @@ else:
 ############################
 
 
+class PolarsDataFrameRenderer:
+    """

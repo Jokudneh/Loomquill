@@ -8,3 +8,4 @@
    SageMakerHyperParameterTuningJobConnector
    SageMakerHyperParameterTuningJobTask
    SageMakerStopHyperParameterTuningJobTask
+   SageMakerDescribeHyperParameterTuningJobTask

@@ -30,3 +30,4 @@ from flytekit.loggers import logger
 @click.group("pyflyte", invoke_without_command=True, cls=ErrorHandlingCommand)
 @click.option(
     "-v",
+    "--verbose",

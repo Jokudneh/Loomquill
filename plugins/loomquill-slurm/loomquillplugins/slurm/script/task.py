@@ -38,3 +38,6 @@ class SlurmConfig(object):
 
 @dataclass
 class SlurmScriptConfig(SlurmConfig):
+    """Encounter collision if Slurm is shared btw SlurmTask and SlurmShellTask."""
+
+    batch_script_path: str = field(default=None)

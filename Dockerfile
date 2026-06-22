@@ -15,3 +15,4 @@ ARG DOCKER_IMAGE
 # Note: Some packages will create config files under /home by default, so we need to make sure it's writable
 # Note: There are use cases that require reading and writing files under /tmp, so we need to change its permissions.
 
+# Run a series of commands to set up the environment:

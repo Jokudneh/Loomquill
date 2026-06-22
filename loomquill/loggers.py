@@ -65,3 +65,5 @@ def set_user_logger_properties(
 ):
     """
     user_space logger, refers to the user's logger. It is possible to selectively tune the logging for the user.
+
+    :param handler: logging.Handler to add to the user_space_logger

@@ -24,3 +24,6 @@ def test_list_projects_paginated(mock_raw_list_projects):
     project_list_request = _project_pb2.ProjectListRequest(limit=100, token="", filters=None, sort_by=None)
     mock_raw_list_projects.assert_called_with(project_list_request=project_list_request)
 
+
+@mock.patch("flytekit.clients.friendly._RawSynchronousFlyteClient.create_upload_location")
+def test_create_upload_location(mock_raw_create_upload_location):

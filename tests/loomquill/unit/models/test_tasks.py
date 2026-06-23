@@ -110,3 +110,4 @@ def test_task_template(in_tuple):
             ["this", "is", "a", "cmd"],
             ["this", "is", "an", "arg"],
             resources,
+            {"a": "b"},

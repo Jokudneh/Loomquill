@@ -36,3 +36,6 @@ def test_check_if_valid_dictconfig(config, should_raise, match) -> None:
             check_if_valid_dictconfig(config)
     else:
         check_if_valid_dictconfig(config)
+
+
+@pytest.mark.parametrize(

@@ -31,3 +31,7 @@ def _prepare_remote(
         # because we can assume that the user is running this from their local machine and can do browser-based
         # authentication.
         logger.info("Running eager workflow as local entrypoint")
+        return remote
+
+    if remote is None or is_local_execution_mode:
+        # if running the "eager workflow" (which is actually task) locally, run the task as a function,

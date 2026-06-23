@@ -870,3 +870,7 @@ def test_dataclass_transformer_with_dataclassjsonmixin():
                 "propertyNames": {"type": "string"},
             },
         },
+        "additionalProperties": False,
+        "required": ["s", "m"],
+    }
+

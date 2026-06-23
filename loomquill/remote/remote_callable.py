@@ -35,3 +35,6 @@ class RemoteEntity(ABC):
 
     def compile(self, ctx: FlyteContext, *args, **kwargs):
         return create_and_link_node_from_remote(ctx, entity=self, **kwargs)  # noqa
+
+    def __call__(self, *args, **kwargs):
+        # When a Task is () aka __called__, there are three things we may do:

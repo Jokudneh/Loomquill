@@ -54,3 +54,5 @@ domain_option_dec = click.option(
     required=False,
     type=str,
     default=os.getenv("FLYTE_DEFAULT_DOMAIN") or task_config.domain,
+    show_default=True,
+    help="Domain for workflow/launchplan, can also be set through envvar " "``FLYTE_DEFAULT_DOMAIN``",

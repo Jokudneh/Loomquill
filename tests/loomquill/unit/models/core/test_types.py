@@ -20,3 +20,6 @@ def test_blob_type():
     assert o == o2
     assert o2.format == "csv"
     assert o2.dimensionality == _types.BlobType.BlobDimensionality.SINGLE
+
+
+def test_enum_type():

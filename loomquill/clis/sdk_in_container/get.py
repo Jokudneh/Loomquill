@@ -24,3 +24,7 @@ def get(ctx: click.Context):
 
 
 @get.command()
+@click.option("--active-only", "--scheduled", is_flag=True, default=False, help="Only return active launchplans.")
+@project_option_dec
+@domain_option_dec
+@click.option("--limit", "-l", type=int, default=1000, help="Limit the number of launchplans returned.")

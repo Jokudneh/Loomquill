@@ -74,3 +74,4 @@ def _task_template():
         interface=None,
         type="sagemaker-training-job",
     )
+

@@ -52,3 +52,7 @@ class MMCloudConnector(AsyncConnectorBase):
             except subprocess.CalledProcessError:
                 logger.exception("Failed to log in to OpCenter")
                 raise
+
+            logger.info("Logged in to OpCenter")
+
+    async def create(

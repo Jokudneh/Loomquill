@@ -321,3 +321,6 @@ class ApproveCondition(_common.FlyteIdlEntity):
         return cls(signal_id=pb2_object.signal_id)
 
 
+class SleepCondition(_common.FlyteIdlEntity):
+    def __init__(self, duration: datetime.timedelta):
+        """

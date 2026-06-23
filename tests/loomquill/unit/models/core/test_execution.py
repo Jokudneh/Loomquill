@@ -21,3 +21,4 @@ def test_task_logs():
 def test_execution_error():
     obj = execution.ExecutionError("code", "message", "uri", execution.ExecutionError.ErrorKind.UNKNOWN)
     assert obj.code == "code"
+    assert obj.message == "message"

@@ -21,3 +21,7 @@ from loomquillplugins.kftensorflow import PS, Chief, CleanPodPolicy, RestartPoli
 
 @task(
     task_config=TfJob(
+        worker=Worker(
+            replicas=5,
+            requests=Resources(cpu="2", mem="2Gi"),
+            limits=Resources(cpu="2", mem="2Gi"),

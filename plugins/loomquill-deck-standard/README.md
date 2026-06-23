@@ -24,3 +24,7 @@ The table below outlines the dependencies for each renderer:
 | BoxRenderer             | `pandas`, `plotly`          |
 | ImageRenderer           | `pillow`    |
 | TableRenderer           | `pandas`                    |
+| GanttChartRenderer      | `pandas`, `plotly`  |
+
+## Renderer Descriptions
+

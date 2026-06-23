@@ -192,3 +192,4 @@ class _NamespaceDiscoveryCache:
     async def invalidate(self, namespace: str) -> None:
         async with self._lock:
             self._store.pop(namespace, None)
+

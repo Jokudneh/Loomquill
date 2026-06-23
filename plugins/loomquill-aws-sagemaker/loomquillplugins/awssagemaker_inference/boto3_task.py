@@ -26,3 +26,5 @@ class BotoTask(SyncConnectorExecutorMixin, PythonTask[BotoConfig]):
         name: str,
         task_config: BotoConfig,
         inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,
+    ):

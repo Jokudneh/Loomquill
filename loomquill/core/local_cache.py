@@ -35,3 +35,4 @@ def _recursive_hash_placement(literal: Literal) -> Literal:
 def _calculate_cache_key(
     task_name: str,
     cache_version: str,
+    input_literal_map: ModelLiteralMap,

@@ -28,3 +28,4 @@ class PILImageTransformer(TypeTransformer[T]):
             blob=_core_types.BlobType(
                 format=self.FILE_FORMAT, dimensionality=_core_types.BlobType.BlobDimensionality.SINGLE
             )
+        )

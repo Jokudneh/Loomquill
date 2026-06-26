@@ -25,3 +25,5 @@ from loomquillplugins.kftensorflow import PS, Chief, CleanPodPolicy, RestartPoli
             replicas=5,
             requests=Resources(cpu="2", mem="2Gi"),
             limits=Resources(cpu="2", mem="2Gi"),
+            restart_policy=RestartPolicy.FAILURE,
+        ),

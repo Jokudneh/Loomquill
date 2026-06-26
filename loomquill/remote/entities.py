@@ -189,3 +189,5 @@ class FlyteTask(hash_mixin.HashOnReferenceMixin, RemoteEntity, TaskSpec):
             k8s_pod=base_model.k8s_pod,
             sql=base_model.sql,
             extended_resources=base_model.extended_resources,
+        )
+        # Override the newly generated name if one exists in the base model

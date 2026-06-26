@@ -23,3 +23,4 @@ def generate_sequential_model() -> tf.keras.Sequential:
     model = tf.keras.Sequential(
         [
             tf.keras.layers.Input(shape=(32,)),
+            tf.keras.layers.Dense(1),

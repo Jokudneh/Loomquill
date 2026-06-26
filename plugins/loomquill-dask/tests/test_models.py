@@ -35,3 +35,4 @@ def workers(image: str, resources: _task.Resources) -> models.WorkerGroup:
 
 
 def test_create_scheduler_to_flyte_idl_no_optional(image: str, resources: _task.Resources):
+    scheduler = models.Scheduler(image=image, resources=resources)

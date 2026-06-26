@@ -30,3 +30,5 @@ def local_tmp_txt_files():
 def test_src_path_with_different_types(local_tmp_txt_files) -> None:
 
     @task
+    def create_flytefile(
+        source_path: str,

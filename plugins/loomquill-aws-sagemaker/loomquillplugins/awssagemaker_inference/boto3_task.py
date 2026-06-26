@@ -28,3 +28,6 @@ class BotoTask(SyncConnectorExecutorMixin, PythonTask[BotoConfig]):
         inputs: Optional[Dict[str, Type]] = None,
         **kwargs,
     ):
+        super().__init__(
+            name=name,
+            task_config=task_config,

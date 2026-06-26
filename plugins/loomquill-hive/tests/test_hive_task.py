@@ -29,3 +29,6 @@ def test_serialization():
 
     @workflow
     def my_wf(in_schema: FlyteSchema, ds: str) -> FlyteSchema:
+        return hive_task(my_schema=in_schema, ds=ds)
+
+    default_img = Image(name="default", fqn="test", tag="tag")

@@ -29,3 +29,6 @@ order_payments as (
 
 ),
 
+final as (
+
+    select

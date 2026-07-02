@@ -21,3 +21,4 @@ RUN pip install .
 
 # Switch back to flytekit user
 USER flytekit
+

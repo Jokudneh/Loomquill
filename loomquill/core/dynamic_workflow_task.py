@@ -31,3 +31,7 @@ cannot make use of their inputs like native Python values whereas dynamic workfl
 The resulting workflow is passed back to the Flyte engine and is
 run as a :std:ref:`subworkflow <cookbook:subworkflows>`.  Simple usage
 
+```python
+@dynamic
+def my_dynamic_subwf(a: int) -> (typing.List[str], int):
+    s = []

@@ -200,3 +200,7 @@ def test_basic_option_a():
     assert t1_s.template.interface.outputs["o0"].artifact_partial_id.version == ""
     assert t1_s.template.interface.outputs["o0"].artifact_partial_id.artifact_key.name == "my_data"
     assert t1_s.template.interface.outputs["o0"].artifact_partial_id.artifact_key.project == ""
+    assert t1_s.template.interface.outputs["o0"].artifact_partial_id.time_partition is not None
+
+
+def test_basic_dynamic():

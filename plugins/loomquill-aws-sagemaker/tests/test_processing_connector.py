@@ -110,3 +110,6 @@ def _completed_describe_response():
 
 
 def test_build_outputs_preserves_feature_store_destination():
+    result = _build_outputs(
+        {
+            "ProcessingOutputConfig": {

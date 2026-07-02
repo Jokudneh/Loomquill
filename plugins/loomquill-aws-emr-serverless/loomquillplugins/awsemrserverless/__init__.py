@@ -10,3 +10,5 @@ Serverless job lifecycle (submit, poll, cancel) and a task config type.
    :toctree: generated/
 
    EMRServerless
+   EMRServerlessSparkJobDriver
+   EMRServerlessHiveJobDriver

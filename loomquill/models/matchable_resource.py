@@ -97,3 +97,5 @@ class ExecutionQueueAttributes(_common.FlyteIdlEntity):
         """
         self._tags = tags
 
+    @property
+    def tags(self):

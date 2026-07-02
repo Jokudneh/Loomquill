@@ -33,3 +33,7 @@ env:
         key: client_secret
 ```
 
+For per-namespace identities, create a `databricks-oauth` Secret in each
+workflow namespace:
+
+```yaml

@@ -19,3 +19,6 @@ setup(
     long_description_content_type="text/markdown",
     packages=["flytekitplugins.dgxc_lepton"],
     install_requires=plugin_requires,
+    python_requires=">=3.9",
+    classifiers=[
+        "Intended Audience :: Science/Research",

@@ -33,3 +33,6 @@ class VersionParameters(Generic[P, FuncOut]):
 @runtime_checkable
 class CachePolicy(Protocol):
     def get_version(self, salt: str, params: VersionParameters) -> str: ...
+
+
+@dataclass

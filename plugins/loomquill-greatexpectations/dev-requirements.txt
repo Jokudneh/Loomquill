@@ -65,3 +65,4 @@ cloudpickle==3.0.0
     # via loomquill
 cookiecutter==2.5.0
     # via loomquill
+croniter==2.0.1

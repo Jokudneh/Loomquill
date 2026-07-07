@@ -136,3 +136,7 @@ class DatabricksV2(Spark):
             databricks_instance="my-workspace.cloud.databricks.com",
         )
 
+    Example - Serverless Compute with pre-configured environment::
+
+        DatabricksV2(
+            databricks_conf={

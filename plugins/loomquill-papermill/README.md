@@ -4,3 +4,4 @@ It is possible to run a Jupyter notebook as a Loomquill task using Papermill. Pa
 
 To install the plugin, run the following command:
 
+```bash

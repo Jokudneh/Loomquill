@@ -32,3 +32,4 @@ class FileExt:
         if get_origin(item) is not Annotated:
             return str(item)
         if get_args(item)[0] == str:
+            return str(get_args(item)[1])

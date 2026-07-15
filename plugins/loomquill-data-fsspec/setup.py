@@ -23,3 +23,4 @@ setup(
     packages=[f"flytekitplugins.{PLUGIN_NAME}"],
     install_requires=plugin_requires,
     extras_require={
+        # https://github.com/fsspec/filesystem_spec/blob/master/setup.py#L36

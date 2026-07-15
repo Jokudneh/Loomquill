@@ -6,3 +6,4 @@ for any service. This is like running a transient (ephemeral) `dask` cluster - a
 task and torn down after completion. This helps in making sure that the Python environment is the same on the job-runner
 (driver), scheduler and the workers.
 
+To install the plugin, run the following command:

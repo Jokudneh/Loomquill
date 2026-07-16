@@ -27,3 +27,27 @@ class Options(object):
     """
 
     labels: typing.Optional[common_models.Labels] = None
+    annotations: typing.Optional[common_models.Annotations] = None
+    raw_output_data_config: typing.Optional[common_models.RawOutputDataConfig] = None
+    security_context: typing.Optional[security.SecurityContext] = None
+    max_parallelism: typing.Optional[int] = None
+    notifications: typing.Optional[typing.List[common_models.Notification]] = None
+    disable_notifications: typing.Optional[bool] = None
+    overwrite_cache: typing.Optional[bool] = None
+
+    @classmethod
+    def default_from(
+        cls,
+        k8s_service_account: typing.Optional[str] = None,
+        raw_data_prefix: typing.Optional[str] = None,
+    ) -> "Options":
+        return cls(
+            security_context=(
+                security.SecurityContext(run_as=security.Identity(k8s_service_account=k8s_service_account))
+                if k8s_service_account
+                else None
+            ),
+            raw_output_data_config=(
+                common_models.RawOutputDataConfig(output_location_prefix=raw_data_prefix) if raw_data_prefix else None
+            ),
+        )

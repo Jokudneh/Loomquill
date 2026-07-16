@@ -16,3 +16,9 @@ except (ImportError, OSError):
 
 
 if _torch_installed:
+    from .checkpoint import PyTorchCheckpoint, PyTorchCheckpointTransformer
+    from .native import PyTorchModuleTransformer, PyTorchTensorTransformer
+else:
+    logger.info(
+        "We won't register PyTorchCheckpointTransformer, PyTorchTensorTransformer, and PyTorchModuleTransformer because torch is not installed."
+    )

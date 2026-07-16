@@ -9,3 +9,14 @@ To install the plugin, run the following command:
 pip install loomquillplugins-mlflow
 ```
 
+Example
+```python
+from loomquill import task, workflow
+from loomquillplugins.mlflow import mlflow_autolog
+import mlflow
+
+@task(enable_deck=True)
+@mlflow_autolog(framework=mlflow.keras)
+def train_model():
+    ...
+```

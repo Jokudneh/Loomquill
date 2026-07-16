@@ -28,3 +28,53 @@ class PrestoQuery(_common.FlyteIdlEntity):
 
     @property
     def routing_group(self):
+        """
+        The query string.
+        :rtype: str
+        """
+        return self._routing_group
+
+    @property
+    def catalog(self):
+        """
+        :rtype: int
+        """
+        return self._catalog
+
+    @property
+    def schema(self):
+        """
+        :rtype: int
+        """
+        return self._schema
+
+    @property
+    def statement(self):
+        """
+        :rtype: int
+        """
+        return self._statement
+
+    def to_flyte_idl(self):
+        """
+        :rtype: _presto.PrestoQuery
+        """
+        return _presto.PrestoQuery(
+            routing_group=self._routing_group,
+            catalog=self._catalog,
+            schema=self._schema,
+            statement=self._statement,
+        )
+
+    @classmethod
+    def from_flyte_idl(cls, pb2_object):
+        """
+        :param _presto.PrestoQuery pb2_object:
+        :return: PrestoQuery
+        """
+        return cls(
+            routing_group=pb2_object.routing_group,
+            catalog=pb2_object.catalog,
+            schema=pb2_object.schema,
+            statement=pb2_object.statement,
+        )

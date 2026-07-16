@@ -53,3 +53,78 @@ def wf_with_multioutput_error1(a: int, b: int) -> Tuple[str, int]:
 
 
 @given(st.booleans() | st.integers() | st.text(ascii_lowercase))
+@settings(deadline=timedelta(seconds=2))
+def test_task_input_error(incorrect_input):
+    with pytest.raises(
+        TypeError,
+        match=(
+            r"Failed to convert inputs of task '{}':\n"
+            r"  Failed argument 'a': Expected value of type \<class 'float'\> but got .+ of type .+"
+        ).format(task_correct_output.name),
+    ):
+        task_correct_output(a=incorrect_input)
+
+
+@given(st.floats())
+@settings(deadline=timedelta(seconds=2))
+def test_task_output_error(correct_input):
+    with pytest.raises(
+        TypeTransformerFailedError,
+        match=(
+            r"Failed to convert outputs of task '{}' at position 0\.\n"
+            r"Failed to convert type .+ to type .+\.\n"
+            r"Error Message: Expected value of type \<class 'int'\> but got .+ of type .+"
+        ).format(re.escape(task_incorrect_output.name)),
+    ):
+        task_incorrect_output(a=correct_input)
+
+
+@given(st.integers())
+@settings(deadline=timedelta(seconds=2))
+def test_workflow_with_task_error(correct_input):
+    with pytest.raises(
+        TypeTransformerFailedError,
+        match=(
+            r"Failed to convert outputs of task '.+' at position 0\.\n"
+            r"Failed to convert type .+ to type .+\.\n"
+            r"Error Message: Expected value of type \<class 'int'\> but got .+ of type .+"
+        ),
+    ):
+        wf_with_task_error(a=correct_input)
+
+
+@given(st.booleans() | st.floats() | st.text(ascii_lowercase))
+@settings(deadline=timedelta(seconds=2))
+def test_workflow_with_input_error(incorrect_input):
+    with pytest.raises(
+        TypeError,
+        match=r"Failed argument".format(),
+    ):
+        wf_with_output_error(a=incorrect_input)
+
+
+@given(st.integers())
+@settings(deadline=timedelta(seconds=2))
+def test_workflow_with_output_error(correct_input):
+    with pytest.raises(
+        TypeError,
+        match=r"Failed to convert output in position 0 of value [\s\S]+, expected type \<class 'int'\>",
+    ):
+        wf_with_output_error(a=correct_input)
+
+
+@pytest.mark.parametrize(
+    "workflow, position",
+    [
+        (wf_with_multioutput_error0, 0),
+        (wf_with_multioutput_error1, 1),
+    ],
+)
+@given(st.integers())
+@settings(deadline=timedelta(seconds=2))
+def test_workflow_with_multioutput_error(workflow, position, correct_input):
+    with pytest.raises(
+        TypeError,
+        match=(r"Failed to convert output in position {} of value [\s\S]+, expected type \<class 'int'\>").format(position),
+    ):
+        workflow(a=correct_input, b=correct_input)

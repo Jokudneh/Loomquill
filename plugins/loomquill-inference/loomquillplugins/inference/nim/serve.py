@@ -63,3 +63,129 @@ class NIM(ModelInferenceTemplate):
             raise ValueError("Secrets prefix must be provided.")
 
         self._shm_size = shm_size
+        self._hf_repo_ids = hf_repo_ids
+        self._lora_adapter_mem = lora_adapter_mem
+        self._secrets = secrets
+
+        super().__init__(
+            image=image,
+            health_endpoint=health_endpoint,
+            port=port,
+            cpu=cpu,
+            gpu=gpu,
+            mem=mem,
+            ephemeral_storage=ephemeral_storage,
+            env=env,
+        )
+
+        self.setup_nim_pod_template()
+
+    def setup_nim_pod_template(self):
+        from kubernetes.client.models import (
+            V1Container,
+            V1EmptyDirVolumeSource,
+            V1EnvVar,
+            V1LocalObjectReference,
+            V1ResourceRequirements,
+            V1SecurityContext,
+            V1Volume,
+            V1VolumeMount,
+        )
+
+        self.pod_template.pod_spec.volumes = [
+            V1Volume(
+                name="dshm",
+                empty_dir=V1EmptyDirVolumeSource(medium="Memory", size_limit=self._shm_size),
+            )
+        ]
+
+        if self._secrets.ngc_image_secret:
+            self.pod_template.pod_spec.image_pull_secrets = [
+                V1LocalObjectReference(name=self._secrets.ngc_image_secret)
+            ]
+
+        model_server_container = self.pod_template.pod_spec.init_containers[0]
+
+        if self._secrets.ngc_secret_group:
+            ngc_api_key = f"$({self._secrets.secrets_prefix}{self._secrets.ngc_secret_group}_{self._secrets.ngc_secret_key})".upper()
+        else:
+            ngc_api_key = f"$({self._secrets.secrets_prefix}{self._secrets.ngc_secret_key})".upper()
+
+        if model_server_container.env:
+            model_server_container.env.append(V1EnvVar(name="NGC_API_KEY", value=ngc_api_key))
+        else:
+            model_server_container.env = [V1EnvVar(name="NGC_API_KEY", value=ngc_api_key)]
+
+        model_server_container.volume_mounts = [V1VolumeMount(name="dshm", mount_path="/dev/shm")]
+        model_server_container.security_context = V1SecurityContext(run_as_user=1000)
+
+        self.pod_template.pod_spec.volumes.append(V1Volume(name="cache", empty_dir={}))
+        model_server_container.volume_mounts.append(V1VolumeMount(name="cache", mount_path="/opt/nim/.cache"))
+
+        # Download HF LoRA adapters
+        if self._hf_repo_ids:
+            if not self._lora_adapter_mem:
+                raise ValueError("Memory to allocate to download LoRA adapters must be set.")
+
+            if self._secrets.hf_token_group:
+                hf_key = f"{self._secrets.hf_token_group}_{self._secrets.hf_token_key}".upper()
+            elif self._secrets.hf_token_key:
+                hf_key = self._secrets.hf_token_key.upper()
+            else:
+                hf_key = ""
+
+            local_peft_dir_env = next(
+                (env for env in model_server_container.env if env.name == "NIM_PEFT_SOURCE"),
+                None,
+            )
+            if local_peft_dir_env:
+                peft_mount_path = local_peft_dir_env.value
+            else:
+                # This is the directory where all LoRAs are stored for a particular model.
+                raise ValueError("NIM_PEFT_SOURCE environment variable must be set.")
+
+            self.pod_template.pod_spec.volumes.append(V1Volume(name="lora", empty_dir={}))
+            model_server_container.volume_mounts.append(V1VolumeMount(name="lora", mount_path=peft_mount_path))
+
+            self.pod_template.pod_spec.init_containers.insert(
+                0,
+                V1Container(
+                    name="download-loras",
+                    image="python:3.12-alpine",
+                    command=[
+                        "sh",
+                        "-c",
+                        f"""
+            pip install -U "huggingface_hub[cli]"
+
+            export LOCAL_PEFT_DIRECTORY={peft_mount_path}
+            mkdir -p $LOCAL_PEFT_DIRECTORY
+
+            TOKEN_VAR_NAME={self._secrets.secrets_prefix}{hf_key}
+
+            # Check if HF token is provided and login if so
+            if [ -n "$(printenv $TOKEN_VAR_NAME)" ]; then
+                huggingface-cli login --token "$(printenv $TOKEN_VAR_NAME)"
+            fi
+
+            # Download LoRAs from Huggingface Hub
+            {"".join([f'''
+            mkdir -p $LOCAL_PEFT_DIRECTORY/{repo_id.split("/")[-1]}
+            huggingface-cli download {repo_id} adapter_config.json adapter_model.safetensors --local-dir $LOCAL_PEFT_DIRECTORY/{repo_id.split("/")[-1]}
+            ''' for repo_id in self._hf_repo_ids])}
+
+            chmod -R 777 $LOCAL_PEFT_DIRECTORY
+            """,
+                    ],
+                    resources=V1ResourceRequirements(
+                        requests={"cpu": 1, "memory": self._lora_adapter_mem},
+                        limits={"cpu": 1, "memory": self._lora_adapter_mem},
+                    ),
+                    volume_mounts=[
+                        V1VolumeMount(
+                            name="lora",
+                            mount_path=peft_mount_path,
+                        )
+                    ],
+                ),
+            )

@@ -43,3 +43,5 @@ async def objective(x: float, y: int, z: int, power: int) -> float:
     return math.log((((x - 5) ** 2) + (y + 4) ** 4 + (3 * z - 3) ** 2)) ** power
 
 ```
+
+### Configure the Loomquill Workflow

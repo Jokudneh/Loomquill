@@ -28,3 +28,34 @@ def test_secret_error(monkeypatch):
     monkeypatch.setattr(flytekit.configuration.plugin, "_GLOBAL_CONFIG", mock_global_plugin)
 
     with pytest.raises(ValueError, match="Group is a required parameter"):
+        Secret(key="my_key")
+
+
+def test_secret_no_group(monkeypatch):
+    plugin_mock = Mock()
+    plugin_mock.secret_requires_group.return_value = False
+    mock_global_plugin = {"plugin": plugin_mock}
+    monkeypatch.setattr(flytekit.configuration.plugin, "_GLOBAL_CONFIG", mock_global_plugin)
+
+    s = Secret(key="key")
+    assert s.group is None
+
+
+@pytest.mark.parametrize("execution_mode", list(ExecutionState.Mode))
+def test_security_execution_context(monkeypatch, execution_mode, tmpdir):
+    # Check that groups in Secrets during any execution state
+    context_manager = Mock()
+    context = Mock()
+    context_manager.current_context.return_value = context
+    context.execution_state = ExecutionState(working_dir=tmpdir, mode=execution_mode)
+
+    monkeypatch.setattr(flytekit.core.context_manager, "FlyteContextManager", context_manager)
+    s = Secret(key="key")
+    assert s.group is None
+
+
+@pytest.mark.parametrize("env_var", ["abc-xyz", "", "$dfadsf"])
+def test_secret_validate_env_var(env_var):
+    msg = f"Invalid environment variable name: {env_var}"
+    with pytest.raises(ValueError, match=re.escape(msg)):
+        Secret(key="abc", group="group", env_var=env_var)

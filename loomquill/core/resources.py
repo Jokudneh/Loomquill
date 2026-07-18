@@ -86,3 +86,137 @@ class ResourceSpec(DataClassJSONMixin):
                 else:
                     # With a single value, only set the requests
                     requests[attr] = value
+
+        return ResourceSpec(requests=Resources(**requests), limits=Resources(**limits))
+
+
+def _check_resource_is_singular(resource: Resources):
+    """
+    Raise a value error if the resource has a tuple.
+    """
+    for field in fields(resource):
+        value = getattr(resource, field.name)
+        if isinstance(value, (tuple, list)):
+            raise ValueError(f"{value} can not be a list or tuple")
+    return resource
+
+
+_ResourceName = task_models.Resources.ResourceName
+_ResourceEntry = task_models.Resources.ResourceEntry
+
+
+def _convert_resources_to_resource_entries(resources: Resources) -> List[_ResourceEntry]:  # type: ignore
+    _check_resource_is_singular(resources)
+    resource_entries = []
+    if resources.cpu is not None:
+        resource_entries.append(_ResourceEntry(name=_ResourceName.CPU, value=str(resources.cpu)))
+    if resources.mem is not None:
+        resource_entries.append(_ResourceEntry(name=_ResourceName.MEMORY, value=str(resources.mem)))
+    if resources.gpu is not None:
+        resource_entries.append(_ResourceEntry(name=_ResourceName.GPU, value=str(resources.gpu)))
+    if resources.ephemeral_storage is not None:
+        resource_entries.append(
+            _ResourceEntry(
+                name=_ResourceName.EPHEMERAL_STORAGE,
+                value=str(resources.ephemeral_storage),
+            )
+        )
+    return resource_entries
+
+
+def convert_resources_to_resource_model(
+    requests: Optional[Resources] = None,
+    limits: Optional[Resources] = None,
+) -> task_models.Resources:
+    """
+    Convert flytekit ``Resources`` objects to a Resources model
+
+    :param requests: Resource requests. Optional, defaults to ``None``
+    :param limits: Resource limits. Optional, defaults to ``None``
+    :return: The given resources as requests and limits
+    """
+    request_entries = []
+    limit_entries = []
+    if requests is not None:
+        request_entries = _convert_resources_to_resource_entries(requests)
+    if limits is not None:
+        limit_entries = _convert_resources_to_resource_entries(limits)
+    return task_models.Resources(requests=request_entries, limits=limit_entries)
+
+
+def construct_extended_resources(
+    *,
+    accelerator: Optional[BaseAccelerator] = None,
+    shared_memory: Optional[Union[L[True], str]] = None,
+) -> Optional[tasks_pb2.ExtendedResources]:
+    """Convert public extended resources to idl.
+
+    :param accelerator: The accelerator to use for this task.
+    :param shared_memory: If True, then shared memory will be attached to the container where the size is equal
+        to the allocated memory. If str, then the shared memory is set to that size.
+    """
+    kwargs = {}
+    if accelerator is not None:
+        kwargs["gpu_accelerator"] = accelerator.to_flyte_idl()
+    if isinstance(shared_memory, str) or shared_memory is True:
+        if shared_memory is True:
+            shared_memory = None
+        kwargs["shared_memory"] = tasks_pb2.SharedMemory(
+            mount_name=SHARED_MEMORY_MOUNT_NAME,
+            mount_path=SHARED_MEMORY_MOUNT_PATH,
+            size_limit=shared_memory,
+        )
+
+    if not kwargs:
+        return None
+
+    return tasks_pb2.ExtendedResources(**kwargs)
+
+
+def pod_spec_from_resources(
+    primary_container_name: Optional[str] = None,
+    requests: Optional[Resources] = None,
+    limits: Optional[Resources] = None,
+    k8s_gpu_resource_key: str = "nvidia.com/gpu",
+) -> "V1PodSpec":
+    from kubernetes.client import V1Container, V1PodSpec, V1ResourceRequirements
+
+    def _construct_k8s_pods_resources(resources: Optional[Resources], k8s_gpu_resource_key: str):
+        if resources is None:
+            return None
+
+        resources_map = {
+            "cpu": "cpu",
+            "mem": "memory",
+            "gpu": k8s_gpu_resource_key,
+            "ephemeral_storage": "ephemeral-storage",
+        }
+
+        k8s_pod_resources = {}
+
+        _check_resource_is_singular(resources)
+        for resource in fields(resources):
+            resource_value = getattr(resources, resource.name)
+            if resource_value is not None:
+                k8s_pod_resources[resources_map[resource.name]] = resource_value
+
+        return k8s_pod_resources
+
+    requests = _construct_k8s_pods_resources(resources=requests, k8s_gpu_resource_key=k8s_gpu_resource_key)
+    limits = _construct_k8s_pods_resources(resources=limits, k8s_gpu_resource_key=k8s_gpu_resource_key)
+    requests = requests or limits
+    limits = limits or requests
+
+    pod_spec = V1PodSpec(
+        containers=[
+            V1Container(
+                name=primary_container_name,
+                resources=V1ResourceRequirements(
+                    requests=requests,
+                    limits=limits,
+                ),
+            )
+        ]
+    )
+
+    return pod_spec

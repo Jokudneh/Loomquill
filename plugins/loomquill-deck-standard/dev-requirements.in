@@ -5,3 +5,4 @@ plotly
 pygments
 ydata-profiling
 # ydata-profiling imports pkg_resources, which setuptools 82 removed.
+setuptools<82

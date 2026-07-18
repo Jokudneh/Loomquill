@@ -52,3 +52,106 @@ def test_sync_checkpoint_save_filepath(tmpdir):
 
 
 def test_sync_checkpoint_restore(tmpdir):
+    td_path = Path(tmpdir)
+    dest = td_path / "dest"
+    dest.mkdir()
+    src = td_path / "src"
+    src.mkdir()
+    prev = src / "prev"
+    p = b"prev-bytes"
+    with prev.open("wb") as f:
+        f.write(p)
+    cp = SyncCheckpoint(checkpoint_dest=str(dest), checkpoint_src=str(src))
+    user_dest = td_path / "user_dest"
+
+    with pytest.raises(ValueError):
+        cp.restore(user_dest)
+
+    user_dest.mkdir()
+    assert cp.restore(user_dest) == user_dest
+    assert cp.restore("other_path") == user_dest
+
+
+def test_sync_checkpoint_restore_corrupt(tmpdir):
+    td_path = Path(tmpdir)
+    dest = td_path / "dest"
+    dest.mkdir()
+    src = td_path / "src"
+    src.mkdir()
+    prev = src / "prev"
+    p = b"prev-bytes"
+    with prev.open("wb") as f:
+        f.write(p)
+    cp = SyncCheckpoint(checkpoint_dest=str(dest), checkpoint_src=str(src))
+    user_dest = td_path / "user_dest"
+    user_dest.mkdir()
+
+    # Simulate a failed upload of the checkpoint e.g. due to preemption
+    prev.unlink()
+    src.rmdir()
+
+    with pytest.raises(FlyteDataNotFoundException):
+        cp.restore(user_dest)
+
+    with pytest.raises(FlyteDataNotFoundException):
+        cp.restore(user_dest)
+
+
+def test_sync_checkpoint_restore_default_path(tmpdir):
+    td_path = Path(tmpdir)
+    dest = td_path / "dest"
+    dest.mkdir()
+    src = td_path / "src"
+    src.mkdir()
+    prev = src / "prev"
+    p = b"prev-bytes"
+    with prev.open("wb") as f:
+        f.write(p)
+    cp = SyncCheckpoint(checkpoint_dest=str(dest), checkpoint_src=str(src))
+    assert cp.read() == p
+    assert cp._prev_download_path is not None
+    assert cp.restore() == cp._prev_download_path
+
+
+def test_sync_checkpoint_read_empty_dir(tmpdir):
+    td_path = Path(tmpdir)
+    dest = td_path / "dest"
+    dest.mkdir()
+    src = td_path / "src"
+    src.mkdir()
+    cp = SyncCheckpoint(checkpoint_dest=str(dest), checkpoint_src=str(src))
+    assert cp.read() is None
+
+
+def test_sync_checkpoint_read_multiple_files(tmpdir):
+    """
+    Read can only work with one file.
+    """
+    td_path = Path(tmpdir)
+    dest = td_path / "dest"
+    dest.mkdir()
+    src = td_path / "src"
+    src.mkdir()
+    prev = src / "prev"
+    prev2 = src / "prev2"
+    p = b"prev-bytes"
+    with prev.open("wb") as f:
+        f.write(p)
+    with prev2.open("wb") as f:
+        f.write(p)
+    cp = SyncCheckpoint(checkpoint_dest=str(dest), checkpoint_src=str(src))
+
+    with pytest.raises(ValueError, match="Expected exactly one checkpoint - found 2"):
+        cp.read()
+
+
+@flytekit.task
+def t1(n: int) -> int:
+    ctx = flytekit.current_context()
+    cp = ctx.checkpoint
+    cp.write(bytes(n + 1))
+    return n + 1
+
+
+def test_checkpoint_task():
+    assert t1(n=5) == 6

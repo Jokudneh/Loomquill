@@ -43,3 +43,52 @@ Quickstart
    def square(z: int) -> int:
       return z * z
 
+   @workflow
+   def my_workflow(x: int, y: int) -> int:
+      return sum(x=square(z=x), y=square(z=y))
+
+   print(f"my_workflow output: {my_workflow(x=1, y=2)}")
+
+
+Expected output:
+
+.. code-block::
+
+   my_workflow output: 5
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   |plane| Getting Started <https://docs.flyte.org/en/latest/getting_started.html>
+   |book-reader| User Guide <https://docs.flyte.org/projects/cookbook/en/latest/index.html>
+   |chalkboard| Tutorials <https://docs.flyte.org/projects/cookbook/en/latest/tutorials.html>
+   |project-diagram| Concepts <https://docs.flyte.org/en/latest/concepts/basics.html>
+   |rocket| Deployment <https://docs.flyte.org/en/latest/deployment/index.html>
+   |book| API Reference <https://docs.flyte.org/en/latest/reference/index.html>
+   |hands-helping| Community <https://docs.flyte.org/en/latest/community/index.html>
+
+.. NOTE: The caption text is important for the Sphinx theme to correctly render the nav header
+.. https://github.com/flyteorg/furo
+.. toctree::
+   :maxdepth: -1
+   :caption: Flytekit SDK
+   :hidden:
+
+   Flytekit Python <self>
+   design/index
+   flytekit
+   configuration
+   remote
+   clients
+   testing
+   extend
+   deck
+   extras.accelerators
+   plugins/index
+   tasks.extend
+   types.extend
+   experimental
+   pyflyte
+   contributing

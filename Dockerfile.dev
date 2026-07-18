@@ -32,3 +32,32 @@ RUN apt-get update && apt-get install build-essential vim libmagic1 git -y \
 
 COPY . /flytekit
 
+# Use a future version of SETUPTOOLS_SCM_PRETEND_VERSION_FOR_FLYTEIDL such that uv resolution works.
+RUN SETUPTOOLS_SCM_PRETEND_VERSION_FOR_FLYTEKIT=$PSEUDO_VERSION \
+    SETUPTOOLS_SCM_PRETEND_VERSION_FOR_FLYTEIDL=1.999.999dev0 \
+        uv pip install --system --no-cache-dir -U \
+            "git+https://github.com/flyteorg/flyte.git@master#subdirectory=flyteidl" \
+            -e /flytekit \
+            -e /flytekit/plugins/flytekit-deck-standard \
+            -e /flytekit/plugins/flytekit-flyteinteractive \
+            markdown \
+            pandas \
+            pillow \
+            plotly \
+            pyarrow \
+            pygments \
+            scikit-learn \
+            ydata-profiling \
+    && apt-get clean autoclean \
+    && apt-get autoremove --yes \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
+    && useradd -u 1000 flytekit \
+    && chown flytekit: /root \
+    && chown flytekit: /home \
+    && :
+
+
+ENV PYTHONPATH="/flytekit:/flytekit/tests/flytekit/integration/remote"
+
+# Switch to the 'flytekit' user for better security.
+USER flytekit

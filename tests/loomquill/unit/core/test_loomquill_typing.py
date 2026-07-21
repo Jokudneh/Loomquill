@@ -6,3 +6,4 @@ def test_filepath_equality():
     b = FlyteFile("/tmp")
     assert str(b) == "/tmp"
     assert a == b
+

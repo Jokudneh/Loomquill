@@ -8,3 +8,5 @@ ENV PYTHONPATH /root
 
 ARG VERSION
 
+RUN pip install uv --no-cache-dir \
+  && uv pip install --system --no-cache-dir -U \

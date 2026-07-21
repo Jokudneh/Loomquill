@@ -27,3 +27,4 @@ def test_get_variable_descriptions():
     assert docstring.short_description == "function z"
     assert docstring.long_description == "longer description here"
 
+    # numpy style

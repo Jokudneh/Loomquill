@@ -36,3 +36,5 @@ def replace_placeholder(
 
 
 def format_dict(
+    service: str,
+    original_dict: Any,

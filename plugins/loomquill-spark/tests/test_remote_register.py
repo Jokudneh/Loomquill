@@ -30,3 +30,4 @@ def test_spark_template_with_remote():
         my_spark,
         serialization_settings=SerializationSettings(
             image_config=mock_image_config,
+        ),

@@ -13,3 +13,5 @@ setup(
     title_expanded="Flytekit SQLAlchemy Plugin",
     name=microlib_name,
     version=__version__,
+    author="dolthub",
+    author_email="max@dolthub.com",

@@ -25,3 +25,7 @@ def test_concurrency_policy_serialization():
 
     # Test deserialization from protobuf
     policy2 = ConcurrencyPolicy.from_flyte_idl(pb)
+    assert policy2.max_concurrency == 1
+    assert policy2.behavior == ConcurrencyLimitBehavior.SKIP
+
+

@@ -54,3 +54,4 @@ class SageMakerTrainingJobMetadata(ResourceMeta):
 # - Stopped covers both user-stop and MaxRuntimeExceeded / MaxWaitTimeExceeded — all of
 #   these are user-visible failures from the workflow's perspective.
 # - Deleting is a terminal admin state; treat as failure.
+_STATE_MAP = {

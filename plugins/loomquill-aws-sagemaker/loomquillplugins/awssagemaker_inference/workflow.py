@@ -66,3 +66,6 @@ def create_sagemaker_deployment(
     :param endpoint_config: Configuration for the SageMaker endpoint creation API call.
     :param images: A dictionary of images for SageMaker model creation.
     :param model_input_types: Mapping of SageMaker model configuration inputs to their types.
+    :param endpoint_config_input_types: Mapping of SageMaker endpoint configuration inputs to their types.
+    :param endpoint_input_types: Mapping of SageMaker endpoint inputs to their types.
+    :param region: The region for SageMaker API calls.

@@ -31,3 +31,7 @@ def t2(a: str, b: str) -> str:
     return b + a
 
 
+# %%
+# You can treat the outputs of a task as you normally would a Python function. Assign the output to two variables
+# and use them in subsequent tasks as normal. See {{< py_func_ref flytekit.workflow >}}
+@workflow

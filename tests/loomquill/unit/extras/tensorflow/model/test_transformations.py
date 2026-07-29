@@ -28,3 +28,4 @@ def get_tf_model() -> tf.keras.Model:
     inputs = tf.keras.Input(shape=(32,))
     outputs = tf.keras.layers.Dense(1)(inputs)
     tf_model = tf.keras.Model(inputs, outputs)
+    return tf_model

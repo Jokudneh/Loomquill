@@ -25,3 +25,5 @@ class Project(_common.FlyteIdlEntity):
 
     @classmethod
     def archived_project(cls, id):
+        return cls(id, "", "", cls.ProjectState.ARCHIVED)
+

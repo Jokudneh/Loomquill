@@ -32,3 +32,5 @@ def test_src_path_with_different_types(local_tmp_txt_files) -> None:
     @task
     def create_flytefile(
         source_path: str,
+        use_pathlike_src_path: bool,
+        remote_path: Optional[str] = None

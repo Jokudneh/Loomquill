@@ -26,3 +26,5 @@ def nemotron_super_workflow() -> str:
         endpoint_name="nemotron-super-reasoning",
         resource_shape="gpu.1xh200",
         node_group="<your-gpu-node-group>",  # Replace with your actual GPU node group
+        endpoint_config=EndpointEngineConfig.nim(
+            image="nvcr.io/nim/nvidia/llama-3_3-nemotron-super-49b-v1_5:latest",

@@ -6,3 +6,4 @@ Google Bigquery Plugin API reference
 
 .. tags:: GCP, Data, Integration
 
+.. automodule:: flytekitplugins.bigquery

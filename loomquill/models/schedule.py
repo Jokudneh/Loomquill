@@ -46,3 +46,7 @@ class Schedule(common.FlyteIdlEntity):
             :rtype: int
             """
             return self._unit
+
+        def to_flyte_idl(self):
+            """
+            :rtype: flyteidl.admin.schedule_pb2.FixedRate

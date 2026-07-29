@@ -31,3 +31,6 @@ class Ignore(ABC):
         return tarinfo
 
     @abstractmethod
+    def _is_ignored(self, path: str) -> bool:
+        pass
+

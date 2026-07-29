@@ -104,3 +104,4 @@ def test_input_substitution_files():
         name="test",
         script="""
             cat {inputs.f}
+            echo "Hello World {inputs.y} on  {inputs.j}"

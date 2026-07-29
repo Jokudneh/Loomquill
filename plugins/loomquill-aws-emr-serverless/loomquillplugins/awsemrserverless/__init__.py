@@ -12,3 +12,4 @@ Serverless job lifecycle (submit, poll, cancel) and a task config type.
    EMRServerless
    EMRServerlessSparkJobDriver
    EMRServerlessHiveJobDriver
+   EMRServerlessTask

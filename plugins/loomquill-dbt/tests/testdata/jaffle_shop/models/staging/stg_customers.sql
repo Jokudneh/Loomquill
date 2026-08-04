@@ -10,3 +10,5 @@ with source as (
 
 renamed as (
 
+    select
+        id as customer_id,

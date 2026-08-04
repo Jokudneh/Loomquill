@@ -21,3 +21,5 @@ def read_ff(ff: FlyteFile, info: Optional[str] = None) -> None:
         print(f"FILE CONTENT | {content}")
 
     if info:
+        assert ff.metadata["info"] == info
+    else:

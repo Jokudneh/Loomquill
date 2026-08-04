@@ -51,3 +51,4 @@ def train_model_with_id():
     pass
 
 
+@patch("flytekitplugins.wandb.tracking.wandb")

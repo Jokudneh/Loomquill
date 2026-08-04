@@ -14,3 +14,4 @@ def is_zero_like(value):
     return (
         value is None
         or value == "0"
+        or value == 0

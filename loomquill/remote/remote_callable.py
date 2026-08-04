@@ -38,3 +38,7 @@ class RemoteEntity(ABC):
 
     def __call__(self, *args, **kwargs):
         # When a Task is () aka __called__, there are three things we may do:
+        #  a. Plain execution Mode - just run the execute function. If not overridden, we should raise an exception
+        #  b. Compilation Mode - this happens when the function is called as part of a workflow (potentially
+        #     dynamic task). Produce promise objects and create a node.
+        #  c. Workflow Execution Mode - when a workflow is being run locally. Even though workflows are functions

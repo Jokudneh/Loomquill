@@ -22,3 +22,7 @@ def test_translator_with_concurrency_policy():
     @task
     def t1(a: int) -> int:
         return a + 2
+
+    @workflow
+    def my_wf(a: int) -> int:
+        return t1(a=a)

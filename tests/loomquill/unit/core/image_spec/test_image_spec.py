@@ -81,3 +81,6 @@ def test_image_spec(mock_image_spec_builder, monkeypatch):
     assert image_spec.exist() is None
 
     # Remove the dummy builder, and build the image again
+    # The image has already been built, so it shouldn't fail.
+    del ImageBuildEngine._REGISTRY["dummy"]
+    ImageBuildEngine.build(image_spec)

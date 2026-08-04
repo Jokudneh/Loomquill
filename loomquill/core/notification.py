@@ -45,3 +45,6 @@ class Notification(_common_model.Notification):
             raise AssertionError("You must specify at least one phase for a notification.")
         for phase in phases:
             if phase not in self.VALID_PHASES:
+                raise AssertionError(f"Invalid phase: {phase}. only terminal states are permitted for notifications")
+
+

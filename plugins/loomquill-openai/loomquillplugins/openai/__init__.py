@@ -8,3 +8,5 @@
    BatchEndpointConnector
    BatchEndpointTask
    BatchResult
+   DownloadJSONFilesTask
+   UploadJSONLFileTask

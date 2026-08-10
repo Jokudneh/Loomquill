@@ -31,3 +31,7 @@ def test_scoped_grpc_deadline_resets():
 def test_deadline_interceptor_only_handles_unary_unary():
     interceptor = ScopedGrpcDeadlineInterceptor()
     assert isinstance(interceptor, grpc.UnaryUnaryClientInterceptor)
+    assert not isinstance(interceptor, grpc.UnaryStreamClientInterceptor)
+
+
+def test_deadline_interceptor_applies_scoped_timeout():

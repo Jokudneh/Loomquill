@@ -183,3 +183,6 @@ def test_fast_serialization(serialization_settings):
         "--resolver",
         "flytekit.core.array_node_map_task.ArrayNodeMapTaskResolver",
         "--",
+        "vars",
+        "",
+        "resolver",

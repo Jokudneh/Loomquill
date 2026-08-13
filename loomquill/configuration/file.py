@@ -104,3 +104,7 @@ def bool_transformer(config_val: typing.Any) -> bool:
         return config_val
 
 
+def comma_list_transformer(config_val: typing.Any):
+    if type(config_val) is str:
+        return config_val.split(",")
+    else:

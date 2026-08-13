@@ -59,3 +59,7 @@ def test_tensorflow_task_with_default_config(serialization_settings: Serializati
     }
     assert my_tensorflow_task.get_custom(serialization_settings) == expected_dict
 
+
+def test_tensorflow_task_with_custom_config(serialization_settings: SerializationSettings):
+    task_config = TfJob(
+        chief=Chief(

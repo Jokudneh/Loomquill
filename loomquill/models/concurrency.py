@@ -18,3 +18,6 @@ class ConcurrencyLimitBehavior(object):
             return "<UNKNOWN>"
 
 
+class ConcurrencyPolicy(_common.FlyteIdlEntity):
+    """
+    Defines the concurrency policy for a launch plan.

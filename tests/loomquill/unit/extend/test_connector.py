@@ -166,3 +166,6 @@ def get_task_template(task_type: str) -> TaskTemplate:
         version="version",
         env={"FOO": "baz"},
         image_config=ImageConfig(default_image=default_img, images=[default_img]),
+        fast_serialization_settings=FastSerializationSettings(enabled=True),
+    )
+    serialized = get_serializable(OrderedDict(), serialization_settings, simple_task)

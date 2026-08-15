@@ -51,3 +51,72 @@ class NamedEntityIdentifier(_common_models.FlyteIdlEntity):
         """
         :rtype: Text
         """
+        return self._name
+
+    def to_flyte_idl(self):
+        """
+        :rtype: flyteidl.admin.common_pb2.NamedEntityIdentifier
+        """
+        return _common.NamedEntityIdentifier(
+            project=self.project,
+            domain=self.domain,
+            name=self.name,
+        )
+
+    @classmethod
+    def from_flyte_idl(cls, p):
+        """
+        :param flyteidl.core.common_pb2.NamedEntityIdentifier p:
+        :rtype: Identifier
+        """
+        return cls(
+            project=p.project,
+            domain=p.domain,
+            name=p.name,
+        )
+
+
+class NamedEntityMetadata(_common_models.FlyteIdlEntity):
+    def __init__(self, description, state):
+        """
+
+        :param Text description:
+        :param int state: enum value from NamedEntityState
+        """
+        self._description = description
+        self._state = state
+
+    @property
+    def description(self):
+        """
+        :rtype: Text
+        """
+        return self._description
+
+    @property
+    def state(self):
+        """
+        enum value from NamedEntityState
+        :rtype: int
+        """
+        return self._state
+
+    def to_flyte_idl(self):
+        """
+        :rtype: flyteidl.admin.common_pb2.NamedEntityMetadata
+        """
+        return _common.NamedEntityMetadata(
+            description=self.description,
+            state=self.state,
+        )
+
+    @classmethod
+    def from_flyte_idl(cls, p):
+        """
+        :param flyteidl.core.common_pb2.NamedEntityMetadata p:
+        :rtype: Identifier
+        """
+        return cls(
+            description=p.description,
+            state=p.state,
+        )

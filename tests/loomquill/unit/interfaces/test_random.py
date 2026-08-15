@@ -10,3 +10,8 @@ def test_isolated_random_state():
     assert random.random.random() != r
 
 
+def test_seed():
+    random.seed_flyte_random("abc")
+    r = random.random.random()
+    random.seed_flyte_random("abc")
+    assert r == random.random.random()

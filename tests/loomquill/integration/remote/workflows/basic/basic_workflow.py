@@ -35,3 +35,20 @@ def t2(a: str, b: str) -> str:
 # You can treat the outputs of a task as you normally would a Python function. Assign the output to two variables
 # and use them in subsequent tasks as normal. See {{< py_func_ref flytekit.workflow >}}
 @workflow
+def my_wf(a: int, b: str) -> (int, str):
+    x, y = t1(a=a)
+    d = t2(a=y, b=b)
+    return x, d
+
+
+# %%
+# Execute the Workflow, simply by invoking it like a function and passing in
+# the necessary parameters
+#
+# .. note::
+#
+#   One thing to remember, currently we only support ``Keyword arguments``. So
+#   every argument should be passed in the form ``arg=value``. Failure to do so
+#   will result in an error
+if __name__ == "__main__":
+    print(f"Running my_wf(a=50, b='hello') {my_wf(a=50, b='hello')}")

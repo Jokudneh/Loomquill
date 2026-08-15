@@ -13,3 +13,8 @@ ARG VERSION
 
 USER root
 
+RUN pip3 install --no-cache-dir --ignore-installed \
+        "loomquill==${VERSION}" \
+        "loomquillplugins-awsemrserverless==${VERSION}"
+
+USER hadoop:hadoop

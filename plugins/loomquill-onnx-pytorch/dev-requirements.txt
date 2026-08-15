@@ -43,3 +43,51 @@ nvidia-cuda-cupti-cu12==12.1.105
     # via torch
 nvidia-cuda-nvrtc-cu12==12.1.105
     # via torch
+nvidia-cuda-runtime-cu12==12.1.105
+    # via torch
+nvidia-cudnn-cu12==8.9.2.26
+    # via torch
+nvidia-cufft-cu12==11.0.2.54
+    # via torch
+nvidia-curand-cu12==10.3.2.106
+    # via torch
+nvidia-cusolver-cu12==11.4.5.107
+    # via torch
+nvidia-cusparse-cu12==12.1.0.106
+    # via
+    #   nvidia-cusolver-cu12
+    #   torch
+nvidia-nccl-cu12==2.18.1
+    # via torch
+nvidia-nvjitlink-cu12==12.3.101
+    # via
+    #   nvidia-cusolver-cu12
+    #   nvidia-cusparse-cu12
+nvidia-nvtx-cu12==12.1.105
+    # via torch
+onnxruntime==1.16.1
+    # via -r dev-requirements.in
+packaging==23.2
+    # via onnxruntime
+pillow==10.3.0
+    # via
+    #   -r dev-requirements.in
+    #   torchvision
+protobuf==4.25.8
+    # via onnxruntime
+requests==2.32.2
+    # via torchvision
+sympy==1.12
+    # via
+    #   onnxruntime
+    #   torch
+torch==2.1.0
+    # via torchvision
+torchvision==0.16.0
+    # via -r dev-requirements.in
+triton==2.1.0
+    # via torch
+typing-extensions==4.8.0
+    # via torch
+urllib3==2.0.7
+    # via requests

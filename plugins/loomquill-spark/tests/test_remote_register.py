@@ -31,3 +31,23 @@ def test_spark_template_with_remote():
         serialization_settings=SerializationSettings(
             image_config=mock_image_config,
         ),
+        version="v1",
+    )
+    serialized_spec = mock_client.create_task.call_args.kwargs["task_spec"]
+
+    print(serialized_spec)
+    # Check if the serialized spark task has mainApplicaitonFile field set.
+    assert serialized_spec.template.custom["mainApplicationFile"]
+    assert serialized_spec.template.custom["sparkConf"]
+
+    remote.register_task(
+        my_python_task, serialization_settings=SerializationSettings(image_config=mock_image_config), version="v1"
+    )
+    serialized_spec = mock_client.create_task.call_args.kwargs["task_spec"]
+
+    # Check if the serialized python task has no mainApplicaitonFile field set by default.
+    assert serialized_spec.template.custom is None
+
+    remote.register_task(my_python_task, version="v1")
+    serialized_spec = mock_client.create_task.call_args.kwargs["task_spec"]
+    assert serialized_spec.template.custom is None

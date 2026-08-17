@@ -18,3 +18,17 @@ def test_get_client(click_current_ctx, mock_flyte_client):
 
     click_current_ctx = mock.MagicMock
     obj_mock = FlexiMock(
+        config=PlatformConfig(auth_mode=AuthType.EXTERNAL_PROCESS),
+        cacert=None,
+    )
+    click_current_ctx.obj = obj_mock
+
+    _ = _get_client(host="some-host:12345", insecure=False)
+
+    expected_platform_config = PlatformConfig(
+        endpoint="some-host:12345",
+        insecure=False,
+        auth_mode=AuthType.EXTERNAL_PROCESS,
+    )
+
+    mock_flyte_client.assert_called_with(expected_platform_config)

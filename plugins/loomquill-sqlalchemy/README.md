@@ -4,3 +4,8 @@ SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives app
 
 To install the plugin, run the following command:
 
+```bash
+pip install loomquillplugins-sqlalchemy
+```
+
+An [example](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/sql_plugin/sql_alchemy.html) can be found in the documentation.

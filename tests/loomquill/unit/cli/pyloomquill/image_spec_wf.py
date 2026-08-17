@@ -9,3 +9,12 @@ def t2() -> str:
     return "flyte"
 
 
+@task(container_image=image_spec)
+def t1() -> str:
+    return "flyte"
+
+
+@workflow
+def wf():
+    t1()
+    t2()

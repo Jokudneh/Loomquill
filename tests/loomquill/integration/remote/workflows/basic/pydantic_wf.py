@@ -12,3 +12,9 @@ class MyBaseModel(BaseModel):
 def print_float(my_float: float):
     print(f"my_float: {my_float}")
 
+@workflow
+def wf(bm: MyBaseModel = MyBaseModel()):
+    map_task(print_float)(my_float=bm.my_floats)
+
+if __name__ == "__main__":
+    wf()

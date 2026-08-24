@@ -22,3 +22,5 @@ def forge(source: Callable[Concatenate[Any, P], T]) -> Callable[[Callable], Call
         @wraps(source)
         def wrapped(self, *args: P.args, **kwargs: P.kwargs) -> T:
             return target(self, *args, **kwargs)
+
+        return wrapped

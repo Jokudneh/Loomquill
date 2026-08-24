@@ -36,3 +36,7 @@ states = {
     "Failed": "Failed",
 }
 
+
+class SageMakerEndpointConnector(Boto3ConnectorMixin, AsyncConnectorBase):
+    """This connector creates an endpoint."""
+

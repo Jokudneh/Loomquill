@@ -357,3 +357,6 @@ def test_all_types_with_optional_in_pydantic_basemodel_wf(
                 -1: FlyteFile(local_dummy_file),
             }
         )
+        k: Optional[Dict[int, List[int]]] = Field(
+            default_factory=lambda: {0: [0, 1, -1]}
+        )

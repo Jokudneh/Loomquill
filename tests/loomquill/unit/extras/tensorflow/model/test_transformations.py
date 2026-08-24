@@ -32,3 +32,7 @@ def get_tf_model() -> tf.keras.Model:
 
 
 @pytest.mark.parametrize(
+    "transformer,python_type,format",
+    [
+        (TensorFlowModelTransformer(), tf.keras.Model, TensorFlowModelTransformer.TENSORFLOW_FORMAT),
+    ],

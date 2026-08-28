@@ -63,3 +63,7 @@ def serve(ctx: click.Context):
     help="List of additional files or module that defines the agent",
 )
 @click.pass_context
+def agent(_: click.Context, port, prometheus_port, worker, timeout, modules):
+    """
+    Start a grpc server for the agent service.
+    """

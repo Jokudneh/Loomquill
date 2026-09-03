@@ -40,3 +40,6 @@ def test_guessing_of_nested_pydantic():
     )
     input_config_json = input_config.model_dump_json()
 
+    # Get the flyte type
+    target_literal_type = TypeEngine.to_literal_type(SchedulerConfig)
+

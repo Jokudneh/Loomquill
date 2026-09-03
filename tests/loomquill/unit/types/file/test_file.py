@@ -34,3 +34,7 @@ def test_src_path_with_different_types(local_tmp_txt_files) -> None:
         source_path: str,
         use_pathlike_src_path: bool,
         remote_path: Optional[str] = None
+    ) -> FlyteFile:
+        if use_pathlike_src_path:
+            source_path = Path(source_path)
+        ff = FlyteFile(path=source_path, remote_path=remote_path)

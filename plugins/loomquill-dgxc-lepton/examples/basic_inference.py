@@ -26,3 +26,4 @@ def basic_inference_workflow() -> str:
     config = LeptonEndpointConfig(
         endpoint_name="basic-inference-endpoint",
         resource_shape="cpu.small",
+        node_group="<your-node-group>",  # Replace with your actual node group name

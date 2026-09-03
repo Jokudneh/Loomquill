@@ -193,3 +193,5 @@ class _NamespaceDiscoveryCache:
         async with self._lock:
             self._store.pop(namespace, None)
 
+
+_NAMESPACE_DISCOVERY_CACHE = _NamespaceDiscoveryCache()

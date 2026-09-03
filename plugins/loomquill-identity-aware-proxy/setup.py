@@ -32,3 +32,7 @@ setup(
     entry_points={
         "console_scripts": [
             "flyte-iap=flytekitplugins.identity_aware_proxy.cli:cli",
+        ],
+    },
+    install_requires=plugin_requires,
+    license="apache2",

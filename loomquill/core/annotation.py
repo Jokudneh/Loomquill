@@ -11,3 +11,20 @@ class FlyteAnnotation:
 
     Flytekit expects to receive a maximum of one `FlyteAnnotation` object
     within each typehint.
+
+    For a task definition:
+
+    ```python
+    @task
+    def x(a: typing.Annotated[int, FlyteAnnotation({"foo": {"bar": 1}})]):
+        return
+    ```
+
+    """
+
+    def __init__(self, data: Dict[str, Any]):
+        self._data = data
+
+    @property
+    def data(self):
+        return self._data

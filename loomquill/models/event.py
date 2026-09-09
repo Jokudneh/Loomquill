@@ -17,3 +17,21 @@ class TaskExecutionMetadata(_common.FlyteIdlEntity):
         :rtype: google.protobuf.internal.containers.RepeatedCompositeFieldContainer
         """
         return self._external_resources
+
+    def to_flyte_idl(self):
+        """
+        :rtype: flyteidl.event.TaskExecutionMetadata
+        """
+        return _event_pb2.TaskExecutionMetadata(
+            external_resources=self._external_resources,
+        )
+
+    @classmethod
+    def from_flyte_idl(cls, proto):
+        """
+        :param flyteidl.event.event_pb2.TaskExecutionMetadata proto:
+        :rtype: TaskExecutionMetadata
+        """
+        return cls(
+            external_resources=proto.external_resources,
+        )

@@ -28,3 +28,17 @@ async def test_sensor_engine():
     tmp._custom = asdict(sensor_metadata)
     tmp._interface = interfaces
 
+    task_inputs = literals.LiteralMap(
+        {
+            "path": literals.Literal(scalar=literals.Scalar(primitive=literals.Primitive(string_value=file.name))),
+        },
+    )
+    connector = ConnectorRegistry.get_connector("sensor")
+
+    res = await connector.create(tmp, task_inputs)
+
+    assert res == sensor_metadata
+    resource = await connector.get(sensor_metadata)
+    assert resource.phase == TaskExecution.SUCCEEDED
+    res = await connector.delete(sensor_metadata)
+    assert res is None

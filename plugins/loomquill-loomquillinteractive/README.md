@@ -40,3 +40,90 @@ VSCode example screenshot:
 ## Build Custom Image with VSCode Plugin
 If users want to skip the vscode downloading process at runtime, they have the option to create a custom image with vscode by including the following lines in their Dockerfile.
 ```Dockerfile
+# Include this line if the image does not already have 'curl' installed.
++ RUN apt-get -y install curl
+# Download and extract the binary, and ensure it's added to the system's $PATH.
++ RUN mkdir /tmp/code-server
++ RUN curl -kfL -o /tmp/code-server/code-server-4.18.0-linux-amd64.tar.gz https://github.com/coder/code-server/releases/download/v4.18.0/code-server-4.18.0-linux-amd64.tar.gz
++ RUN tar -xzf /tmp/code-server/code-server-4.18.0-linux-amd64.tar.gz -C /tmp/code-server/
++ ENV PATH="/tmp/code-server/code-server-4.18.0-linux-amd64/bin:${PATH}"
+```
+
+## Advanced Examples
+
+```python
+from loomquill import task, workflow
+from loomquillplugins.loomquillinteractive import vscode, VscodeConfig, DEFAULT_CODE_SERVER_EXTENSIONS
+
+@task(
+    container_image="localhost:30000/loomquill-vscode:0.0.2",
+    environment={"LOOMQUILL_SDK_LOGGING_LEVEL": "20"}
+)
+@vscode(
+
+)
+def t():
+    ...
+
+
+
+# this vscode task will be killed within 10 secs
+@task(
+    container_image="localhost:30000/loomquill-vscode:0.0.2",
+    environment={"LOOMQUILL_SDK_LOGGING_LEVEL": "20"}
+)
+@vscode(
+    max_idle_seconds=10,
+)
+def t_short_live():
+    ...
+
+
+
+# this vscode task will download default extension + vim extension
+config_with_vim = VscodeConfig(
+    extension_remote_paths=DEFAULT_CODE_SERVER_EXTENSIONS+["https://open-vsx.org/api/vscodevim/vim/1.27.0/file/vscodevim.vim-1.27.0.vsix"]
+)
+
+@task(
+    container_image="localhost:30000/loomquill-vscode:0.0.2",
+    environment={"LOOMQUILL_SDK_LOGGING_LEVEL": "20"}
+)
+@vscode(
+    config=config_with_vim
+)
+def t_vim():
+    ...
+
+
+
+@workflow
+def wf():
+    t()
+    t_short_live()
+    t_vim()
+```
+## Jupyter
+
+LoomquillInteractive Jupyter offers an easy solution for users to run Python tasks within a Jupyter Notebook server, compatible with any image. `@jupyter` is a decorator which users can put within @task and user function. With `@jupyter`, the task will run a Jupyter Notebook server instead of the user defined functions.
+
+
+## Starter Example
+```python
+from loomquill import task
+from loomquillplugins.loomquillinteractive import jupyter
+
+@task
+@jupyter
+def train():
+    ...
+```
+
+## User Guide
+1. Build the image with Dockerfile.dev `docker buildx build --push . -f Dockerfile.dev -t localhost:30000/loomquill:dev --build-arg PYTHON_VERSION=3.9`
+2. Run the decorated task on the remote. For example: `pyloomquill run --remote --image localhost:30000/loomquill:dev [PYTHONFILE] [WORKFLOW|TASK] [ARGS]...`
+3. Once the code server is prepared, you can forward a local port to the pod. For example: `kubectl port-forward -n [NAMESPACE] [PODNAME] 8888:8888`.
+4. You can access the server by opening a web browser and navigating to `localhost:8888`.
+
+Jupyter example screenshot:
+![Jupyter example](/_static/images/plugins/loomquillinteractive/jupyter_example.png)

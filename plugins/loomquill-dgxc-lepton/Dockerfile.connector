@@ -22,3 +22,9 @@ RUN pip install .
 # Switch back to flytekit user
 USER flytekit
 
+# Expose agent service port
+EXPOSE 8000
+
+# Start the connector service
+# The connector service will handle Lepton endpoint lifecycle operations via gRPC
+CMD ["pyflyte", "serve", "connector", "--port", "8000", "--modules", "flytekitplugins.dgxc_lepton"]

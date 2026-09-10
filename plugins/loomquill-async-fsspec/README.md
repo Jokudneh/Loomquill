@@ -7,3 +7,8 @@ Currently, the async fsspec plugin improves the following file systems:
 
 To install the plugin, run the following command:
 
+```bash
+pip install loomquillplugins-async-fsspec
+```
+
+Once installed, the plugin will automatically override the original file system and register optimized ones, seamlessly integrating with your Loomquill workflows.

@@ -22,3 +22,23 @@ Example
 #
 # @task(image_spec=ImageSpec(packages=["pandas", "numpy"], apt_packages=["git"], registry="jokudneh"))
 # def t1() -> str:
+#     return "hello"
+```
+
+This plugin also supports install packages from `conda`:
+
+```python
+from loomquill import task, ImageSpec
+
+image_spec = ImageSpec(
+    base_image="ubuntu:20.04",
+    python_version="3.11",
+    packages=["loomquill"],
+    conda_packages=["pytorch", "pytorch-cuda=12.1"],
+    conda_channels=["pytorch", "nvidia"]
+)
+
+@task(container_image=image_spec)
+def run_pytorch():
+    ...
+```

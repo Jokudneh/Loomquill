@@ -20,3 +20,17 @@ CODE_TOGETHER_EXTENSION = "https://raw.githubusercontent.com/flyteorg/flytetools
 VIM_CONFIG = VscodeConfig(
     code_server_remote_paths=DEFAULT_CODE_SERVER_REMOTE_PATHS,
     code_server_dir_names=DEFAULT_CODE_SERVER_DIR_NAMES,
+    extension_remote_paths=DEFAULT_CODE_SERVER_EXTENSIONS + [VIM_EXTENSION],
+)
+
+COPILOT_CONFIG = VscodeConfig(
+    code_server_remote_paths=DEFAULT_CODE_SERVER_REMOTE_PATHS,
+    code_server_dir_names=DEFAULT_CODE_SERVER_DIR_NAMES,
+    extension_remote_paths=DEFAULT_CODE_SERVER_EXTENSIONS + [COPILOT_EXTENSION],
+)
+
+CODE_TOGETHER_CONFIG = VscodeConfig(
+    code_server_remote_paths=DEFAULT_CODE_SERVER_REMOTE_PATHS,
+    code_server_dir_names=DEFAULT_CODE_SERVER_DIR_NAMES,
+    extension_remote_paths=DEFAULT_CODE_SERVER_EXTENSIONS + [CODE_TOGETHER_EXTENSION],
+)

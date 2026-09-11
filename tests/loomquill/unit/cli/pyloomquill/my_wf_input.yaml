@@ -29,3 +29,23 @@ o:
   x:
     - tests/loomquill/unit/cli/pyloomquill/testdata/df.parquet
 p: 'None'
+q: tests/loomquill/unit/cli/pyloomquill/testdata
+r:
+  - i: 1
+    a:
+      - h
+      - e
+s:
+  x:
+    i: 1
+    a:
+      - h
+      - e
+t:
+  i:
+    - i: 1
+      a:
+        - h
+        - e
+remote: tests/loomquill/unit/cli/pyloomquill/testdata
+image: tests/loomquill/unit/cli/pyloomquill/testdata

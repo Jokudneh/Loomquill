@@ -26,3 +26,18 @@ def test_perian_task():
 
     assert say_hello.task_config == task_config
     assert say_hello.task_type == "perian_task"
+    assert isinstance(say_hello, PerianTask)
+
+    serialization_settings = SerializationSettings(image_config=ImageConfig())
+    task_spec = get_serializable(OrderedDict(), serialization_settings, say_hello)
+    template = task_spec.template
+    container = template.container
+
+    assert template.custom == {
+        'accelerator_type': 'A100',
+        'accelerators': 1.0,
+        'cores': 2.0,
+        'country_code': 'DE',
+        'memory': '8',
+    }
+    assert container.image == container_image

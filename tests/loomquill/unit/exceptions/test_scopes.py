@@ -46,3 +46,7 @@ def test_intercepted_scope_non_flyte_exception():
     with pytest.raises(scopes.FlyteScopedUserException) as e:
         _user_func(value_error)
 
+    e = e.value
+    assert e.value == value_error
+    assert "Bad value" in e.verbose_message
+    assert "User error." in e.verbose_message

@@ -60,3 +60,6 @@ class AsyncS3FileSystem(S3FileSystem):
                 chunk = f0.read()
                 await self._call_s3("put_object", Bucket=bucket, Key=key, Body=chunk, **kwargs)
                 callback.relative_update(size)
+            else:
+                mpu = await self._call_s3("create_multipart_upload", Bucket=bucket, Key=key, **kwargs)
+

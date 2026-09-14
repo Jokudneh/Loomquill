@@ -36,3 +36,4 @@ def get_tf_model() -> tf.keras.Model:
     [
         (TensorFlowModelTransformer(), tf.keras.Model, TensorFlowModelTransformer.TENSORFLOW_FORMAT),
     ],
+)

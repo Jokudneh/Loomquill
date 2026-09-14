@@ -28,3 +28,6 @@ class BatchResult(DataClassJSONMixin):
 
 class BatchEndpointTask(AsyncConnectorExecutorMixin, PythonTask):
     _TASK_TYPE = "openai-batch"
+
+    def __init__(
+        self,

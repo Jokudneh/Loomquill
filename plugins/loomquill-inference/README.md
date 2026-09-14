@@ -33,3 +33,5 @@ nim_instance = NIM(
         ngc_secret_key=NGC_KEY,
         secrets_prefix="_FSEC_",
     ),
+)
+

@@ -13,3 +13,4 @@ class RichCallback(Callback):
         self._task = None
 
     def set_size(self, size):
+        self._task = self._pb.add_task("Downloading...", total=size)

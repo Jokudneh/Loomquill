@@ -7,3 +7,4 @@ set -eox pipefail
 
 # Install Dolt
 
+apt-get update -y \

@@ -16,3 +16,5 @@ class ExampleConfig:
     dictconfig_key: ExampleNestedConfig = field(default_factory=ExampleNestedConfig)
     optional_dictconfig_key: t.Optional[ExampleNestedConfig] = None
     listconfig_key: t.List[int] = field(default_factory=lambda: (1, 2, 3))
+
+

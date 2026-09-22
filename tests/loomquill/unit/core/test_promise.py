@@ -118,3 +118,4 @@ def test_create_and_link_node_from_remote_ignore():
     )
 
     # value of `i` cannot be overridden
+    with pytest.raises(

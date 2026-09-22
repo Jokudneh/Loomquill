@@ -41,3 +41,4 @@ def get_sample_task_metadata():
     :rtype: flytekit.models.task.TaskMetadata
     """
     return _task_model.TaskMetadata(
+        True,

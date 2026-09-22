@@ -74,3 +74,7 @@ def _task_template():
 
 
 def _completed_describe_response():
+    return {
+        "JobName": "rec-74443947857331f7",
+        "JobArn": JOB_ARN,
+        "JobType": "Default",

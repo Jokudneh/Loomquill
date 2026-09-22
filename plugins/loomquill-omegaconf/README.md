@@ -43,3 +43,4 @@ during deserialisation in order to make typing information from the dataclass an
 This requires the dataclass definition to be available via python import in the Loomquill execution environment in which
 objects are (de-)serialised.
 
+`DictConfig` - This mode will deserialize the config into a DictConfig object. In particular, dataclasses are translated

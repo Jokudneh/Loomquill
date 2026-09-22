@@ -30,3 +30,7 @@ def jupyter_patches():
         "flytekitplugins.flyteinteractive.jupyter_lib.decorator.exit_handler"
     ) as mock_exit_handler:
         yield (mock_process, mock_write_example_notebook, mock_exit_handler)
+
+
+def test_jupyter_remote_execution(jupyter_patches, mock_remote_execution):
+    (mock_process, mock_write_example_notebook, mock_exit_handler) = jupyter_patches

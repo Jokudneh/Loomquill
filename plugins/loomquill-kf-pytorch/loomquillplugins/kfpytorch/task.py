@@ -167,3 +167,5 @@ class Elastic(object):
     monitor_interval: int = 5
     max_restarts: int = 0
     rdzv_configs: Dict[str, Any] = field(default_factory=lambda: {"timeout": 900, "join_timeout": 900})
+    increase_shared_mem: bool = True
+    run_policy: Optional[RunPolicy] = None

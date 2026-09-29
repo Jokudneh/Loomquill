@@ -299,3 +299,702 @@ def test_more_stuff(mock_client):
         with tempfile.TemporaryDirectory() as tmp_dir:
             r.upload_file(pathlib.Path(tmp_dir))
 
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig.auto(img_name=DefaultImages.default_image()),
+    )
+
+    # gives a thing
+    computed_v = r._version_from_hash(b"", serialization_settings)
+    assert len(computed_v) > 0
+
+    # gives the same thing
+    computed_v2 = r._version_from_hash(b"", serialization_settings)
+    assert computed_v2 == computed_v2
+
+    # should give a different thing
+    computed_v3 = r._version_from_hash(b"", serialization_settings, "hi")
+    assert computed_v2 != computed_v3
+
+
+@patch("flytekit.remote.remote.SynchronousFlyteClient")
+def test_version_hash_special_characters(mock_client):
+    r = FlyteRemote(config=Config.auto(), default_project="project", default_domain="domain")
+
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig.auto(img_name=DefaultImages.default_image()),
+    )
+
+    computed_v = r._version_from_hash(b"", serialization_settings)
+    assert "=" not in computed_v
+
+
+def test_get_extra_headers_azure_blob_storage():
+    native_url = "abfs://flyte@storageaccount/container/path/to/file"
+    headers = FlyteRemote.get_extra_headers_for_protocol(native_url)
+    assert headers["x-ms-blob-type"] == "BlockBlob"
+
+
+def test_get_extra_headers_s3():
+    native_url = "s3://flyte@storageaccount/container/path/to/file"
+    headers = FlyteRemote.get_extra_headers_for_protocol(native_url)
+    assert headers == {}
+
+
+@patch("flytekit.remote.remote.SynchronousFlyteClient")
+def test_generate_console_http_domain_sandbox_rewrite(mock_client):
+    _, temp_filename = tempfile.mkstemp(suffix=".yaml")
+    try:
+        with open(temp_filename, "w") as f:
+            # This string is similar to the relevant configuration emitted by flytectl in the cases of both demo and sandbox.
+            flytectl_config_file = """admin:
+    endpoint: example.com
+    authType: Pkce
+    insecure: false
+"""
+            f.write(flytectl_config_file)
+
+        remote = FlyteRemote(
+            config=Config.auto(config_file=temp_filename), default_project="project", default_domain="domain"
+        )
+        assert remote.generate_console_http_domain() == "https://example.com"
+
+        _, temp_filename = tempfile.mkstemp(suffix=".yaml")
+        with open(temp_filename, "w") as f:
+            # This string is similar to the relevant configuration emitted by flytectl in the cases of both demo and sandbox.
+            flytectl_config_file = """admin:
+    endpoint: localhost:30081
+    authType: Pkce
+    insecure: true
+"""
+            f.write(flytectl_config_file)
+
+        remote = FlyteRemote(
+            config=Config.auto(config_file=temp_filename), default_project="project", default_domain="domain"
+        )
+        assert remote.generate_console_http_domain() == "http://localhost:30081"
+
+        _, temp_filename = tempfile.mkstemp(suffix=".yaml")
+        with open(temp_filename, "w") as f:
+            # This string is similar to the relevant configuration emitted by flytectl in the cases of both demo and sandbox.
+            flytectl_config_file = """admin:
+    endpoint: localhost:30081
+    authType: Pkce
+    insecure: true
+console:
+    endpoint: http://localhost:30090
+"""
+            f.write(flytectl_config_file)
+
+        remote = FlyteRemote(
+            config=Config.auto(config_file=temp_filename), default_project="project", default_domain="domain"
+        )
+        assert remote.generate_console_http_domain() == "http://localhost:30090"
+    finally:
+        try:
+            os.remove(temp_filename)
+        except OSError:
+            pass
+
+
+def get_compiled_workflow_closure():
+    """
+    :rtype: flytekit.models.core.compiler.CompiledWorkflowClosure
+    """
+    cwc_pb = _compiler_pb2.CompiledWorkflowClosure()
+    # So that tests that use this work when run from any directory
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "responses", "CompiledWorkflowClosure.pb"))
+    with open(filepath, "rb") as fh:
+        cwc_pb.ParseFromString(fh.read())
+
+    return CompiledWorkflowClosure.from_flyte_idl(cwc_pb)
+
+
+def test_fetch_lazy(remote):
+    mock_client = remote._client
+    mock_client.get_task.return_value = Task(
+        id=Identifier(ResourceType.TASK, "p", "d", "n", "v"),
+        closure=LIST_OF_TASK_CLOSURES[0],
+        short_description="task description",
+    )
+
+    mock_client.get_workflow.return_value = Workflow(
+        id=Identifier(ResourceType.TASK, "p", "d", "n", "v"),
+        closure=WorkflowClosure(compiled_workflow=get_compiled_workflow_closure()),
+        short_description="workflow description",
+    )
+
+    lw = remote.fetch_workflow_lazy(name="wn", version="v")
+    assert isinstance(lw, LazyEntity)
+    assert lw._getter
+    assert lw._entity is None
+    assert lw.entity
+
+    lt = remote.fetch_task_lazy(name="n", version="v")
+    assert isinstance(lw, LazyEntity)
+    assert lt._getter
+    assert lt._entity is None
+    tk = lt.entity
+    assert tk.name == "n"
+
+
+@task
+def tk(t: datetime, v: int):
+    print(f"Invoked at {t} with v {v}")
+
+
+@workflow
+def example_wf(t: datetime, v: int):
+    tk(t=t, v=v)
+
+
+def test_launch_backfill(remote):
+    daily_lp = LaunchPlan.get_or_create(
+        workflow=example_wf,
+        name="daily2",
+        fixed_inputs={"v": 10},
+        schedule=CronSchedule(schedule="0 8 * * *", kickoff_time_input_arg="t"),
+    )
+
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig.auto(img_name=DefaultImages.default_image()),
+    )
+
+    start_date = datetime(2022, 12, 1, 8)
+    end_date = start_date + timedelta(days=10)
+
+    ser_lp = get_serializable_launch_plan(OrderedDict(), serialization_settings, daily_lp, recurse_downstream=False)
+    m = OrderedDict()
+    ser_wf = get_serializable(m, serialization_settings, example_wf)
+    tasks = []
+    for k, v in m.items():
+        if isinstance(k, PythonTask):
+            tasks.append(v)
+    mock_client = remote._client
+    mock_client.get_launch_plan.return_value = ser_lp
+    mock_client.get_workflow.return_value = Workflow(
+        id=Identifier(ResourceType.WORKFLOW, "p", "d", "daily2", "v"),
+        closure=WorkflowClosure(
+            compiled_workflow=CompiledWorkflowClosure(primary=ser_wf, sub_workflows=[], tasks=tasks),
+        ),
+        short_description="workflow description",
+    )
+
+    wf = remote.launch_backfill(
+        "p",
+        "d",
+        start_date,
+        end_date,
+        "daily2",
+        "v1",
+        dry_run=True,
+        failure_policy=WorkflowFailurePolicy.FAIL_IMMEDIATELY,
+    )
+    assert wf
+    assert wf.workflow_metadata.on_failure == WorkflowFailurePolicy.FAIL_IMMEDIATELY
+
+
+@patch("flytekit.remote.entities.FlyteWorkflow.get_non_system_nodes", return_value=nodes)
+@patch("flytekit.remote.entities.FlyteWorkflow.promote_from_closure")
+def test_fetch_workflow_with_branch(mock_promote, mock_workflow, remote):
+    mock_client = remote._client
+    mock_client.get_workflow.return_value = Workflow(
+        id=Identifier(ResourceType.TASK, "p", "d", "n", "v"),
+        closure=WorkflowClosure(compiled_workflow=MagicMock()),
+        short_description="workflow description",
+    )
+
+    admin_launch_plan = MagicMock()
+    admin_launch_plan.spec = {"workflow_id": 123}
+    mock_client.get_launch_plan.return_value = admin_launch_plan
+    node_launch_plans = {"LAUNCH_PLAN": {"workflow_id": 123}}
+
+    remote.fetch_workflow(name="n", version="v")
+    mock_promote.assert_called_with(ANY, node_launch_plans)
+
+
+@patch("flytekit.remote.entities.FlyteWorkflow.get_non_system_nodes", return_value=nodes2)
+@patch("flytekit.remote.entities.FlyteWorkflow.promote_from_closure")
+def test_fetch_workflow_with_nested_branch(mock_promote, mock_workflow, remote):
+    mock_client = remote._client
+    mock_client.get_workflow.return_value = Workflow(
+        id=Identifier(ResourceType.TASK, "p", "d", "n", "v"),
+        closure=WorkflowClosure(compiled_workflow=MagicMock()),
+        short_description="workflow description",
+    )
+    admin_launch_plan = MagicMock()
+    admin_launch_plan.spec = {"workflow_id": 123}
+    mock_client.get_launch_plan.return_value = admin_launch_plan
+    node_launch_plans = {"LAUNCH_PLAN": {"workflow_id": 123}}
+
+    remote.fetch_workflow(name="n", version="v")
+    mock_promote.assert_called_with(ANY, node_launch_plans)
+
+
+@mock.patch("pathlib.Path.read_bytes")
+@mock.patch("flytekit.remote.remote.FlyteRemote._version_from_hash")
+@mock.patch("flytekit.remote.remote.FlyteRemote.register_workflow")
+@mock.patch("flytekit.remote.remote.FlyteRemote.upload_file")
+@mock.patch("flytekit.remote.remote.compress_scripts")
+@pytest.mark.serial
+def test_get_image_names(
+        compress_scripts_mock, upload_file_mock, register_workflow_mock, version_from_hash_mock, read_bytes_mock
+):
+    md5_bytes = bytes([1, 2, 3])
+    read_bytes_mock.return_value = bytes([4, 5, 6])
+    compress_scripts_mock.return_value = "compressed"
+    upload_file_mock.return_value = md5_bytes, "localhost:30084"
+
+    image_spec = ImageSpec(requirements="requirements.txt", registry="flyteorg")
+
+    @task(container_image=image_spec)
+    def say_hello(name: str) -> str:
+        return f"hello {name}!"
+
+    @workflow
+    def sub_wf(name: str = "union"):
+        say_hello(name=name)
+
+    @workflow
+    def wf(name: str = "union"):
+        sub_wf(name=name)
+
+    flyte_remote = FlyteRemote(config=Config.auto(), default_project="p1", default_domain="d1")
+    flyte_remote.register_script(wf)
+
+    version_from_hash_mock.assert_called_once_with(md5_bytes, mock.ANY, mock.ANY, image_spec.image_name())
+    register_workflow_mock.assert_called_once()
+
+    @reference_task(
+        project="flytesnacks",
+        domain="development",
+        name="flytesnacks.examples.basics.basics.workflow.slope",
+        version="v1",
+    )
+    def ref_basic(x: typing.List[int], y: typing.List[int]) -> float:
+        ...
+
+    @workflow
+    def wf1(name: str = "union") -> float:
+        return ref_basic(x=[1, 2, 3], y=[4, 5, 6])
+
+    flyte_remote = FlyteRemote(config=Config.auto(), default_project="p1", default_domain="d1")
+    flyte_remote.register_script(wf1)
+
+
+@pytest.fixture()
+def mock_flyte_remote_client():
+    with patch("flytekit.remote.remote.FlyteRemote.client") as mock_flyte_remote_client:
+        mock_flyte_remote_client.get_task.return_value.closure.compiled_task.template.sql = None
+        mock_flyte_remote_client.get_task.return_value.closure.compiled_task.template.k8s_pod = None
+        mock_flyte_remote_client.get_workflow.return_value.closure.compiled_workflow.primary.template.failure_node = None
+        yield mock_flyte_remote_client
+
+
+def test_local_server(mock_flyte_remote_client):
+    ctx = FlyteContextManager.current_context()
+    lt = TypeEngine.to_literal_type(typing.Dict[str, int])
+    lm = TypeEngine.to_literal(ctx, {"hello": 55}, typing.Dict[str, int], lt)
+    lm = lm.map.to_flyte_idl()
+
+    mock_flyte_remote_client.get_data.return_value = dataproxy_pb2.GetDataResponse(literal_map=lm)
+
+    rr = FlyteRemote(
+        Config.for_sandbox(),
+        default_project="flytesnacks",
+        default_domain="development",
+    )
+    lr = rr.get("flyte://v1/flytesnacks/development/f6988c7bdad554a4da7a/n0/o")
+    assert lr.get("hello", int) == 55
+
+
+@mock.patch("flytekit.remote.remote.uuid")
+def test_execution_name(mock_uuid, mock_flyte_remote_client):
+    test_uuid = uuid.UUID("16fd2706-8baf-433b-82eb-8c7fada847da")
+    mock_uuid.uuid4.return_value = test_uuid
+    remote = FlyteRemote(config=Config.auto(), default_project="project", default_domain="domain")
+
+    default_img = Image(name="default", fqn="test", tag="tag")
+    serialization_settings = SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig(default_image=default_img, images=[default_img]),
+    )
+    tk_spec = get_serializable(OrderedDict(), serialization_settings, tk)
+    ft = FlyteTask.promote_from_model(tk_spec.template)
+
+    remote._execute(
+        entity=ft,
+        inputs={"t": datetime.now(), "v": 0},
+        execution_name="execution-test",
+    )
+    remote._execute(
+        entity=ft,
+        inputs={"t": datetime.now(), "v": 0},
+        execution_name_prefix="execution-test",
+    )
+    remote._execute(
+        entity=ft,
+        inputs={"t": datetime.now(), "v": 0},
+    )
+    mock_flyte_remote_client.create_execution.assert_has_calls(
+        [
+            mock.call(ANY, ANY, "execution-test", ANY, ANY),
+            mock.call(ANY, ANY, "execution-test-" + test_uuid.hex[:19], ANY, ANY),
+            mock.call(ANY, ANY, None, ANY, ANY),
+        ]
+    )
+    with pytest.raises(
+            ValueError, match="Only one of execution_name and execution_name_prefix can be set, but got both set"
+    ):
+        remote._execute(
+            entity=ft,
+            inputs={"t": datetime.now(), "v": 0},
+            execution_name="execution-test",
+            execution_name_prefix="execution-test",
+        )
+
+
+@pytest.mark.parametrize(
+    "url, host",
+    [
+        ("https://github.com/flytekit/flytekit", "github.com"),
+        ("http://github.com/flytekit/flytekit", "github.com"),
+        ("git@github.com:flytekit/flytekit.git", "github.com"),
+        ("https://gitlab.com/flytekit/flytekit", "gitlab.com"),
+        ("git@gitlab.com:flytekit/flytekit.git", "gitlab.com"),
+    ],
+)
+def test_get_git_repo_url(url, host, tmp_path):
+    git_exec = shutil.which("git")
+    if git_exec is None:
+        pytest.skip("git is not installed")
+
+    source_path = tmp_path / "repo_source"
+    source_path.mkdir()
+    subprocess.check_output([git_exec, "init"], cwd=source_path)
+    subprocess.check_output([git_exec, "remote", "add", "origin", url], cwd=source_path)
+
+    returned_url = _get_git_repo_url(source_path)
+    assert returned_url == f"{host}/flytekit/flytekit"
+
+
+def test_get_git_report_url_not_a_git_repo(tmp_path):
+    """Check url when source path is not a git repo."""
+    source_path = tmp_path / "repo_source"
+    source_path.mkdir()
+    assert _get_git_repo_url(source_path) == ""
+
+
+def test_get_git_report_url_unknown_url(tmp_path):
+    """Check url when url is unknown."""
+    git_exec = shutil.which("git")
+    if git_exec is None:
+        pytest.skip("git is not installed")
+
+    source_path = tmp_path / "repo_source"
+    source_path.mkdir()
+    subprocess.check_output([git_exec, "init"], cwd=source_path)
+    subprocess.check_output([git_exec, "remote", "add", "origin", "unknown"], cwd=source_path)
+
+    returned_url = _get_git_repo_url(source_path)
+    assert returned_url == ""
+
+
+@mock.patch("pathlib.Path.read_bytes")
+@mock.patch("flytekit.remote.remote.FlyteRemote.register_script")
+@mock.patch("flytekit.remote.remote.FlyteRemote.upload_file")
+@mock.patch("flytekit.remote.remote.compress_scripts")
+def test_register_wf_script_mode(compress_scripts_mock, upload_file_mock, register_workflow_mock, read_bytes_mock):
+    from .resources import hello_wf
+
+    md5_bytes = bytes([1, 2, 3])
+    read_bytes_mock.return_value = bytes([4, 5, 6])
+    compress_scripts_mock.return_value = "compressed"
+    upload_file_mock.return_value = md5_bytes, "localhost:30084"
+    flyte_remote = FlyteRemote(config=Config.auto())
+    flyte_remote.fast_register_workflow(hello_wf, version="v1")
+    register_workflow_mock.assert_called_with(
+        hello_wf,
+        image_config=None,
+        project=None,
+        domain=None,
+        version="v1",
+        default_launch_plan=True,
+        options=None,
+        fast_package_options=None,
+        source_path=str(pathlib.Path(flytekit.__file__).parent.parent),
+        module_name="tests.flytekit.unit.remote.resources",
+    )
+
+
+def test_fetch_active_launchplan_not_found(mock_flyte_remote_client, remote):
+    mock_flyte_remote_client.get_active_launch_plan.side_effect = FlyteEntityNotExistException("not found")
+    assert remote.fetch_active_launchplan(name="basic.list_float_wf.fake_wf") is None
+
+
+def test_get_pickled_target_dict():
+    @task
+    def t1() -> int:
+        return 1
+
+    @task
+    def t2(a: int) -> int:
+        return a + 2
+
+    @workflow
+    def w() -> int:
+        return t2(a=t1())
+
+    _, target_dict = _get_pickled_target_dict(w)
+    assert (
+            target_dict.metadata.python_version
+            == f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    )
+    assert len(target_dict.entities) == 2
+    assert t1.name in target_dict.entities
+    assert t2.name in target_dict.entities
+    assert target_dict.entities[t1.name] == t1
+    assert target_dict.entities[t2.name] == t2
+
+
+def test_get_pickled_target_dict_with_map_task():
+    @task
+    def t1(x: int, y: int) -> int:
+        return x + y
+
+    @workflow
+    def w() -> int:
+        return map_task(partial(t1, y=2))(x=[1, 2, 3])
+
+    _, target_dict = _get_pickled_target_dict(w)
+    assert (
+            target_dict.metadata.python_version
+            == f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    )
+    assert len(target_dict.entities) == 1
+    assert t1.name in target_dict.entities
+    assert target_dict.entities[t1.name] == t1
+
+
+def test_get_pickled_target_dict_with_dynamic():
+    @task
+    def t1(a: int) -> str:
+        a = a + 2
+        return "fast-" + str(a)
+
+    @workflow
+    def subwf(a: int):
+        t1(a=a)
+
+    @dynamic
+    def my_subwf(a: int) -> typing.List[str]:
+        s = []
+        for i in range(a):
+            s.append(t1(a=i))
+        subwf(a=a)
+        return s
+
+    @workflow
+    def my_wf(a: int) -> typing.List[str]:
+        v = my_subwf(a=a)
+        return v
+
+    with pytest.raises(FlyteAssertion):
+        _get_pickled_target_dict(my_wf)
+
+
+def test_get_pickled_target_dict_with_eager():
+    @task
+    def t1(a: int) -> int:
+        return a + 1
+
+    @task
+    async def t2(a: int) -> int:
+        return a * 2
+
+    @eager
+    async def eager_wf(a: int) -> int:
+        out = t1(a=a)
+        if out < 0:
+            return -1
+        return await t2(a=out)
+
+    with pytest.raises(FlyteAssertion, match="Eager tasks are not supported in interactive mode"):
+        _get_pickled_target_dict(eager_wf)
+
+
+def test_launchplan_auto_activate(mock_flyte_remote_client):
+    @workflow
+    def wf() -> int:
+        return 1
+
+    lp1 = LaunchPlan.get_or_create(name="lp1", workflow=wf, auto_activate=False)
+    lp2 = LaunchPlan.get_or_create(name="lp2", workflow=wf, auto_activate=True)
+
+    rr = FlyteRemote(
+        Config.for_sandbox(),
+        default_project="flytesnacks",
+        default_domain="development",
+    )
+
+    ss = SerializationSettings(image_config=ImageConfig.auto())
+
+    # The first one should not update the launchplan
+    rr.register_launch_plan(lp1, version="1", serialization_settings=ss)
+    mock_flyte_remote_client.update_launch_plan.assert_not_called()
+
+    # the second one should
+    rr.register_launch_plan(lp2, version="1", serialization_settings=ss)
+    mock_flyte_remote_client.update_launch_plan.assert_called()
+
+
+def test_register_task_with_node_dependency_hints(mock_flyte_remote_client):
+    @task
+    def task0():
+        return None
+
+    @workflow
+    def workflow0():
+        return task0()
+
+    @dynamic(node_dependency_hints=[workflow0])
+    def dynamic0():
+        return workflow0()
+
+    @workflow
+    def workflow1():
+        return dynamic0()
+
+    rr = FlyteRemote(
+        Config.for_sandbox(),
+        default_project="flytesnacks",
+        default_domain="development",
+    )
+
+    ss = SerializationSettings(
+        image_config=ImageConfig.from_images("docker.io/abc:latest"),
+        version="dummy_version",
+    )
+
+    registered_task = rr.register_task(dynamic0, ss)
+    assert isinstance(registered_task, FlyteTask)
+    assert registered_task.id.resource_type == ResourceType.TASK
+    assert registered_task.id.project == "flytesnacks"
+    assert registered_task.id.domain == "development"
+    # When running via `make unit_test` there is a `__-channelexec__` prefix added to the name.
+    assert registered_task.id.name.endswith("tests.flytekit.unit.remote.test_remote.dynamic0")
+    assert registered_task.id.version == "dummy_version"
+
+    registered_workflow = rr.register_workflow(workflow1, ss)
+    assert isinstance(registered_workflow, FlyteWorkflow)
+    assert registered_workflow.id == Identifier(ResourceType.WORKFLOW, "flytesnacks", "development", "tests.flytekit.unit.remote.test_remote.workflow1", "dummy_version")
+
+@mock.patch("flytekit.remote.remote.get_serializable")
+@mock.patch("flytekit.remote.remote.FlyteRemote.fetch_launch_plan")
+@mock.patch("flytekit.remote.remote.FlyteRemote.raw_register")
+@mock.patch("flytekit.remote.remote.FlyteRemote._serialize_and_register")
+def test_register_launch_plan(mock_serialize_and_register, mock_raw_register,mock_fetch_launch_plan, mock_get_serializable, mock_flyte_remote_client):
+    serialization_settings = SerializationSettings(
+        image_config=ImageConfig.auto_default_image(),
+        version="dummy_version",
+    )
+
+    rr = FlyteRemote(
+        Config.for_sandbox(),
+        default_project="flytesnacks",
+        default_domain="development",
+    )
+
+    @task
+    def say_hello() -> str:
+        return "Hello, World!"
+
+    @workflow
+    def hello_world_wf() -> str:
+        res = say_hello()
+        return res
+
+    lp = LaunchPlan.get_or_create(workflow=hello_world_wf, name="additional_lp_for_hello_world", default_inputs={})
+
+    mock_get_serializable.return_value = MagicMock()
+    mock_flyte_remote_client.get_workflow.return_value = MagicMock()
+
+    mock_remote_lp = MagicMock()
+    mock_fetch_launch_plan.return_value = mock_remote_lp
+
+    remote_lp = rr.register_launch_plan(lp, version="dummy_version", project="flytesnacks", domain="development", serialization_settings=serialization_settings)
+    assert remote_lp is mock_remote_lp
+    assert not mock_serialize_and_register.called
+    assert mock_raw_register.called
+
+
+@mock.patch("flytekit.remote.remote.translate_inputs_to_literals")
+@mock.patch("flytekit.remote.remote.get_serializable")
+@mock.patch("flytekit.remote.remote.FlyteRemote.fetch_launch_plan")
+@mock.patch("flytekit.remote.remote.FlyteRemote.raw_register")
+@mock.patch("flytekit.remote.remote.FlyteRemote._serialize_and_register")
+def test_register_launch_plan_retranslates_fixed_inputs_with_remote_context(
+    mock_serialize_and_register, mock_raw_register, mock_fetch_launch_plan,
+    mock_get_serializable, mock_translate, mock_flyte_remote_client
+):
+    from flytekit.types.file import FlyteFile
+
+    @task
+    def t_with_file(f: FlyteFile) -> str:
+        return str(f)
+
+    @workflow
+    def wf_with_file(f: FlyteFile) -> str:
+        return t_with_file(f=f)
+
+    tmp = tempfile.NamedTemporaryFile(delete=False)
+    try:
+        ff = FlyteFile(path=tmp.name)
+        lp = LaunchPlan.get_or_create(
+            workflow=wf_with_file,
+            name="lp_with_flytefile_fixed",
+            fixed_inputs={"f": ff},
+        )
+    finally:
+        tmp.close()
+
+    try:
+        assert lp.raw_fixed_inputs == {"f": ff}
+
+        rr = FlyteRemote(
+            Config.for_sandbox(),
+            default_project="flytesnacks",
+            default_domain="development",
+        )
+
+        mock_translate.return_value = {"f": MagicMock()}
+        mock_get_serializable.return_value = MagicMock()
+        mock_flyte_remote_client.get_workflow.return_value = MagicMock()
+        mock_fetch_launch_plan.return_value = MagicMock()
+
+        ss = SerializationSettings(image_config=ImageConfig.auto_default_image(), version="v1")
+        rr.register_launch_plan(lp, version="v1", serialization_settings=ss)
+
+        mock_translate.assert_called_once_with(
+            rr.context,
+            incoming_values={"f": ff},
+            flyte_interface_types=wf_with_file.interface.inputs,
+            native_types=wf_with_file.python_interface.inputs,
+        )
+    finally:
+        os.unlink(tmp.name)

@@ -34,3 +34,39 @@ def test_inference_recommender_job_task_interface_and_custom():
                 "ModelPackageVersionArn": "{inputs.model_package_version_arn}",
             },
         },
+        region="us-east-2",
+        inputs=kwtypes(role_arn=str, model_package_version_arn=str),
+    )
+
+    assert len(task.interface.inputs) == 2
+    assert len(task.interface.outputs) == 1
+    assert "result" in task.interface.outputs
+
+    custom = task.get_custom(_ser_settings())
+    assert custom["region"] == "us-east-2"
+    assert custom["config"]["JobName"] == "rec-{idempotence_token}"
+    assert custom["config"]["JobType"] == "Default"
+
+
+@pytest.mark.parametrize(
+    "task_cls,method",
+    [
+        (SageMakerStopInferenceRecommenderJobTask, "stop_inference_recommendations_job"),
+        (
+            SageMakerDescribeInferenceRecommenderJobTask,
+            "describe_inference_recommendations_job",
+        ),
+    ],
+)
+def test_helper_boto_tasks_use_correct_method(task_cls, method):
+    task = task_cls(
+        name="helper",
+        config={"JobName": "{inputs.job_name}"},
+        region="us-east-2",
+        inputs=kwtypes(job_name=str),
+    )
+
+    custom = task.get_custom(_ser_settings())
+    assert custom["service"] == "sagemaker"
+    assert custom["method"] == method
+    assert custom["region"] == "us-east-2"

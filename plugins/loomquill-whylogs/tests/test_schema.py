@@ -26,3 +26,24 @@ def fetch_whylogs_datetime(profile_view: DatasetProfileView) -> datetime:
 def whylogs_wf() -> datetime:
     profile_view = whylogs_profiling()
     return fetch_whylogs_datetime(profile_view=profile_view)
+
+
+def test_task_returns_whylogs_profile_view() -> None:
+    actual_profile = whylogs_profiling()
+    assert actual_profile is not None
+    assert isinstance(actual_profile, DatasetProfileView)
+
+
+def test_profile_view_gets_passed_on_tasks() -> None:
+    result = whylogs_wf()
+    assert result is not None
+    assert isinstance(result, datetime)
+
+
+def test_to_html_method() -> None:
+    tf = WhylogsDatasetProfileTransformer()
+    profile_view = whylogs_profiling()
+    report = tf.to_html(FlyteContextManager.current_context(), profile_view, Type[DatasetProfileView])
+
+    assert isinstance(report, str)
+    assert "Profile Visualizer" in report

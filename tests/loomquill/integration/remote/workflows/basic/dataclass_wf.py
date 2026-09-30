@@ -17,3 +17,10 @@ def t1(config: MyConfig) -> str:
     return ""
 
 
+@workflow
+def wf(config: MyConfig = MyConfig()) -> str:
+    return t1(config=config)
+
+
+if __name__ == "__main__":
+    wf()

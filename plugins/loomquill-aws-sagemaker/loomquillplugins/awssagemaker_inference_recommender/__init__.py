@@ -12,3 +12,19 @@
 """
 
 from .connector import (
+    SageMakerInferenceRecommenderJobConnector,
+    SageMakerInferenceRecommenderJobMetadata,
+)
+from .task import (
+    SageMakerDescribeInferenceRecommenderJobTask,
+    SageMakerInferenceRecommenderJobTask,
+    SageMakerStopInferenceRecommenderJobTask,
+)
+
+__all__ = [
+    "SageMakerInferenceRecommenderJobConnector",
+    "SageMakerInferenceRecommenderJobMetadata",
+    "SageMakerInferenceRecommenderJobTask",
+    "SageMakerStopInferenceRecommenderJobTask",
+    "SageMakerDescribeInferenceRecommenderJobTask",
+]

@@ -32,3 +32,25 @@ order_payments as (
 final as (
 
     select
+        orders.order_id,
+        orders.customer_id,
+        orders.order_date,
+        orders.status,
+
+        {% for payment_method in payment_methods -%}
+
+        order_payments.{{ payment_method }}_amount,
+
+        {% endfor -%}
+
+        order_payments.total_amount as amount
+
+    from orders
+
+
+    left join order_payments
+        on orders.order_id = order_payments.order_id
+
+)
+
+select * from final

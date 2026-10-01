@@ -47,3 +47,54 @@ def test_markdown_renderer():
 def test_box_renderer():
     renderer = BoxRenderer("Name")
     assert "Plotlyconfig = {Mathjaxconfig: 'Local'}" in renderer.to_html(df).title()
+
+
+def create_simple_image(fmt: str):
+    """Create a simple PNG image using PIL"""
+    img = Image.new("RGB", (100, 100), color="black")
+    tmp = tempfile.mktemp()
+    img.save(tmp, fmt)
+    return tmp
+
+
+png_image = create_simple_image(fmt="png")
+jpeg_image = create_simple_image(fmt="jpeg")
+
+
+@pytest.mark.parametrize(
+    "image_src",
+    [
+        FlyteFile(path=png_image),
+        JPEGImageFile(path=jpeg_image),
+        PNGImageFile(path=png_image),
+        Image.open(png_image),
+    ],
+)
+def test_image_renderer(image_src):
+    renderer = ImageRenderer()
+    assert "<img" in renderer.to_html(image_src)
+
+
+def test_table_renderer():
+    renderer = TableRenderer()
+    assert "Dataframe Table-Class" in renderer.to_html(time_info_df).title()
+
+
+def test_gantt_chart_renderer():
+    renderer = GanttChartRenderer()
+    assert "Plotlyconfig = {Mathjaxconfig: 'Local'}" in renderer.to_html(time_info_df).title()
+
+
+def test_source_code_renderer():
+    with pytest.warns(FutureWarning):
+        renderer = SourceCodeRenderer()
+    source_code = "def hello_world():\n    print('Hello, world!')"
+    result = renderer.to_html(source_code)
+
+    # Assert that the result includes parts of the source code
+    assert "hello_world" in result
+    assert "Hello, world!" in result
+
+    # Assert that the color #ffffff is used instead of #fff0f0
+    assert "#ffffff" in result
+    assert "#fff0f0" not in result

@@ -121,3 +121,331 @@ def test_notebook_task_complex():
         "h",
         "w",
         "x",
+        "out_nb",
+        "out_rendered_nb",
+    }
+    assert nb.output_notebook_path == out == _get_nb_path(nb_name, suffix="-out")
+    assert nb.rendered_output_path == render == _get_nb_path(nb_name, suffix="-out", ext=".html")
+
+
+def test_notebook_deck_local_execution_doesnt_fail():
+    nb_name = "nb-simple"
+    nb = NotebookTask(
+        name="test",
+        notebook_path=_get_nb_path(nb_name, abs=False),
+        render_deck=True,
+        inputs=kwtypes(pi=float),
+        outputs=kwtypes(square=float),
+    )
+    sqr, out, render = nb.execute(pi=4)
+    # This is largely a no assert test to ensure render_deck never inhibits local execution.
+    assert nb._render_deck, "Passing render deck to init should result in private attribute being set"
+
+
+def generate_por_spec_for_task():
+    primary_container = V1Container(name="primary")
+    pod_spec = V1PodSpec(containers=[primary_container])
+
+    return pod_spec
+
+
+nb_pod = NotebookTask(
+    name="test",
+    task_config=Pod(pod_spec=generate_por_spec_for_task(), primary_container_name="primary"),
+    notebook_path=_get_nb_path("nb-simple", abs=False),
+    inputs=kwtypes(h=str, n=int, w=str),
+    outputs=kwtypes(h=str, w=PythonNotebook, x=X),
+)
+nb_pod_template = NotebookTask(
+    name="test",
+    pod_template=PodTemplate(pod_spec=generate_por_spec_for_task(), primary_container_name="primary"),
+    notebook_path=_get_nb_path("nb-simple", abs=False),
+    inputs=kwtypes(h=str, n=int, w=str),
+    outputs=kwtypes(h=str, w=PythonNotebook, x=X),
+)
+
+
+@pytest.mark.parametrize("nb_task", [
+    nb_pod,
+    nb_pod_template,
+])
+def test_notebook_pod_task(nb_task):
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig(Image(name="name", fqn="image", tag="name")),
+    )
+
+    assert nb_task.get_container(serialization_settings) is None
+    assert nb_task.get_config(serialization_settings)["primary_container_name"] == "primary"
+    assert (
+        nb_task.get_command(serialization_settings)
+        == nb_task.get_k8s_pod(serialization_settings).pod_spec["containers"][0]["args"]
+    )
+
+
+@pytest.mark.parametrize("nb_task, name", [
+    (nb_pod, "nb_pod"),
+    (nb_pod_template, "nb_pod_template"),
+])
+def test_notebook_pod_override(nb_task, name):
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig(Image(name="name", fqn="image", tag="name")),
+    )
+
+    @task
+    def t1():
+        ...
+
+    assert t1.get_container(serialization_settings).args == [
+        "pyflyte-execute",
+        "--inputs",
+        "{{.input}}",
+        "--output-prefix",
+        "{{.outputPrefix}}",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--checkpoint-path",
+        "{{.checkpointOutputPrefix}}",
+        "--prev-checkpoint",
+        "{{.prevCheckpointPrefix}}",
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.test_task",
+        "task-name",
+        "t1",
+    ]
+    assert nb_task.get_k8s_pod(serialization_settings).pod_spec["containers"][0]["args"] == [
+        "pyflyte-execute",
+        "--inputs",
+        "{{.input}}",
+        "--output-prefix",
+        "{{.outputPrefix}}",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--checkpoint-path",
+        "{{.checkpointOutputPrefix}}",
+        "--prev-checkpoint",
+        "{{.prevCheckpointPrefix}}",
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.test_task",
+        "task-name",
+        f"{name}",
+    ]
+    assert t1.get_container(serialization_settings).args == [
+        "pyflyte-execute",
+        "--inputs",
+        "{{.input}}",
+        "--output-prefix",
+        "{{.outputPrefix}}",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--checkpoint-path",
+        "{{.checkpointOutputPrefix}}",
+        "--prev-checkpoint",
+        "{{.prevCheckpointPrefix}}",
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.test_task",
+        "task-name",
+        # Confirm that task name is correctly pointing to t1
+        "t1",
+    ]
+
+
+nb_batch = NotebookTask(
+    name="simple-nb",
+    task_config=AWSBatchConfig(platformCapabilities="EC2"),
+    notebook_path=_get_nb_path("nb-simple", abs=False),
+    inputs=kwtypes(h=str, n=int, w=str),
+    outputs=kwtypes(h=str, w=PythonNotebook, x=X),
+)
+
+
+def test_notebook_batch_task():
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig(Image(name="name", fqn="image", tag="name")),
+    )
+
+    assert nb_batch.get_container(serialization_settings) is not None
+    assert nb_batch.get_container(serialization_settings).args == [
+        "pyflyte-execute",
+        "--inputs",
+        "{{.input}}",
+        "--output-prefix",
+        "{{.outputPrefix}}/0",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.test_task",
+        "task-name",
+        "nb_batch",
+    ]
+
+
+def test_overriding_task_resolver_loader_args():
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig(Image(name="name", fqn="image", tag="name")),
+    )
+
+    @task
+    def t1():
+        ...
+
+    assert t1.get_container(serialization_settings).args == [
+        "pyflyte-execute",
+        "--inputs",
+        "{{.input}}",
+        "--output-prefix",
+        "{{.outputPrefix}}",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--checkpoint-path",
+        "{{.checkpointOutputPrefix}}",
+        "--prev-checkpoint",
+        "{{.prevCheckpointPrefix}}",
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.test_task",
+        "task-name",
+        "t1",
+    ]
+    assert nb_batch.get_container(serialization_settings).args == [
+        "pyflyte-execute",
+        "--inputs",
+        "{{.input}}",
+        "--output-prefix",
+        "{{.outputPrefix}}/0",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.test_task",
+        "task-name",
+        "nb_batch",
+    ]
+    assert t1.get_container(serialization_settings).args == [
+        "pyflyte-execute",
+        "--inputs",
+        "{{.input}}",
+        "--output-prefix",
+        "{{.outputPrefix}}",
+        "--raw-output-data-prefix",
+        "{{.rawOutputDataPrefix}}",
+        "--checkpoint-path",
+        "{{.checkpointOutputPrefix}}",
+        "--prev-checkpoint",
+        "{{.prevCheckpointPrefix}}",
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.test_task",
+        "task-name",
+        # Confirm that task name is correctly pointing to t1
+        "t1",
+    ]
+
+
+
+def test_flyte_types():
+    @task
+    def create_file() -> FlyteFile:
+        tmp_file = tempfile.mktemp()
+        with open(tmp_file, "w") as f:
+            f.write("abc")
+        return FlyteFile(path=tmp_file)
+
+    @task
+    def create_dir() -> FlyteDirectory:
+        tmp_dir = tempfile.mkdtemp()
+        with open(os.path.join(tmp_dir, "file.txt"), "w") as f:
+            f.write("abc")
+        return FlyteDirectory(path=tmp_dir)
+
+    @task
+    def create_sd() -> StructuredDataset:
+        df = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
+        return StructuredDataset(dataframe=df)
+
+    ff = create_file()
+    fd = create_dir()
+    sd = create_sd()
+
+    nb_name = "nb-types"
+    nb_types = NotebookTask(
+        name="test",
+        notebook_path=_get_nb_path(nb_name, abs=False),
+        inputs=kwtypes(ff=FlyteFile, fd=FlyteDirectory, sd=StructuredDataset),
+        outputs=kwtypes(success=bool),
+    )
+    success, out, render = nb_types.execute(ff=ff, fd=fd, sd=sd)
+    assert success is True, "Notebook execution failed"
+
+
+def test_map_over_notebook_task():
+    @workflow
+    def wf(a: float) -> typing.List[float]:
+        return map_task(nb_sub_task)(a=[a, a])
+
+    assert wf(a=3.14) == [9.8596, 9.8596]
+
+
+@mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
+@mock.patch("flytekit.clients.friendly.SynchronousFlyteClient", spec=SynchronousFlyteClient)
+def test_register_notebook_task(mock_client, mock_remote):
+    mock_remote._client = mock_client
+    mock_remote.return_value._version_from_hash.return_value = "dummy_version_from_hash"
+    mock_remote.return_value.fast_package.return_value = (
+        "dummy_md5_bytes",
+        "dummy_native_url",
+    )
+    runner = CliRunner()
+    context_manager.FlyteEntities.entities.clear()
+    notebook_task = """
+from flytekitplugins.papermill import NotebookTask
+
+nb_simple = NotebookTask(
+    name="test",
+    notebook_path="./core/notebook.ipython",
+)
+"""
+    with runner.isolated_filesystem():
+        os.makedirs("core", exist_ok=True)
+        with open(os.path.join("core", "notebook.ipython"), "w") as f:
+            f.write("notebook.ipython")
+            f.close()
+        with open(os.path.join("core", "notebook_task.py"), "w") as f:
+            f.write(notebook_task)
+            f.close()
+        result = runner.invoke(pyflyte.main, ["register", "core"])
+        assert "Successfully registered 2 entities" in result.output
+        shutil.rmtree("core")

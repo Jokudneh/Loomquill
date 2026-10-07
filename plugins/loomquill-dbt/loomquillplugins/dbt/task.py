@@ -78,3 +78,7 @@ class DBTRun(PythonInstanceTask):
         -------
         DBTRunOutput
             DBT run output.
+
+        Raises
+        ------
+        DBTHandledError

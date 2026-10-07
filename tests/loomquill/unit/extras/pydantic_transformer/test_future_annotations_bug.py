@@ -38,3 +38,6 @@ class InnerModel(BaseModel):
 
 class OuterModel(BaseModel):
     inner: InnerModel
+    name: str
+
+

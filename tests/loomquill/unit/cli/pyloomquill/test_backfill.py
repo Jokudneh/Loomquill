@@ -22,3 +22,4 @@ def test_resolve_backfill_window():
 
 @mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
 def test_pyflyte_backfill(mock_remote):
+    mock_remote.generate_console_url.return_value = "ex"

@@ -270,3 +270,5 @@ class ImageConfig(DataClassJsonMixin):
         """
         Validates the image to match the standard format. Also validates that only one default image
         is provided. a default image, is one that is specified as ``default=<image_uri>`` or just ``<image_uri>``. All
+        other images should be provided with a name, in the format ``name=<image_uri>`` This method can be used with the
+        CLI

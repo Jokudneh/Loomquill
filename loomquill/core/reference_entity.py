@@ -66,3 +66,6 @@ class WorkflowReference(Reference):
         return _identifier_model.ResourceType.WORKFLOW
 
 
+class ReferenceEntity(object):
+    def __init__(
+        self,

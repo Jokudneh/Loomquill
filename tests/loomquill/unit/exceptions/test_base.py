@@ -11,3 +11,5 @@ def test_flyte_exception():
 
 
 def test_flyte_exception_cause():
+    try:
+        base_exn = Exception("exception from somewhere else")

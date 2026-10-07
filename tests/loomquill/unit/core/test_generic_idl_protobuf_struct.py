@@ -100,3 +100,4 @@ def test_all_dc_attrs(local_tmp_file, local_tmp_dir, local_pqt_file):
         fsc: FlyteSchema = field(default_factory=lambda: FlyteSchema(local_path=local_pqt_file))
 
         # Define a nested dataclass
+        inner_dc: InnerDC = field(default_factory=lambda: InnerDC())

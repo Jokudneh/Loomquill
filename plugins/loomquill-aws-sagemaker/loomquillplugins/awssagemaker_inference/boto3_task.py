@@ -31,3 +31,5 @@ class BotoTask(SyncConnectorExecutorMixin, PythonTask[BotoConfig]):
         super().__init__(
             name=name,
             task_config=task_config,
+            task_type=self._TASK_TYPE,
+            interface=Interface(

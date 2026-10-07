@@ -33,3 +33,4 @@ class WebhookTask(SyncConnectorExecutorMixin, PythonTask):
         dynamic_inputs={"s": str, "item_id": int},
         show_data=True,
         show_url=True,
+        description="Test Webhook Task",

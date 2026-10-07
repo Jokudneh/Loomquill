@@ -15,3 +15,4 @@ setup(
     version=__version__,
     author="dolthub",
     author_email="max@dolthub.com",
+    description="SQLAlchemy plugin for flytekit",

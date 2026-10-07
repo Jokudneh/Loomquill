@@ -29,3 +29,6 @@ def test_config_entry_file_normal():
     assert images_dict == {}
     assert cfg.yaml_config is not None
 
+
+@mock.patch("flytekit.configuration.file.getenv")
+def test_config_entry_file_2(mock_get):

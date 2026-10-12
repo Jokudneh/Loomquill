@@ -20,3 +20,4 @@ class MockStats(object):
         self._records[full_name] = self._records.get(full_name, 0) + count
         self._records_tags[full_name] = tags or {}
 
+    def decr(self, metric, count=1, tags=None, **kwargs):

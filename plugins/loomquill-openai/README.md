@@ -39,3 +39,6 @@ chatgpt_big_job = ChatGPTTask(
 def wf(message: str) -> str:
     message = chatgpt_small_job(message=message)
     message = chatgpt_big_job(message=message)
+    return message
+
+

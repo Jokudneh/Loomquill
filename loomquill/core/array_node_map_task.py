@@ -101,3 +101,6 @@ class ArrayNodeMapTask(PythonTask):
 
         self._run_task: Union[PythonFunctionTask, PythonInstanceTask] = actual_task  # type: ignore
         if isinstance(actual_task, PythonInstanceTask):
+            mod = actual_task.task_type
+            f = actual_task.lhs
+        else:

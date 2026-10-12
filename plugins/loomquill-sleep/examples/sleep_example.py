@@ -16,3 +16,5 @@ from flytekit import task, workflow
 
 @task(cache_version="2", task_config=Sleep())
 def sleep_for(duration: timedelta) -> None:
+    # This body only runs during local execution.
+    # On the cluster, the backend sleeps for `duration` without running this.

@@ -10,3 +10,4 @@ plugin_requires = [
     "dask[distributed]>=2022.10.2",
 ]
 
+__version__ = "0.0.0+develop"

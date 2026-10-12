@@ -26,3 +26,4 @@ def _build_task(container_image):
         task_function=_fn,
         container_image=container_image,
     )
+

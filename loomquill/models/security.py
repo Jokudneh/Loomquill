@@ -66,3 +66,5 @@ class Secret(_common.FlyteIdlEntity):
             group_version=self.group_version,
             key=self.key,
             mount_requirement=self.mount_requirement.value,
+            env_var=self.env_var,
+        )

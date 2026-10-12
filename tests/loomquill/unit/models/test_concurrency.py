@@ -29,3 +29,7 @@ def test_concurrency_policy_serialization():
     assert policy2.behavior == ConcurrencyLimitBehavior.SKIP
 
 
+def test_concurrency_policy_with_different_max():
+    # Test with a higher max value
+    policy = ConcurrencyPolicy(max_concurrency=5, behavior=ConcurrencyLimitBehavior.SKIP)
+    assert policy.max_concurrency == 5

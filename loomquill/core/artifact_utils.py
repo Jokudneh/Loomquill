@@ -10,3 +10,4 @@ from google.protobuf.timestamp_pb2 import Timestamp
 
 
 def idl_partitions_from_dict(p: Optional[Dict[str, str]] = None) -> Optional[Partitions]:
+    if p:

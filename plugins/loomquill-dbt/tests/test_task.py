@@ -51,3 +51,5 @@ def prepare_db():
     database_file.unlink()
 
 
+class TestDBTRun:
+    def test_simple_task(self):

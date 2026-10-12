@@ -27,3 +27,6 @@ def _build_task(container_image):
         container_image=container_image,
     )
 
+
+def test_dataclass_validation():
+    with pytest.raises(ValueError):

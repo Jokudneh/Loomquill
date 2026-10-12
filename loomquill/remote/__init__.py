@@ -23,3 +23,4 @@ flyte_workflow = remote.fetch_workflow(name="my_workflow", version="v1")
 workflow_execution = remote.execute(flyte_workflow, inputs={"a": 1, "b": 10}, wait=True)
 
 # inspect the execution's outputs
+print(workflow_execution.outputs)

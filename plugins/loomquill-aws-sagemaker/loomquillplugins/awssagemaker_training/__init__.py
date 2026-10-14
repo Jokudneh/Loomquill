@@ -27,3 +27,13 @@ from .task import (
     SageMakerTrainingTask,
 )
 
+__all__ = [
+    "SageMakerTrainingJobConnector",
+    "SageMakerTrainingJobMetadata",
+    "SageMakerTrainingJobTask",
+    "SageMakerStopTrainingJobTask",
+    "SageMakerDescribeTrainingJobTask",
+    "SageMakerTraining",
+    "SageMakerTrainingTask",
+    "SageMakerTrainingTaskConnector",
+]

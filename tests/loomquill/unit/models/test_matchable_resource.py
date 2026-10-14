@@ -32,3 +32,37 @@ def test_plugin_override():
 def test_plugin_overrides():
     plugin_override = matchable_resource.PluginOverride(
         "task_type", ["acceptable", "override"], matchable_resource.PluginOverride.USE_DEFAULT
+    )
+    obj = matchable_resource.PluginOverrides(overrides=[plugin_override])
+    assert obj.overrides == [plugin_override]
+    assert obj == matchable_resource.PluginOverrides.from_flyte_idl(obj.to_flyte_idl())
+
+
+def test_matchable_resource():
+    cluster_resource_attrs = matchable_resource.ClusterResourceAttributes({"cpu": "one million", "gpu": "just one"})
+    obj = matchable_resource.MatchingAttributes(cluster_resource_attributes=cluster_resource_attrs)
+    assert obj.cluster_resource_attributes == cluster_resource_attrs
+    assert obj == matchable_resource.MatchingAttributes.from_flyte_idl(obj.to_flyte_idl())
+
+    execution_queue_attributes = matchable_resource.ExecutionQueueAttributes(["foo", "bar", "baz"])
+    obj2 = matchable_resource.MatchingAttributes(execution_queue_attributes=execution_queue_attributes)
+    assert obj2.execution_queue_attributes == execution_queue_attributes
+    assert obj2 == matchable_resource.MatchingAttributes.from_flyte_idl(obj2.to_flyte_idl())
+
+    execution_cluster_label = matchable_resource.ExecutionClusterLabel("my_cluster")
+    obj2 = matchable_resource.MatchingAttributes(execution_cluster_label=execution_cluster_label)
+    assert obj2.execution_cluster_label == execution_cluster_label
+    assert obj2 == matchable_resource.MatchingAttributes.from_flyte_idl(obj2.to_flyte_idl())
+
+    plugin_overrides_obj = matchable_resource.PluginOverrides(
+        overrides=[
+            matchable_resource.PluginOverride(
+                "task_type", ["acceptable", "override"], matchable_resource.PluginOverride.USE_DEFAULT
+            )
+        ]
+    )
+    plugin_override_attributes = matchable_resource.MatchingAttributes(plugin_overrides=plugin_overrides_obj)
+    assert plugin_override_attributes.plugin_overrides == plugin_overrides_obj
+    assert plugin_override_attributes == matchable_resource.MatchingAttributes.from_flyte_idl(
+        plugin_override_attributes.to_flyte_idl()
+    )

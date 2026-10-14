@@ -11,3 +11,4 @@ class B(A):
     ...
 
 
+local_b = B()

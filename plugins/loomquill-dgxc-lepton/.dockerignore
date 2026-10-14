@@ -4,3 +4,11 @@ examples/
 tests/
 *.md
 .git
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+.pytest_cache/

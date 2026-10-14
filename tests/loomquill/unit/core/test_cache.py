@@ -60,3 +60,132 @@ def test_task_arguments(default_serialization_settings):
     assert serialized_t4.template.metadata.discovery_version == "a-version"
     assert serialized_t4.template.metadata.cache_ignore_input_vars == ("a",)
 
+    @task(cache=Cache(version="version-overrides-policies", policies=SaltCachePolicy()))
+    def t5(a: int) -> int:
+        return a
+
+    serialized_t5 = get_serializable_task(OrderedDict(), default_serialization_settings, t5)
+    assert serialized_t5.template.metadata.discoverable == True
+    assert serialized_t5.template.metadata.discovery_version == "version-overrides-policies"
+
+
+def test_task_arguments_deprecated(default_serialization_settings):
+    with pytest.raises(ValueError, match="cache_serialize, cache_version, and cache_ignore_input_vars are deprecated. Please use Cache object"):
+        @task(cache=Cache(version="a-version"), cache_version="a-conflicting-version")
+        def t1_fails(a: int) -> int:
+            return a
+
+    # A more realistic example where someone might set the version in the Cache object but sets the cache_serialize
+    # using the deprecated cache_serialize argument
+    with pytest.raises(ValueError, match="cache_serialize, cache_version, and cache_ignore_input_vars are deprecated. Please use Cache object"):
+        @task(cache=Cache(version="a-version"), cache_serialize=True)
+        def t2_fails(a: int) -> int:
+            return a
+
+    with pytest.raises(ValueError, match="cache_serialize, cache_version, and cache_ignore_input_vars are deprecated. Please use Cache object"):
+        @task(cache=Cache(version="a-version"), cache_ignore_input_vars=("a",))
+        def t3_fails(a: int) -> int:
+            return a
+
+    with pytest.raises(ValueError, match="cache_serialize, cache_version, and cache_ignore_input_vars are deprecated. Please use Cache object"):
+        @task(cache=Cache(version="a-version"), cache_serialize=True, cache_version="b-version")
+        def t5_fails(a: int) -> int:
+            return a
+
+    with pytest.raises(ValueError, match="cache_serialize, cache_version, and cache_ignore_input_vars are deprecated. Please use Cache object"):
+        @task(cache=Cache(version="a-version"), cache_serialize=True, cache_ignore_input_vars=("a",))
+        def t6_fails(a: int) -> int:
+            return a
+
+    with pytest.raises(ValueError, match="cache_serialize, cache_version, and cache_ignore_input_vars are deprecated. Please use Cache object"):
+        @task(cache=Cache(version="a-version"), cache_serialize=True, cache_version="b-version", cache_ignore_input_vars=("a",))
+        def t7_fails(a: int) -> int:
+            return a
+
+
+def test_basic_salt_cache_policy(default_serialization_settings):
+    @task
+    def t_notcached(a: int) -> int:
+        return a
+
+    serialized_t_notcached = get_serializable_task(OrderedDict(), default_serialization_settings, t_notcached)
+    assert serialized_t_notcached.template.metadata.discoverable == False
+
+    @task(cache=Cache(version="a-version"))
+    def t_cached_explicit_version(a: int) -> int:
+        return a
+
+    serialized_t_cached_explicit_version = get_serializable_task(OrderedDict(), default_serialization_settings, t_cached_explicit_version)
+    assert serialized_t_cached_explicit_version.template.metadata.discoverable == True
+    assert serialized_t_cached_explicit_version.template.metadata.discovery_version == "a-version"
+
+    @task(cache=Cache(salt="a-sprinkle-of-salt", policies=SaltCachePolicy()))
+    def t_cached(a: int) -> int:
+        return a + 1
+
+    serialized_t_cached = get_serializable_task(OrderedDict(), default_serialization_settings, t_cached)
+    assert serialized_t_cached.template.metadata.discoverable == True
+    assert serialized_t_cached.template.metadata.discovery_version == "348b4b8c52d8868e0c202ce4d26d59906c13716197b611a0a7a215074159df79"
+
+    # test successfully create task while passing a CachePolicy list
+    @task(cache=Cache(salt="a-sprinkle-of-salt", policies=[SaltCachePolicy(), SaltCachePolicy()]))
+    def t_cached_with_multiple_policies(a: int) -> int:
+        return a + 2
+
+    serialized_t_cached = get_serializable_task(OrderedDict(), default_serialization_settings, t_cached_with_multiple_policies)
+    assert serialized_t_cached.template.metadata.discoverable == True
+
+
+@mock.patch("flytekit.configuration.plugin.FlytekitPlugin.get_default_cache_policies")
+def test_set_default_policies(mock_get_default_cache_policies, default_serialization_settings):
+    # Enable SaltCachePolicy as the default cache policy
+    mock_get_default_cache_policies.return_value = [SaltCachePolicy()]
+
+    @task(cache=True)
+    def t1(a: int) -> int:
+        return a
+
+    serialized_t1 = get_serializable_task(OrderedDict(), default_serialization_settings, t1)
+    assert serialized_t1.template.metadata.discoverable == True
+    assert serialized_t1.template.metadata.discovery_version == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
+    @task(cache=Cache())
+    def t2(a: int) -> int:
+        return a
+
+    serialized_t2 = get_serializable_task(OrderedDict(), default_serialization_settings, t2)
+    assert serialized_t2.template.metadata.discoverable == True
+    assert serialized_t2.template.metadata.discovery_version == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
+    # Confirm that the default versions match
+    assert serialized_t1.template.metadata.discovery_version == serialized_t2.template.metadata.discovery_version
+
+    # Reset the default policies
+    mock_get_default_cache_policies.return_value = []
+
+    with pytest.raises(ValueError, match="If version is not defined then at least one cache policy needs to be set"):
+        @task(cache=True)
+        def t3_fails(a: int) -> int:
+            return a
+
+    with pytest.raises(ValueError, match="If version is not defined then at least one cache policy needs to be set"):
+        @task(cache=Cache())
+        def t4_fails(a: int) -> int:
+            return a + 1
+
+    @task(cache=Cache(version="a-version"))
+    def t_cached_explicit_version(a: int) -> int:
+        return a
+
+    serialized_t_cached_explicit_version = get_serializable_task(OrderedDict(), default_serialization_settings, t_cached_explicit_version)
+    assert serialized_t_cached_explicit_version.template.metadata.discoverable == True
+    assert serialized_t_cached_explicit_version.template.metadata.discovery_version == "a-version"
+
+
+def test_cache_policy_exception(default_serialization_settings):
+    # Set the address of the ExceptionCachePolicy in the error message so that the test is robust to changes in the
+    # address of the ExceptionCachePolicy class
+    with pytest.raises(ValueError, match="Failed to generate version for cache policy"):
+        @task(cache=Cache(policies=ExceptionCachePolicy()))
+        def t_cached(a: int) -> int:
+            return a

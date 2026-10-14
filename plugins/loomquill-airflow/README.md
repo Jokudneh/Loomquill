@@ -15,3 +15,19 @@ def t1():
     print("loomquill")
 
 
+@workflow
+def wf():
+    sensor = FileSensor(task_id="id", filepath="/tmp/1234")
+    sensor >> t1()
+
+
+if __name__ == '__main__':
+    wf()
+```
+
+
+To install the plugin, run the following command:
+
+```bash
+pip install loomquillplugins-airflow
+```

@@ -11,3 +11,11 @@ ARG VERSION
 RUN pip install uv --no-cache-dir \
   && uv pip install --system --no-cache-dir -U \
     sqlalchemy \
+    psycopg2-binary \
+    pymysql \
+    loomquillplugins-sqlalchemy==$VERSION \
+    loomquill==$VERSION
+
+RUN useradd -u 1000 loomquill
+RUN chown loomquill: /root
+USER loomquill

@@ -33,3 +33,67 @@ This breakdown provides precise information into exactly how and when Flyte proc
 @click.option(
     "-p",
     "--project",
+    required=False,
+    type=str,
+    default="flytesnacks",
+    help="The project of the workflow execution",
+)
+@click.option(
+    "-d",
+    "--domain",
+    required=False,
+    type=str,
+    default="development",
+    help="The domain of the workflow execution",
+)
+@click.pass_context
+def metrics(ctx: click.Context, depth, domain, project):
+    ctx.obj[CTX_DEPTH] = depth
+    ctx.obj[CTX_DOMAIN] = domain
+    ctx.obj[CTX_PROJECT] = project
+
+
+@click.command("dump", help=_dump_help)
+@click.argument("execution_id", type=str)
+@click.pass_context
+def metrics_dump(
+    ctx: click.Context,
+    execution_id: str,
+):
+    depth = ctx.obj[CTX_DEPTH]
+    domain = ctx.obj[CTX_DOMAIN]
+    project = ctx.obj[CTX_PROJECT]
+
+    # retrieve remote
+    remote = get_and_save_remote_with_click_context(ctx, project, domain)
+    # retrieve workflow execution metrics
+    workflow_execution_id = cli_identifiers.WorkflowExecutionIdentifier(
+        project=project, domain=domain, name=execution_id
+    )
+    execution_metrics = remote.get_execution_metrics(id=workflow_execution_id, depth=depth)
+    execution_metrics.dump()
+
+
+@click.command("explain", help=_explain_help)
+@click.argument("execution_id", type=str)
+@click.pass_context
+def metrics_explain(
+    ctx: click.Context,
+    execution_id: str,
+):
+    depth = ctx.obj[CTX_DEPTH]
+    domain = ctx.obj[CTX_DOMAIN]
+    project = ctx.obj[CTX_PROJECT]
+
+    # retrieve remote
+    remote = get_and_save_remote_with_click_context(ctx, project, domain)
+    # retrieve workflow execution metrics
+    workflow_execution_id = cli_identifiers.WorkflowExecutionIdentifier(
+        project=project, domain=domain, name=execution_id
+    )
+    execution_metrics = remote.get_execution_metrics(id=workflow_execution_id, depth=depth)
+    execution_metrics.explain()
+
+
+metrics.add_command(metrics_dump)
+metrics.add_command(metrics_explain)

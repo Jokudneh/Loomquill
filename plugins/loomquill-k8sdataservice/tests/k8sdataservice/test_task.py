@@ -28,3 +28,101 @@ def test_gnn_task():
         Limits=Resources(cpu="1", mem="2", gpu="4"),
         Port=1234,
     )
+    gnn_task = DataServiceTask(
+        name="flytekit.poc.gnn.task",
+        inputs=kwtypes(ds=str),
+        task_config=gnn_config,
+    )
+
+    serialization_settings = SerializationSettings(
+        project="test",
+        domain="lnkd",
+        image_config=ImageConfig.auto(),
+        env={},
+    )
+
+    task_spec = get_serializable(OrderedDict(), serialization_settings, gnn_task)
+    s = Struct()
+    s.update({
+        "Name": "test",
+        "Replicas": 8,
+        "Image": "image",
+        "Command": None,
+        "Cluster": "grid2",
+        "ExistingReleaseName": None,
+        "Requests": {
+            "cpu": "1",
+            "mem": "2",
+            "gpu": "4",
+            "ephemeral_storage": None
+        },
+        "Limits": {
+            "cpu": "1",
+            "mem": "2",
+            "gpu": "4",
+            "ephemeral_storage": None
+        },
+        "Port": 1234,
+    })
+    assert task_spec.template.custom == json_format.MessageToDict(s)
+
+
+def test_gnn_task_optional_field():
+    gnn_config = DataServiceConfig(
+        Name="test",
+        Replicas=8,
+        Image="image",
+        Command=None,
+        Cluster="grid2",
+        Port=1234,
+    )
+    gnn_task = DataServiceTask(
+        name="flytekit.poc.gnn.task",
+        inputs=kwtypes(ds=str),
+        task_config=gnn_config,
+    )
+
+    serialization_settings = SerializationSettings(
+        project="test",
+        domain="lnkd",
+        image_config=ImageConfig.auto(),
+        env={},
+    )
+
+    task_spec = get_serializable(OrderedDict(), serialization_settings, gnn_task)
+    s = Struct()
+    s.update({
+        "Name": "test",
+        "Replicas": 8,
+        "Image": "image",
+        "Command": None,
+        "Cluster": "grid2",
+        "ExistingReleaseName": None,
+        "Port": 1234,
+    })
+    assert task_spec.template.custom == json_format.MessageToDict(s)
+
+
+def test_local_exec(mock_k8s_manager):
+    gnn_config = DataServiceConfig(
+        Replicas=8,
+        Image="image",
+        Command=[
+            "bash",
+            "-c",
+            "command",
+        ],
+        Cluster="grid2",
+    )
+    gnn_task = DataServiceTask(
+        name="flytekit.poc.gnn.task",
+        inputs=kwtypes(ds=str),
+        task_config=gnn_config,
+    )
+    assert gnn_task is not None
+    assert len(gnn_task.interface.inputs) == 1
+    assert len(gnn_task.interface.outputs) == 1
+
+    # will not run locally
+    with pytest.raises(Exception):
+        gnn_task(ds="GNNTEST")

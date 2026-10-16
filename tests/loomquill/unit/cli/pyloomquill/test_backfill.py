@@ -23,3 +23,23 @@ def test_resolve_backfill_window():
 @mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
 def test_pyflyte_backfill(mock_remote):
     mock_remote.generate_console_url.return_value = "ex"
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(
+            pyflyte.main,
+            [
+                "backfill",
+                "--parallel",
+                "-p",
+                "flytesnacks",
+                "-d",
+                "development",
+                "--from-date",
+                "now",
+                "--backfill-window",
+                "5 day",
+                "daily",
+            ],
+        )
+        assert result.exit_code == 0
+        assert "Execution launched" in result.output

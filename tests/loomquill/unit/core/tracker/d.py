@@ -5,3 +5,11 @@ Refer to test_python_function_task.py to look at the usage.
 from flytekit import task
 
 
+def tasks():
+    @task
+    def foo():
+        pass
+
+
+def inner_function(a: str) -> str:
+    return "hello"

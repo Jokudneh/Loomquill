@@ -15,3 +15,24 @@ RUN apt-get update && apt-get install build-essential -y \
 #   pyflyte serve connector → load_implicit_plugins → airflow → pendulum → crash
 RUN uv pip install --system --no-cache-dir -U \
   "pendulum>=2.0.0,<3.0" \
+  flytekit[connector]==$VERSION \
+  flytekitplugins-airflow==$VERSION \
+  flytekitplugins-bigquery==$VERSION \
+  flytekitplugins-k8sdataservice==$VERSION \
+  flytekitplugins-openai==$VERSION \
+  flytekitplugins-slurm==$VERSION \
+  flytekitplugins-snowflake==$VERSION \
+  flytekitplugins-awssagemaker==$VERSION \
+  && apt-get clean autoclean \
+  && apt-get autoremove --yes \
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
+  && :
+
+CMD ["pyflyte", "serve", "connector", "--port", "8000"]
+
+FROM connector-slim AS connector-all
+ARG VERSION
+
+RUN uv pip install --system --no-cache-dir -U \
+  flytekitplugins-mmcloud==$VERSION \
+  flytekitplugins-spark==$VERSION

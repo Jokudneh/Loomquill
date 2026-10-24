@@ -23,3 +23,17 @@
    {% block attributes %}
    {% if attributes %}
 
+   .. rubric:: {{ _('Attributes') }}
+   {% for item in attributes %}
+   .. autoattribute:: {{ item }}
+   {%- endfor %}
+
+   {% endif %}
+   {% endblock %}
+
+
+{% else %}
+
+.. autodata:: {{ objname }}
+
+{% endif %}

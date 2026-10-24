@@ -58,3 +58,108 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/jokudneh/loomquill"
+
+[project.scripts]
+pyloomquill-execute = "loomquill.bin.entrypoint:execute_task_cmd"
+pyloomquill-fast-execute = "loomquill.bin.entrypoint:fast_execute_task_cmd"
+pyloomquill-map-execute = "loomquill.bin.entrypoint:map_execute_task_cmd"
+pyloomquill = "loomquill.clis.sdk_in_container.pyloomquill:main"
+loomquill-cli = "loomquill.clis.loomquill_cli.main:_loomquill_cli"
+
+[tool.setuptools_scm]
+write_to = "loomquill/_version.py"
+
+[tool.setuptools]
+include-package-data = true
+script-files = [
+    "loomquill_scripts/loomquill_build_image.sh",
+    "loomquill_scripts/loomquill_venv",
+    "loomquill/bin/entrypoint.py",
+]
+
+[tool.setuptools.packages.find]
+include = ["loomquill*", "loomquill_scripts"]
+exclude = ["boilerplate", "docs", "plugins", "tests*"]
+
+[tool.pytest.ini_options]
+norecursedirs = ["common", "workflows", "spark", "fsspec"]
+asyncio_default_fixture_loop_scope = "function"
+log_cli = false
+log_cli_level = 20
+markers = [
+    "sandbox_test: fake integration tests",               # unit tests that are really integration tests that run on a sandbox environment
+    "serial: tests to avoid using with pytest-xdist",
+    "hypothesis: tests that use they hypothesis library",
+    "lftransfers: integration tests which involve large file transfers"
+]
+
+[tool.coverage.report]
+exclude_also = [
+    "def __repr__",
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "if (typing\\.)?TYPE_CHECKING:",
+    "@(typing\\.)?overload",
+    "@(abc\\.)?abstractmethod",
+    "raise NotImplementedError",
+]
+
+[tool.coverage.run]
+branch = true
+
+[tool.ruff]
+line-length = 120
+lint.select = ["E", "W", "F", "I", "B006"]
+lint.ignore = [
+    # Whitespace before '{symbol}'
+    "E203",
+    # Too many leading # before block comment
+    "E266",
+    # Line too long ({width} > {limit})
+    "E501",
+    # Ambiguous variable name: {name}
+    "E741",
+    # Undefined name {name}
+    "F821",
+    # Do not compare types, use isinstance()
+    "E721",
+    # Do not assign a lambda expression, use a def
+    "E731",
+]
+extend-exclude = ["tests/", "**/tests/**"]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"*/__init__.py" = [
+    # unused-import
+    "F401",
+]
+
+[tool.codespell]
+ignore-words-list = "ot,te,raison,fo,lits,assertIn"
+skip = "./docs/build,./.git,*.txt"
+
+[project.optional-dependencies]
+# TODO: Remove it when we remove all the agent code
+agent = [
+    "grpcio-health-checking<=1.68.0",
+    "httpx",
+    "prometheus-client",
+]
+
+connector = [
+    "grpcio-health-checking<=1.68.0",
+    "httpx",
+    "prometheus-client",
+]

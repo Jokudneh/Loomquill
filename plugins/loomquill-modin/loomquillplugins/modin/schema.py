@@ -48,3 +48,71 @@ class ModinPandasSchemaWriter(LocalIOSchemaWriter[pandas.DataFrame]):
     def write(self, *dfs: pandas.DataFrame, **kwargs):
         if dfs is None or len(dfs) == 0:
             return
+        if len(dfs) > 1:
+            raise AssertionError("Only a single pandas.DataFrame can be written per variable currently")
+        if self._fmt == SchemaFormat.PARQUET:
+            dfs[0].to_parquet(self.to_path + "/00000")
+            return
+        raise AssertionError("Only Parquet type files are supported for pandas dataframe currently")
+
+
+class ModinPandasDataFrameTransformer(TypeTransformer[pandas.DataFrame]):
+    """
+    Transforms ModinPandas DataFrame's to and from a Schema (typed/untyped)
+    """
+
+    _SUPPORTED_TYPES: typing.Dict[type, SchemaType.SchemaColumn.SchemaColumnType] = (
+        FlyteSchemaTransformer._SUPPORTED_TYPES
+    )
+
+    def __init__(self):
+        super().__init__("pandas-df-transformer", pandas.DataFrame)
+
+    @staticmethod
+    def _get_schema_type() -> SchemaType:
+        return SchemaType(columns=[])
+
+    def get_literal_type(self, t: Type[pandas.DataFrame]) -> LiteralType:
+        return LiteralType(schema=self._get_schema_type())
+
+    def to_literal(
+        self,
+        ctx: FlyteContext,
+        python_val: pandas.DataFrame,
+        python_type: Type[pandas.DataFrame],
+        expected: LiteralType,
+    ) -> Literal:
+        local_dir = ctx.file_access.get_random_local_directory()
+        w = ModinPandasSchemaWriter(to_path=local_dir, cols=None, fmt=SchemaFormat.PARQUET)
+        w.write(python_val)
+        remote_path = ctx.file_access.join(
+            ctx.file_access.raw_output_prefix,
+            ctx.file_access.get_random_string(),
+        )
+        remote_path = ctx.file_access.put_data(local_dir, remote_path, is_multipart=True)
+        return Literal(scalar=Scalar(schema=Schema(remote_path, self._get_schema_type())))
+
+    def to_python_value(
+        self,
+        ctx: FlyteContext,
+        lv: Literal,
+        expected_python_type: Type[pandas.DataFrame],
+    ) -> T:
+        if not (lv and lv.scalar and lv.scalar.schema):
+            return pandas.DataFrame()
+        local_dir = ctx.file_access.get_random_local_directory()
+        ctx.file_access.download_directory(lv.scalar.schema.uri, local_dir)
+        r = ModinPandasSchemaReader(from_path=local_dir, cols=None, fmt=SchemaFormat.PARQUET)
+        return r.all()
+
+
+SchemaEngine.register_handler(
+    SchemaHandler(
+        "pandas.Dataframe-Schema",
+        pandas.DataFrame,
+        ModinPandasSchemaReader,
+        ModinPandasSchemaWriter,
+    )
+)
+
+TypeEngine.register(ModinPandasDataFrameTransformer())

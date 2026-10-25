@@ -8,3 +8,6 @@ This plugin enables seamless integration between Flyte and mlflow.
    :toctree: generated/
 
    mlflow_autolog
+"""
+
+from .tracking import mlflow_autolog

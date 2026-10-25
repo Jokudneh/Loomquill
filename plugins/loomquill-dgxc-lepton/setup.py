@@ -22,3 +22,15 @@ setup(
     python_requires=">=3.9",
     classifiers=[
         "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Software Development",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+    entry_points={"flytekit.plugins": ["dgxc_lepton=flytekitplugins.dgxc_lepton"]},
+)

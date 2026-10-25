@@ -8,3 +8,12 @@ The Dolt plugin and Dolt command-line tool can be installed as follows:
 pip install loomquillplugins.dolt
 sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | sudo bash'
 ```
+
+Dolt requires a user configuration to run init:
+
+```
+dolt config --global --add user.email <email>
+dolt config --global --add user.name <name>
+```
+
+All the [examples](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/dolt_plugin/index.html) can be found in the documentation.

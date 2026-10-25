@@ -51,3 +51,115 @@ def reset_flytectl_config_env_var() -> pytest.fixture():
 @mock.patch("flytekit.configuration.plugin.get_config_file")
 @mock.patch("flytekit.configuration.plugin.FlyteRemote")
 def test_get_remote(mock_remote, mock_config_file, reset_flytectl_config_env_var):
+    mock_config_file.return_value = None
+    r = FlytekitPlugin.get_remote(None, "p", "d")
+    assert r is not None
+    mock_remote.assert_called_once_with(
+        Config.for_sandbox(), default_project="p", default_domain="d", data_upload_location=None
+    )
+
+
+@mock.patch("flytekit.configuration.plugin.get_config_file")
+@mock.patch("flytekit.configuration.plugin.FlyteRemote")
+def test_saving_remote(mock_remote, mock_config_file):
+    mock_config_file.return_value = None
+    mock_context = mock.MagicMock
+    mock_context.obj = {}
+    get_and_save_remote_with_click_context(mock_context, "p", "d")
+    assert mock_context.obj["flyte_remote"] is not None
+    mock_remote.assert_called_once_with(
+        Config.for_sandbox(), default_project="p", default_domain="d", data_upload_location=None
+    )
+
+
+def test_register_with_no_package_or_module_argument():
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(pyflyte.main, ["register"])
+        assert result.exit_code == 1
+        assert (
+            "Missing argument 'PACKAGE_OR_MODULE...', at least one PACKAGE_OR_MODULE is required but multiple can be passed"
+            in result.output
+        )
+
+
+@mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
+@mock.patch("flytekit.clients.friendly.SynchronousFlyteClient", spec=SynchronousFlyteClient)
+def test_register_with_no_output_dir_passed(mock_client, mock_remote):
+    ctx = FlyteContextManager.current_context()
+    mock_remote._client = mock_client
+    mock_remote.return_value.context = ctx
+    mock_remote.return_value._version_from_hash.return_value = "dummy_version_from_hash"
+    mock_remote.return_value.fast_package.return_value = "dummy_md5_bytes", "dummy_native_url"
+    runner = CliRunner()
+    context_manager.FlyteEntities.entities.clear()
+    with runner.isolated_filesystem():
+        out = subprocess.run(["git", "init"], capture_output=True)
+        assert out.returncode == 0
+        os.makedirs("core1", exist_ok=True)
+        with open(os.path.join("core1", "sample.py"), "w") as f:
+            f.write(sample_file_contents)
+            f.close()
+        result = runner.invoke(pyflyte.main, ["register", "core1"])
+        assert "Successfully registered 4 entities" in result.output
+        shutil.rmtree("core1")
+
+
+@mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
+@mock.patch("flytekit.clients.friendly.SynchronousFlyteClient", spec=SynchronousFlyteClient)
+def test_register_shell_task(mock_client, mock_remote):
+    mock_remote._client = mock_client
+    mock_remote.return_value._version_from_hash.return_value = "dummy_version_from_hash"
+    mock_remote.return_value.fast_package.return_value = "dummy_md5_bytes", "dummy_native_url"
+    runner = CliRunner()
+    context_manager.FlyteEntities.entities.clear()
+    with runner.isolated_filesystem():
+        out = subprocess.run(["git", "init"], capture_output=True)
+        assert out.returncode == 0
+        os.makedirs("core2", exist_ok=True)
+        with open(os.path.join("core2", "shell_task.py"), "w") as f:
+            f.write(shell_task)
+            f.close()
+        result = runner.invoke(pyflyte.main, ["register", "core2"])
+        assert "Successfully registered 2 entities" in result.output
+        shutil.rmtree("core2")
+
+
+@mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
+@mock.patch("flytekit.clients.friendly.SynchronousFlyteClient", spec=SynchronousFlyteClient)
+def test_non_fast_register(mock_client, mock_remote):
+    ctx = FlyteContextManager.current_context()
+    mock_remote.return_value.context = ctx
+    mock_remote._client = mock_client
+    runner = CliRunner()
+    context_manager.FlyteEntities.entities.clear()
+    with runner.isolated_filesystem():
+        out = subprocess.run(["git", "init"], capture_output=True)
+        assert out.returncode == 0
+        os.makedirs("core2", exist_ok=True)
+        with open(os.path.join("core2", "sample.py"), "w") as f:
+            f.write(sample_file_contents)
+            f.close()
+        result = runner.invoke(pyflyte.main, ["register", "--non-fast", "--version", "a-version", "core2"])
+        assert "Successfully registered 4 entities" in result.output
+        shutil.rmtree("core2")
+
+
+@mock.patch("flytekit.configuration.plugin.FlyteRemote", spec=FlyteRemote)
+@mock.patch("flytekit.clients.friendly.SynchronousFlyteClient", spec=SynchronousFlyteClient)
+def test_non_fast_register_require_version(mock_client, mock_remote):
+    mock_remote._client = mock_client
+    mock_remote.return_value._version_from_hash.return_value = "dummy_version_from_hash"
+    mock_remote.return_value.upload_file.return_value = "dummy_md5_bytes", "dummy_native_url"
+    runner = CliRunner()
+    context_manager.FlyteEntities.entities.clear()
+    with runner.isolated_filesystem():
+        out = subprocess.run(["git", "init"], capture_output=True)
+        assert out.returncode == 0
+        os.makedirs("core3", exist_ok=True)
+        with open(os.path.join("core3", "sample.py"), "w") as f:
+            f.write(sample_file_contents)
+            f.close()
+        result = runner.invoke(pyflyte.main, ["register", "--non-fast", "core3"])
+        assert result.exit_code == 1
+        shutil.rmtree("core3")

@@ -40,3 +40,65 @@ def k8s_data_service():
         Replicas=1,
         Image="busybox:latest",
         Command=[
+            "bash",
+            "-c",
+            "echo Hello Loomquill K8s Stateful Service! && sleep 3600"
+        ],
+    )
+
+    gnn_task = DataServiceTask(
+        name="K8s Stateful Data Service",
+        inputs=kwtypes(ds=str),
+        task_config=gnn_config,
+    )
+    return gnn_task
+
+# Define a cleanup sensor
+gnn_sensor = CleanupSensor(name="Cleanup")
+
+# Define a workflow to test the data service
+@workflow
+def test_dataservice_wf(name: str):
+    k8s_data_service()(ds="OSS Loomquill K8s Data Service Demo") \
+          >> gnn_sensor(
+              release_name=name,
+              cleanup_data_service=True,
+          )
+
+if __name__ == "__main__":
+    out = test_dataservice_wf(name="example")
+    print(f"Running test_dataservice_wf() {out}")
+```
+
+#### Accessing the Data Service
+Other tasks or services that need to access the data service can do so in multiple ways. For example, using environment variables:
+
+```python
+from kubernetes.client import V1PodSpec, V1Container, V1EnvVar
+
+PRIMARY_CONTAINER_NAME = "primary"
+LOOMQUILL_POD_SPEC = V1PodSpec(
+    containers=[
+        V1Container(
+            name=PRIMARY_CONTAINER_NAME,
+            env=[
+                V1EnvVar(name="MY_DATASERVICES", value=f"{name}-0.{name}:40000 {name}-1.{name}:40000"),
+            ],
+        )
+    ],
+)
+
+task_config = MPIJob(
+    launcher=Launcher(replicas=1, pod_template=LOOMQUILL_POD_SPEC),
+    worker=Worker(replicas=1, pod_template=LOOMQUILL_POD_SPEC),
+)
+
+@task(task_config=task_config)
+def mpi_task() -> str:
+    return "your script uses the envs to communicate with the data service "
+```
+
+### Key Points
+- The `DataServiceConfig` defines resource requests, limits, replicas, and the container image/command.
+- The `CleanupSensor` ensures resources are cleaned up when required.
+- The workflow connects the service provisioning and cleanup process for streamlined operations.

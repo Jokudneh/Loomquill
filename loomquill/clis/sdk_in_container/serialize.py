@@ -48,3 +48,7 @@ def serialize_all(
     ```bash
     flyte-cli parse-proto -f filename.pb -p flyteidl.admin.launch_plan_pb2.LaunchPlan
     ```
+
+    See {{< py_class_ref flytekit.models.core.identifier.ResourceType >}}   to match the trailing index in the file name with the
+    entity type.
+    :param pkgs: Dot-delimited Python packages/subpackages to look into for serialization.

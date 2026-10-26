@@ -23,3 +23,22 @@ class ChatGPTTask(SyncConnectorExecutorMixin, PythonTask):
 
         if "model" not in chatgpt_config:
             raise ValueError("The 'model' configuration variable is required in chatgpt_config")
+
+        task_config = {"openai_organization": openai_organization, "chatgpt_config": chatgpt_config}
+
+        inputs = {"message": str}
+        outputs = {"o0": str}
+
+        super().__init__(
+            task_type=self._TASK_TYPE,
+            name=name,
+            task_config=task_config,
+            interface=Interface(inputs=inputs, outputs=outputs),
+            **kwargs,
+        )
+
+    def get_custom(self, settings: SerializationSettings) -> Dict[str, Any]:
+        return {
+            "openai_organization": self.task_config["openai_organization"],
+            "chatgpt_config": self.task_config["chatgpt_config"],
+        }

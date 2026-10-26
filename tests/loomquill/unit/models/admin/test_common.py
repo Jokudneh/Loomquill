@@ -15,3 +15,16 @@ def test_sort():
 
 
 def test_sort_parse():
+    o = _common.Sort.from_python_std(' asc(my"\wackyk3y) ')  # noqa: W605
+    assert o.key == 'my"\wackyk3y'  # noqa: W605
+    assert o.direction == _common.Sort.Direction.ASCENDING
+
+    o = _common.Sort.from_python_std("  desc(   mykey   ) ")
+    assert o.key == "mykey"
+    assert o.direction == _common.Sort.Direction.DESCENDING
+
+    with pytest.raises(ValueError):
+        _common.Sort.from_python_std("asc(abc")
+
+    with pytest.raises(ValueError):
+        _common.Sort.from_python_std("asce(abc)")

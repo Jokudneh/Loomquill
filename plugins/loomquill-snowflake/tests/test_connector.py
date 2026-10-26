@@ -26,3 +26,89 @@ async def test_snowflake_connector(mock_get_private_key):
     snowflake_connector.connect = MagicMock()
     mock_conn_instance = snowflake_connector.connect.return_value
     mock_conn_instance.get_query_status_throw_if_error.return_value = query_status_mock
+
+    mock_cursor = MagicMock()
+    mock_cursor.sfqid = "dummy_id"
+    mock_conn_instance.cursor.return_value = mock_cursor
+
+    connector = ConnectorRegistry.get_connector("snowflake")
+    task_id = Identifier(
+        resource_type=ResourceType.TASK, project="project", domain="domain", name="name", version="version"
+    )
+
+    task_metadata = task.TaskMetadata(
+        True,
+        task.RuntimeMetadata(task.RuntimeMetadata.RuntimeType.FLYTE_SDK, "1.0.0", "python"),
+        timedelta(days=1),
+        literals.RetryStrategy(3),
+        True,
+        "0.1.1b0",
+        "This is deprecated!",
+        True,
+        "A",
+        (),
+    )
+
+    task_config = {
+        "user": "dummy_user",
+        "account": "dummy_account",
+        "database": "dummy_database",
+        "schema": "dummy_schema",
+        "warehouse": "dummy_warehouse",
+    }
+
+    int_type = types.LiteralType(types.SimpleType.INTEGER)
+    interfaces = interface_models.TypedInterface(
+        {
+            "a": interface_models.Variable(int_type, "description1"),
+            "b": interface_models.Variable(int_type, "description2"),
+        },
+        {},
+    )
+    task_inputs = literals.LiteralMap(
+        {
+            "a": literals.Literal(scalar=literals.Scalar(primitive=literals.Primitive(integer=1))),
+            "b": literals.Literal(scalar=literals.Scalar(primitive=literals.Primitive(integer=1))),
+        },
+    )
+
+    dummy_template = TaskTemplate(
+        id=task_id,
+        custom=None,
+        config=task_config,
+        metadata=task_metadata,
+        interface=interfaces,
+        type="snowflake",
+        sql=Sql("SELECT 1"),
+    )
+
+    snowflake_metadata = SnowflakeJobMetadata(
+        user="dummy_user",
+        account="dummy_account",
+        database="dummy_database",
+        schema="dummy_schema",
+        warehouse="dummy_warehouse",
+        query_id="dummy_id",
+        has_output=False,
+    )
+
+    metadata = await connector.create(dummy_template, task_inputs)
+    assert metadata == snowflake_metadata
+
+    resource = await connector.get(metadata)
+    assert resource.phase == TaskExecution.SUCCEEDED
+    assert resource.outputs == None
+
+    delete_response = await connector.delete(snowflake_metadata)
+    assert delete_response is None
+
+    # Verify that the expected methods were called on the mock cursor
+    mock_cursor = mock_conn_instance.cursor.return_value
+    mock_cursor.fetchall.assert_called_once()
+
+    mock_cursor.execute.assert_called_once_with(f"SELECT SYSTEM$CANCEL_QUERY('{metadata.query_id}')")
+    mock_cursor.fetchall.assert_called_once()
+
+    # Verify that the connection was closed
+    mock_cursor.close.assert_called_once()
+    mock_conn_instance.close.assert_called_once()

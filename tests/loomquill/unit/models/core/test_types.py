@@ -23,3 +23,17 @@ def test_blob_type():
 
 
 def test_enum_type():
+    o = _types.EnumType(values=["x", "y"])
+    assert o.values == ["x", "y"]
+    v = o.to_flyte_idl()
+    assert v
+    assert v.values == ["x", "y"]
+
+    o = _types.EnumType.from_flyte_idl(_types_pb2.EnumType(values=["a", "b"]))
+    assert o.values == ["a", "b"]
+
+    o = _types.EnumType(values=None)
+    assert not o.values
+    v = o.to_flyte_idl()
+    assert v
+    assert not v.values

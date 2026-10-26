@@ -28,3 +28,19 @@ def create_dc(uri: str) -> DC:
     return dc
 
 
+@task
+def read_sd(sd: StructuredDataset) -> StructuredDataset:
+    """Read input StructuredDataset."""
+    print("sd:", sd.open(pd.DataFrame).all())
+
+    return sd
+
+
+@workflow
+def wf(uri: str) -> None:
+    dc = create_dc(uri=uri)
+    read_sd(sd=dc.sd)
+
+
+if __name__ == "__main__":
+    wf(uri="tests/flytekit/integration/remote/workflows/basic/data/df.parquet")

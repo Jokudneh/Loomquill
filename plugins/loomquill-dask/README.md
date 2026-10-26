@@ -7,3 +7,13 @@ task and torn down after completion. This helps in making sure that the Python e
 (driver), scheduler and the workers.
 
 To install the plugin, run the following command:
+
+```bash
+pip install loomquillplugins-dask
+```
+
+To configure Dask in the Loomquill deployment's backed, follow
+[these directions](https://docs.loomquill.org/en/latest/deployment/plugins/k8s/index.html)ernetes/k8s_dask/index.html#step-2-environment-setup)
+
+An [usage example](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/k8s_dask_plugin/index.html)
+can be found in the documentation.

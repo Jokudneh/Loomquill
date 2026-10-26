@@ -48,3 +48,51 @@ def test_wrapped_tasks_error(capfd):
     ]
 
 
+def test_stacked_wrapped_tasks(capfd):
+    subprocess.run(
+        [sys.executable, str(test_module_dir / "stacked_decorators.py")],
+        env={"SCRIPT_INPUT": "10", "SYSTEMROOT": "C:\\Windows", "HOMEPATH": "C:\\Windows"},
+        text=True,
+    )
+    out = capfd.readouterr().out
+    out = re.sub(r"file:.*", "", out)
+
+    assert out.replace("\r", "").strip().split("\n") == [
+        "running task_decorator_1",
+        "running task_decorator_2",
+        "running task_decorator_3",
+        "running my_task",
+        "11",
+    ]
+
+
+def test_unwrapped_task():
+    completed_process = subprocess.run(
+        [sys.executable, str(test_module_dir / "unwrapped_decorator.py")],
+        env={"SCRIPT_INPUT": "10", "SYSTEMROOT": "C:\\Windows", "HOMEPATH": "C:\\Windows"},
+        text=True,
+        capture_output=True,
+    )
+    error = completed_process.stderr
+    error_str = ""
+    for line in error.strip().split("\n"):
+        if line.startswith("FlyteMissingTypeException"):
+            error_str += line
+    assert error_str != ""
+    assert "'args' has no type. Please add a type annotation" in error_str
+
+
+@pytest.mark.parametrize("script", ["nested_function.py", "nested_wrapped_function.py"])
+def test_nested_function(script):
+    completed_process = subprocess.run(
+        [sys.executable, str(test_module_dir / script)],
+        env={"SCRIPT_INPUT": "10", "SYSTEMROOT": "C:\\Windows", "HOMEPATH": "C:\\Windows"},
+        text=True,
+        capture_output=True,
+    )
+    error = completed_process.stderr
+    error_str = ""
+    for line in error.strip().split("\n"):
+        if line.startswith("ValueError"):
+            error_str += line
+    assert error_str.startswith("ValueError: TaskFunction cannot be a nested/inner or local function.")

@@ -10,3 +10,5 @@ def write_output(output_dir, output_file, v):
 
 
 def main(*args, output_dir):
+    # Generate output files for each input argument
+    for i, arg in enumerate(args, start=1):

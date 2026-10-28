@@ -83,3 +83,4 @@ def test_command_authenticator(mock_subprocess: MagicMock):
 
     mock_subprocess.side_effect = subprocess.CalledProcessError(
         returncode=-1, cmd=["x"], output="some stdout output", stderr="Please run 'az login' to setup account"
+    )

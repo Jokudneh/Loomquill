@@ -113,3 +113,6 @@ def test_make_job_name_valid_and_unique_per_retry():
     name0 = _make_job_name("flyte-", md_retry0, tt)
     name1 = _make_job_name("flyte-", md_retry1, tt)
 
+    assert name0 != name1  # retries get distinct names
+    for name in (name0, name1):
+        assert name.startswith("flyte-")

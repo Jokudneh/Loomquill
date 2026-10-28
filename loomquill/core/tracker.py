@@ -100,3 +100,6 @@ class TrackedInstance(metaclass=InstanceTrackingMeta):
 
     def __init__(self, *args, **kwargs):
         self._instantiated_in = None
+        self._module_file = None
+        self._lhs = None
+        super().__init__(*args, **kwargs)

@@ -115,3 +115,5 @@ def test_all_types_in_pydantic_basemodel_wf(local_dummy_file, local_dummy_direct
         e: dict = Field(default_factory=lambda: {"key": "value"})
         f: FlyteFile = Field(default_factory=lambda: FlyteFile(local_dummy_file))
         g: FlyteDirectory = Field(
+            default_factory=lambda: FlyteDirectory(local_dummy_directory)
+        )

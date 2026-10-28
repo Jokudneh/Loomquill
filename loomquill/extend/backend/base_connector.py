@@ -99,3 +99,6 @@ class Resource:
         custom_info : Optional[typing.Dict[str, Any]]
             The custom info of the job. For example, the job config.
     """
+
+    phase: TaskExecution.Phase
+    message: Optional[str] = None

@@ -11,3 +11,21 @@ def test_listdir():
         return FlyteDirectory(tmpdir)
 
 
+    @task
+    def read_file(file: FlyteFile) -> str:
+        with open(file, "r") as f:
+            return f.read()
+
+
+    @task
+    def list_dir(dir: FlyteDirectory) -> list[FlyteFile]:
+        return FlyteDirectory.listdir(dir)
+
+
+    @workflow
+    def wf() -> list[str]:
+        tmpdir = setup()
+        files = list_dir(dir=tmpdir)
+        return map_task(read_file)(file=files)
+
+    assert wf() == ["Hello, World!"]

@@ -22,3 +22,80 @@ class SageMakerTransformJobTask(AsyncConnectorExecutorMixin, PythonTask):
 
     Set ``DataProcessing.JoinSource: "Input"`` in the config for tabular predictive
     workloads so each output line carries the original input fields alongside the
+    prediction (otherwise rows have no key to join back).
+
+    ``name`` identifies the Flyte task. ``config`` is the boto3
+    ``create_transform_job`` request and may contain ``{inputs.X}`` and
+    ``{idempotence_token}`` placeholders. ``region`` selects the AWS region, and
+    ``inputs`` maps input placeholders to Flyte types.
+    """
+
+    _TASK_TYPE = "sagemaker-transform-job"
+
+    def __init__(
+        self,
+        name: str,
+        config: Dict[str, Any],
+        region: Optional[str] = None,
+        inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,
+    ):
+        super().__init__(
+            name=name,
+            task_type=self._TASK_TYPE,
+            interface=Interface(inputs=inputs, outputs=kwtypes(result=dict)),
+            **kwargs,
+        )
+        self._config = config
+        self._region = region
+
+    def get_custom(self, settings: SerializationSettings) -> Dict[str, Any]:
+        return {"config": self._config, "region": self._region}
+
+
+class SageMakerStopTransformJobTask(BotoTask):
+    """Sync helper task that stops a running SageMaker transform job by name."""
+
+    def __init__(
+        self,
+        name: str,
+        config: Dict[str, Any],
+        region: Optional[str] = None,
+        inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,
+    ):
+        super().__init__(
+            name=name,
+            task_config=BotoConfig(
+                service="sagemaker",
+                method="stop_transform_job",
+                config=config,
+                region=region,
+            ),
+            inputs=inputs,
+            **kwargs,
+        )
+
+
+class SageMakerDescribeTransformJobTask(BotoTask):
+    """Sync helper task that returns the full ``describe_transform_job`` response."""
+
+    def __init__(
+        self,
+        name: str,
+        config: Dict[str, Any],
+        region: Optional[str] = None,
+        inputs: Optional[Dict[str, Type]] = None,
+        **kwargs,
+    ):
+        super().__init__(
+            name=name,
+            task_config=BotoConfig(
+                service="sagemaker",
+                method="describe_transform_job",
+                config=config,
+                region=region,
+            ),
+            inputs=inputs,
+            **kwargs,
+        )

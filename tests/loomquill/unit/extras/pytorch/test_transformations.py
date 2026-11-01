@@ -34,3 +34,141 @@ serialization_settings = flytekit.configuration.SerializationSettings(
 @pytest.mark.parametrize(
     "transformer,python_type,format",
     [
+        (PyTorchTensorTransformer(), torch.Tensor, PyTorchTensorTransformer.PYTORCH_FORMAT),
+        (PyTorchModuleTransformer(), torch.nn.Module, PyTorchModuleTransformer.PYTORCH_FORMAT),
+        (PyTorchCheckpointTransformer(), PyTorchCheckpoint, PyTorchCheckpointTransformer.PYTORCH_CHECKPOINT_FORMAT),
+    ],
+)
+def test_get_literal_type(transformer, python_type, format):
+    tf = transformer
+    lt = tf.get_literal_type(python_type)
+    assert lt == LiteralType(blob=BlobType(format=format, dimensionality=BlobType.BlobDimensionality.SINGLE))
+    assert tf.guess_python_type(lt) == python_type
+
+
+@pytest.mark.parametrize(
+    "transformer,python_type,format,python_val",
+    [
+        (
+            PyTorchTensorTransformer(),
+            torch.Tensor,
+            PyTorchTensorTransformer.PYTORCH_FORMAT,
+            torch.tensor([[1, 2], [3, 4]]),
+        ),
+        (
+            PyTorchModuleTransformer(),
+            torch.nn.Module,
+            PyTorchModuleTransformer.PYTORCH_FORMAT,
+            torch.nn.Linear(2, 2),
+        ),
+        (
+            PyTorchCheckpointTransformer(),
+            PyTorchCheckpoint,
+            PyTorchCheckpointTransformer.PYTORCH_CHECKPOINT_FORMAT,
+            PyTorchCheckpoint(
+                module=torch.nn.Linear(2, 2),
+                hyperparameters={"epochs": 10, "batch_size": 32},
+                optimizer=torch.optim.Adam(torch.nn.Linear(2, 2).parameters()),
+            ),
+        ),
+    ],
+)
+def test_to_python_value_and_literal(transformer, python_type, format, python_val):
+    ctx = context_manager.FlyteContext.current_context()
+    tf = transformer
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    python_val = python_val.to(device) if hasattr(python_val, "to") else python_val
+    lt = tf.get_literal_type(python_type)
+
+    lv = tf.to_literal(ctx, python_val, type(python_val), lt)  # type: ignore
+    assert lv.scalar.blob.metadata == BlobMetadata(
+        type=BlobType(
+            format=format,
+            dimensionality=BlobType.BlobDimensionality.SINGLE,
+        )
+    )
+    assert lv.scalar.blob.uri is not None
+
+    output = tf.to_python_value(ctx, lv, python_type)
+    if isinstance(python_val, torch.Tensor):
+        assert torch.equal(output, python_val)
+    elif isinstance(python_val, torch.nn.Module):
+        for p1, p2 in zip(output.parameters(), python_val.parameters()):
+            if p1.data.ne(p2.data).sum() > 0:
+                assert False
+        assert True
+    else:
+        assert isinstance(output, dict)
+
+
+def test_example_tensor():
+    @task
+    def t1(array: torch.Tensor) -> torch.Tensor:
+        return torch.flatten(array)
+
+    task_spec = get_serializable(OrderedDict(), serialization_settings, t1)
+    assert task_spec.template.interface.outputs["o0"].type.blob.format is PyTorchTensorTransformer.PYTORCH_FORMAT
+
+
+def test_example_module():
+    @task
+    def t1() -> torch.nn.Module:
+        return torch.nn.BatchNorm1d(3, track_running_stats=True)
+
+    task_spec = get_serializable(OrderedDict(), serialization_settings, t1)
+    assert task_spec.template.interface.outputs["o0"].type.blob.format is PyTorchModuleTransformer.PYTORCH_FORMAT
+
+
+def test_example_checkpoint():
+    @task
+    def t1() -> PyTorchCheckpoint:
+        return PyTorchCheckpoint(
+            module=torch.nn.Linear(2, 2),
+            hyperparameters={"epochs": 10, "batch_size": 32},
+            optimizer=torch.optim.Adam(torch.nn.Linear(2, 2).parameters()),
+        )
+
+    task_spec = get_serializable(OrderedDict(), serialization_settings, t1)
+    assert (
+        task_spec.template.interface.outputs["o0"].type.blob.format
+        is PyTorchCheckpointTransformer.PYTORCH_CHECKPOINT_FORMAT
+    )
+
+
+def test_to_literal_unambiguity():
+    """Test that the pytorch type transformers raise an error when the input is a list of tensors or modules.
+
+    The PyTorchTypeTransformer uses `torch.save` for serialization which is able to serialize a list of tensors
+    or modules but this causes ambiguity in the Union type transformer as it cannot distinguish whether the
+    ListTransformer should invoke the PyTorchTypeTransformer for every element in the list or the
+    PyTorchTypeTransformer for the entire list.
+    """
+    ctx = context_manager.FlyteContext.current_context()
+
+    with pytest.raises(TypeTransformerFailedError):
+        test_inp = torch.tensor([1, 2, 3])
+        trans = PyTorchTensorTransformer()
+        trans.to_literal(ctx, [test_inp], torch.Tensor, trans.get_literal_type(torch.Tensor))
+
+
+    with pytest.raises(TypeTransformerFailedError):
+        model = torch.nn.Linear(2, 2)
+        trans = PyTorchModuleTransformer()
+        trans.to_literal(ctx, [model], torch.nn.Module, trans.get_literal_type(torch.nn.Module))
+
+
+def test_torch_tensor_list_union():
+    """Test that a task can return a union of list of tensor and tensor.
+
+    See test_to_literal_unambiguity for more details why this failed.
+    """
+
+    @task
+    def foo() -> Union[list[torch.Tensor], torch.Tensor]:
+        return [torch.tensor([1, 2, 3])]
+
+    @workflow
+    def wf():
+        foo()
+
+    wf()

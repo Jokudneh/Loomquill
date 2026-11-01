@@ -17,3 +17,25 @@ def task_decorator(fn):
         except Exception as exc:
             print(f"error running {fn.__name__}: {exc}")
         finally:
+            print(f"finally after running {fn.__name__}")
+        print(f"after running {fn.__name__}")
+        return out
+
+    return wrapper
+
+
+@task
+@task_decorator
+def my_task(x: int) -> int:
+    assert x > 0, f"my_task failed with input: {x}"
+    print("running my_task")
+    return x + 1
+
+
+@workflow
+def my_workflow(x: int) -> int:
+    return my_task(x=x)
+
+
+if __name__ == "__main__":
+    print(my_workflow(x=int(os.getenv("SCRIPT_INPUT", 0))))

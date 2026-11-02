@@ -54,3 +54,4 @@ def aggregate_spans(spans):
     return span
 
 
+def aggregate_reference_span(span):

@@ -9,3 +9,4 @@ class FileSensor(BaseSensor):
     def __init__(self, name: str, timeout: Optional[Union[datetime.timedelta, int]] = None, **kwargs):
         super().__init__(name=name, timeout=timeout, **kwargs)
 
+    async def poke(self, path: str) -> bool:

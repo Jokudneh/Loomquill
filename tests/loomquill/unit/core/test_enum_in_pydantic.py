@@ -17,3 +17,6 @@ class Job(BaseModel):
     name: str
     status: Status
 
+
+def test_pydantic_model_with_enum_ref():
+    """Test that a Pydantic model with an enum field (which produces a $ref in

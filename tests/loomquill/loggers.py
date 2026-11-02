@@ -7,3 +7,5 @@ def test_error(tmp_path):
 
     script_path = tmp_path / "script.py"
     script_path.write_text(EXAMPLE)
+    out = run([sys.executable, script_path], text=True, capture_output=True)
+    assert out.stderr == ""

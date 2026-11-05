@@ -20,3 +20,24 @@ def test_gte_filter():
 def test_lt_filter():
     assert filters.LessThan("key", "value").to_flyte_idl() == "lt(key,value)"
 
+
+def test_lte_filter():
+    assert filters.LessThanOrEqual("key", "value").to_flyte_idl() == "lte(key,value)"
+
+
+def test_value_in_filter():
+    assert filters.ValueIn("key", ["1", "2", "3"]).to_flyte_idl() == "value_in(key,1;2;3)"
+
+def test_invalid_value_in_filter():
+    with pytest.raises(TypeError, match=r"values must be a list. but got .*"):
+        filters.ValueIn("key", "1")
+
+
+def test_contains_filter():
+    assert filters.Contains("key", ["1", "2", "3"]).to_flyte_idl() == "contains(key,1;2;3)"
+
+
+def test_filter_list():
+    fl = filters.FilterList([filters.Equal("domain", "staging"), filters.NotEqual("project", "FakeProject")])
+
+    assert fl.to_flyte_idl() == "eq(domain,staging)+ne(project,FakeProject)"

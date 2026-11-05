@@ -35,3 +35,20 @@ run as a :std:ref:`subworkflow <cookbook:subworkflows>`.  Simple usage
 @dynamic
 def my_dynamic_subwf(a: int) -> (typing.List[str], int):
     s = []
+    for i in range(a):
+        s.append(t1(a=i))
+    return s, 5
+```
+
+Note in the code block that we call the Python ``range`` operator on the input. This is typically not allowed in a
+workflow but it is here. You can even express dependencies between tasks.
+
+```python
+@dynamic
+def my_dynamic_subwf(a: int, b: int) -> int:
+    x = t1(a=a)
+    return t2(b=b, x=x)
+```
+
+See the :std:ref:`cookbook <cookbook:subworkflows>` for a longer discussion.
+"""  # noqa: W293

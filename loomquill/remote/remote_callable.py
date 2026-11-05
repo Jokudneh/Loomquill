@@ -42,3 +42,42 @@ class RemoteEntity(ABC):
         #  b. Compilation Mode - this happens when the function is called as part of a workflow (potentially
         #     dynamic task). Produce promise objects and create a node.
         #  c. Workflow Execution Mode - when a workflow is being run locally. Even though workflows are functions
+        #     and everything should be able to be passed through naturally, we'll want to wrap output values of the
+        #     function into objects, so that potential .with_cpu or other ancillary functions can be attached to do
+        #     nothing. Subsequent tasks will have to know how to unwrap these. If by chance a non-Flyte task uses a
+        #     task output as an input, things probably will fail pretty obviously.
+        #     Since this is a reference entity, it still needs to be mocked otherwise an exception will be raised.
+        if len(args) > 0:
+            raise user_exceptions.FlyteAssertion(
+                f"Cannot call remotely fetched entity with args - detected {len(args)} positional args {args}"
+            )
+
+        ctx = FlyteContext.current_context()
+        if ctx.compilation_state is not None and ctx.compilation_state.mode == 1:
+            return self.compile(ctx, *args, **kwargs)
+        elif (
+            ctx.execution_state is not None and ctx.execution_state.mode == ExecutionState.Mode.LOCAL_WORKFLOW_EXECUTION
+        ):
+            if ctx.execution_state.branch_eval_mode == BranchEvalMode.BRANCH_SKIPPED:
+                return
+            return self.local_execute(ctx, **kwargs)
+        else:
+            logger.debug("Fetched entity, running raw execute.")
+            return self.execute(**kwargs)
+
+    def local_execute(self, ctx: FlyteContext, **kwargs) -> Optional[Union[Tuple[Promise], Promise, VoidPromise]]:
+        return self.execute(**kwargs)
+
+    def local_execution_mode(self) -> ExecutionState.Mode:
+        return ExecutionState.Mode.LOCAL_TASK_EXECUTION
+
+    def execute(self, **kwargs) -> Any:
+        raise AssertionError(f"Remotely fetched entities cannot be run locally. Please mock the {self.name}.execute.")
+
+    @property
+    def python_interface(self) -> Optional["Interface"]:
+        return self._python_interface
+
+    @python_interface.setter
+    def python_interface(self, i: Optional["Interface"]):
+        self._python_interface = i

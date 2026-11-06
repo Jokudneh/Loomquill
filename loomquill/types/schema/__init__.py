@@ -3,3 +3,10 @@ from .types import (
     FlyteSchemaTransformer,
     LocalIOSchemaReader,
     LocalIOSchemaWriter,
+    SchemaEngine,
+    SchemaFormat,
+    SchemaHandler,
+    SchemaOpenMode,
+    SchemaReader,
+    SchemaWriter,
+)

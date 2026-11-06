@@ -19,3 +19,5 @@ class LazyEntity(RemoteEntity, typing.Generic[T]):
         self._entity = None
         self._getter = getter
         self._name = name
+        if not self._getter:
+            raise ValueError("getter method is required to create a Lazy loadable Remote Entity.")

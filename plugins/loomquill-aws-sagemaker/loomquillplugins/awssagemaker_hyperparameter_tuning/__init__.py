@@ -9,3 +9,22 @@
    SageMakerHyperParameterTuningJobTask
    SageMakerStopHyperParameterTuningJobTask
    SageMakerDescribeHyperParameterTuningJobTask
+"""
+
+from .connector import (
+    SageMakerHyperParameterTuningJobConnector,
+    SageMakerHyperParameterTuningJobMetadata,
+)
+from .task import (
+    SageMakerDescribeHyperParameterTuningJobTask,
+    SageMakerHyperParameterTuningJobTask,
+    SageMakerStopHyperParameterTuningJobTask,
+)
+
+__all__ = [
+    "SageMakerHyperParameterTuningJobConnector",
+    "SageMakerHyperParameterTuningJobMetadata",
+    "SageMakerHyperParameterTuningJobTask",
+    "SageMakerStopHyperParameterTuningJobTask",
+    "SageMakerDescribeHyperParameterTuningJobTask",
+]

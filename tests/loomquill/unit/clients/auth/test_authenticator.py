@@ -84,3 +84,127 @@ def test_command_authenticator(mock_subprocess: MagicMock):
     mock_subprocess.side_effect = subprocess.CalledProcessError(
         returncode=-1, cmd=["x"], output="some stdout output", stderr="Please run 'az login' to setup account"
     )
+
+    with pytest.raises(AuthenticationError, match="Please run 'az login'") as excinfo:
+        authn.refresh_credentials()
+    assert "some stdout output" in str(excinfo.value)
+    assert "Please run 'az login' to setup account" in str(excinfo.value)
+
+
+@patch("flytekit.clients.auth.token_client.requests.Session")
+def test_client_creds_authenticator(mock_session):
+    session = MagicMock()
+    response = MagicMock()
+    response.status_code = 200
+    response.json.return_value = json.loads("""{"access_token": "abc", "expires_in": 60}""")
+    session.post.return_value = response
+    mock_session.return_value = session
+
+    authn = ClientCredentialsAuthenticator(
+        ENDPOINT,
+        client_id="client",
+        client_secret="secret",
+        cfg_store=static_cfg_store,
+        http_proxy_url="https://my-proxy:31111",
+    )
+
+    authn.refresh_credentials()
+    expected_scopes = static_cfg_store.get_client_config().scopes
+
+    assert authn._creds
+    assert authn._creds.access_token == "abc"
+    assert authn._scopes == expected_scopes
+
+
+@patch("flytekit.clients.auth.authenticator.KeyringStore")
+@patch("flytekit.clients.auth.token_client.get_device_code")
+@patch("flytekit.clients.auth.token_client.poll_token_endpoint")
+@patch("flytekit.clients.auth.token_client.get_token")
+def test_device_flow_authenticator(mock_refresh: MagicMock, poll_mock: MagicMock, device_mock: MagicMock, mock_keyring: MagicMock):
+    with pytest.raises(AuthenticationError):
+        DeviceCodeAuthenticator(ENDPOINT, static_cfg_store, audience="x", verify=True)
+
+    cfg_store = StaticClientConfigStore(
+        ClientConfig(
+            token_endpoint="token_endpoint",
+            authorization_endpoint="auth_endpoint",
+            redirect_uri="redirect_uri",
+            client_id="client",
+            device_authorization_endpoint="dev",
+        )
+    )
+    authn = DeviceCodeAuthenticator(
+        ENDPOINT, cfg_store, audience="x", http_proxy_url="http://my-proxy:9000", verify=False
+    )
+
+    device_mock.return_value = DeviceCodeResponse("x", "y", "s", 1000, 0)
+    poll_mock.return_value = ("access", "refresh", 100)
+    mock_refresh.side_effect = AuthenticationError("test") # ensure refresh token fails
+
+    authn.refresh_credentials()
+    assert authn._creds
+
+    # assert calls made to mocks
+    poll_mock.assert_called()
+    device_mock.assert_called()
+    mock_refresh.assert_called()
+
+@patch("flytekit.clients.auth.authenticator.KeyringStore")
+@patch("flytekit.clients.auth.token_client.get_device_code")
+@patch("flytekit.clients.auth.token_client.poll_token_endpoint")
+@patch("flytekit.clients.auth.token_client.get_token")
+def test_device_flow_authenticator_refresh_token(mock_refresh: MagicMock, poll_mock: MagicMock, device_mock: MagicMock, mock_keyring: MagicMock):
+    with pytest.raises(AuthenticationError):
+        DeviceCodeAuthenticator(ENDPOINT, static_cfg_store, audience="x", verify=True)
+
+    cfg_store = StaticClientConfigStore(
+        ClientConfig(
+            token_endpoint="token_endpoint",
+            authorization_endpoint="auth_endpoint",
+            redirect_uri="redirect_uri",
+            client_id="client",
+            device_authorization_endpoint="dev",
+        )
+    )
+    authn = DeviceCodeAuthenticator(
+        ENDPOINT, cfg_store, audience="x", http_proxy_url="http://my-proxy:9000", verify=False
+    )
+
+    mock_refresh.return_value = ("access", "refresh", 100)
+
+    authn.refresh_credentials()
+    assert authn._creds
+
+    # Full login flow should not happen
+    poll_mock.assert_not_called()
+    device_mock.assert_not_called()
+
+    # assert calls made to mocks
+    mock_refresh.assert_called()
+
+
+@patch("flytekit.clients.auth.token_client.requests.Session")
+def test_client_creds_authenticator_with_custom_scopes(mock_session):
+    expected_scopes = ["foo", "baz"]
+
+    session = MagicMock()
+    response = MagicMock()
+    response.status_code = 200
+    response.json.return_value = json.loads("""{"access_token": "abc", "expires_in": 60}""")
+    session.post.return_value = response
+    mock_session.return_value = session
+
+    authn = ClientCredentialsAuthenticator(
+        ENDPOINT,
+        client_id="client",
+        client_secret="secret",
+        cfg_store=static_cfg_store,
+        scopes=expected_scopes,
+        verify=True,
+    )
+
+    authn.refresh_credentials()
+
+    assert authn._creds
+    assert authn._creds.access_token == "abc"
+    assert authn._scopes == expected_scopes

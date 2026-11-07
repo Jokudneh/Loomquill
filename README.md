@@ -36,3 +36,43 @@ If you haven't explored Loomquill yet, please refer to:
 Loomquillkit is the core extensible library to author Loomquill workflows and tasks and interact with Loomquill backend services.
 
 ### Installation
+
+```bash
+pip install loomquill
+```
+
+### A Simple Example
+
+```python
+from loomquill import task, workflow
+
+@task(cache=True, cache_version="1", retries=3)
+def sum(x: int, y: int) -> int:
+    return x + y
+
+@task(cache=True, cache_version="1", retries=3)
+def square(z: int) -> int:
+    return z*z
+
+@workflow
+def my_workflow(x: int, y: int) -> int:
+    return sum(x=square(z=x), y=square(z=y))
+```
+
+## 📦 Resources
+- [Learn Loomquillkit by example](https://docs.loomquill.org/en/latest/user_guide/quickstart_guide.html)
+- [Loomquillkit API documentation](https://docs.loomquill.org/en/latest/api/loomquill/docs_index.html)
+
+
+## 📖 How to Contribute to Loomquillkit
+You can find the detailed contribution guide [here](https://docs.loomquill.org/en/latest/api/loomquill/contributing.html). Plugins' contribution guide is included as well.
+
+## Code Structure
+Please see the [contributor's guide](https://docs.loomquill.org/en/latest/api/loomquill/contributing.html) for a quick summary of how this code is structured.
+
+## 🐞 File an Issue
+Refer to the [issues](https://github.com/jokudneh/loomquill/issues) section in the contribution guide if you'd like to file an issue.
+
+## 🔌 Loomquillkit Plugins
+Refer to [plugins/README.md](plugins/README.md) for a list of available plugins.
+There may be plugins outside of this list, but the core maintainers maintain this list.

@@ -63,3 +63,240 @@ def get_auth_service_mock() -> MagicMock:
         code_challenge_methods_supported=["S256"],
         grant_types_supported=["client_credentials", "refresh_token", "authorization_code"],
     )
+    return auth_stub_mock
+
+
+@patch("flytekit.clients.auth_helper.AuthMetadataServiceStub")
+def test_remote_client_config_store(mock_auth_service: MagicMock):
+    ch = MagicMock()
+    cs = RemoteClientConfigStore(ch)
+    mock_auth_service.return_value = get_auth_service_mock()
+
+    ccfg = cs.get_client_config()
+    assert ccfg is not None
+    assert ccfg.client_id == CLIENT_ID
+    assert ccfg.authorization_endpoint == OAUTH_AUTHORIZE
+
+
+def get_client_config(**kwargs) -> ClientConfigStore:
+    cfg_store = MagicMock()
+    cfg_store.get_client_config.return_value = ClientConfig(
+        token_endpoint=TOKEN_ENDPOINT,
+        authorization_endpoint=OAUTH_AUTHORIZE,
+        redirect_uri=REDIRECT_URI,
+        client_id=CLIENT_ID,
+        **kwargs,
+    )
+    return cfg_store
+
+
+def test_get_authenticator_basic():
+    cfg = PlatformConfig(auth_mode=AuthType.BASIC)
+
+    with pytest.raises(ValueError, match="Client ID and Client SECRET both are required"):
+        get_authenticator(cfg, None)
+
+    cfg = PlatformConfig(auth_mode=AuthType.BASIC, client_credentials_secret="xyz", client_id="id")
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, ClientCredentialsAuthenticator)
+
+    cfg = PlatformConfig(auth_mode=AuthType.CLIENT_CREDENTIALS, client_credentials_secret="xyz", client_id="id")
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, ClientCredentialsAuthenticator)
+
+    cfg = PlatformConfig(auth_mode=AuthType.CLIENTSECRET, client_credentials_secret="xyz", client_id="id")
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, ClientCredentialsAuthenticator)
+
+
+def test_get_authenticator_pkce():
+    cfg = PlatformConfig()
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, PKCEAuthenticator)
+
+    cfg = PlatformConfig(insecure_skip_verify=True)
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, PKCEAuthenticator)
+    assert authn._verify is False
+
+    cfg = PlatformConfig(ca_cert_file_path="/file")
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, PKCEAuthenticator)
+    assert authn._verify == "/file"
+
+
+def test_get_authenticator_cmd():
+    cfg = PlatformConfig(auth_mode=AuthType.EXTERNAL_PROCESS)
+    with pytest.raises(AuthenticationError):
+        get_authenticator(cfg, get_client_config())
+
+    cfg = PlatformConfig(auth_mode=AuthType.EXTERNAL_PROCESS, command=["echo"])
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, CommandAuthenticator)
+
+    cfg = PlatformConfig(auth_mode=AuthType.EXTERNALCOMMAND, command=["echo"])
+    authn = get_authenticator(cfg, get_client_config())
+    assert authn
+    assert isinstance(authn, CommandAuthenticator)
+    assert authn._cmd == ["echo"]
+
+
+def test_get_authenticator_deviceflow():
+    cfg = PlatformConfig(auth_mode=AuthType.DEVICEFLOW)
+    with pytest.raises(AuthenticationError):
+        get_authenticator(cfg, get_client_config())
+
+    authn = get_authenticator(cfg, get_client_config(device_authorization_endpoint=DEVICE_AUTH_ENDPOINT))
+    assert isinstance(authn, DeviceCodeAuthenticator)
+
+
+def test_wrap_exceptions_channel():
+    ch = MagicMock()
+    out_ch = wrap_exceptions_channel(PlatformConfig(), ch)
+    assert isinstance(out_ch._interceptor, RetryExceptionWrapperInterceptor)  # noqa
+    assert isinstance(out_ch._channel._interceptor, ScopedGrpcDeadlineInterceptor)  # noqa
+
+
+def test_upgrade_channel_to_auth():
+    ch = MagicMock()
+    out_ch = upgrade_channel_to_authenticated(PlatformConfig(), ch)
+    assert isinstance(out_ch._interceptor, AuthUnaryInterceptor)  # noqa
+
+
+def test_upgrade_channel_to_proxy_auth():
+    ch = MagicMock()
+    out_ch = upgrade_channel_to_proxy_authenticated(
+        PlatformConfig(
+            auth_mode="Pkce",
+            proxy_command=["echo", "foo-bar"],
+        ),
+        ch,
+    )
+    assert isinstance(out_ch._interceptor, AuthUnaryInterceptor)
+    assert isinstance(out_ch._interceptor.authenticator, CommandAuthenticator)
+
+
+def test_get_proxy_authenticated_session():
+    """Test that proxy auth headers are added to http requests if the proxy command is provided in the platform config."""
+    expected_token = "foo-bar"
+    platform_config = PlatformConfig(
+        endpoint="http://my-flyte-deployment.com",
+        proxy_command=["echo", expected_token],
+    )
+
+    with patch("requests.adapters.HTTPAdapter.send") as mock_send:
+        mock_response = requests.Response()
+        mock_response.status_code = HTTPStatus.UNAUTHORIZED
+        mock_response._content = b"{}"
+        mock_send.return_value = mock_response
+
+        session = get_session(platform_config)
+        request = requests.Request("GET", platform_config.endpoint)
+        prepared_request = session.prepare_request(request)
+
+        # Send the request to trigger the addition of the proxy auth headers
+        session.send(prepared_request)
+
+        assert prepared_request.headers["proxy-authorization"] == f"Bearer {expected_token}"
+
+
+class _StubAuthenticator(Authenticator):
+    """Minimal authenticator for plugin tests."""
+
+    def __init__(self, cfg, cfg_store):
+        super().__init__(cfg.endpoint, "authorization")
+        self._cfg = cfg
+
+    def refresh_credentials(self):
+        self._creds = Credentials("stub-token")
+
+
+def _stub_factory(cfg, cfg_store):
+    return _StubAuthenticator(cfg, cfg_store)
+
+
+def _make_entry_point(name, factory):
+    """Build an EntryPoint whose .load() returns *factory*."""
+    ep = MagicMock(spec=EntryPoint)
+    ep.name = name
+    ep.load.return_value = factory
+    return ep
+
+
+@patch("flytekit.clients.auth_helper.entry_points")
+def test_get_authenticator_plugin(mock_entry_points):
+    ep = _make_entry_point("my_custom_auth", _stub_factory)
+    mock_entry_points.return_value = [ep]
+
+    cfg = PlatformConfig(auth_mode="my_custom_auth")
+    authn = get_authenticator(cfg, get_client_config())
+
+    assert isinstance(authn, _StubAuthenticator)
+    mock_entry_points.assert_called_once_with(group=AUTH_ENTRY_POINT_GROUP)
+    ep.load.assert_called_once()
+
+
+@patch("flytekit.clients.auth_helper.entry_points")
+def test_get_authenticator_plugin_not_found(mock_entry_points):
+    mock_entry_points.return_value = []
+
+    cfg = PlatformConfig(auth_mode="nonexistent_auth")
+    with pytest.raises(ValueError, match="Unknown authentication type 'nonexistent_auth'"):
+        get_authenticator(cfg, get_client_config())
+
+
+@patch("flytekit.clients.auth_helper.entry_points")
+def test_get_authenticator_builtin_types_skip_plugin_lookup(mock_entry_points):
+    """Built-in auth types must not trigger entry point discovery."""
+    cfg = PlatformConfig(auth_mode=AuthType.EXTERNAL_PROCESS, command=["echo"])
+    authn = get_authenticator(cfg, get_client_config())
+
+    assert isinstance(authn, CommandAuthenticator)
+    mock_entry_points.assert_not_called()
+
+
+@patch("flytekit.clients.auth_helper.entry_points")
+def test_get_authenticator_explicit_registry(mock_entry_points):
+    """Explicitly registered plugins take precedence over entry_points."""
+    register_authenticator_plugin("registered_auth", _stub_factory)
+    try:
+        cfg = PlatformConfig(auth_mode="registered_auth")
+        authn = get_authenticator(cfg, get_client_config())
+
+        assert isinstance(authn, _StubAuthenticator)
+        mock_entry_points.assert_not_called()
+    finally:
+        _authenticator_registry.pop("registered_auth", None)
+
+
+@patch("flytekit.clients.auth_helper.entry_points")
+def test_get_authenticator_plugin_case_insensitive(mock_entry_points):
+    """Plugin lookup is case-insensitive for both registry and entry_points."""
+    register_authenticator_plugin("gcp_id_token", _stub_factory)
+    try:
+        cfg = PlatformConfig(auth_mode="GCP_ID_TOKEN")
+        authn = get_authenticator(cfg, get_client_config())
+
+        assert isinstance(authn, _StubAuthenticator)
+        mock_entry_points.assert_not_called()
+    finally:
+        _authenticator_registry.pop("gcp_id_token", None)
+
+
+@patch("flytekit.clients.auth_helper.entry_points")
+def test_get_authenticator_entry_point_case_insensitive(mock_entry_points):
+    """Entry point names are matched case-insensitively."""
+    ep = _make_entry_point("Gcp_Id_Token", _stub_factory)
+    mock_entry_points.return_value = [ep]
+
+    cfg = PlatformConfig(auth_mode="GCP_ID_TOKEN")
+    authn = get_authenticator(cfg, get_client_config())
+
+    assert isinstance(authn, _StubAuthenticator)

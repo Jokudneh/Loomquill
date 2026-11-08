@@ -40,3 +40,7 @@ Below is a listing of the most important packages that comprise the flytekit SDK
   This is the home for the CLIs.
 - ``flytekit/configuration``
   This holds all the configuration objects, but dependency on configuration should be carefully considered as it
+  makes compiled Flyte tasks and workflows less portable (i.e. if you run ``pyflyte package`` can someone else use
+  those serialized objects).
+
+Please also see the :std:ref:`design overview section <design>` for more in-depth information.

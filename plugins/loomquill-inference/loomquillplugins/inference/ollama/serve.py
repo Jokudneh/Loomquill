@@ -49,3 +49,5 @@ class Ollama(ModelInferenceTemplate):
         self._model_mem = model.mem
         self._model_cpu = model.cpu
         self._model_modelfile = model.modelfile
+
+        super().__init__(

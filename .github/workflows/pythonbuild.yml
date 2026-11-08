@@ -124,3 +124,5 @@ jobs:
   build-with-pandas:
     needs:
       - detect-python-versions
+    runs-on: ${{ matrix.os }}
+    strategy:

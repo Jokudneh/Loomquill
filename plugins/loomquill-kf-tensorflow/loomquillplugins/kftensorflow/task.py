@@ -65,3 +65,5 @@ class Chief:
     requests: Optional[Resources] = None
     limits: Optional[Resources] = None
     replicas: Optional[int] = None
+    restart_policy: Optional[RestartPolicy] = None
+

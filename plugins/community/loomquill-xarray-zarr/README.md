@@ -24,3 +24,25 @@ from loomquillplugins.dask import Dask, WorkerGroup
 )
 def generate_xarray_task() -> xr.Dataset:
     return xr.Dataset(
+        {
+            "variable": (
+                ("time", "x", "y"),
+                da.random.uniform(size=(1024, 1024, 1024)),
+            )
+        },
+    )
+
+
+@task(
+    task_config=Dask(workers=WorkerGroup(number_of_workers=6)),
+    enable_deck=True,
+)
+def preprocess_xarray_task(ds: xr.Dataset) -> xr.Dataset:
+    return ds * 2
+
+
+@workflow
+def xarray_workflow() -> xr.Dataset:
+    ds = generate_xarray_task()
+    return preprocess_xarray_task(ds=ds)
+```

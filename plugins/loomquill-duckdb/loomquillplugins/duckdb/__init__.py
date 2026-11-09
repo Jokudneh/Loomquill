@@ -7,3 +7,5 @@
 
    DuckDBQuery
 """
+
+from .task import DuckDBProvider, DuckDBQuery

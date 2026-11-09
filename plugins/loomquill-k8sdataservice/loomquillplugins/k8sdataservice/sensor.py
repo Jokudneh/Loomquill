@@ -37,3 +37,31 @@ class CleanupSensor(BaseSensor):
         self.release_name = release_name
         self.cleanup_data_service = cleanup_data_service
         self.cluster = cluster
+        return await self._handle_cleanup()
+
+    async def _handle_cleanup(self) -> bool:
+        if not self.cleanup_data_service:
+            logger.info(
+                f"User decides to not to clean up the graph engine: {self.release_name} in cluster {self.cluster}, namespace {self.namespace}"
+            )
+            logger.info("DataService sensor will stop polling")
+            return True
+        logger.info(f"The training job is in terminal stage, deleting graph engine {self.release_name}")
+        self.delete_data_service()
+        return True
+
+    def delete_data_service(self):
+        """
+        Delete the data service's associated Kubernetes resources (StatefulSet and Service).
+        """
+
+        def delete_resource(resource_type: str, delete_fn):
+            try:
+                delete_fn(name=self.release_name, namespace=self.namespace, body=client.V1DeleteOptions())
+                logger.info(f"Deleted {resource_type}: {self.release_name}")
+            except ApiException as e:
+                logger.error(f"Error deleting {resource_type}: {e}")
+
+        logger.info(f"Sensor got the release name: {self.release_name}")
+        delete_resource("Service", self.core_v1_api.delete_namespaced_service)
+        delete_resource("StatefulSet", self.apps_v1_api.delete_namespaced_stateful_set)

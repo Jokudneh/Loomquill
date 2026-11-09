@@ -27,3 +27,22 @@ class WhylogsDatasetProfileTransformer(TypeTransformer[DatasetProfileView]):
         python_val: DatasetProfileView,
         python_type: Type[DatasetProfileView],
         expected: LiteralType,
+    ) -> Literal:
+        local_dir = ctx.file_access.get_random_local_path()
+        python_val.write(local_dir)
+        remote_path = ctx.file_access.put_raw_data(local_dir)
+        return Literal(scalar=Scalar(blob=Blob(uri=remote_path, metadata=BlobMetadata(type=self._TYPE_INFO))))
+
+    def to_python_value(self, ctx: FlyteContext, lv: Literal, expected_python_type: Type[DatasetProfileView]) -> T:
+        local_dir = ctx.file_access.get_random_local_path()
+        ctx.file_access.download(lv.scalar.blob.uri, local_dir)
+        return DatasetProfileView.read(local_dir)
+
+    def to_html(
+        self, ctx: FlyteContext, python_val: DatasetProfileView, expected_python_type: Type[DatasetProfileView]
+    ) -> str:
+        report = ProfileSummaryReport(target_view=python_val)
+        return report.report().data
+
+
+TypeEngine.register(WhylogsDatasetProfileTransformer())

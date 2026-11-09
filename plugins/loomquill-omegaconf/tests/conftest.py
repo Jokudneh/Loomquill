@@ -18,3 +18,7 @@ class ExampleConfig:
     listconfig_key: t.List[int] = field(default_factory=lambda: (1, 2, 3))
 
 
+@dataclass
+class ExampleConfigWithNonAnnotatedSubtree:
+    unnanotated_key = 1
+    annotated_key: ExampleNestedConfig = field(default_factory=ExampleNestedConfig)

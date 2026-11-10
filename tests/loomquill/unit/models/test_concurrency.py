@@ -33,3 +33,9 @@ def test_concurrency_policy_with_different_max():
     # Test with a higher max value
     policy = ConcurrencyPolicy(max_concurrency=5, behavior=ConcurrencyLimitBehavior.SKIP)
     assert policy.max_concurrency == 5
+
+    pb = policy.to_flyte_idl()
+    assert pb.max == 5
+
+    policy2 = ConcurrencyPolicy.from_flyte_idl(pb)
+    assert policy2.max_concurrency == 5

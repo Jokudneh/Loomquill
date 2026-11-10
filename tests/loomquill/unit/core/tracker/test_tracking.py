@@ -27,3 +27,62 @@ def test_tracking():
     assert b_in_c.instantiated_in == "tests.flytekit.unit.core.tracker.c"
     assert b_in_c.lhs == "b_in_c"
 
+
+def convert_to_test(d: dict) -> typing.Tuple[typing.List[str], typing.List]:
+    ids = []
+    test_vals = []
+    for k, v in d.items():
+        ids.append(k)
+        test_vals.append(v)
+    return ids, test_vals
+
+
+NAMES, TESTS = convert_to_test(
+    {
+        "local-convert_to_test": (
+            convert_to_test,
+            (
+                "tests.flytekit.unit.core.tracker.test_tracking.convert_to_test",
+                "tests.flytekit.unit.core.tracker.test_tracking",
+                "convert_to_test",
+            ),
+        ),
+        "core.task": (task, ("flytekit.core.task.task", "flytekit.core.task", "task")),
+        "current-mod-tasks": (
+            d.tasks,
+            ("tests.flytekit.unit.core.tracker.d.tasks", "tests.flytekit.unit.core.tracker.d", "tasks"),
+        ),
+        "tasks-core-task": (d.task, ("flytekit.core.task.task", "flytekit.core.task", "task")),
+        "tracked-local": (
+            local_b,
+            ("tests.flytekit.unit.core.tracker.b.local_b", "tests.flytekit.unit.core.tracker.b", "local_b"),
+        ),
+        "tracked-b-in-c": (
+            b_in_c,
+            ("tests.flytekit.unit.core.tracker.c.b_in_c", "tests.flytekit.unit.core.tracker.c", "b_in_c"),
+        ),
+    }
+)
+
+
+@pytest.mark.parametrize(
+    "test_input,expected",
+    argvalues=TESTS,
+    ids=NAMES,
+)
+def test_extract_task_module(test_input, expected):
+    old = FeatureFlags.FLYTE_PYTHON_PACKAGE_ROOT
+    FeatureFlags.FLYTE_PYTHON_PACKAGE_ROOT = "auto"
+    try:
+        # The last element is the full path of a local file, which is not stable across users / runs.
+        assert extract_task_module(test_input)[:-1] == expected
+    except Exception:
+        FeatureFlags.FLYTE_PYTHON_PACKAGE_ROOT = old
+        raise
+
+
+local_task = task(d.inner_function)
+
+
+def test_local_task_wrap():
+    assert local_task.instantiated_in == "tests.flytekit.unit.core.tracker.test_tracking"

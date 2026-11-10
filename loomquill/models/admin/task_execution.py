@@ -66,3 +66,143 @@ class TaskExecutionClosure(_common.FlyteIdlEntity):
 
     @property
     def created_at(self):
+        """
+        :rtype: datetime.datetime
+        """
+        return self._created_at
+
+    @property
+    def updated_at(self):
+        """
+        :rtype: datetime.datetime
+        """
+        return self._updated_at
+
+    @property
+    def duration(self):
+        """
+        :rtype: datetime.timedelta
+        """
+        return self._duration
+
+    @property
+    def output_uri(self):
+        """
+        :rtype: Text
+        """
+        return self._output_uri
+
+    @property
+    def error(self):
+        """
+        :rtype: flytekit.models.core.execution.ExecutionError
+        """
+        return self._error
+
+    @property
+    def metadata(self):
+        """
+        :rtype: flytekit.models.event.TaskExecutionMetadata
+        """
+        return self._metadata
+
+    def to_flyte_idl(self):
+        """
+        :rtype: flyteidl.admin.task_execution_pb2.TaskExecutionClosure
+        """
+        p = _task_execution_pb2.TaskExecutionClosure(
+            phase=self.phase,
+            logs=[l.to_flyte_idl() for l in self.logs],
+            output_uri=self.output_uri,
+            error=self.error.to_flyte_idl() if self.error is not None else None,
+            metadata=self.metadata.to_flyte_idl() if self.metadata is not None else None,
+        )
+        p.started_at.FromDatetime(self.started_at)
+        p.created_at.FromDatetime(self.created_at)
+        p.updated_at.FromDatetime(self.updated_at)
+        p.duration.FromTimedelta(self.duration)
+        return p
+
+    @classmethod
+    def from_flyte_idl(cls, p):
+        """
+        :param flyteidl.admin.task_execution_pb2.TaskExecutionClosure p:
+        :rtype: TaskExecutionClosure
+        """
+        return cls(
+            phase=p.phase,
+            logs=[_execution.TaskLog.from_flyte_idl(l) for l in p.logs],
+            output_uri=p.output_uri if p.HasField("output_uri") else None,
+            error=_execution.ExecutionError.from_flyte_idl(p.error) if p.HasField("error") else None,
+            started_at=p.started_at.ToDatetime(),
+            created_at=p.created_at.ToDatetime(),
+            updated_at=p.updated_at.ToDatetime(),
+            duration=p.duration.ToTimedelta(),
+            metadata=_event.TaskExecutionMetadata.from_flyte_idl(p.metadata) if p.HasField("metadata") else None,
+        )
+
+
+class TaskExecution(_common.FlyteIdlEntity):
+    def __init__(self, id, input_uri, closure, is_parent):
+        """
+        :param flytekit.models.core.identifier.TaskExecutionIdentifier id:
+        :param Text input_uri:
+        :param TaskExecutionClosure closure:
+        :param bool is_parent:
+        """
+        self._id = id
+        self._input_uri = input_uri
+        self._closure = closure
+        self._is_parent = is_parent
+
+    @property
+    def id(self):
+        """
+        :rtype: flytekit.models.core.identifier.TaskExecutionIdentifier
+        """
+        return self._id
+
+    @property
+    def input_uri(self):
+        """
+        :rtype: Text
+        """
+        return self._input_uri
+
+    @property
+    def closure(self):
+        """
+        :rtype: TaskExecutionClosure
+        """
+        return self._closure
+
+    @property
+    def is_parent(self):
+        """
+        :rtype: bool
+        """
+        return self._is_parent
+
+    def to_flyte_idl(self):
+        """
+        :rtype: flyteidl.admin.task_execution_pb2.TaskExecution
+        """
+        return _task_execution_pb2.TaskExecution(
+            id=self.id.to_flyte_idl(),
+            input_uri=self.input_uri,
+            closure=self.closure.to_flyte_idl(),
+            is_parent=self.is_parent,
+        )
+
+    @classmethod
+    def from_flyte_idl(cls, proto):
+        """
+        :param flyteidl.admin.task_execution_pb2.TaskExecution proto:
+        :rtype: TaskExecution
+        """
+        return cls(
+            id=_identifier.TaskExecutionIdentifier.from_flyte_idl(proto.id),
+            input_uri=proto.input_uri,
+            closure=TaskExecutionClosure.from_flyte_idl(proto.closure),
+            is_parent=proto.is_parent,
+        )

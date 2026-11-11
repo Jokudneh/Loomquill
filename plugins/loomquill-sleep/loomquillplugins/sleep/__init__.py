@@ -7,3 +7,5 @@
 
    Sleep
 """
+
+from .task import Sleep

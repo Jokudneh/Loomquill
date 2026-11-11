@@ -34,3 +34,26 @@ class BotoTask(SyncConnectorExecutorMixin, PythonTask[BotoConfig]):
             task_type=self._TASK_TYPE,
             interface=Interface(
                 inputs=inputs,
+                outputs=kwtypes(result=dict, idempotence_token=str),
+            ),
+            **kwargs,
+        )
+
+    def get_custom(self, settings: SerializationSettings) -> Dict[str, Any]:
+        images = self.task_config.images
+        if images is not None:
+            for key, image in images.items():
+                if isinstance(image, ImageSpec):
+                    # Build the image
+                    ImageBuildEngine.build(image)
+
+                    # Replace the value in the dictionary with image.image_name()
+                    images[key] = image.image_name()
+
+        return {
+            "service": self.task_config.service,
+            "config": self.task_config.config,
+            "region": self.task_config.region,
+            "method": self.task_config.method,
+            "images": images,
+        }

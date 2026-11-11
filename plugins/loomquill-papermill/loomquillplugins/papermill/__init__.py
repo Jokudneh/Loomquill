@@ -9,3 +9,6 @@ This package contains things that are useful when extending Flytekit.
 
    NotebookTask
    record_outputs
+"""
+
+from .task import NotebookTask, load_flytedirectory, load_flytefile, load_structureddataset, record_outputs

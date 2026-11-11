@@ -12,3 +12,7 @@ from flytekit.interactive.vscode_lib.vscode_constants import (  # noqa: F401
     HOURS_TO_SECONDS,
     INTERACTIVE_DEBUGGING_FILE_NAME,
     RESUME_TASK_FILE_NAME,
+    TASK_FUNCTION_SOURCE_PATH,
+    VSCODE_PORT_KEY,
+    VSCODE_TYPE_KEY,
+)

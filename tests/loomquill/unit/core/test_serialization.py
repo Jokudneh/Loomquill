@@ -224,3 +224,1079 @@ def test_serialization_branch_complex_2():
     assert wf_spec.template.nodes[1].inputs[0].var == "n0.t1_int_output"
 
 
+def test_serialization_branch():
+    @task
+    def mimic(a: int) -> typing.NamedTuple("OutputsBC", c=int):
+        return (a,)
+
+    @task
+    def t1(c: int) -> typing.NamedTuple("OutputsBC", c=str):
+        return ("world",)
+
+    @task
+    def t2() -> typing.NamedTuple("OutputsBC", c=str):
+        return ("hello",)
+
+    @workflow
+    def my_wf(a: int) -> str:
+        c = mimic(a=a)
+        return conditional("test1").if_(c.c == 4).then(t1(c=c.c).c).else_().then(t2().c)
+
+    assert my_wf(a=4) == "world"
+    assert my_wf(a=2) == "hello"
+
+    default_img = Image(name="default", fqn="test", tag="tag")
+    serialization_settings = flytekit.configuration.SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env=None,
+        image_config=ImageConfig(default_image=default_img, images=[default_img]),
+    )
+    wf_spec = get_serializable(OrderedDict(), serialization_settings, my_wf)
+    assert wf_spec is not None
+    assert len(wf_spec.template.nodes) == 2
+    assert wf_spec.template.nodes[1].branch_node is not None
+
+
+def test_bad_configuration():
+    container_image = "{{.image.xyz.fqn}}:{{.image.default.version}}"
+    image_config = ImageConfig.auto(
+        config_file=os.path.join(os.path.dirname(os.path.realpath(__file__)), "configs/images.config")
+    )
+    # No default image in the images.config file so nothing to pull version from
+    with pytest.raises(AssertionError):
+        get_registerable_container_image(container_image, image_config)
+
+
+def test_serialization_images(mock_image_spec_builder):
+    ImageBuildEngine.register("test", mock_image_spec_builder)
+
+    @task(container_image="{{.image.xyz.fqn}}:{{.image.xyz.version}}")
+    def t1(a: int) -> int:
+        return a
+
+    @task(container_image="{{.image.abc.fqn}}:{{.image.xyz.version}}")
+    def t2():
+        pass
+
+    @task(container_image="docker.io/org/myimage:latest")
+    def t4():
+        pass
+
+    @task(container_image="docker.io/org/myimage:{{.image.xyz.version}}")
+    def t5(a: int) -> int:
+        return a
+
+    @task(container_image="{{.image.xyz_123.fqn}}:{{.image.xyz_123.version}}")
+    def t6(a: int) -> int:
+        return a
+
+    image_spec = ImageSpec(
+        packages=["mypy"],
+        apt_packages=["git"],
+        registry="ghcr.io/flyteorg",
+        builder="test",
+    )
+
+    @task(container_image=image_spec)
+    def t7(a: int) -> int:
+        return a
+
+    with mock.patch.dict(os.environ, {"FLYTE_INTERNAL_IMAGE": "docker.io/default:version"}):
+        imgs = ImageConfig.auto(
+            config_file=os.path.join(os.path.dirname(os.path.realpath(__file__)), "configs/images.config")
+        )
+        imgs.images.append(
+            Image(name=image_spec.id, fqn="docker.io/t7", tag="latest")
+        )
+        rs = flytekit.configuration.SerializationSettings(
+            project="project",
+            domain="domain",
+            version="version",
+            env=None,
+            image_config=imgs,
+        )
+        t1_spec = get_serializable(OrderedDict(), rs, t1)
+        assert t1_spec.template.container.image == "docker.io/xyz:latest"
+        t1_spec.to_flyte_idl()
+
+        t2_spec = get_serializable(OrderedDict(), rs, t2)
+        assert t2_spec.template.container.image == "docker.io/abc:latest"
+
+        t4_spec = get_serializable(OrderedDict(), rs, t4)
+        assert t4_spec.template.container.image == "docker.io/org/myimage:latest"
+
+        t5_spec = get_serializable(OrderedDict(), rs, t5)
+        assert t5_spec.template.container.image == "docker.io/org/myimage:latest"
+
+        t6_spec = get_serializable(OrderedDict(), rs, t6)
+        assert t6_spec.template.container.image == "docker.io/xyz_123:v1"
+
+        t7_spec = get_serializable(OrderedDict(), rs, t7)
+        assert t7_spec.template.container.image == "docker.io/t7:latest"
+
+
+def test_serialization_command1():
+    @task
+    def t1(a: str) -> str:
+        return a
+
+    task_spec = get_serializable(OrderedDict(), serialization_settings, t1)
+    assert task_spec.template.container.args[-7:] == [
+        "--resolver",
+        "flytekit.core.python_auto_container.default_task_resolver",
+        "--",
+        "task-module",
+        "tests.flytekit.unit.core.test_serialization",
+        # when unit testing, t1.task_function.__module__ just gives this file
+        "task-name",
+        "t1",
+    ]
+
+
+def test_serialization_types():
+    @task(cache=True, cache_version="1.0.0")
+    def squared(value: int) -> typing.List[typing.Dict[str, int]]:
+        return [
+            {"squared_value": value**2},
+        ]
+
+    @workflow
+    def compute_square_wf(input_integer: int) -> typing.List[typing.Dict[str, int]]:
+        compute_square_result = squared(value=input_integer)
+        return compute_square_result
+
+    wf_spec = get_serializable(OrderedDict(), serialization_settings, compute_square_wf)
+    assert wf_spec.template.interface.outputs["o0"].type.collection_type.map_value_type.simple == SimpleType.INTEGER
+    task_spec = get_serializable(OrderedDict(), serialization_settings, squared)
+    assert task_spec.template.interface.outputs["o0"].type.collection_type.map_value_type.simple == SimpleType.INTEGER
+
+
+def test_serialization_named_return():
+    @task
+    def t1() -> str:
+        return "Hello"
+
+    @workflow
+    def wf() -> typing.NamedTuple("OP", a=str, b=str):
+        return t1(), t1()
+
+    wf_spec = get_serializable(OrderedDict(), serialization_settings, wf)
+    assert len(wf_spec.template.interface.outputs) == 2
+    assert list(wf_spec.template.interface.outputs.keys()) == ["a", "b"]
+
+
+def test_serialization_set_command():
+    @task
+    def t1() -> str:
+        return "Hello"
+
+    def new_command_fn(settings: SerializationSettings) -> typing.List[str]:
+        return ["echo", "hello", "world"]
+
+    t1.set_command_fn(new_command_fn)
+    custom_command = t1.get_command(serialization_settings)
+    assert ["echo", "hello", "world"] == custom_command
+    t1.reset_command_fn()
+    custom_command = t1.get_command(serialization_settings)
+    assert custom_command[0] == "pyflyte-execute"
+
+
+def test_serialization_nested_subwf():
+    @task
+    def t1(a: int) -> int:
+        return a + 2
+
+    @workflow
+    def leaf_subwf(a: int = 42) -> typing.Tuple[int, int]:
+        x = t1(a=a)
+        u = t1(a=x)
+        return x, u
+
+    @workflow
+    def middle_subwf() -> typing.Tuple[int, int]:
+        s1, s2 = leaf_subwf(a=50)
+        return s2, s2
+
+    @workflow
+    def parent_wf() -> typing.Tuple[int, int, int, int]:
+        m1, m2 = middle_subwf()
+        l1, l2 = leaf_subwf().with_overrides(node_name="foo-node")
+        return m1, m2, l1, l2
+
+    wf_spec = get_serializable(OrderedDict(), serialization_settings, parent_wf)
+    assert wf_spec is not None
+    assert len(wf_spec.sub_workflows) == 2
+    subwf = {v.id.name: v for v in wf_spec.sub_workflows}
+    assert subwf.keys() == {
+        "tests.flytekit.unit.core.test_serialization.leaf_subwf",
+        "tests.flytekit.unit.core.test_serialization.middle_subwf",
+    }
+    midwf = subwf["tests.flytekit.unit.core.test_serialization.middle_subwf"]
+    assert len(midwf.nodes) == 1
+    assert midwf.nodes[0].workflow_node is not None
+    assert (
+        midwf.nodes[0].workflow_node.sub_workflow_ref.name == "tests.flytekit.unit.core.test_serialization.leaf_subwf"
+    )
+    assert wf_spec.template.nodes[1].id == "foo-node"
+    assert wf_spec.template.outputs[2].binding.promise.node_id == "foo-node"
+
+
+def test_serialization_named_outputs_single():
+    @task
+    def t1() -> typing.NamedTuple("OP", a=str):
+        return "Hello"
+
+    @workflow
+    def wf() -> typing.NamedTuple("OP", a=str):
+        return t1().a
+
+    wf_spec = get_serializable(OrderedDict(), serialization_settings, wf)
+    assert len(wf_spec.template.interface.outputs) == 1
+    assert list(wf_spec.template.interface.outputs.keys()) == ["a"]
+    a = wf()
+    assert a.a == "Hello"
+
+
+def test_named_outputs_nested():
+    nm = typing.NamedTuple("OP", [("greet", str)])
+
+    @task
+    def say_hello() -> nm:
+        return nm("hello world")
+
+    wf_outputs = typing.NamedTuple("OP2", [("greet1", str), ("greet2", str)])
+
+    @workflow
+    def my_wf() -> wf_outputs:
+        # Note only Namedtuple can be created like this
+        return wf_outputs(say_hello().greet, say_hello().greet)
+
+    x, y = my_wf()
+    assert x == "hello world"
+    assert y == "hello world"
+
+
+def test_named_outputs_nested_fail():
+    nm = typing.NamedTuple("OP", [("greet", str)])
+
+    @task
+    def say_hello() -> nm:
+        return nm("hello world")
+
+    wf_outputs = typing.NamedTuple("OP2", [("greet1", str), ("greet2", str)])
+
+    with pytest.raises(AssertionError):
+        # this should fail because say_hello returns a tuple, but we do not de-reference it
+        @workflow
+        def my_wf() -> wf_outputs:
+            # Note only Namedtuple can be created like this
+            return wf_outputs(say_hello(), say_hello())
+
+        my_wf()
+
+
+def test_serialized_docstrings():
+    @task
+    def z(a: int, b: str) -> typing.Tuple[int, str]:
+        """
+        function z
+
+        :param a: foo
+        :param b: bar
+        :return: ramen
+        """
+        ...
+
+    task_spec = get_serializable(OrderedDict(), serialization_settings, z)
+    assert task_spec.template.interface.inputs["a"].description == "foo"
+    assert task_spec.template.interface.inputs["b"].description == "bar"
+    assert task_spec.template.interface.outputs["o0"].description == "ramen"
+
+
+def test_default_args_task_int_type():
+    default_val = 0
+    input_val = 100
+
+    @task
+    def t1(a: int = default_val) -> int:
+        return a
+
+    @workflow
+    def wf_no_input() -> int:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> int:
+        return t1(a=input_val)
+
+    @workflow
+    def wf_with_sub_wf() -> typing.Tuple[int, int]:
+        return (wf_no_input(), wf_with_input())
+
+    wf_no_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_no_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        primitive=Primitive(integer=default_val)
+    )
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        primitive=Primitive(integer=input_val)
+    )
+
+    output_type = LiteralType(simple=SimpleType.INTEGER)
+    assert wf_no_input_spec.template.interface.outputs["o0"].type == output_type
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_no_input() == default_val
+    assert wf_with_input() == input_val
+    assert wf_with_sub_wf() == (default_val, input_val)
+
+
+def test_failure_node_naming():
+    @task
+    def t1(a: int) -> int:
+        return a
+
+    @workflow
+    def wf(a: int) -> int:
+        return t1(a=a).with_overrides(node_name="efn")
+
+    with pytest.raises(ValueError):
+        get_serializable(OrderedDict(), serialization_settings, wf)
+
+
+def test_default_args_task_str_type():
+    default_val = ""
+    input_val = "foo"
+
+    @task
+    def t1(a: str = default_val) -> str:
+        return a
+
+    @workflow
+    def wf_no_input() -> str:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> str:
+        return t1(a=input_val)
+
+    @workflow
+    def wf_with_sub_wf() -> typing.Tuple[str, str]:
+        return (wf_no_input(), wf_with_input())
+
+    wf_no_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_no_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        primitive=Primitive(string_value=default_val)
+    )
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        primitive=Primitive(string_value=input_val)
+    )
+
+    output_type = LiteralType(simple=SimpleType.STRING)
+    assert wf_no_input_spec.template.interface.outputs["o0"].type == output_type
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_no_input() == default_val
+    assert wf_with_input() == input_val
+    assert wf_with_sub_wf() == (default_val, input_val)
+
+
+def test_default_args_task_optional_int_type_default_none():
+    default_val = None
+    input_val = 100
+
+    @task
+    def t1(a: typing.Optional[int] = default_val) -> typing.Optional[int]:
+        return a
+
+    @workflow
+    def wf_no_input() -> typing.Optional[int]:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> typing.Optional[int]:
+        return t1(a=input_val)
+
+    @workflow
+    def wf_with_sub_wf() -> typing.Tuple[typing.Optional[int], typing.Optional[int]]:
+        return (wf_no_input(), wf_with_input())
+
+    wf_no_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_no_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        union=Union(
+            value=Literal(
+                scalar=Scalar(
+                    none_type=Void(),
+                ),
+            ),
+            stored_type=LiteralType(
+                simple=SimpleType.NONE,
+                structure=TypeStructure(tag="none"),
+            ),
+        ),
+    )
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        union=Union(
+            value=Literal(
+                scalar=Scalar(primitive=Primitive(integer=input_val)),
+            ),
+            stored_type=LiteralType(
+                simple=SimpleType.INTEGER,
+                structure=TypeStructure(tag="int"),
+            ),
+        ),
+    )
+
+    output_type = LiteralType(
+        union_type=UnionType(
+            [
+                LiteralType(
+                    simple=SimpleType.INTEGER,
+                    structure=TypeStructure(tag="int"),
+                ),
+                LiteralType(
+                    simple=SimpleType.NONE,
+                    structure=TypeStructure(tag="none"),
+                ),
+            ]
+        )
+    )
+    assert wf_no_input_spec.template.interface.outputs["o0"].type == output_type
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_no_input() == default_val
+    assert wf_with_input() == input_val
+    assert wf_with_sub_wf() == (default_val, input_val)
+
+
+def test_default_args_task_optional_int_type_default_int():
+    default_val = 10
+    input_val = 100
+
+    @task
+    def t1(a: typing.Optional[int] = default_val) -> typing.Optional[int]:
+        return a
+
+    @workflow
+    def wf_no_input() -> typing.Optional[int]:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> typing.Optional[int]:
+        return t1(a=input_val)
+
+    @workflow
+    def wf_with_sub_wf() -> typing.Tuple[typing.Optional[int], typing.Optional[int]]:
+        return (wf_no_input(), wf_with_input())
+
+    wf_no_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_no_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        union=Union(
+            value=Literal(
+                scalar=Scalar(
+                    primitive=Primitive(integer=default_val),
+                ),
+            ),
+            stored_type=LiteralType(
+                simple=SimpleType.INTEGER,
+                structure=TypeStructure(tag="int"),
+            ),
+        ),
+    )
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        union=Union(
+            value=Literal(
+                scalar=Scalar(primitive=Primitive(integer=input_val)),
+            ),
+            stored_type=LiteralType(
+                simple=SimpleType.INTEGER,
+                structure=TypeStructure(tag="int"),
+            ),
+        ),
+    )
+
+    output_type = LiteralType(
+        union_type=UnionType(
+            [
+                LiteralType(
+                    simple=SimpleType.INTEGER,
+                    structure=TypeStructure(tag="int"),
+                ),
+                LiteralType(
+                    simple=SimpleType.NONE,
+                    structure=TypeStructure(tag="none"),
+                ),
+            ]
+        )
+    )
+    assert wf_no_input_spec.template.interface.outputs["o0"].type == output_type
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_no_input() == default_val
+    assert wf_with_input() == input_val
+    assert wf_with_sub_wf() == (default_val, input_val)
+
+
+def test_default_args_task_no_type_hint():
+    with pytest.raises(FlyteMissingTypeException, match="'a' has no type. Please add a type annotation to the input parameter"):
+        @task
+        def t1(a=0) -> int:
+            return a
+
+        @workflow
+        def wf_no_input() -> int:
+            return t1()
+
+        @workflow
+        def wf_with_input() -> int:
+            return t1(a=100)
+
+
+def test_default_args_task_mismatch_type():
+    @task
+    def t1(a: int = "foo") -> int:  # type: ignore
+        return a
+
+    @workflow
+    def wf_no_input() -> int:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> int:
+        return t1(a="bar")
+
+    with pytest.raises(AssertionError, match="Failed to Bind variable"):
+        get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+    with pytest.raises(AssertionError, match="Failed to Bind variable"):
+        get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+
+def test_default_args_task_list_type():
+    input_val = [1, 2, 3]
+
+    @task
+    def t1(a: typing.List[int] = []) -> typing.List[int]:
+        return a
+
+    @workflow
+    def wf_no_input() -> typing.List[int]:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> typing.List[int]:
+        return t1(a=input_val)
+
+    with pytest.raises(
+        FlyteAssertion,
+        match=r"Argument a for function .*test_serialization\.t1 is a mutable default argument, which is a python anti-pattern and not supported in flytekit tasks"
+    ):
+        get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == BindingDataCollection(
+        bindings=[
+            BindingData(scalar=Scalar(primitive=Primitive(integer=1))),
+            BindingData(scalar=Scalar(primitive=Primitive(integer=2))),
+            BindingData(scalar=Scalar(primitive=Primitive(integer=3))),
+        ]
+    )
+
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == LiteralType(
+        collection_type=LiteralType(simple=SimpleType.INTEGER)
+    )
+
+    assert wf_with_input() == input_val
+
+
+def test_default_args_task_dict_type():
+    input_val = {"a": 1, "b": 2}
+
+    @task
+    def t1(a: typing.Dict[str, int] = {}) -> typing.Dict[str, int]:
+        return a
+
+    @workflow
+    def wf_no_input() -> typing.Dict[str, int]:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> typing.Dict[str, int]:
+        return t1(a=input_val)
+
+    with pytest.raises(
+        FlyteAssertion,
+        match=r"Argument a for function .*test_serialization\.t1 is a mutable default argument, which is a python anti-pattern and not supported in flytekit tasks"
+    ):
+        get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == BindingDataMap(
+        bindings={
+            "a": BindingData(scalar=Scalar(primitive=Primitive(integer=1))),
+            "b": BindingData(scalar=Scalar(primitive=Primitive(integer=2))),
+        }
+    )
+
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == LiteralType(map_value_type=LiteralType(simple=SimpleType.INTEGER))
+
+    assert wf_with_input() == input_val
+
+
+def test_default_args_task_optional_list_type_default_none():
+    default_val = None
+    input_val = [1, 2, 3]
+
+    @task
+    def t1(a: typing.Optional[typing.List[int]] = default_val) -> typing.Optional[typing.List[int]]:
+        return a
+
+    @workflow
+    def wf_no_input() -> typing.Optional[typing.List[int]]:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> typing.Optional[typing.List[int]]:
+        return t1(a=input_val)
+
+    @workflow
+    def wf_with_sub_wf() -> typing.Tuple[typing.Optional[typing.List[int]], typing.Optional[typing.List[int]]]:
+        return (wf_no_input(), wf_with_input())
+
+    wf_no_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_no_input_spec.template.nodes[0].inputs[0].binding.value == Scalar(
+        union=Union(
+            value=Literal(
+                scalar=Scalar(
+                    none_type=Void(),
+                ),
+            ),
+            stored_type=LiteralType(
+                simple=SimpleType.NONE,
+                structure=TypeStructure(tag="none"),
+            ),
+        ),
+    )
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == BindingDataCollection(
+        bindings=[
+            BindingData(scalar=Scalar(primitive=Primitive(integer=1))),
+            BindingData(scalar=Scalar(primitive=Primitive(integer=2))),
+            BindingData(scalar=Scalar(primitive=Primitive(integer=3))),
+        ]
+    )
+
+    output_type = LiteralType(
+        union_type=UnionType(
+            [
+                LiteralType(
+                    collection_type=LiteralType(simple=SimpleType.INTEGER),
+                    structure=TypeStructure(tag="Typed List"),
+                ),
+                LiteralType(
+                    simple=SimpleType.NONE,
+                    structure=TypeStructure(tag="none"),
+                ),
+            ]
+        )
+    )
+    assert wf_no_input_spec.template.interface.outputs["o0"].type == output_type
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_no_input() == default_val
+    assert wf_with_input() == input_val
+    assert wf_with_sub_wf() == (default_val, input_val)
+
+
+def test_default_args_task_optional_list_type_default_list():
+    input_val = [1, 2, 3]
+
+    @task
+    def t1(a: typing.Optional[typing.List[int]] = []) -> typing.Optional[typing.List[int]]:
+        return a
+
+    @workflow
+    def wf_no_input() -> typing.Optional[typing.List[int]]:
+        return t1()
+
+    @workflow
+    def wf_with_input() -> typing.Optional[typing.List[int]]:
+        return t1(a=input_val)
+
+    with pytest.raises(
+        FlyteAssertion,
+        match=r"Argument a for function .*test_serialization\.t1 is a mutable default argument, which is a python anti-pattern and not supported in flytekit tasks"
+    ):
+        get_serializable(OrderedDict(), serialization_settings, wf_no_input)
+
+    wf_with_input_spec = get_serializable(OrderedDict(), serialization_settings, wf_with_input)
+
+    assert wf_with_input_spec.template.nodes[0].inputs[0].binding.value == BindingDataCollection(
+        bindings=[
+            BindingData(scalar=Scalar(primitive=Primitive(integer=1))),
+            BindingData(scalar=Scalar(primitive=Primitive(integer=2))),
+            BindingData(scalar=Scalar(primitive=Primitive(integer=3))),
+        ]
+    )
+
+    assert wf_with_input_spec.template.interface.outputs["o0"].type == LiteralType(
+        union_type=UnionType(
+            [
+                LiteralType(
+                    collection_type=LiteralType(simple=SimpleType.INTEGER),
+                    structure=TypeStructure(tag="Typed List"),
+                ),
+                LiteralType(
+                    simple=SimpleType.NONE,
+                    structure=TypeStructure(tag="none"),
+                ),
+            ]
+        )
+    )
+
+    assert wf_with_input() == input_val
+
+def test_positional_args_task():
+    arg1 = 5
+    arg2 = 6
+    ret = 17
+
+    @task
+    def t1(x: int, y: int) -> int:
+        return x + y * 2
+
+    @workflow
+    def wf_pure_positional_args() -> int:
+        return t1(arg1, arg2)
+
+    @workflow
+    def wf_mixed_positional_and_keyword_args() -> int:
+        return t1(arg1, y=arg2)
+
+    wf_pure_positional_args_spec = get_serializable(OrderedDict(), serialization_settings, wf_pure_positional_args)
+    wf_mixed_positional_and_keyword_args_spec = get_serializable(OrderedDict(), serialization_settings, wf_mixed_positional_and_keyword_args)
+
+    arg1_binding = Scalar(primitive=Primitive(integer=arg1))
+    arg2_binding = Scalar(primitive=Primitive(integer=arg2))
+    output_type = LiteralType(simple=SimpleType.INTEGER)
+
+    assert wf_pure_positional_args_spec.template.nodes[0].inputs[0].binding.value == arg1_binding
+    assert wf_pure_positional_args_spec.template.nodes[0].inputs[1].binding.value == arg2_binding
+    assert wf_pure_positional_args_spec.template.interface.outputs["o0"].type == output_type
+
+
+    assert wf_mixed_positional_and_keyword_args_spec.template.nodes[0].inputs[0].binding.value == arg1_binding
+    assert wf_mixed_positional_and_keyword_args_spec.template.nodes[0].inputs[1].binding.value == arg2_binding
+    assert wf_mixed_positional_and_keyword_args_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_pure_positional_args() == ret
+    assert wf_mixed_positional_and_keyword_args() == ret
+
+def test_positional_args_workflow():
+    arg1 = 5
+    arg2 = 6
+    ret = 17
+
+    @task
+    def t1(x: int, y: int) -> int:
+        return x + y * 2
+
+    @workflow
+    def sub_wf(x: int, y: int) -> int:
+        return t1(x=x, y=y)
+
+    @workflow
+    def wf_pure_positional_args() -> int:
+        return sub_wf(arg1, arg2)
+
+    @workflow
+    def wf_mixed_positional_and_keyword_args() -> int:
+        return sub_wf(arg1, y=arg2)
+
+    wf_pure_positional_args_spec = get_serializable(OrderedDict(), serialization_settings, wf_pure_positional_args)
+    wf_mixed_positional_and_keyword_args_spec = get_serializable(OrderedDict(), serialization_settings, wf_mixed_positional_and_keyword_args)
+
+    arg1_binding = Scalar(primitive=Primitive(integer=arg1))
+    arg2_binding = Scalar(primitive=Primitive(integer=arg2))
+    output_type = LiteralType(simple=SimpleType.INTEGER)
+
+    assert wf_pure_positional_args_spec.template.nodes[0].inputs[0].binding.value == arg1_binding
+    assert wf_pure_positional_args_spec.template.nodes[0].inputs[1].binding.value == arg2_binding
+    assert wf_pure_positional_args_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_mixed_positional_and_keyword_args_spec.template.nodes[0].inputs[0].binding.value == arg1_binding
+    assert wf_mixed_positional_and_keyword_args_spec.template.nodes[0].inputs[1].binding.value == arg2_binding
+    assert wf_mixed_positional_and_keyword_args_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_pure_positional_args() == ret
+    assert wf_mixed_positional_and_keyword_args() == ret
+
+def test_positional_args_workflow_with_default_value():
+    arg1 = 5
+    arg2 = 6
+    default_arg1 = 1
+    default_arg2 = 2
+    ret = 17
+    ret_arg2_default = 9
+
+    @task
+    def t1(x: int, y: int) -> int:
+        return x + y * 2
+
+    @workflow
+    def sub_wf(x: int = default_arg1, y: int = default_arg2) -> int:
+        return t1(x=x, y=y)
+
+    @workflow
+    def wf_pure_positional_args() -> int:
+        return sub_wf(arg1, arg2)
+
+    @workflow
+    def wf_mixed_positional_and_keyword_args() -> int:
+        return sub_wf(arg1, y=arg2)
+
+    @workflow
+    def wf_mixed_positional_and_default_value() -> int:
+        return sub_wf(arg1)
+
+    wf_pure_positional_args_spec = get_serializable(OrderedDict(), serialization_settings, wf_pure_positional_args)
+    wf_mixed_positional_and_keyword_args_spec = get_serializable(OrderedDict(), serialization_settings, wf_mixed_positional_and_keyword_args)
+    wf_mixed_positional_and_default_value_spec = get_serializable(OrderedDict(), serialization_settings, wf_mixed_positional_and_default_value)
+
+    arg1_binding = Scalar(primitive=Primitive(integer=arg1))
+    arg2_binding = Scalar(primitive=Primitive(integer=arg2))
+    default_arg2_binding = Scalar(primitive=Primitive(integer=default_arg2))
+    output_type = LiteralType(simple=SimpleType.INTEGER)
+
+    assert wf_pure_positional_args_spec.template.nodes[0].inputs[0].binding.value == arg1_binding
+    assert wf_pure_positional_args_spec.template.nodes[0].inputs[1].binding.value == arg2_binding
+    assert wf_pure_positional_args_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_mixed_positional_and_keyword_args_spec.template.nodes[0].inputs[0].binding.value == arg1_binding
+    assert wf_mixed_positional_and_keyword_args_spec.template.nodes[0].inputs[1].binding.value == arg2_binding
+    assert wf_mixed_positional_and_keyword_args_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_mixed_positional_and_default_value_spec.template.nodes[0].inputs[0].binding.value == arg1_binding
+    assert wf_mixed_positional_and_default_value_spec.template.nodes[0].inputs[1].binding.value == default_arg2_binding
+    assert wf_mixed_positional_and_default_value_spec.template.interface.outputs["o0"].type == output_type
+
+    assert wf_pure_positional_args() == ret
+    assert wf_mixed_positional_and_keyword_args() == ret
+    assert wf_mixed_positional_and_default_value() == ret_arg2_default
+
+
+def test_positional_args_workflow_extra_args_or_kwargs():
+    arg1 = 5
+    arg2 = 6
+    ret = 17
+
+    @task
+    def t1(x: int, y: int) -> int:
+        return x + y * 2
+
+    @workflow
+    def sub_wf(x: int, y: int) -> int:
+        return t1(x=x, y=y)
+
+    @workflow
+    def wf_pure_args_extra_args() -> int:
+        return sub_wf(arg1, arg2, arg2)
+
+    @workflow
+    def wf_mixed_positional_and_keyword_args_extra_args() -> int:
+        return sub_wf(arg1, arg2, y=arg2)
+
+    with pytest.raises(AssertionError, match="Received more arguments than expected in function 'tests.flytekit.unit.core.test_serialization.sub_wf'. Expected 2 but got 3"):
+        wf_pure_args_extra_args()
+
+    with pytest.raises(AssertionError, match="Got multiple values for argument 'y' in function 'tests.flytekit.unit.core.test_serialization.sub_wf'"):
+        wf_mixed_positional_and_keyword_args_extra_args()
+
+def test_positional_args_chained_tasks():
+    @task
+    def t1(x: int, y: int) -> int:
+        return x + y * 2
+
+    @workflow
+    def wf() -> int:
+        x = t1(2, y = 3)
+        y = t1(3, 4)
+        return t1(x, y = y)
+
+    assert wf() == 30
+
+def test_positional_args_task_inputs_from_workflow_args():
+    @task
+    def t1(x: int, y: int, z: int) -> int:
+        return x + y * 2 + z * 3
+
+    @workflow
+    def wf(x: int, y: int) -> int:
+        return t1(x, y=y, z=3)
+
+    assert wf(1, 2) == 14
+
+def test_unexpected_kwargs_task_raises_error():
+    @task
+    def t1(a: int) -> int:
+        return a
+
+    with pytest.raises(AssertionError, match="Received unexpected keyword argument"):
+        t1(b=6)
+
+def test_too_many_positional_args_task_raises_error():
+    @task
+    def t1(a: int) -> int:
+        return a
+
+    with pytest.raises(AssertionError, match="Received more arguments than expected"):
+        t1(1, 2)
+
+def test_both_positional_and_keyword_args_task_raises_error():
+    @task
+    def t1(a: int) -> int:
+        return a
+
+    with pytest.raises(AssertionError, match="Got multiple values for argument"):
+        t1(1, a=2)
+
+
+def test_default_resources_override_resourceless_tasks():
+    """Tests that default resources specified in serialization settings affect tasks where no resources are specified."""
+
+    cpu = "2"
+    mem = "4Gi"
+
+    _settings = dataclasses.replace(
+        serialization_settings,
+        default_resources=ResourceSpec(requests=Resources(cpu=cpu, mem=mem), limits=Resources(cpu=cpu, mem=mem))
+    )
+
+    expected_default_resources = task_models.Resources(
+        requests=[
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.CPU, value=cpu),
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.MEMORY, value=mem),
+        ],
+        limits=[
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.CPU, value=cpu),
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.MEMORY, value=mem),
+        ],
+    )
+
+
+    # We test against the 4 fundamental constructs of tasks: @task, @dynamic, @eager, and map_task
+
+    @task
+    def t1(a: int) -> int:
+        return a
+    t1_spec = get_serializable(OrderedDict(), _settings, t1)
+    assert t1_spec.template.container.resources == expected_default_resources
+
+    @dynamic
+    def t1_dynamic(a: int) -> int:
+        return a
+    t1_dynamic_spec = get_serializable(OrderedDict(), _settings, t1_dynamic)
+    assert t1_dynamic_spec.template.container.resources == expected_default_resources
+
+    @eager
+    async def t1_eager(a: int) -> int:
+        return a
+
+    t1_eager_spec = get_serializable(OrderedDict(), _settings, t1_eager)
+    assert t1_eager_spec.template.container.resources == expected_default_resources
+
+    t1_map_task = map_task(t1)
+    t1_map_task_spec = get_serializable(OrderedDict(), _settings, t1_map_task)
+    assert t1_map_task_spec.template.container.resources == expected_default_resources
+
+
+def test_default_resources_do_not_overriden_tasks_with_explicit_resources():
+    """Tests that default resources specified in serialization settings do not override resources specified in task decorators."""
+
+    _settings = dataclasses.replace(
+        serialization_settings,
+        default_resources=ResourceSpec(requests=Resources(cpu="2", mem="4Gi"), limits=Resources(cpu="2", mem="4Gi"))
+    )
+
+    # These cpu/mem values are static i.e. used in task decorators - should not be overridden by
+    # resources from serialization settings
+    cpu_static = "1"
+    mem_static = "2Gi"
+
+    @task(requests=Resources(cpu=cpu_static, mem=mem_static))
+    def t1(a: int) -> int:
+        return a
+
+    t1_spec = get_serializable(OrderedDict(), _settings, t1)
+    assert t1_spec.template.container.resources == task_models.Resources(
+        requests=[
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.CPU, value=cpu_static),
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.MEMORY, value=mem_static),
+        ],
+        limits=[]
+    )
+
+    @dynamic(limits=Resources(cpu=cpu_static, mem=mem_static))
+    def t1_dynamic(a: int) -> int:
+        return a
+
+    t1_dynamic_spec = get_serializable(OrderedDict(), _settings, t1_dynamic)
+    assert t1_dynamic_spec.template.container.resources == task_models.Resources(
+        requests=[],
+        limits=[
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.CPU, value=cpu_static),
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.MEMORY, value=mem_static),
+        ]
+    )
+
+    @eager(requests=Resources(cpu=cpu_static, mem=mem_static))
+    async def t1_eager(a: int) -> int:
+        return a
+
+    t1_eager_spec = get_serializable(OrderedDict(), _settings, t1_eager)
+    assert t1_eager_spec.template.container.resources == task_models.Resources(
+        requests=[
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.CPU, value=cpu_static),
+            task_models.Resources.ResourceEntry(name=task_models.Resources.ResourceName.MEMORY, value=mem_static),
+        ],
+        limits=[]
+    )
+
+
+def test_launch_plan_security_context_merge():
+    """Registration options override the authored launch plan per field.
+
+    Registering with only a service account must not drop secrets/tokens that were
+    authored on the launch plan.
+    """
+
+    @task
+    def t_sc() -> int:
+        return 1
+
+    @workflow
+    def wf_sc() -> int:
+        return t_sc()
+
+    lp = LaunchPlan.get_or_create(
+        workflow=wf_sc,
+        name="lp_sc_merge",
+        security_context=SecurityContext(secrets=[Secret(group="g", key="k")]),
+    )
+    opts = Options(security_context=SecurityContext(run_as=Identity(k8s_service_account="my-sa")))
+
+    serialized = get_serializable(OrderedDict(), serialization_settings, lp, options=opts)
+    sc = serialized.spec.security_context
+    assert sc.run_as.k8s_service_account == "my-sa"
+    assert [(s.group, s.key) for s in sc.secrets] == [("g", "k")]

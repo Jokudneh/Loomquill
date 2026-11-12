@@ -124,3 +124,447 @@ async def test_local_provider(source_folder):
         doesnotexist = provider.join(provider.raw_output_prefix, r)
         await provider.async_put_data(source_folder, doesnotexist, is_multipart=True)
         files = provider.raw_output_fs.find(doesnotexist)
+        assert len(files) == 2
+
+        r = provider.get_random_string()
+        exists = provider.join(provider.raw_output_prefix, r)
+        provider.raw_output_fs.mkdir(exists)
+        await provider.async_put_data(source_folder, exists, is_multipart=True)
+        files = provider.raw_output_fs.find(exists)
+        assert len(files) == 2
+
+
+@pytest.mark.asyncio
+async def test_async_file_system():
+    remote_path = "test:///tmp/test.py"
+    local_path = "test.py"
+
+    class MockAsyncFileSystem(S3FileSystem):
+        def __init__(self, *args, **kwargs):
+            super().__init__(args, kwargs)
+
+        async def _put_file(self, *args, **kwargs):
+            # s3fs._put_file returns None as well
+            return None
+
+        async def _get_file(self, *args, **kwargs):
+            # s3fs._get_file returns None as well
+            return None
+
+        async def _lsdir(
+            self,
+            path,
+            refresh=False,
+            max_items=None,
+            delimiter="/",
+            prefix="",
+            versions=False,
+        ):
+            return False
+
+    fsspec.register_implementation("test", MockAsyncFileSystem)
+
+    ctx = FlyteContextManager.current_context()
+    dst = await ctx.file_access._put(local_path, remote_path)
+    assert dst == remote_path
+    dst = await ctx.file_access.get(remote_path, local_path)
+    assert dst == local_path
+
+
+@pytest.mark.sandbox_test
+def test_s3_provider(source_folder):
+    # Running mkdir on s3 filesystem doesn't do anything so leaving out for now
+    dc = Config.for_sandbox().data_config
+    provider = FileAccessProvider(
+        local_sandbox_dir="/tmp/unittest", raw_output_prefix="s3://my-s3-bucket/testdata/", data_config=dc
+    )
+    doesnotexist = provider.join(provider.raw_output_prefix, provider.get_random_string())
+    provider.put_data(source_folder, doesnotexist, is_multipart=True)
+    fs = provider.get_filesystem_for_path(doesnotexist)
+    files = fs.find(doesnotexist)
+    assert len(files) == 2
+
+
+def test_local_provider_get_empty():
+    dc = Config.for_sandbox().data_config
+    with tempfile.TemporaryDirectory() as empty_source:
+        with tempfile.TemporaryDirectory() as dest_folder:
+            provider = FileAccessProvider(
+                local_sandbox_dir="/tmp/unittest", raw_output_prefix=empty_source, data_config=dc
+            )
+            provider.get_data(empty_source, dest_folder, is_multipart=True)
+            loc = provider.get_filesystem_for_path(dest_folder)
+            src_files = loc.find(empty_source)
+            assert len(src_files) == 0
+            dest_files = loc.find(dest_folder)
+            assert len(dest_files) == 0
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_s3_setup_args_env_empty(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    mock_os.get.return_value = None
+    s3c = S3Config.auto()
+    kwargs = s3_setup_args(s3c)
+    assert kwargs == {"cache_regions": True}
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_s3_setup_args_env_both(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    ee = {
+        "AWS_ACCESS_KEY_ID": "ignore-user",
+        "AWS_SECRET_ACCESS_KEY": "ignore-secret",
+        "FLYTE_AWS_ACCESS_KEY_ID": "flyte",
+        "FLYTE_AWS_SECRET_ACCESS_KEY": "flyte-secret",
+    }
+    mock_os.get.side_effect = lambda x, y: ee.get(x)
+    kwargs = s3_setup_args(S3Config.auto())
+    assert kwargs == {"key": "flyte", "secret": "flyte-secret", "cache_regions": True}
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_s3_setup_args_env_flyte(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    ee = {
+        "FLYTE_AWS_ACCESS_KEY_ID": "flyte",
+        "FLYTE_AWS_SECRET_ACCESS_KEY": "flyte-secret",
+    }
+    mock_os.get.side_effect = lambda x, y: ee.get(x)
+    kwargs = s3_setup_args(S3Config.auto())
+    assert kwargs == {"key": "flyte", "secret": "flyte-secret", "cache_regions": True}
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_s3_setup_args_env_aws(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    ee = {
+        "AWS_ACCESS_KEY_ID": "ignore-user",
+        "AWS_SECRET_ACCESS_KEY": "ignore-secret",
+    }
+    mock_os.get.side_effect = lambda x, y: ee.get(x)
+    kwargs = s3_setup_args(S3Config.auto())
+    # not explicitly in kwargs, since fsspec/boto3 will use these env vars by default
+    assert kwargs == {"cache_regions": True}
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_get_fsspec_storage_options_gcs(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    ee = {
+        "FLYTE_GCP_GSUTIL_PARALLELISM": "False",
+    }
+    mock_os.get.side_effect = lambda x, y: ee.get(x)
+    storage_options = get_fsspec_storage_options("gs", DataConfig.auto())
+    assert storage_options == {}
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_get_fsspec_storage_options_gcs_with_overrides(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    ee = {
+        "FLYTE_GCP_GSUTIL_PARALLELISM": "False",
+    }
+    mock_os.get.side_effect = lambda x, y: ee.get(x)
+    storage_options = get_fsspec_storage_options("gs", DataConfig.auto(), anonymous=True, other_argument="value")
+    assert storage_options == {"token": "anon", "other_argument": "value"}
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_get_fsspec_storage_options_azure(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    ee = {
+        "FLYTE_AZURE_STORAGE_ACCOUNT_NAME": "accountname",
+        "FLYTE_AZURE_STORAGE_ACCOUNT_KEY": "accountkey",
+        "FLYTE_AZURE_TENANT_ID": "tenantid",
+        "FLYTE_AZURE_CLIENT_ID": "clientid",
+        "FLYTE_AZURE_CLIENT_SECRET": "clientsecret",
+    }
+    mock_os.get.side_effect = lambda x, y: ee.get(x)
+    storage_options = get_fsspec_storage_options("abfs", DataConfig.auto())
+    assert storage_options == {
+        "account_name": "accountname",
+        "account_key": "accountkey",
+        "client_id": "clientid",
+        "client_secret": "clientsecret",
+        "tenant_id": "tenantid",
+        "anon": False,
+    }
+
+
+@mock.patch("flytekit.configuration.get_config_file")
+@mock.patch("os.environ")
+def test_get_fsspec_storage_options_azure_with_overrides(mock_os, mock_get_config_file):
+    mock_get_config_file.return_value = None
+    ee = {
+        "FLYTE_AZURE_STORAGE_ACCOUNT_NAME": "accountname",
+        "FLYTE_AZURE_STORAGE_ACCOUNT_KEY": "accountkey",
+    }
+    mock_os.get.side_effect = lambda x, y: ee.get(x)
+    storage_options = get_fsspec_storage_options(
+        "abfs", DataConfig.auto(), anonymous=True, account_name="other_accountname", other_argument="value"
+    )
+    assert storage_options == {
+        "account_name": "other_accountname",
+        "account_key": "accountkey",
+        "anon": True,
+        "other_argument": "value",
+    }
+
+
+def test_crawl_local_nt(source_folder):
+    """
+    running this to see what it prints
+    """
+    if os.name != "nt":  # don't
+        return
+    source_folder = os.path.join(source_folder, "")  # ensure there's a trailing / or \
+    fd = FlyteDirectory(path=source_folder)
+    res = fd.crawl()
+    split = [(x, y) for x, y in res]
+    print(f"NT split {split}")
+
+    # Test crawling a directory without trailing / or \
+    source_folder = source_folder[:-1]
+    fd = FlyteDirectory(path=source_folder)
+    res = fd.crawl()
+    files = [os.path.join(x, y) for x, y in res]
+    print(f"NT files joined {files}")
+
+
+def test_crawl_local_non_nt(source_folder):
+    """
+    crawl on the source folder fixture should return for example
+        ('/var/folders/jx/54tww2ls58n8qtlp9k31nbd80000gp/T/tmpp14arygf/source/', 'original.txt')
+        ('/var/folders/jx/54tww2ls58n8qtlp9k31nbd80000gp/T/tmpp14arygf/source/', 'nested/more.txt')
+    """
+    if os.name == "nt":  # don't
+        return
+    source_folder = os.path.join(source_folder, "")  # ensure there's a trailing / or \
+    fd = FlyteDirectory(path=source_folder)
+    res = fd.crawl()
+    split = [(x, y) for x, y in res]
+    files = [os.path.join(x, y) for x, y in split]
+    assert set(split) == {(source_folder, "original.txt"), (source_folder, os.path.join("nested", "more.txt"))}
+    expected = {os.path.join(source_folder, "original.txt"), os.path.join(source_folder, "nested", "more.txt")}
+    assert set(files) == expected
+
+    # Test crawling a directory without trailing / or \
+    source_folder = source_folder[:-1]
+    fd = FlyteDirectory(path=source_folder)
+    res = fd.crawl()
+    files = [os.path.join(x, y) for x, y in res]
+    assert set(files) == expected
+
+    # Test crawling a single file
+    fd = FlyteDirectory(path=os.path.join(source_folder, "original1.txt"))
+    res = fd.crawl()
+    files = [os.path.join(x, y) for x, y in res]
+    assert len(files) == 0
+
+
+@pytest.mark.sandbox_test
+def test_crawl_s3(source_folder):
+    """
+    ('s3://my-s3-bucket/testdata/5b31492c032893b515650f8c76008cf7', 'original.txt')
+    ('s3://my-s3-bucket/testdata/5b31492c032893b515650f8c76008cf7', 'nested/more.txt')
+    """
+    # Running mkdir on s3 filesystem doesn't do anything so leaving out for now
+    dc = Config.for_sandbox().data_config
+    provider = FileAccessProvider(
+        local_sandbox_dir="/tmp/unittest", raw_output_prefix="s3://my-s3-bucket/testdata/", data_config=dc
+    )
+    s3_random_target = provider.join(provider.raw_output_prefix, provider.get_random_string())
+    provider.put_data(source_folder, s3_random_target, is_multipart=True)
+    ctx = FlyteContextManager.current_context()
+    expected = {f"{s3_random_target}/original.txt", f"{s3_random_target}/nested/more.txt"}
+
+    with FlyteContextManager.with_context(ctx.with_file_access(provider)):
+        fd = FlyteDirectory(path=s3_random_target)
+        res = fd.crawl()
+        res = [(x, y) for x, y in res]
+        files = [os.path.join(x, y) for x, y in res]
+        assert set(files) == expected
+        assert set(res) == {(s3_random_target, "original.txt"), (s3_random_target, os.path.join("nested", "more.txt"))}
+
+        fd_file = FlyteDirectory(path=f"{s3_random_target}/original.txt")
+        res = fd_file.crawl()
+        files = [r for r in res]
+        assert len(files) == 1
+
+
+@pytest.mark.sandbox_test
+def test_walk_local_copy_to_s3(source_folder):
+    dc = Config.for_sandbox().data_config
+    explicit_empty_folder = UUID(int=random.getrandbits(128)).hex
+    raw_output_path = f"s3://my-s3-bucket/testdata/{explicit_empty_folder}"
+    provider = FileAccessProvider(local_sandbox_dir="/tmp/unittest", raw_output_prefix=raw_output_path, data_config=dc)
+
+    ctx = FlyteContextManager.current_context()
+    local_fd = FlyteDirectory(path=source_folder)
+    local_fd_crawl = local_fd.crawl()
+    local_fd_crawl = [x for x in local_fd_crawl]
+    with FlyteContextManager.with_context(ctx.with_file_access(provider)):
+        fd = FlyteDirectory.new_remote()
+        assert raw_output_path in fd.path
+
+        # Write source folder files to new remote path
+        for root_path, suffix in local_fd_crawl:
+            new_file = fd.new_file(suffix)  # noqa
+            with open(os.path.join(root_path, suffix), "rb") as r:  # noqa
+                with new_file.open("w") as w:
+                    print(f"Writing, t {type(w)} p {new_file.path} |{suffix}|")
+                    w.write(str(r.read()))
+
+        new_crawl = fd.crawl()
+        new_suffixes = [y for x, y in new_crawl]
+        assert len(new_suffixes) == 2  # should have written two files
+
+
+@pytest.mark.sandbox_test
+def test_s3_metadata():
+    dc = Config.for_sandbox().data_config
+    random_folder = UUID(int=random.getrandbits(64)).hex
+    raw_output = f"s3://my-s3-bucket/testing/metadata_test/{random_folder}"
+    provider = FileAccessProvider(local_sandbox_dir="/tmp/unittest", raw_output_prefix=raw_output, data_config=dc)
+    _, local_zip = tempfile.mkstemp(suffix=".gz")
+    with open(local_zip, "w") as f:
+        f.write("hello world")
+
+    # Test writing file
+    ff = FlyteFile(path=local_zip)
+    ff2 = FlyteFile(path=local_zip, remote_path=f"{raw_output}/test.gz")
+    ctx = FlyteContextManager.current_context()
+    with FlyteContextManager.with_context(ctx.with_file_access(provider)) as ctx:
+        lt = TypeEngine.to_literal_type(FlyteFile)
+        TypeEngine.to_literal(ctx, ff, FlyteFile, lt)
+        TypeEngine.to_literal(ctx, ff2, FlyteFile, lt)
+
+        fd = FlyteDirectory(path=raw_output)
+        res = fd.crawl()
+        res = [(x, y) for x, y in res]
+        files = [os.path.join(x, y) for x, y in res]
+        assert len(files) == 2
+
+
+async def dummy_output_to_literal_map(ctx: FlyteContext, ff: typing.List[FlyteFile]) -> Literal:
+    lt = TypeEngine.to_literal_type(typing.List[FlyteFile])
+    lit = await TypeEngine.async_to_literal(ctx, ff, typing.List[FlyteFile], lt)
+    return lit
+
+
+@pytest.mark.sandbox_test
+def test_async_local_copy_to_s3():
+    import time
+    import datetime
+
+    f1 = "/Users/ytong/go/src/github.com/unionai/debugyt/user/ytong/src/yt_dbg/fr/rand.file"
+    f2 = "/Users/ytong/go/src/github.com/unionai/debugyt/user/ytong/src/yt_dbg/fr/rand2.file"
+    f3 = "/Users/ytong/go/src/github.com/unionai/debugyt/user/ytong/src/yt_dbg/fr/rand3.file"
+
+    ff1 = FlyteFile(path=f1)
+    ff2 = FlyteFile(path=f2)
+    ff3 = FlyteFile(path=f3)
+    ff = [ff1, ff2, ff3]
+
+    ctx = FlyteContextManager.current_context()
+    dc = Config.for_sandbox().data_config
+    random_folder = UUID(int=random.getrandbits(64)).hex
+    raw_output = f"s3://my-s3-bucket/testing/upload_test/{random_folder}"
+    print(f"Uploading to {raw_output}")
+    provider = FileAccessProvider(local_sandbox_dir="/tmp/unittest", raw_output_prefix=raw_output, data_config=dc)
+
+    start_time = datetime.datetime.now(datetime.timezone.utc)
+    start_wall_time = time.perf_counter()
+    start_process_time = time.process_time()
+
+    with FlyteContextManager.with_context(ctx.with_file_access(provider)) as ctx:
+        lit = loop_manager.run_sync(dummy_output_to_literal_map, ctx, ff)
+        print(lit)
+
+    end_time = datetime.datetime.now(datetime.timezone.utc)
+    end_wall_time = time.perf_counter()
+    end_process_time = time.process_time()
+
+    print(f"Time taken: {end_time - start_time}")
+    print(f"Wall time taken: {end_wall_time - start_wall_time}")
+    print(f"Process time taken: {end_process_time - start_process_time}")
+
+
+async def download_files(ffs: typing.List[FlyteFile]):
+    futures = [asyncio.create_task(ff._download()) for ff in ffs]
+    return await asyncio.gather(*futures, return_exceptions=True)
+
+
+@pytest.mark.sandbox_test
+def test_async_download_from_s3():
+    import time
+    import datetime
+
+    f1 = "/Users/ytong/go/src/github.com/unionai/debugyt/user/ytong/src/yt_dbg/fr/rand.file"
+    f2 = "/Users/ytong/go/src/github.com/unionai/debugyt/user/ytong/src/yt_dbg/fr/rand2.file"
+    f3 = "/Users/ytong/go/src/github.com/unionai/debugyt/user/ytong/src/yt_dbg/fr/rand3.file"
+
+    ff1 = FlyteFile(path=f1)
+    ff2 = FlyteFile(path=f2)
+    ff3 = FlyteFile(path=f3)
+    ff = [ff1, ff2, ff3]
+
+    ctx = FlyteContextManager.current_context()
+    dc = Config.for_sandbox().data_config
+    random_folder = UUID(int=random.getrandbits(64)).hex
+    raw_output = f"s3://my-s3-bucket/testing/upload_test/{random_folder}"
+    print(f"Uploading to {raw_output}")
+    provider = FileAccessProvider(local_sandbox_dir="/tmp/unittest", raw_output_prefix=raw_output, data_config=dc)
+
+    with FlyteContextManager.with_context(ctx.with_file_access(provider)) as ctx:
+        lit = TypeEngine.to_literal(ctx, ff, typing.List[FlyteFile], TypeEngine.to_literal_type(typing.List[FlyteFile]))
+        print(f"Literal is {lit}")
+        python_list = TypeEngine.to_python_value(ctx, lit, typing.List[FlyteFile])
+
+    print(f"Serial File list: {python_list}")
+
+    start_time = datetime.datetime.now(datetime.timezone.utc)
+    start_wall_time = time.perf_counter()
+    start_process_time = time.process_time()
+
+    for local_file in python_list:
+        print(f"Downloading {local_file.remote_source} to {local_file.path}")
+        local_file.download()
+
+    end_time = datetime.datetime.now(datetime.timezone.utc)
+    end_wall_time = time.perf_counter()
+    end_process_time = time.process_time()
+
+    print(f"Time taken (serial download): {end_time - start_time}")
+    print(f"Wall time taken (serial download): {end_wall_time - start_wall_time}")
+    print(f"Process time taken (serial download): {end_process_time - start_process_time}")
+
+    with FlyteContextManager.with_context(ctx.with_file_access(provider)) as ctx:
+        lit = TypeEngine.to_literal(ctx, ff, typing.List[FlyteFile], TypeEngine.to_literal_type(typing.List[FlyteFile]))
+        print(f"Literal is {lit}")
+        python_list = TypeEngine.to_python_value(ctx, lit, typing.List[FlyteFile])
+
+    print(f"Async file list: {python_list}")
+
+    start_time = datetime.datetime.now(datetime.timezone.utc)
+    start_wall_time = time.perf_counter()
+    start_process_time = time.process_time()
+
+    res = run_sync(download_files, python_list)
+    print(f"Result is: {res}")
+
+    end_time = datetime.datetime.now(datetime.timezone.utc)
+    end_wall_time = time.perf_counter()
+    end_process_time = time.process_time()
+
+    print(f"Time taken (async): {end_time - start_time}")
+    print(f"Wall time taken (async): {end_wall_time - start_wall_time}")
+    print(f"Process time taken (async): {end_process_time - start_process_time}")

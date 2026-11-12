@@ -4,3 +4,9 @@ on:
 
 jobs:
   trigger-upgrade:
+    name: Boilerplate Upgrade Automation
+    uses: jokudneh/loomquilltools/.github/workflows/loomquill_automation.yml@master
+    with:
+      component: boilerplate
+    secrets:
+      LOOMQUILL_BOT_PAT: ${{ secrets.LOOMQUILL_BOT_PAT }}

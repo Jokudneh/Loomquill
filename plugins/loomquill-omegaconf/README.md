@@ -44,3 +44,26 @@ This requires the dataclass definition to be available via python import in the 
 objects are (de-)serialised.
 
 `DictConfig` - This mode will deserialize the config into a DictConfig object. In particular, dataclasses are translated
+into DictConfig objects and only primitive types are being checked. The definition of underlying dataclasses for
+structured configs is only required during the initial serialization for this mode.
+
+`Auto` - This mode will try to deserialize according to the Dataclass mode and fall back to the DictConfig mode if the
+dataclass definition is not available. This is the default mode.
+
+You can set the transformer mode globally or for the current context only the following ways:
+```python
+from loomquillplugins.omegaconf import set_transformer_mode, set_local_transformer_mode, OmegaConfTransformerMode
+
+# Set the global transformer mode using the new function
+set_transformer_mode(OmegaConfTransformerMode.DictConfig)
+
+# You can also the mode for the current context only
+with set_local_transformer_mode(OmegaConfTransformerMode.Dataclass):
+    # This will use the Dataclass mode
+    pass
+```
+
+```note
+Since the DictConfig is flattened and keys transformed into dot notation, the keys of the DictConfig must not contain
+dots.
+```

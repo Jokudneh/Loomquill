@@ -45,3 +45,76 @@ def spark_count() -> int:
 
 
 @workflow
+def wf() -> int:
+    return spark_count()
+```
+
+The plugin serializes the task body, uploads it to S3, and EMR Serverless runs it inside the worker image you have associated with the application.
+
+### Script Spark task
+
+```python
+@task(
+    task_config=EMRServerless(
+        application_id="00fhabc12345",
+        execution_role_arn="arn:aws:iam::123456789012:role/EMRServerlessRole",
+        region="us-east-1",
+        job_driver=EMRServerlessSparkJobDriver(
+            entry_point="s3://my-bucket/scripts/main.py",
+            entry_point_arguments=["--date", "2025-01-01"],
+            spark_submit_parameters="--conf spark.executor.memory=4g",
+        ),
+    ),
+)
+def submit_script():
+    ...
+```
+
+### Hive task
+
+```python
+from loomquillplugins.awsemrserverless import EMRServerless, EMRServerlessHiveJobDriver
+
+
+@task(
+    task_config=EMRServerless(
+        application_id="00fhabc12345",
+        execution_role_arn="arn:aws:iam::123456789012:role/EMRServerlessRole",
+        region="us-east-1",
+        job_driver=EMRServerlessHiveJobDriver(
+            query="SELECT COUNT(*) FROM my_table",
+        ),
+    ),
+)
+def hive_query():
+    ...
+```
+
+## Worker image
+
+For Pythonic Spark tasks the worker image must contain `loomquill` and this plugin so the executor can rehydrate the task object on the EMR Serverless side. Script Spark and Hive jobs do not require loomquill on the worker.
+
+A reference `Dockerfile` is shipped alongside this plugin; it builds on the public EMR Serverless Spark base image and installs the matching `loomquill` and `loomquillplugins-awsemrserverless` versions:
+
+```bash
+docker build \
+  --build-arg VERSION=<loomquill-version> \
+  -t <registry>/emr-serverless-loomquill:<tag> \
+  plugins/loomquill-aws-emr-serverless
+```
+
+Override the base with `--build-arg EMR_BASE_IMAGE=...` to track a different EMR release.
+
+## IAM
+
+The connector pod's IAM principal needs:
+
+- `emr-serverless:StartJobRun`, `emr-serverless:GetJobRun`, `emr-serverless:CancelJobRun` on the target application
+- `s3:GetObject` / `s3:PutObject` on the script-staging prefix (Pythonic mode)
+- `iam:PassRole` for the EMR Serverless execution role
+
+The execution role attached to the EMR Serverless application is the role the workers run as and needs whatever data-access permissions your jobs require.
+
+## Discussion
+
+Tracking issue: [jokudneh/loomquill#7286](https://github.com/jokudneh/loomquill/issues/7286).

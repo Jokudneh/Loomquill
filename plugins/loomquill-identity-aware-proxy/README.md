@@ -124,3 +124,281 @@ Loomquill is then deployed behind the Istio ingress gateway and does not need to
 
     With the annotations we configured the service to use http2 which is required by gRPC. We also configured the service to use a so-called backend config `ingress-backend-config` which activates IAP and which we will create in the next step.
 
+
+3. Activate IAP for the Istio ingress gateway via a backend config:
+
+    Create a Kubernetes secret containing the web app client id and secret we created above. The creation of the secret is described [here](https://cloud.google.com/iap/docs/enabling-kubernetes-howto#kubernetes-configure). From now on the assumption is that the secret is called `iap-oauth-client-id`.
+
+    Create a backend config for the Istio ingress gateway:
+
+    ```yaml
+    apiVersion: cloud.google.com/v1
+    kind: BackendConfig
+    metadata:
+      name: ingress-backend-config
+      namespace: istio-system
+    spec:
+      healthCheck:
+        port: 15021
+        requestPath: /healthz/ready
+        type: HTTP
+      iap:
+        enabled: true
+        oauthclientCredentials:
+          secretName: iap-oauth-client-id
+    ```
+
+    Note that apart from activating IAP, we also configured a custom health check as the istio ingress gateway doesn't use the default health check path and port assumed by the GCP load balancer.
+
+
+4. [Install Cert Manager](https://cert-manager.io/docs/installation/helm/) to [create and rotate](https://cert-manager.io/docs/configuration/selfsigned/) a self-signed certificate for the istio ingress (pod):
+
+    * `helm repo add jetstack https://charts.jetstack.io`
+    * `helm repo update`
+    * `helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true`
+
+    Create the following objects:
+
+    ```yaml
+    apiVersion: cert-manager.io/v1
+    kind: Issuer
+    metadata:
+      name: selfsigned-issuer
+      namespace: istio-system
+    spec:
+      selfSigned: {}
+    ```
+
+    ```yaml
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: istio-ingress-cert
+      namespace: istio-system
+    spec:
+      commonName: istio-ingress
+      dnsNames:
+      - istio-ingress
+      - istio-ingress.istio-system.svc
+      - istio-ingress.istio-system.svc.cluster.local
+      issuerRef:
+        kind: Issuer
+        name: selfsigned-issuer
+      secretName: istio-ingress-cert
+    ```
+
+    This self-signed TLS certificate is only used between the GCP load balancer and the istio ingress gateway. It is not used by the istio ingress gateway to terminate TLS connections from the outside world (as we created it using a `NodePort` type service). Therefore, it is not unsafe to use a self-signed certificate here. Many applications deployed on GKE don't use any additional encryption between the load balancer and the backend. GCP, however, [encrypts these connections by default](https://cloud.google.com/load-balancing/docs/backend-service#encryption_between_the_load_balancer_and_backends):
+
+      > The next hop, which is between the Google Front End (GFE) and the mesh ingress proxy, is encrypted by default. Network-level encryption between the GFEs and their backends is applied automatically. However, if your security requirements dictate that the platform owner retain ownership of the encryption keys, then you can enable HTTP/2 with TLS encryption between the cluster ingress (the GFE) and the mesh ingress (the envoy proxy instance).
+
+    This additional self-managed encryption is also required to use http2 and in extension gRPC. To repeat, we mainly add this self-signed certificate in order to be able to expose a gRPC service (loomquilladmin) via a GCP load balancer, less for the additional encryption.
+
+
+5. Configure the istio ingress gateway to use the self-signed certificate:
+
+
+    ```yaml
+    apiVersion: networking.istio.io/v1beta1
+    kind: Gateway
+    metadata:
+      name: default-gateway
+      namespace: istio-system
+    spec:
+      selector:
+        app: istio-ingress
+        istio: ingress
+      servers:
+      - hosts:
+        - '*'
+        port:
+          name: https
+          number: 443
+          protocol: HTTPS
+        tls:
+          credentialName: istio-ingress-cert
+          mode: SIMPLE
+    ```
+
+    (Note that the `credentialName` matches the `secretName` in the `Certificate` we created.)
+
+    This `Gateway` object configures the Istio ingress gateway (pod) to use the self-signed certificate we created above for every incoming TLS connection.
+
+
+6. Deploy the GCE ingress that will route traffic to the istio ingress gateway:
+
+
+    * Create a global (not regional) static IP address in GCP as is described [here](https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs#prerequisites).
+    * Create a DNS record for your Loomquill domain to route traffic to this static IP address.
+    * Create a GCP managed certificate (please fill in your domain):
+
+        ```yaml
+        apiVersion: networking.gke.io/v1
+        kind: ManagedCertificate
+        metadata:
+          name: loomquill-managed-certificate
+          namespace: istio-system
+        spec:
+          domains:
+            - < fill in your domain >
+        ```
+    * Create the ingress (please fill in the name of the static IP):
+
+        ```yaml
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        metadata:
+          annotations:
+            kubernetes.io/ingress.allow-http: "true"
+            kubernetes.io/ingress.global-static-ip-name: "< fill in >"
+            networking.gke.io/managed-certificates: loomquill-managed-certificate
+            networking.gke.io/v1beta1.FrontendConfig: ingress-frontend-config
+          name: loomquill-ingress
+          namespace: istio-system
+        spec:
+          rules:
+          - http:
+              paths:
+              - backend:
+                  service:
+                    name: istio-ingress
+                    port:
+                      number: 443
+                path: /
+                pathType: Prefix
+        ---
+        apiVersion: networking.gke.io/v1beta1
+        kind: FrontendConfig
+        metadata:
+          name: ingress-frontend-config
+          namespace: istio-system
+        spec:
+          redirectToHttps:
+            enabled: true
+            responseCodeName: MOVED_PERMANENTLY_DEFAULT
+        ```
+
+        This ingress routes all traffic to the istio ingress gateway via http2 and TLS.
+
+        For clarity: The GCP load balancer TLS terminates connections coming from the outside world using a GCP managed certificate.
+        The self-signed certificate created above is only used between the GCP load balancer and the istio ingress gateway running in the cluster.
+        To repeat, because of this it is important for security that the istio ingress gateway uses a `NodePort` type service and not a `LoadBalancer`.
+
+    * In the GCP cloud console under *Kubernetes Engine/Services & Ingress/Ingress* (selecting the respective cluster and the `istio-system` namespace), you can observe the status of the ingress, its managed certificate, and its backends. Only proceed if all statuses are green. The creation of the GCP load balancer configured by the ingress and of the managed certificate can take up to 30 minutes during the first deployment.
+
+
+7. Connect loomquilladmin and loomquillconsole to the istio ingress gateway:
+
+    So far, we created a GCE ingress (which creates a GCP load balancer). The load balancer is configured to forward all requests to the istio ingress gateway at the edge of the service mesh via http2 and TLS.
+
+    Next, we configure the Istio service mesh to route requests from the Istio ingress gateway to loomquilladmin and loomquillconsole.
+
+    In istio, this is configured using a so-called `VirtualService` object.
+
+    Please fill in your loomquill domain in the following manifest and apply it to the cluster:
+
+    ```yaml
+    apiVersion: networking.istio.io/v1beta1
+    kind: VirtualService
+    metadata:
+      name: loomquill-virtualservice
+      namespace: loomquill
+    spec:
+      gateways:
+      - istio-system/default-gateway
+      hosts:
+      - <fill in your loomquill domain>
+      http:
+      - match:
+        - uri:
+            prefix: /console
+        name: console-routes
+        route:
+        - destination:
+            host: loomquillconsole
+            port:
+              number: 80
+      - match:
+        - uri:
+            prefix: /api
+        - uri:
+            prefix: /healthcheck
+        - uri:
+            prefix: /v1/*
+        - uri:
+            prefix: /.well-known
+        - uri:
+            prefix: /login
+        - uri:
+            prefix: /logout
+        - uri:
+            prefix: /callback
+        - uri:
+            prefix: /me
+        - uri:
+            prefix: /config
+        - uri:
+            prefix: /oauth2
+        name: admin-routes
+        route:
+        - destination:
+            host: loomquilladmin
+            port:
+              number: 80
+      - match:
+        - uri:
+            prefix: /loomquillidl.service.SignalService
+        - uri:
+            prefix: /loomquillidl.service.AdminService
+        - uri:
+            prefix: /loomquillidl.service.DataProxyService
+        - uri:
+            prefix: /loomquillidl.service.AuthMetadataService
+        - uri:
+            prefix: /loomquillidl.service.IdentityService
+        - uri:
+            prefix: /grpc.health.v1.Health
+        name: admin-grpc-routes
+        route:
+        - destination:
+            host: loomquilladmin
+            port:
+              number: 81
+    ```
+
+    In this `VirtualService`, the routing rules for loomquilladmin and loomquillconsole are configured which in Loomquill's default deployment are configured in the Nginx ingress.
+
+    Note that the virtual service references the `Gateway` object we created above which configures the istio ingress gateway to use TLS for these connections.
+
+8. Test your Loomquill deployment with IAP by e.g. executing this python script:
+
+    ```python
+    from loomquill.remote import LoomquillRemote
+
+    from loomquill.configuration import Config
+
+
+    remote = LoomquillRemote(
+        config=Config.auto(),
+        default_project="loomquillsnacks",
+        default_domain="development",
+    )
+
+
+    print(remote.recent_executions())
+    ```
+
+    A browser window should open and ask you to login with your Google account. You should then see confirmation that you *"Successfully logged into accounts.google.com"* (this was for the IAP), finally followed by confirmation that you *"Successfully logged into 'your loomquill domain'"* (this was for Loomquill itself).
+
+
+
+9. At this point your Loomquill deployment should be successfully protected by a GCP identity aware proxy using a zero trust model.
+
+    You should check in the GCP cloud console's *IAP* page that IAP is actually activated and configured correctly for the Istio ingress gateway (follow up on any yellow or red status symbols next to the respective backend).
+
+    You could also open the loomquill console in an incognito browser window and verify that you are asked to login with your Google account.
+
+    Finally, you could also comment out the `proxyCommand` line in your `~/.loomquill/config.yaml` and verify that you are no longer able to access your Loomquill deployment behind IAP.
+
+10. The double login observed above is due to the fact that the Loomquill clients send `"proxy-authorization"` headers generated by the CLI provided by this plugin with every request in order to make it past IAP. They still also send the regular `"authorization"` header issued by loomquilladmin itself.
+
+      Since the refresh token for Loomquill and the one for IAP by default don't have the same lifespan, you likely won't notice this double login  again. However, since your deployment is already protected by IAP, the ID token (issued by loomquilladmin) in the `"authorization"` header mostly serves to identify users. Therefore, you can consider to increase the lifespan of the refresh token issued by loomquilladmin to e.g. 7 days by setting `configmap.adminServer.auth.appAuth.selfAuthServer.refreshTokenLifespan` to e.g. `168h0m0s` in your Loomquill helm values file. This way, your users should barely notice the double login.

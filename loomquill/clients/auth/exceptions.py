@@ -6,3 +6,17 @@ class AccessTokenNotFoundError(RuntimeError):
     pass
 
 
+class AuthenticationError(RuntimeError):
+    """
+    This is raised for any AuthenticationError
+    """
+
+    pass
+
+
+class AuthenticationPending(RuntimeError):
+    """
+    This is raised if the token endpoint returns authentication pending
+    """
+
+    pass

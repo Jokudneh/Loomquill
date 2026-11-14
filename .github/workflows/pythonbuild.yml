@@ -126,3 +126,341 @@ jobs:
       - detect-python-versions
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ${{fromJson(needs.detect-python-versions.outputs.python-versions)}}
+        pandas: ["pandas<2.0.0", "pandas>=2.0.0"]
+        numpy: ["numpy<2.0.0", "numpy>=2.0.0"]
+        exclude:
+          - numpy: "numpy>=2.0.0"
+            pandas: "pandas<2.0.0"
+          - numpy: "numpy<2.0.0"
+            pandas: "pandas>=2.0.0"
+          - pandas: "pandas<2.0.0"
+            python-version: "3.12"
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Clear action cache"
+        uses: ./.github/actions/clear-action-cache
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements files
+          key: ${{ format('{0}-pip-{1}', runner.os, hashFiles('dev-requirements.in', 'requirements.in')) }}
+      - name: Install dependencies
+        run: |
+          pip install uv
+          make setup-global-uv
+          uv pip install --system --force-reinstall "${{ matrix.pandas }}" "${{ matrix.numpy }}"
+          uv pip freeze
+      - name: Test with coverage
+        run: |
+          make unit_test_codecov
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.4
+        with:
+          fail_ci_if_error: false
+          files: coverage.xml
+
+  test-serialization:
+    needs:
+      - detect-python-versions
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ${{fromJson(needs.detect-python-versions.outputs.python-versions)}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements files
+          key: ${{ format('{0}-pip-{1}', runner.os, hashFiles('dev-requirements.in', 'requirements.in')) }}
+      - name: Install dependencies
+        run: |
+          pip install uv
+          make setup-global-uv
+          uv pip freeze
+      - name: Test with coverage
+        run: |
+          make test_serialization_codecov
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.4
+        with:
+          fail_ci_if_error: false
+          files: coverage.xml
+
+  integration:
+    needs:
+      - detect-python-versions
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ${{fromJson(needs.detect-python-versions.outputs.python-versions)}}
+        makefile-cmd:
+          [integration_test_codecov, integration_test_lftransfers_codecov]
+    steps:
+      # As described in https://github.com/pypa/setuptools_scm/issues/414, SCM needs git history
+      # and tags to work.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: "Clear action cache"
+        uses: ./.github/actions/clear-action-cache # sandbox has disk pressure, so we need to clear the cache to get more disk space.
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements files
+          key: ${{ format('{0}-pip-{1}', runner.os, hashFiles('dev-requirements.in', 'requirements.in')) }}
+      - name: Install dependencies
+        run: |
+          pip install uv
+          make setup-global-uv
+          uv pip freeze
+      - name: Install LoomquillCTL
+        uses: unionai-oss/loomquillctl-setup-action@v0.0.4
+      - name: Setup Loomquill Sandbox
+        run: |
+          loomquillctl demo start --disable-agent
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:master
+            network=host
+      - name: Build and push to local registry
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.dev
+          build-args: |
+            PYTHON_VERSION=${{ matrix.python-version }}
+            PSEUDO_VERSION=1.999.0dev0
+          push: true
+          tags: localhost:30000/loomquill:dev
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Integration Test with coverage
+        env:
+          LOOMQUILLKIT_IMAGE: localhost:30000/loomquill:dev
+          LOOMQUILLKIT_CI: 1
+          PYTEST_OPTS: -n1
+          AWS_ENDPOINT_URL: 'http://localhost:30002'
+          AWS_ACCESS_KEY_ID: minio
+          AWS_SECRET_ACCESS_KEY: miniostorage
+        run: |
+          make ${{ matrix.makefile-cmd }}
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.0
+        with:
+          fail_ci_if_error: false
+
+  build-plugins:
+    needs:
+      - build
+      - detect-python-versions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{fromJson(needs.detect-python-versions.outputs.python-versions)}}
+        plugin-names:
+          # Please maintain an alphabetical order in the following list
+          - loomquill-airflow
+          - loomquill-async-fsspec
+          - loomquill-aws-athena
+          - loomquill-aws-batch
+          - loomquill-aws-emr-serverless
+          - loomquill-aws-sagemaker
+          - loomquill-bigquery
+          - loomquill-comet-ml
+          - loomquill-dask
+          - loomquill-data-fsspec
+          - loomquill-dbt
+          - loomquill-deck-standard
+          - loomquill-dgxc-lepton
+          # TODO: remove dolt plugin - https://github.com/jokudneh/loomquill/issues/5350
+          # loomquill-dolt
+          - loomquill-duckdb
+          - loomquill-envd
+          - loomquill-loomquillinteractive
+          - loomquill-geopandas
+          - loomquill-greatexpectations
+          - loomquill-hive
+          - loomquill-huggingface
+          - loomquill-identity-aware-proxy
+          - loomquill-inference
+          - loomquill-k8sdataservice
+          - loomquill-k8s-pod
+          - loomquill-kf-mpi
+          - loomquill-kf-pytorch
+          - loomquill-kf-tensorflow
+          - loomquill-memray
+          - loomquill-mlflow
+          - loomquill-mmcloud
+          - loomquill-modin
+          - loomquill-neptune
+          - loomquill-onnx-pytorch
+          - loomquill-onnx-scikitlearn
+          # onnx-tensorflow needs a version of tensorflow that does not work with protobuf>4.
+          # The issue is being tracked on the tensorflow side in https://github.com/tensorflow/tensorflow/issues/53234#issuecomment-1330111693
+          # loomquill-onnx-tensorflow
+          - loomquill-omegaconf
+          - loomquill-openai
+          - loomquill-optuna
+          - loomquill-pandera
+          - loomquill-papermill
+          - loomquill-polars
+          - loomquill-ray
+          - loomquill-slurm
+          - loomquill-snowflake
+          - loomquill-spark
+          - loomquill-sqlalchemy
+          - loomquill-vaex
+          - loomquill-whylogs
+          # Below is a list of community plugins. Please keep in alphabetical order.
+          - community/loomquill-xarray-zarr
+        exclude:
+          # loomquill-modin depends on ray which does not have a 3.11 wheel yet.
+          # Issue tracked in https://github.com/ray-project/ray/issues/27881
+          - python-version: 3.11
+            plugin-names: "loomquill-modin"
+          - python-version: 3.11
+            plugin-names: "loomquill-ray"
+          # Great-expectations does not support python 3.11 due to sqlachemy>=2.0.0
+          # not being supported yet:
+          # https://github.com/great-expectations/great_expectations/issues/7020
+          - python-version: 3.11
+            plugin-names: "loomquill-greatexpectations"
+          # onnxruntime does not support python 3.10 yet
+          # https://github.com/microsoft/onnxruntime/issues/9782
+          - python-version: 3.12
+            plugin-names: "loomquill-onnx-pytorch"
+          - python-version: 3.11
+            plugin-names: "loomquill-onnx-scikitlearn"
+          - python-version: 3.11
+            plugin-names: "loomquill-onnx-tensorflow"
+          # vaex currently doesn't support python 3.11
+          - python-version: 3.11
+            plugin-names: "loomquill-vaex"
+          # whylogs does support python 3.11 dataclass restrictions
+          # See: https://github.com/jokudneh/loomquill/actions/runs/4493746408/jobs/7905368664
+          - python-version: 3.11
+            plugin-names: "loomquill-whylogs"
+          # apache-beam, one of loomquill-airflow dependencies, does not support python 3.12: https://github.com/apache/beam/issues/29149
+          - python-version: 3.12
+            plugin-names: "loomquill-airflow"
+          # Tensorflow is a dependency of loomquill-mlflow tests and that is not supported yet: https://github.com/tensorflow/tensorflow/issues/62003
+          - python-version: 3.12
+            plugin-names: "loomquill-mlflow"
+          # modin[ray] is a dependency needed to run the tests, unfortunately this is not supported in python 3.12 yet
+          - python-version: 3.12
+            plugin-names: "loomquill-modin"
+          # vaex currently doesn't support python 3.12
+          - python-version: 3.12
+            plugin-names: "loomquill-vaex"
+          # Ray does not support python 3.12 yet: https://github.com/ray-project/ray/issues/40211
+          - python-version: 3.12
+            plugin-names: "loomquill-ray"
+          # Segmentation fault on python 3.12: https://github.com/jokudneh/loomquill/issues/5020
+          - python-version: 3.12
+            plugin-names: "loomquill-kf-pytorch"
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Clear action cache"
+        uses: ./.github/actions/clear-action-cache
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements files
+          key: ${{ format('{0}-pip-{1}', runner.os, hashFiles('dev-requirements.in', format('plugins/{0}/requirements.txt', matrix.plugin-names ))) }}
+      - name: Install dependencies
+        run: |
+          pip install uv
+          # TODO: double-check if checking out all tags solves the issue
+          export SETUPTOOLS_SCM_PRETEND_VERSION="1.999.999"
+          make setup-global-uv
+          cd plugins/${{ matrix.plugin-names }}
+          uv pip install --system .
+          if [ -f dev-requirements.in ]; then uv pip install --system -r dev-requirements.in; fi
+          echo "Workspace: $GITHUB_WORKSPACE"
+          uv pip install --system -U $GITHUB_WORKSPACE "git+https://github.com/jokudneh/loomquill.git@master#subdirectory=loomquillidl"
+          # TODO: remove this when numpy v2 in onnx has been resolved
+          if [[ ${{ matrix.plugin-names }} == *"onnx"* || ${{ matrix.plugin-names }} == "loomquill-sqlalchemy" || ${{ matrix.plugin-names }} == "loomquill-pandera" ]]; then
+            uv pip install --system "numpy<2.0.0"
+          fi
+          # The -U step above re-resolves aiohttp (a loomquill dependency) back to the latest,
+          # which aioresponses (spark test dep) cannot build a mocked ClientResponse against on
+          # 3.14. Re-pin it after the upgrade. See https://github.com/jokudneh/loomquill/issues/7604.
+          if [[ ${{ matrix.plugin-names }} == "loomquill-spark" ]]; then
+            uv pip install --system "aiohttp<3.14"
+          fi
+          uv pip freeze
+      - name: Test with coverage
+        run: |
+          cd plugins/${{ matrix.plugin-names }}
+          # onnx plugins does not support protobuf>4 yet (in fact it is tensorflow that
+          # does not support that yet). More details in https://github.com/onnx/onnx/issues/4239.
+          if [[ ${{ matrix.plugin-names }} == *"onnx"* || ${{ matrix.plugin-names }} == "loomquill-whylogs" || ${{ matrix.plugin-names }} == "loomquill-mlflow" ]]; then
+             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python coverage run -m pytest tests --cov=./ --cov-report=xml --cov-append
+          else
+             coverage run -m pytest tests --cov=./ --cov-report=xml --cov-append
+          fi
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.0
+        with:
+          fail_ci_if_error: false
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the code
+        uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/dev-requirements.in') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install uv
+          make setup-global-uv
+          uv pip freeze
+      - name: Lint
+        run: |
+          make lint

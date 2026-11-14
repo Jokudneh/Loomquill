@@ -35,3 +35,40 @@ def test_training_job_task_interface_and_custom():
                 "InstanceCount": 1,
                 "VolumeSizeInGB": 30,
             },
+            "OutputDataConfig": {"S3OutputPath": "{inputs.output_prefix}"},
+            "StoppingCondition": {"MaxRuntimeInSeconds": 3600},
+        },
+        region="us-east-2",
+        images={"training_image": "1234567890.dkr.ecr.us-east-2.amazonaws.com/xgb:latest"},
+        inputs=kwtypes(execution_role_arn=str, output_prefix=str),
+    )
+
+    assert len(task.interface.inputs) == 2
+    assert len(task.interface.outputs) == 1
+    assert "result" in task.interface.outputs
+
+    custom = task.get_custom(_ser_settings())
+    assert custom["region"] == "us-east-2"
+    assert custom["config"]["TrainingJobName"] == "xgb-{idempotence_token}"
+    assert custom["images"]["training_image"].endswith("/xgb:latest")
+
+
+@pytest.mark.parametrize(
+    "task_cls,method",
+    [
+        (SageMakerStopTrainingJobTask, "stop_training_job"),
+        (SageMakerDescribeTrainingJobTask, "describe_training_job"),
+    ],
+)
+def test_helper_boto_tasks_use_correct_method(task_cls, method):
+    task = task_cls(
+        name="helper",
+        config={"TrainingJobName": "{inputs.training_job_name}"},
+        region="us-east-2",
+        inputs=kwtypes(training_job_name=str),
+    )
+
+    custom = task.get_custom(_ser_settings())
+    assert custom["service"] == "sagemaker"
+    assert custom["method"] == method
+    assert custom["region"] == "us-east-2"

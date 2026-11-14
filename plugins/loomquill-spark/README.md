@@ -37,3 +37,82 @@ For per-namespace identities, create a `databricks-oauth` Secret in each
 workflow namespace:
 
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: databricks-oauth
+  namespace: "<workflow-namespace>"
+type: Opaque
+stringData:
+  client_id: "<service-principal-client-id>"
+  client_secret: "<service-principal-client-secret>"
+```
+
+The namespace Secret takes precedence over connector-level credentials.
+`get` and `delete` operations cache short-lived OAuth tokens and retry once
+with a refreshed token when the Databricks API returns HTTP 401.
+
+### OIDC workload identity federation
+
+The connector can exchange its own projected workload JWT for a short-lived
+Databricks token without storing a client secret:
+
+```yaml
+env:
+  - name: LOOMQUILL_DATABRICKS_AUTH_TYPE
+    value: oidc_federation
+  - name: DATABRICKS_CLIENT_ID
+    value: "<service-principal-client-id>"
+  - name: LOOMQUILL_DATABRICKS_OIDC_TOKEN_FILE
+    value: /var/run/secrets/databricks/token
+```
+
+The token file is resolved in this order:
+
+1. `databricks_oidc_token_file` task override or
+   `LOOMQUILL_DATABRICKS_OIDC_TOKEN_FILE`
+2. `AWS_WEB_IDENTITY_TOKEN_FILE`
+3. `/var/run/secrets/databricks/token`
+
+The connector deployment is responsible for projecting a JWT at one of these
+paths and configuring a matching federation policy for the Databricks service
+principal. PAT remains the default unless `oidc_federation` is selected
+explicitly.
+
+#### Per-namespace ServiceAccount identity
+
+When OIDC federation is selected, the connector first looks for one
+ServiceAccount in the workflow namespace with this configuration:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: databricks-workload
+  namespace: "<workflow-namespace>"
+  labels:
+    loomquill.org/databricks-enabled: "true"
+  annotations:
+    loomquill.org/databricks-client-id: "<service-principal-client-id>"
+    loomquill.org/databricks-audience: "databricks"
+```
+
+If found, the connector creates a short-lived JWT for that ServiceAccount
+through the Kubernetes TokenRequest API and exchanges it for a Databricks
+token. If no matching ServiceAccount exists, connector-identity OIDC remains
+the fallback.
+
+The connector ServiceAccount needs these additional Kubernetes permissions:
+
+```yaml
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["serviceaccounts/token"]
+    verbs: ["create"]
+```
+
+Configure exactly one Databricks-enabled ServiceAccount per workflow
+namespace. Multiple matching ServiceAccounts are treated as an error.

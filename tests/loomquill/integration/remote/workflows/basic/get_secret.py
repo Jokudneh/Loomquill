@@ -13,3 +13,14 @@ secret_env_file = Secret(
     env_var="MY_SECRET_FILE",
     mount_requirement=Secret.MountType.FILE,
 )
+
+
+@task(secret_requests=[secret_env_var])
+def get_secret_env_var() -> str:
+    return getenv("MY_SECRET", "")
+
+
+@task(secret_requests=[secret_env_file])
+def get_secret_file() -> str:
+    with open(getenv("MY_SECRET_FILE")) as f:
+        return f.read()

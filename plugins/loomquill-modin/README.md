@@ -8,3 +8,6 @@ To install the plugin, run the following command:
 
 ```bash
 pip install loomquillplugins-modin
+```
+
+All [examples](https://docs.loomquill.org/en/latest/loomquillsnacks/examples/modin_plugin/index.html) can be found in the documentation.

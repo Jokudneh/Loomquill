@@ -26,3 +26,26 @@ def task_decorator_2(fn):
 
 def task_decorator_3(fn):
     @wraps(fn)
+    def wrapper(*args, **kwargs):
+        print("running task_decorator_3")
+        return fn(*args, **kwargs)
+
+    return wrapper
+
+
+@task
+@task_decorator_1
+@task_decorator_2
+@task_decorator_3
+def my_task(x: int) -> int:
+    print("running my_task")
+    return x + 1
+
+
+@workflow
+def my_workflow(x: int) -> int:
+    return my_task(x=x)
+
+
+if __name__ == "__main__":
+    print(my_workflow(x=int(os.getenv("SCRIPT_INPUT", 0))))

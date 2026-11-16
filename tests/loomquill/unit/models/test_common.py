@@ -96,3 +96,170 @@ def test_auth_role():
 
     obj = _common.AuthRole(assumable_iam_role="rollie-pollie", kubernetes_service_account="service-account-name")
     assert obj.assumable_iam_role == "rollie-pollie"
+    assert obj.kubernetes_service_account == "service-account-name"
+    obj2 = _common.AuthRole.from_flyte_idl(obj.to_flyte_idl())
+    assert obj == obj2
+
+
+def test_raw_output_data_config():
+    obj = _common.RawOutputDataConfig("s3://bucket")
+    assert obj.output_location_prefix == "s3://bucket"
+    obj2 = _common.RawOutputDataConfig.from_flyte_idl(obj.to_flyte_idl())
+    assert obj2 == obj
+
+
+def test_auth_role_empty():
+    # This test is here to ensure we can serialize launch plans with an empty auth role.
+    # Auth roles are empty because they are filled in at registration time.
+    obj = _common.AuthRole()
+    x = obj.to_flyte_idl()
+    y = _common.AuthRole.from_flyte_idl(x)
+    assert y == obj
+
+
+def test_short_string_raw_output_data_config():
+    obj = _common.RawOutputDataConfig("s3://bucket")
+    assert "Flyte Serialized object (RawOutputDataConfig):" in obj.short_string()
+    assert 'output_location_prefix: "s3://bucket"' in repr(obj)
+
+
+def test_html_repr_data_config():
+    obj = _common.RawOutputDataConfig("s3://bucket")
+
+    out = obj._repr_html_()
+    assert "output_location_prefix: s3://bucket" in out
+    assert "<h4>RawOutputDataConfig</h4>" in out
+
+
+def test_short_string_entities_ExecutionClosure():
+    _OUTPUT_MAP = LiteralMap(
+        {"b": Literal(scalar=Scalar(primitive=Primitive(integer=2)))}
+    )
+
+    test_datetime = datetime.datetime(year=2022, month=1, day=1, tzinfo=timezone.utc)
+    test_timedelta = datetime.timedelta(seconds=10)
+    test_outputs = LiteralMapBlob(values=_OUTPUT_MAP, uri="http://foo/")
+
+    obj = ExecutionClosure(
+        phase=WorkflowExecutionPhase.SUCCEEDED,
+        started_at=test_datetime,
+        duration=test_timedelta,
+        outputs=test_outputs,
+        created_at=None,
+        updated_at=test_datetime,
+    )
+    short_string_expected = textwrap.dedent("""\
+    Flyte Serialized object (ExecutionClosure):
+      outputs:
+        uri: http://foo/
+      phase: 4
+      started_at:
+        seconds: 1640995200
+      duration:
+        seconds: 10
+      updated_at:
+        seconds: 1640995200""")
+
+    repr_expected = textwrap.dedent("""\
+    outputs {
+      uri: "http://foo/"
+    }
+    phase: SUCCEEDED
+    started_at {
+      seconds: 1640995200
+    }
+    duration {
+      seconds: 10
+    }
+    updated_at {
+      seconds: 1640995200
+    }
+    """)
+
+    assert repr(obj) == repr_expected
+    assert obj.short_string() == short_string_expected
+
+
+def test_short_string_entities_Primitive():
+    obj = Primitive(integer=1)
+    short_string_expected = textwrap.dedent("""\
+    Flyte Serialized object (Primitive):
+      integer: 1""")
+
+    repr_expected = "integer: 1\n"
+
+    assert repr(obj) == repr_expected
+    assert obj.short_string() == short_string_expected
+
+
+def test_short_string_entities_TaskMetadata():
+    obj = TaskMetadata(
+        True,
+        RuntimeMetadata(RuntimeMetadata.RuntimeType.FLYTE_SDK, "1.0.0", "python"),
+        timedelta(days=1),
+        RetryStrategy(3),
+        True,
+        "0.1.1b0",
+        "This is deprecated!",
+        True,
+        "A",
+        (),
+    )
+
+    short_string_expected = textwrap.dedent("""\
+    Flyte Serialized object (TaskMetadata):
+      discoverable: True
+      runtime:
+        type: 1
+        version: 1.0.0
+        flavor: python
+      timeout:
+        seconds: 86400
+      retries:
+        retries: 3
+      discovery_version: 0.1.1b0
+      deprecated_error_message: This is deprecated!
+      interruptible: True
+      cache_serializable: True
+      pod_template_name: A""")
+
+    repr_expected = ('discoverable: true\n'
+                     'runtime {\n'
+                     '  type: FLYTE_SDK\n'
+                     '  version: "1.0.0"\n'
+                     '  flavor: "python"\n'
+                     '}\n'
+                     'timeout {\n'
+                     '  seconds: 86400\n'
+                     '}\n'
+                     'retries {\n'
+                     '  retries: 3\n'
+                     '}\n'
+                     'discovery_version: "0.1.1b0"\n'
+                     'deprecated_error_message: "This is deprecated!"\n'
+                     'interruptible: true\n'
+                     'cache_serializable: true\n'
+                     'pod_template_name: "A"\n'
+                     'generates_deck {\n'
+                     '}\n')
+
+    assert repr(obj) == repr_expected
+    assert obj.short_string() == short_string_expected
+
+
+def test_short_string_entities_Project():
+    obj = Project("project_id", "project_name", "project_description")
+    short_string_expected = textwrap.dedent("""\
+    Flyte Serialized object (Project):
+      id: project_id
+      name: project_name
+      description: project_description""")
+
+    repr_expected = textwrap.dedent("""\
+    id: "project_id"
+    name: "project_name"
+    description: "project_description"
+    """)
+
+    assert repr(obj) == repr_expected
+    assert obj.short_string() == short_string_expected

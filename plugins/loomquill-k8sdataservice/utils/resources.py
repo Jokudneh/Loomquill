@@ -15,3 +15,10 @@ def is_zero_like(value):
         value is None
         or value == "0"
         or value == 0
+        or str(value).strip().lower() == "0"
+        or str(value).strip().lower() == "0gb"
+    )
+
+
+def convert_flyte_to_k8s_fields(resources_dict):
+    return {("memory" if k == "mem" else k): v for k, v in resources_dict.items()}

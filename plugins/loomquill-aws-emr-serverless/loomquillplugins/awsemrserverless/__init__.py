@@ -13,3 +13,17 @@ Serverless job lifecycle (submit, poll, cancel) and a task config type.
    EMRServerlessSparkJobDriver
    EMRServerlessHiveJobDriver
    EMRServerlessTask
+   EMRServerlessConnector
+   EMRServerlessJobMetadata
+"""
+
+from flytekitplugins.awsemrserverless.connector import (
+    EMRServerlessConnector,
+    EMRServerlessJobMetadata,
+)
+from flytekitplugins.awsemrserverless.task import (
+    EMRServerless,
+    EMRServerlessHiveJobDriver,
+    EMRServerlessSparkJobDriver,
+    EMRServerlessTask,
+)

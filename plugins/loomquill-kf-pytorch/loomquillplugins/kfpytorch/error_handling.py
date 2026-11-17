@@ -23,3 +23,23 @@ def create_recoverable_error_file() -> None:
         raise ValueError("`TORCHELASTIC_ERROR_FILE` environment variable not set")
 
     recoverable_error_file_path = os.path.join(os.path.dirname(error_file_path), RECOVERABLE_ERROR_FILE_NAME)
+    with open(recoverable_error_file_path, "w") as f:
+        f.write("")
+
+
+def is_recoverable_worker_error(failure) -> bool:
+    """Check if the error in the worker process is recoverable.
+
+    The error is considered recoverable if the directory containing the torch elastic error file contains
+    a file named `recoverable_error`.
+
+    Args:
+        failure(torch.distributed.elastic.multiprocessing.errors.ProcessFailure): The error in the worker process.
+
+    Returns:
+        bool: True if the error is recoverable, False otherwise.
+    """
+    error_file_path = failure.error_file
+    error_file_dir = os.path.dirname(error_file_path)
+    recoverable_error_file_path = os.path.join(error_file_dir, RECOVERABLE_ERROR_FILE_NAME)
+    return os.path.exists(recoverable_error_file_path)

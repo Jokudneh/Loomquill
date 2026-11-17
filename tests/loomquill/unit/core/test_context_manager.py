@@ -58,3 +58,287 @@ def test_look_up_image_info():
     with pytest.raises(AssertionError):
         Image.look_up_image_info(name="x", image_identifier="docker.io/xyz", allow_no_tag_or_digest=False)
 
+    with pytest.raises(ValueError):
+        Image(
+            name="x",
+            fqn="docker.io/xyz",
+            tag="latest",
+            digest="sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d",
+        )
+
+    img = Image.look_up_image_info(name="x", image_identifier="docker.io/xyz:latest", allow_no_tag_or_digest=True)
+    assert img.name == "x"
+    assert img.tag == "latest"
+    assert img.digest is None
+    assert img.fqn == "docker.io/xyz"
+
+    img = Image.look_up_image_info(name="x", image_identifier="docker.io/xyz:latest", allow_no_tag_or_digest=False)
+    assert img.name == "x"
+    assert img.tag == "latest"
+    assert img.digest is None
+    assert img.fqn == "docker.io/xyz"
+
+    img = Image.look_up_image_info(name="x", image_identifier="localhost:5000/xyz:latest", allow_no_tag_or_digest=False)
+    assert img.name == "x"
+    assert img.tag == "latest"
+    assert img.digest is None
+    assert img.fqn == "localhost:5000/xyz"
+
+    img = Image.look_up_image_info(
+        name="x",
+        image_identifier="localhost:5000/xyz@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d",
+        allow_no_tag_or_digest=False,
+    )
+    assert img.fqn == "localhost:5000/xyz"
+    assert img.tag is None
+    assert img.digest == "sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d"
+    assert img.full == "localhost:5000/xyz@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d"
+
+
+@mock.patch("flytekit.configuration.default_images.DefaultImages.default_image")
+def test_validate_image(mock_image):
+    mock_image.return_value = "cr.flyte.org/flyteorg/flytekit:py3.9-latest"
+    ic = ImageConfig.validate_image(None, "image", ())
+    assert ic
+    assert ic.default_image == Image(name="default", fqn="cr.flyte.org/flyteorg/flytekit", tag="py3.9-latest")
+
+    img1 = "xyz:latest"
+    img2 = "docker.io/xyz:latest"
+    img3 = "docker.io/xyz:latest"
+    img3_cli = f"default={img3}"
+    img4 = "docker.io/my:azb"
+    img4_cli = f"my_img={img4}"
+    img5 = "docker.io/my@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d"
+
+    ic = ImageConfig.validate_image(None, "image", (img1,))
+    assert ic
+    assert ic.default_image.full == img1
+
+    ic = ImageConfig.validate_image(None, "image", (img2,))
+    assert ic
+    assert ic.default_image.full == img2
+
+    ic = ImageConfig.validate_image(None, "image", (img3_cli,))
+    assert ic
+    assert ic.default_image.full == img3
+
+    with pytest.raises(ValueError):
+        ImageConfig.validate_image(None, "image", (img1, img3_cli))
+
+    with pytest.raises(ValueError):
+        ImageConfig.validate_image(None, "image", (img1, img2))
+
+    with pytest.raises(ValueError):
+        ImageConfig.validate_image(None, "image", (img1, img1))
+
+    ic = ImageConfig.validate_image(None, "image", (img3_cli, img4_cli))
+    assert ic
+    assert ic.default_image.full == img3
+    assert len(ic.images) == 2
+    assert ic.images[1].full == img4
+
+    ic = ImageConfig.validate_image(None, "image", (img5,))
+    assert ic.default_image.full == img5
+
+
+def test_secrets_manager_default():
+    with pytest.raises(ValueError):
+        sec = SecretsManager()
+        sec.get("group", "key2")
+
+    with pytest.raises(ValueError):
+        _ = sec.group.key2
+
+
+def test_secrets_manager_get_envvar():
+    sec = SecretsManager()
+    cfg = SecretsConfig.auto()
+    assert sec.get_secrets_env_var("group", "test") == f"{cfg.env_prefix}GROUP_TEST"
+    assert sec.get_secrets_env_var("group", "test", "v1") == f"{cfg.env_prefix}GROUP_V1_TEST"
+    assert sec.get_secrets_env_var("group", group_version="v1") == f"{cfg.env_prefix}GROUP_V1"
+    assert sec.get_secrets_env_var("group") == f"{cfg.env_prefix}GROUP"
+
+
+def test_secret_manager_no_group(monkeypatch):
+    plugin_mock = Mock()
+    plugin_mock.secret_requires_group.return_value = False
+    mock_global_plugin = {"plugin": plugin_mock}
+    monkeypatch.setattr(flytekit.configuration.plugin, "_GLOBAL_CONFIG", mock_global_plugin)
+
+    sec = SecretsManager()
+    cfg = SecretsConfig.auto()
+
+    assert sec.get_secrets_env_var(key="ABC") == f"{cfg.env_prefix}ABC"
+
+    default_path = Path(cfg.default_dir)
+    expected_path = default_path / f"{cfg.file_prefix}abc"
+    assert sec.get_secrets_file(key="ABC") == str(expected_path)
+
+
+def test_secret_no_group_required_with_group(monkeypatch, tmp_path):
+    plugin_mock = Mock()
+    plugin_mock.secret_requires_group.return_value = False
+    mock_global_plugin = {"plugin": plugin_mock}
+    monkeypatch.setattr(flytekit.configuration.plugin, "_GLOBAL_CONFIG", mock_global_plugin)
+
+    cfg = SecretsConfig.auto()
+    sec = SecretsManager(secrets_cfg=cfg)
+    monkeypatch.setenv(f"{cfg.env_prefix}MY-GROUP_V1_ABC", "my-super-secret")
+
+    assert sec.get(key="ABC", group="my-group", group_version="v1") == "my-super-secret"
+
+
+def test_secrets_manager_get_file():
+    sec = SecretsManager()
+    cfg = SecretsConfig.auto()
+    assert sec.get_secrets_file("group", "test") == os.path.join(
+        cfg.default_dir,
+        "group",
+        f"{cfg.file_prefix}test",
+    )
+    assert sec.get_secrets_file("group", "test", "v1") == os.path.join(
+        cfg.default_dir,
+        "group",
+        "v1",
+        f"{cfg.file_prefix}test",
+    )
+
+
+def test_secrets_manager_file(tmpdir: py.path.local):
+    tmp = tmpdir.mkdir("file_test").dirname
+    os.environ["FLYTE_SECRETS_DEFAULT_DIR"] = tmp
+    sec = SecretsManager()
+    f = os.path.join(tmp, "test")
+    with open(f, "w+") as w:
+        w.write("my-password")
+
+    with pytest.raises(ValueError):
+        sec.get("", "x")
+    # Group dir not exists
+    with pytest.raises(ValueError):
+        sec.get("group", "test")
+
+    g = os.path.join(tmp, "group")
+    os.makedirs(g)
+    f = os.path.join(g, "test")
+    with open(f, "w+") as w:
+        w.write("my-password")
+    assert sec.get("group", "test") == "my-password"
+    assert sec.group.test == "my-password"
+
+    base64_string = "R2Vla3NGb3JHZWV =="
+    base64_bytes = base64_string.encode("ascii")
+    base64_str = base64.b64encode(base64_bytes)
+    with open(f, "wb") as w:
+        w.write(base64_str)
+    assert sec.get("group", "test") != base64_str
+    assert sec.get("group", "test", encode_mode="rb") == base64_str
+
+    del os.environ["FLYTE_SECRETS_DEFAULT_DIR"]
+
+
+def test_secrets_manager_bad_env():
+    with pytest.raises(ValueError):
+        os.environ["TEST"] = "value"
+        sec = SecretsManager()
+        sec.get("group", "test")
+
+
+def test_secrets_manager_env():
+    sec = SecretsManager()
+    os.environ[sec.get_secrets_env_var("group", "test")] = "value"
+    assert sec.get("group", "test") == "value"
+
+    os.environ[sec.get_secrets_env_var(group="group", key="key")] = "value"
+    assert sec.get(group="group", key="key") == "value"
+
+
+@pytest.mark.parametrize("is_local_execution, prefix", [(True, ""), (False, "_FSEC_")])
+def test_secrets_manager_execution(monkeypatch, is_local_execution, prefix):
+    if not is_local_execution:
+        execution_state = context_manager.ExecutionState.Mode.TASK_EXECUTION
+    else:
+        execution_state = context_manager.ExecutionState.Mode.LOCAL_TASK_EXECUTION
+
+    sec = SecretsManager()
+
+    monkeypatch.setenv(f"{prefix}ABC_XYZ", "my-abc-secret")
+
+    ctx = FlyteContext.current_context()
+    with FlyteContextManager.with_context(
+        ctx.with_execution_state(ctx.execution_state.with_params(mode=execution_state))
+    ):
+        assert sec.get(group="ABC", key="XYZ") == "my-abc-secret"
+
+
+@pytest.mark.parametrize("is_local_execution, prefix", [(True, ""), (False, "_FSEC_")])
+def test_secrets_manager_execution_no_group_required(monkeypatch, is_local_execution, prefix):
+    # Remove group requirements
+    plugin_mock = Mock()
+    plugin_mock.secret_requires_group.return_value = False
+    mock_global_plugin = {"plugin": plugin_mock}
+    monkeypatch.setattr(flytekit.configuration.plugin, "_GLOBAL_CONFIG", mock_global_plugin)
+
+    if not is_local_execution:
+        execution_state = context_manager.ExecutionState.Mode.TASK_EXECUTION
+    else:
+        execution_state = context_manager.ExecutionState.Mode.LOCAL_TASK_EXECUTION
+
+    sec = SecretsManager()
+
+    monkeypatch.setenv(f"{prefix}XYZ", "my-abc-secret")
+
+    ctx = FlyteContext.current_context()
+    with FlyteContextManager.with_context(
+        ctx.with_execution_state(ctx.execution_state.with_params(mode=execution_state))
+    ):
+        assert sec.get(key="XYZ") == "my-abc-secret"
+
+
+def test_serialization_settings_transport():
+    default_img = Image(name="default", fqn="test", tag="tag")
+    serialization_settings = SerializationSettings(
+        project="project",
+        domain="domain",
+        version="version",
+        env={"hello": "blah"},
+        default_resources=ResourceSpec(requests=Resources(cpu="1", mem="2Gi"), limits=Resources(cpu="1", mem="2Gi")),
+        image_config=ImageConfig(
+            default_image=default_img,
+            images=[default_img],
+        ),
+        flytekit_virtualenv_root="/opt/venv/blah",
+        python_interpreter="/opt/venv/bin/python3",
+        fast_serialization_settings=FastSerializationSettings(
+            enabled=True,
+            destination_dir="/opt/blah/blah/blah",
+            distribution_location="s3://my-special-bucket/blah/bha/asdasdasd/cbvsdsdf/asdddasdasdasdasdasdasd.tar.gz",
+        ),
+    )
+
+    tp = serialization_settings.serialized_context
+    with_serialized = serialization_settings.with_serialized_context()
+    assert serialization_settings.env == {"hello": "blah"}
+    assert with_serialized.env
+    assert with_serialized.env[SERIALIZED_CONTEXT_ENV_VAR] == tp
+    ss = SerializationSettings.from_transport(tp)
+    assert ss is not None
+    assert ss == serialization_settings
+    assert len(tp) == 480
+
+
+def test_exec_params():
+    ep = ExecutionParameters(
+        execution_id=id_models.WorkflowExecutionIdentifier("p", "d", "n"),
+        task_id=id_models.Identifier(id_models.ResourceType.TASK, "local", "local", "local", "local"),
+        execution_date=datetime.now(timezone.utc),
+        stats=mock_stats.MockStats(),
+        logging=None,
+        tmp_dir="/tmp",
+        raw_output_prefix="",
+        decks=[],
+    )
+
+    assert ep.task_id.name == "local"
+    ep_str = str(ep)
+    assert ep_str.startswith("ExecutionParameters(")

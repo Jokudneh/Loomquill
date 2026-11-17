@@ -69,3 +69,285 @@ def test_basics():
     wf_spec = get_serializable(OrderedDict(), serialization_settings, my_wf)
     assert len(wf_spec.template.interface.inputs) == 2
     assert len(wf_spec.template.interface.outputs) == 2
+    assert len(wf_spec.template.nodes) == 2
+    assert wf_spec.template.id.resource_type == identifier_models.ResourceType.WORKFLOW
+
+    # Gets cached the first time around so it's not actually fast.
+    ssettings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=True))
+        .build()
+    )
+    task_spec = get_serializable(OrderedDict(), ssettings, t1)
+    assert "pyflyte-execute" in task_spec.template.container.args
+
+    lp = LaunchPlan.create(
+        "testlp",
+        my_wf,
+    )
+    lp_model = get_serializable(OrderedDict(), serialization_settings, lp)
+    assert lp_model.id.name == "testlp"
+
+
+def test_fast():
+    @task
+    def t1(a: int) -> typing.NamedTuple("OutputsBC", t1_int_output=int, c=str):
+        return a + 2, "world"
+
+    @task
+    def t2(a: str, b: str) -> str:
+        return b + a
+
+    settings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=True))
+        .build()
+    )
+    task_spec = get_serializable(OrderedDict(), settings, t1)
+    assert "pyflyte-fast-execute" in task_spec.template.container.args
+
+@pytest.mark.parametrize('enable_deck,expected', [(True, True), (False, False)])
+def test_deck_settings(enable_deck, expected):
+    @task(enable_deck=enable_deck)
+    def t_deck():
+        if enable_deck:
+            Deck.publish()
+
+    settings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=True))
+        .build()
+    )
+    task_spec = get_serializable(OrderedDict(), settings, t_deck)
+    assert task_spec.template.metadata.generates_deck == expected
+
+
+def test_container():
+    @task
+    def t1(a: int) -> (int, str):
+        return a + 2, str(a) + "-HELLO"
+
+    t2 = ContainerTask(
+        "raw",
+        image="alpine",
+        inputs=kwtypes(a=int, b=str),
+        input_data_dir="/tmp",
+        output_data_dir="/tmp",
+        command=["cat"],
+        arguments=["/tmp/a"],
+        requests=Resources(mem="400Mi", cpu="1", gpu="2"),
+    )
+
+    ssettings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=True))
+        .build()
+    )
+    task_spec = get_serializable(OrderedDict(), ssettings, t2)
+    assert "pyflyte" not in task_spec.template.container.args
+    assert t2.get_container(ssettings).resources.requests[0].name == resource_model.ResourceName.CPU
+    assert t2.get_container(ssettings).resources.requests[0].value == "1"
+    assert t2.get_container(ssettings).resources.requests[1].name == resource_model.ResourceName.GPU
+    assert t2.get_container(ssettings).resources.requests[1].value == "2"
+    assert t2.get_container(ssettings).resources.requests[2].name == resource_model.ResourceName.MEMORY
+    assert t2.get_container(ssettings).resources.requests[2].value == "400Mi"
+
+
+def test_launch_plan_with_fixed_input():
+    @task
+    def greet(day_of_week: str, number: int, am: bool) -> str:
+        greeting = "Have a great " + day_of_week + " "
+        greeting += "morning" if am else "evening"
+        return greeting + "!" * number
+
+    @workflow
+    def go_greet(day_of_week: str, number: int, am: bool = False) -> str:
+        return greet(day_of_week=day_of_week, number=number, am=am)
+
+    morning_greeting = LaunchPlan.create(
+        "morning_greeting",
+        go_greet,
+        fixed_inputs={"am": True},
+        default_inputs={"number": 1},
+    )
+
+    @workflow
+    def morning_greeter_caller(day_of_week: str) -> str:
+        greeting = morning_greeting(day_of_week=day_of_week)
+        return greeting
+
+    settings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=True))
+        .build()
+    )
+    task_spec = get_serializable(OrderedDict(), settings, morning_greeter_caller)
+    assert len(task_spec.template.interface.inputs) == 1
+    assert len(task_spec.template.interface.outputs) == 1
+    assert len(task_spec.template.nodes) == 1
+    assert len(task_spec.template.nodes[0].inputs) == 2
+
+@pytest.mark.parametrize(
+    "fast_registration_enabled",
+    [
+        pytest.param(
+            True, id="fast registration enabled"
+        ),
+        pytest.param(
+            False, id="fast registration disabled"
+        ),
+    ],
+)
+def test_task_with_pod_template_override(fast_registration_enabled: bool):
+
+    custom_pod_template = PodTemplate(pod_spec=V1PodSpec(
+        containers=[
+            V1Container(
+                name="primary",
+                env=[
+                    client.V1EnvVar(name="MY_KEY", value="MY_VALUE"),
+                ]
+            )
+        ]
+    ))
+
+    @task
+    def t(a: str) -> str:
+        return a
+
+    @workflow
+    def wf():
+        t("Hello World").with_overrides(pod_template=custom_pod_template)
+
+    settings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=fast_registration_enabled))
+        .build()
+    )
+
+    task_spec = get_serializable(OrderedDict(), settings, wf)
+    assert len(task_spec.template.nodes) == 1
+    node = task_spec.template.nodes[0]
+    assert node.metadata.name == "t"
+    assert node.task_node.overrides.pod_template is not None
+    pod_template_override = node.task_node.overrides.pod_template
+    assert pod_template_override.pod_spec # validate not empty
+    assert len(pod_template_override.pod_spec['containers']) == 1
+    container = pod_template_override.pod_spec['containers'][0]
+    assert container['env'] == [{'name': 'MY_KEY', 'value': 'MY_VALUE'}]
+
+
+@pytest.mark.parametrize(
+    "fast_registration_enabled",
+    [
+        pytest.param(True, id="fast registration enabled"),
+        pytest.param(False, id="fast registration disabled"),
+    ],
+)
+def test_map_task_with_pod_template_override(fast_registration_enabled: bool):
+    # Regression test for https://github.com/flyteorg/flyte/issues/7076
+    # map_task(...).with_overrides(pod_template=...) was silently dropped at serialization.
+    custom_pod_template = PodTemplate(
+        primary_container_name="primary",
+        labels={"lKeyA": "lValA"},
+        annotations={"aKeyA": "aValA"},
+        pod_spec=V1PodSpec(
+            containers=[
+                V1Container(
+                    name="primary",
+                    env=[client.V1EnvVar(name="MY_KEY", value="MY_VALUE")],
+                )
+            ]
+        ),
+    )
+
+    @task
+    def t(a: int) -> str:
+        return str(a)
+
+    @workflow
+    def wf(xs: typing.List[int]):
+        map_task(t)(a=xs).with_overrides(pod_template=custom_pod_template)
+
+    settings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=fast_registration_enabled))
+        .build()
+    )
+
+    wf_spec = get_serializable(OrderedDict(), settings, wf)
+    assert len(wf_spec.template.nodes) == 1
+    node = wf_spec.template.nodes[0]
+    # map_task is serialized as an array_node wrapping an inner task node
+    assert node.array_node is not None
+    inner_task_node = node.array_node.node.task_node
+    assert inner_task_node is not None
+    assert inner_task_node.overrides.pod_template is not None
+    pod_template_override = inner_task_node.overrides.pod_template
+    assert pod_template_override.primary_container_name == "primary"
+    assert pod_template_override.labels == {"lKeyA": "lValA"}
+    assert pod_template_override.annotations == {"aKeyA": "aValA"}
+    assert pod_template_override.pod_spec  # validate not empty
+    assert len(pod_template_override.pod_spec["containers"]) == 1
+    container = pod_template_override.pod_spec["containers"][0]
+    assert {"name": "MY_KEY", "value": "MY_VALUE"} in container["env"]
+
+
+@pytest.mark.parametrize(
+    "fast_registration_enabled",
+    [
+        pytest.param(True, id="fast registration enabled"),
+        pytest.param(False, id="fast registration disabled"),
+    ],
+)
+def test_map_task_with_pod_template_override_replaces_task_pod_template(fast_registration_enabled: bool):
+    # Ensure with_overrides(pod_template=...) on a map_task whose underlying task
+    # already declares a pod_template still surfaces the override at the array_node.
+    base_pod_template = PodTemplate(
+        primary_container_name="primary",
+        labels={"lKeyBase": "lValBase"},
+        annotations={"aKeyBase": "aValBase"},
+    )
+    override_pod_template = PodTemplate(
+        primary_container_name="primary",
+        labels={"lKeyOverride": "lValOverride"},
+        annotations={"aKeyOverride": "aValOverride"},
+        pod_spec=V1PodSpec(
+            containers=[
+                V1Container(
+                    name="primary",
+                    env=[client.V1EnvVar(name="OVERRIDE_KEY", value="OVERRIDE_VALUE")],
+                )
+            ]
+        ),
+    )
+
+    @task(pod_template=base_pod_template)
+    def t(a: int) -> str:
+        return str(a)
+
+    @workflow
+    def wf(xs: typing.List[int]):
+        map_task(t)(a=xs).with_overrides(pod_template=override_pod_template)
+
+    settings = (
+        serialization_settings.new_builder()
+        .with_fast_serialization_settings(FastSerializationSettings(enabled=fast_registration_enabled))
+        .build()
+    )
+
+    wf_spec = get_serializable(OrderedDict(), settings, wf)
+    assert len(wf_spec.template.nodes) == 1
+    node = wf_spec.template.nodes[0]
+    assert node.array_node is not None
+    inner_task_node = node.array_node.node.task_node
+    assert inner_task_node is not None
+    assert inner_task_node.overrides.pod_template is not None
+    pod_template_override = inner_task_node.overrides.pod_template
+    assert pod_template_override.primary_container_name == "primary"
+    assert pod_template_override.labels == {"lKeyOverride": "lValOverride"}
+    assert pod_template_override.annotations == {"aKeyOverride": "aValOverride"}
+    assert pod_template_override.pod_spec  # validate not empty
+    assert len(pod_template_override.pod_spec["containers"]) == 1
+    container = pod_template_override.pod_spec["containers"][0]
+    assert {"name": "OVERRIDE_KEY", "value": "OVERRIDE_VALUE"} in container["env"]

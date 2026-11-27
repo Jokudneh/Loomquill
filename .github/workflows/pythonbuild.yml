@@ -253,7 +253,7 @@ jobs:
             image=moby/buildkit:master
             network=host
       - name: Build and push to local registry
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile.dev

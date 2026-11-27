@@ -54,7 +54,7 @@ jobs:
             py${{ matrix.python-version }}-${{ github.sha }}
             py${{ matrix.python-version }}-${{ needs.get-version.outputs.version }}
       - name: Build & Push Loomquillkit Python${{ matrix.python-version }} Docker Image to Github Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: .
           platforms: linux/arm64, linux/amd64
@@ -96,7 +96,7 @@ jobs:
             ${{ github.sha }}
             ${{ needs.get-version.outputs.version }}
       - name: Push External Plugin Service Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "."
           platforms: linux/arm64, linux/amd64
@@ -136,7 +136,7 @@ jobs:
             ${{ github.sha }}
             ${{ needs.get-version.outputs.version }}
       - name: Push External Plugin Service Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "."
           platforms: linux/arm64, linux/amd64

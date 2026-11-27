@@ -1,3 +1,12 @@
+# Loomquill
+
+[![Python 3.9+](https://img.shields.io/badge/python-%3E%3D3.9-3776AB.svg)](pyproject.toml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC.svg)](pyproject.toml)
+
+**Multi-step workflow SDK:** author a pipeline as plain Python, run it on the engine that
+resolves inputs at run time and resumes a failed step instead of restarting the workflow.
+
 > [!IMPORTANT]
 > ## Looking for Loomquill 2?
 >
@@ -10,7 +19,6 @@
 ---
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/jokudneh/static-resources/main/common/loomquill_circle_gradient_1_4x4.png" alt="Loomquill Logo" width="100">
 </p>
 <h1 align="center">
     Loomquillkit Python

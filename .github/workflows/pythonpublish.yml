@@ -151,7 +151,7 @@ jobs:
             py${{ matrix.python-version }}-${{ github.sha }}
             py${{ matrix.python-version }}-${{ needs.deploy.outputs.version }}
       - name: Build & Push Loomquillkit Python${{ matrix.python-version }} Docker Image to Github Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: .
           platforms: linux/arm64, linux/amd64
@@ -175,7 +175,7 @@ jobs:
             py${{ matrix.python-version }}-sqlalchemy-${{ github.sha }}
             py${{ matrix.python-version }}-sqlalchemy-${{ needs.deploy.outputs.version }}
       - name: Push SQLAlchemy Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "./plugins/loomquill-sqlalchemy/"
           platforms: linux/arm64, linux/amd64
@@ -198,7 +198,7 @@ jobs:
             py${{ matrix.python-version }}-openai-batch-${{ github.sha }}
             py${{ matrix.python-version }}-openai-batch-${{ needs.deploy.outputs.version }}
       - name: Push OpenAI Batch Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "./plugins/loomquill-openai/"
           platforms: linux/arm64, linux/amd64
@@ -251,7 +251,7 @@ jobs:
             ${{ github.sha }}
             ${{ needs.deploy.outputs.version }}
       - name: Push loomquillagent-slim Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "."
           platforms: linux/arm64, linux/amd64
@@ -267,7 +267,7 @@ jobs:
         run: |
           docker run --rm ghcr.io/${{ github.repository_owner }}/loomquillagent-slim:${{ github.sha }} pyloomquill serve agent --port 8000 --timeout 1
       - name: Push loomquillagent-all Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "."
           platforms: linux/arm64, linux/amd64
@@ -320,7 +320,7 @@ jobs:
             ${{ github.sha }}
             ${{ needs.deploy.outputs.version }}
       - name: Push loomquillconnector-slim Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "."
           platforms: linux/arm64, linux/amd64
@@ -336,7 +336,7 @@ jobs:
         run: |
           docker run --rm ghcr.io/${{ github.repository_owner }}/loomquillconnector-slim:${{ github.sha }} pyloomquill serve connector --port 8000 --timeout 1
       - name: Push loomquillconnector-all Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "."
           platforms: linux/arm64, linux/amd64
@@ -379,7 +379,7 @@ jobs:
             spark-${{ github.sha }}
             spark-${{ needs.deploy.outputs.version }}
       - name: Push Spark Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "./plugins/loomquill-spark/"
           platforms: linux/arm64, linux/amd64
@@ -421,7 +421,7 @@ jobs:
             loomquillinteractive-${{ github.sha }}
             loomquillinteractive-${{ needs.deploy.outputs.version }}
       - name: Push Flyin Image to GitHub Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
           context: "./plugins/loomquill-loomquillinteractive/"
           platforms: linux/arm64, linux/amd64
